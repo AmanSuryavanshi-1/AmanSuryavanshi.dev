@@ -52,7 +52,11 @@ export interface Post {
   body: PortableTextBlockType[];
   author?: Author;
   categories?: Category[];
+  tags?: string[];
+  status?: 'draft' | 'published' | 'needs-review';
   publishedAt?: string;
+  seoTitle?: string;
+  seoDescription?: string;
   _createdAt: string;
   _updatedAt: string;
   viewCount?: number;

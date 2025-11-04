@@ -46,6 +46,10 @@ async function getPost(slug: string): Promise<Post | null> {
       _id,
       title
     },
+    tags,
+    status,
+    seoTitle,
+    seoDescription,
     viewCount
   }`;
 
@@ -64,10 +68,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   
   if (!post) notFound();
 
+  const title = post.seoTitle || post.title;
+  const description = post.seoDescription || post.excerpt;
+
   return {
-    title: `${post.title} | Aman Suryavanshi`,
-    description: post.excerpt,
+    title: `${title} | Aman Suryavanshi`,
+    description: description,
+    keywords: post.tags?.join(', '),
     openGraph: {
+      title: title,
+      description: description,
       images: post.mainImage ? [urlFor(post.mainImage).url()] : [],
     },
   };

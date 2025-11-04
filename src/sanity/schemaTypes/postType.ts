@@ -23,6 +23,14 @@ export const postType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'excerpt',
+      type: 'text',
+      title: 'Excerpt',
+      description: 'Short description for SEO and previews (recommended 150-160 characters)',
+      rows: 3,
+      validation: (Rule) => Rule.max(160),
+    }),
+    defineField({
       name: 'author',
       type: 'reference',
       to: { type: 'author' },
@@ -50,14 +58,56 @@ export const postType = defineType({
       of: [defineArrayMember({ type: 'reference', to: { type: 'category' } })],
     }),
     defineField({
+      name: 'tags',
+      type: 'array',
+      title: 'Tags',
+      description: 'Add tags for better content organization',
+      of: [defineArrayMember({ type: 'string' })],
+      options: {
+        layout: 'tags',
+      },
+    }),
+    defineField({
+      name: 'status',
+      type: 'string',
+      title: 'Status',
+      description: 'Publication status of the post',
+      options: {
+        list: [
+          { title: 'Draft', value: 'draft' },
+          { title: 'Published', value: 'published' },
+          { title: 'Needs Review', value: 'needs-review' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'draft',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'publishedAt',
       type: 'datetime',
       title: 'Published At',
+      description: 'When this post was/will be published',
     }),
     defineField({
       name: 'body',
       type: 'blockContent',
       title: 'Body Content'
+    }),
+    defineField({
+      name: 'seoTitle',
+      type: 'string',
+      title: 'SEO Title',
+      description: 'Custom title for search engines (leave empty to use main title)',
+      validation: (Rule) => Rule.max(60),
+    }),
+    defineField({
+      name: 'seoDescription',
+      type: 'text',
+      title: 'SEO Description',
+      description: 'Custom description for search engines (leave empty to use excerpt)',
+      rows: 3,
+      validation: (Rule) => Rule.max(160),
     }),
     defineField({
       name: 'viewCount',

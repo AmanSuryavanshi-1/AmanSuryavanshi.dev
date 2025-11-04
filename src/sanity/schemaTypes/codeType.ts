@@ -17,10 +17,13 @@ export const codeType = defineType({
       options: {
         list: [
           {title: 'JavaScript', value: 'javascript'},
+          {title: 'Python', value: 'python'},
           {title: 'TypeScript', value: 'typescript'},
           {title: 'HTML', value: 'html'},
           {title: 'CSS', value: 'css'},
-          {title: 'Python', value: 'python'},
+          {title: 'JSON', value: 'json'},
+          {title: 'Markdown', value: 'markdown'},
+          {title: 'Bash', value: 'bash'},
           {title: 'JSX', value: 'jsx'},
           {title: 'TSX', value: 'tsx'},
         ]

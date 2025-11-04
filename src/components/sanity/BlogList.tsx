@@ -7,7 +7,7 @@ import FeaturedPost from './FeaturedPost';
 import BlogTabs from './BlogTabs';
 import { motion } from 'framer-motion';
 
-const POSTS_QUERY = `*[ _type == "post" && defined(slug.current) ] | order(_createdAt desc) {
+const POSTS_QUERY = `*[ _type == "post" && defined(slug.current) && status == "published" ] | order(_createdAt desc) {
   _id,
   _type,
   title,
@@ -41,7 +41,9 @@ const POSTS_QUERY = `*[ _type == "post" && defined(slug.current) ] | order(_crea
     _type,
     title,
     description
-  }
+  },
+  tags,
+  status
 }`;
 
 export default function BlogList() {
