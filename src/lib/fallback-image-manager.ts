@@ -12,24 +12,19 @@ export interface FallbackImage {
 export class FallbackImageManager {
   private static readonly fallbackImages: FallbackImage[] = [
     {
-      filename: 'Blog_header_fallback_asset1.jpg',
+      filename: 'Blog_header_fallback_asset1.jpeg',
       alt: 'Default blog header image 1',
-      path: '/Blog_header_fallback_asset1.jpg'
+      path: '/Blog/Blog_header_fallback_asset1.jpeg'
     },
     {
-      filename: 'Blog_header_fallback_asset2.jpg', 
+      filename: 'Blog_header_fallback_asset2.jpeg', 
       alt: 'Default blog header image 2',
-      path: '/Blog_header_fallback_asset2.jpg'
+      path: '/Blog/Blog_header_fallback_asset2.jpeg'
     },
     {
-      filename: 'Blog_header_fallback_asset3.jpg',
+      filename: 'Blog_header_fallback_asset3.jpeg',
       alt: 'Default blog header image 3', 
-      path: '/Blog_header_fallback_asset3.jpg'
-    },
-    {
-      filename: 'Blog_header_fallback_asset4.jpg',
-      alt: 'Default blog header image 4',
-      path: '/Blog_header_fallback_asset4.jpg'
+      path: '/Blog/Blog_header_fallback_asset3.jpeg'
     }
   ];
 

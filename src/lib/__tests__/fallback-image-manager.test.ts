@@ -27,7 +27,7 @@ describe('FallbackImageManager', () => {
         results.add(fallback.filename);
       }
       
-      // With 4 fallback images and 20 calls, we should get at least 2 different ones
+      // With 3 fallback images and 20 calls, we should get at least 2 different ones
       expect(results.size).toBeGreaterThanOrEqual(2);
     });
 
@@ -44,7 +44,7 @@ describe('FallbackImageManager', () => {
       const fallback = FallbackImageManager.getRandomFallback();
       
       expect(fallback).toBeDefined();
-      expect(fallback.filename).toBe('Blog_header_fallback_asset1.jpg');
+      expect(fallback.filename).toBe('Blog_header_fallback_asset1.jpeg');
       
       // Restore Math.random
       Math.random = originalRandom;
@@ -53,10 +53,10 @@ describe('FallbackImageManager', () => {
   });
 
   describe('getAllFallbacks', () => {
-    it('should return an array of 4 fallback images', () => {
+    it('should return an array of 3 fallback images', () => {
       const fallbacks = FallbackImageManager.getAllFallbacks();
       
-      expect(fallbacks).toHaveLength(4);
+      expect(fallbacks).toHaveLength(3);
     });
 
     it('should return a new array instance (not the original)', () => {
@@ -71,23 +71,22 @@ describe('FallbackImageManager', () => {
       const fallbacks = FallbackImageManager.getAllFallbacks();
       
       fallbacks.forEach((fallback, index) => {
-        expect(fallback.filename).toBe(`Blog_header_fallback_asset${index + 1}.jpg`);
+        expect(fallback.filename).toBe(`Blog_header_fallback_asset${index + 1}.jpeg`);
         expect(fallback.alt).toContain('Default blog header image');
-        expect(fallback.path).toBe(`/Blog_header_fallback_asset${index + 1}.jpg`);
+        expect(fallback.path).toBe(`/Blog/Blog_header_fallback_asset${index + 1}.jpeg`);
       });
     });
   });
 
   describe('hasFallback', () => {
     it('should return true for existing fallback filenames', () => {
-      expect(FallbackImageManager.hasFallback('Blog_header_fallback_asset1.jpg')).toBe(true);
-      expect(FallbackImageManager.hasFallback('Blog_header_fallback_asset2.jpg')).toBe(true);
-      expect(FallbackImageManager.hasFallback('Blog_header_fallback_asset3.jpg')).toBe(true);
-      expect(FallbackImageManager.hasFallback('Blog_header_fallback_asset4.jpg')).toBe(true);
+      expect(FallbackImageManager.hasFallback('Blog_header_fallback_asset1.jpeg')).toBe(true);
+      expect(FallbackImageManager.hasFallback('Blog_header_fallback_asset2.jpeg')).toBe(true);
+      expect(FallbackImageManager.hasFallback('Blog_header_fallback_asset3.jpeg')).toBe(true);
     });
 
     it('should return false for non-existing fallback filenames', () => {
-      expect(FallbackImageManager.hasFallback('Blog_header_fallback_asset5.jpg')).toBe(false);
+      expect(FallbackImageManager.hasFallback('Blog_header_fallback_asset4.jpeg')).toBe(false);
       expect(FallbackImageManager.hasFallback('nonexistent.jpg')).toBe(false);
       expect(FallbackImageManager.hasFallback('')).toBe(false);
     });
@@ -95,11 +94,11 @@ describe('FallbackImageManager', () => {
 
   describe('getFallbackByFilename', () => {
     it('should return the correct fallback for existing filenames', () => {
-      const fallback = FallbackImageManager.getFallbackByFilename('Blog_header_fallback_asset1.jpg');
+      const fallback = FallbackImageManager.getFallbackByFilename('Blog_header_fallback_asset1.jpeg');
       
       expect(fallback).not.toBeNull();
-      expect(fallback?.filename).toBe('Blog_header_fallback_asset1.jpg');
-      expect(fallback?.path).toBe('/Blog_header_fallback_asset1.jpg');
+      expect(fallback?.filename).toBe('Blog_header_fallback_asset1.jpeg');
+      expect(fallback?.path).toBe('/Blog/Blog_header_fallback_asset1.jpeg');
     });
 
     it('should return null for non-existing filenames', () => {
