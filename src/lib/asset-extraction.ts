@@ -3,6 +3,8 @@
  * Handles various block types and nested structures safely
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import type { PortableTextBlockType, SanityImage } from '@/sanity/sanity';
 
 export interface BodyAsset {
