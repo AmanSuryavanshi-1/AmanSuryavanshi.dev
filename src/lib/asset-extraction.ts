@@ -46,6 +46,7 @@ export function extractAssetsFromBody(body: PortableTextBlockType[]): ExtractedA
       }
 
       // Handle direct image blocks
+      // @ts-expect-error - Sanity block types can include image blocks not in the base type
       if (block._type === 'image' && isValidImageBlock(block)) {
         const imageBlock = block as unknown as BodyAsset;
         extractedAssets.push({
@@ -67,6 +68,7 @@ export function extractAssetsFromBody(body: PortableTextBlockType[]): ExtractedA
       }
 
       // Handle custom block types that might contain images
+      // @ts-expect-error - Sanity allows custom block types beyond the base types
       if (block._type && block._type !== 'block' && block._type !== 'image') {
         extractCustomBlockImages(block, extractedAssets, imageIndex);
       }
