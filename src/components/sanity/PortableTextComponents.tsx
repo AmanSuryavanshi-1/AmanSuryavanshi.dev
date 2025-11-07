@@ -1,9 +1,7 @@
 import React from 'react';
-import Image from 'next/image';
 import { PortableTextComponents } from '@portabletext/react';
 import CodeBlock from './CodeBlock';
 import AutoPlayVideo from './AutoPlayVideo';
-import { urlFor } from '@/sanity/lib/image';
 import ResponsiveImage from '@/components/blog/ResponsiveImage';
 
 // Normalized heading styles for consistent typography across all post sources

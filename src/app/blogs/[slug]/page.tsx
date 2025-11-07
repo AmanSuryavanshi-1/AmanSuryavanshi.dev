@@ -17,7 +17,6 @@ import CTA from '@/components/learn-more-about-me/CTA';
 import BlogHeaderImage from '@/components/blog/BlogHeaderImage';
 import { getOpenGraphImage, getTwitterCardImage } from '@/lib/metadata-utils';
 import { BlogErrorBoundary } from '@/components/blog/BlogErrorBoundary';
-import { BlogLogger } from '@/lib/blog-logger';
 
 type NextPageProps = {
   params: Promise<{ slug: string }>;

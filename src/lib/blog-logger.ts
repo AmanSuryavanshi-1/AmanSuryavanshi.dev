@@ -144,6 +144,7 @@ export class BlogLogger {
   /**
    * Send logs to external service (placeholder)
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private static sendToExternalService(logEntry: any) {
     // Implement your external logging service here
     // Examples: Sentry, LogRocket, DataDog, etc.
@@ -167,6 +168,7 @@ export class BlogLogger {
   /**
    * Get stored logs (for debugging)
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static getStoredLogs(): any[] {
     try {
       return JSON.parse(sessionStorage.getItem('blog-logs') || '[]');

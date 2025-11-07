@@ -125,7 +125,6 @@ function DefaultErrorFallback({
  * Image Error Fallback Component
  */
 export function ImageErrorFallback({ 
-  error, 
   resetError,
   alt = 'Image'
 }: { 

@@ -3,8 +3,10 @@
  * Tests the complete rendering flow including header images, content, and responsive behavior
  */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import React from 'react';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import BlogPost from '../page';
 import { client } from '@/sanity/lib/client';
 import type { Post } from '@/sanity/sanity';
@@ -29,7 +31,7 @@ jest.mock('@/components/sanity/ViewCounter', () => {
 });
 
 jest.mock('@/components/sanity/ShareButtons', () => {
-  return function MockShareButtons({ title, url }: { title: string; url: string }) {
+  return function MockShareButtons({ title }: { title: string; url: string }) {
     return <div data-testid="share-buttons">{title}</div>;
   };
 });

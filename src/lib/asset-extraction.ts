@@ -92,6 +92,7 @@ export function getFirstAssetFromBody(body: PortableTextBlockType[]): ExtractedA
  * @param block - The block to check
  * @returns {boolean} True if it's a valid image block
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isValidImageBlock(block: any): boolean {
   return (
     block &&
@@ -110,6 +111,7 @@ function isValidImageBlock(block: any): boolean {
  * @param extractedAssets - Array to add found assets to
  * @param imageIndex - Current image index
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function extractNestedImages(
   block: any, 
   extractedAssets: ExtractedAsset[], 
@@ -145,6 +147,7 @@ function extractNestedImages(
  * @param extractedAssets - Array to add found assets to
  * @param imageIndex - Current image index
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function extractCustomBlockImages(
   block: any,
   extractedAssets: ExtractedAsset[],
