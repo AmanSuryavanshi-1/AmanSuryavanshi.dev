@@ -18,6 +18,10 @@ export interface LogContext {
   fallbackType?: string;
   userId?: string;
   timestamp?: string;
+  assetsFound?: number;
+  selectionType?: 'main' | 'first-asset' | 'fallback' | 'ultimate-fallback';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any; // Allow additional properties for flexible logging
 }
 
 export class BlogLogger {
