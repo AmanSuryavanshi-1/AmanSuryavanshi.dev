@@ -46,6 +46,19 @@ const POSTS_QUERY = `*[ _type == "post" && defined(slug.current) && status == "p
   status
 }`;
 
+const DEFAULT_AUTHOR_QUERY = `*[_type == "author" && name == "Aman Suryavanshi"][0]{
+  _id,
+  _type,
+  name,
+  image {
+    asset->{
+      _id,
+      url
+    }
+  },
+  bio
+}`;
+
 export default function BlogList() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,7 +68,19 @@ export default function BlogList() {
     const fetchPosts = async () => {
       try {
         const fetchedPosts = await client.fetch<Post[]>(POSTS_QUERY);
-        setPosts(fetchedPosts || []);
+        
+        // Fetch default author for posts without author
+        const defaultAuthor = await client.fetch(DEFAULT_AUTHOR_QUERY);
+        
+        // Assign default author to posts without author
+        const postsWithAuthor = fetchedPosts.map(post => {
+          if (!post.author && defaultAuthor) {
+            return { ...post, author: defaultAuthor };
+          }
+          return post;
+        });
+        
+        setPosts(postsWithAuthor || []);
       } catch (err) {
         console.error('Error fetching posts:', err);
         setError('Failed to load blog posts. Please try again later.');

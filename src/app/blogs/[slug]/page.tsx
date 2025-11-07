@@ -14,6 +14,10 @@ import ViewCounter from '@/components/sanity/ViewCounter';
 import NotFound from '@/app/not-found';
 import { notFound } from 'next/navigation';
 import CTA from '@/components/learn-more-about-me/CTA';
+import BlogHeaderImage from '@/components/blog/BlogHeaderImage';
+import { getOpenGraphImage, getTwitterCardImage } from '@/lib/metadata-utils';
+import { BlogErrorBoundary } from '@/components/blog/BlogErrorBoundary';
+import { BlogLogger } from '@/lib/blog-logger';
 
 type NextPageProps = {
   params: Promise<{ slug: string }>;
@@ -55,6 +59,21 @@ async function getPost(slug: string): Promise<Post | null> {
 
   try {
     const post = await client.fetch<Post>(query, { slug });
+    
+    // If no author, fetch default author (Aman Suryavanshi)
+    if (post && !post.author) {
+      const defaultAuthorQuery = `*[_type == "author" && name == "Aman Suryavanshi"][0]{
+        _id,
+        name,
+        image,
+        bio
+      }`;
+      const defaultAuthor = await client.fetch(defaultAuthorQuery);
+      if (defaultAuthor) {
+        post.author = defaultAuthor;
+      }
+    }
+    
     return post;
   } catch (error) {
     console.error('Error fetching post:', error);
@@ -70,15 +89,28 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const title = post.seoTitle || post.title;
   const description = post.seoDescription || post.excerpt;
+  const openGraphImage = getOpenGraphImage(post);
+  const twitterCardImage = getTwitterCardImage(post);
 
   return {
     title: `${title} | Aman Suryavanshi`,
     description: description,
     keywords: post.tags?.join(', '),
+    authors: post.author ? [{ name: post.author.name }] : undefined,
     openGraph: {
       title: title,
       description: description,
-      images: post.mainImage ? [urlFor(post.mainImage).url()] : [],
+      type: 'article',
+      publishedTime: post.publishedAt || post._createdAt,
+      authors: post.author ? [post.author.name] : undefined,
+      tags: post.tags,
+      images: [openGraphImage],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title,
+      description: description,
+      images: [twitterCardImage],
     },
   };
 }
@@ -96,21 +128,14 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
   const readTime = calculateReadTime(post.body);
 
   return (
-    <article className="min-h-screen bg-gradient-to-b from-sage-100 to-lime-200">
+    <BlogErrorBoundary>
+      <article className="min-h-screen bg-gradient-to-b from-sage-100 to-lime-200">
       {/* Hero Section */}
       <div className="relative h-[65vh] w-full">
-        {post.mainImage && (
-          <>
-            <Image
-              src={urlFor(post.mainImage).url()}
-              alt={post.mainImage.alt || post.title}
-              fill
-              priority
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-          </>
-        )}
+        <BlogHeaderImage 
+          post={post} 
+          priority={true}
+        />
         
         {/* Hero Content */}
         <div className="absolute bottom-0 w-full p-8 text-white">
@@ -199,6 +224,6 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
       {/* CTA Section */}
     <CTA/>
     </article>
-    
+    </BlogErrorBoundary>
   );
 }

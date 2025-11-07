@@ -8,6 +8,8 @@ import { urlFor } from '@/sanity/lib/image';
 import type { Post, PortableTextBlockType } from '@/sanity/sanity';
 import { calculateReadTime } from './calculateReadTime';
 import ViewCounter from './ViewCounter';
+import { getFirstAssetFromBody } from '@/lib/asset-extraction';
+import { FallbackImageManager } from '@/lib/fallback-image-manager';
 
 interface FeaturedPostProps {
     post: Post;
@@ -37,6 +39,32 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle }) => {
     const readTime = calculateReadTime(post.body);
     const excerpt = extractTextFromBody(post.body);
 
+    // Smart header image selection: mainImage → first asset → fallback
+    const getCardImage = () => {
+        if (post.mainImage) {
+            return {
+                url: urlFor(post.mainImage).url(),
+                alt: post.mainImage.alt || post.title
+            };
+        }
+
+        const firstAsset = getFirstAssetFromBody(post.body);
+        if (firstAsset) {
+            return {
+                url: urlFor(firstAsset.image).url(),
+                alt: firstAsset.alt || post.title
+            };
+        }
+
+        const fallback = FallbackImageManager.getRandomFallback();
+        return {
+            url: fallback.path,
+            alt: fallback.alt
+        };
+    };
+
+    const cardImage = getCardImage();
+
     return (
         <Link href={`/blogs/${post.slug.current}`} className="group">
             <article className={`relative overflow-hidden ${
@@ -46,18 +74,14 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle }) => {
             hover:from-forest-900 hover:to-forest-500 
             transition-all duration-300 group`}>
                 {/* Main Image with Gradient Overlay */}
-                {post.mainImage && (
-                    <>
-                        <Image
-                            src={urlFor(post.mainImage).url()}
-                            alt={post.mainImage.alt || post.title}
-                            fill
-                            priority
-                            className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-forest-900 via-forest-900/95 to-transparent"></div>
-                    </>
-                )}
+                <Image
+                    src={cardImage.url}
+                    alt={cardImage.alt}
+                    fill
+                    priority
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-forest-900 via-forest-900/95 to-transparent"></div>
 
                 {/* Featured Badge */}
                 <div className="absolute top-3 sm:top-4 right-3 sm:right-4 z-10">

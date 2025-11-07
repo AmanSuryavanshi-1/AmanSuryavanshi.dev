@@ -4,13 +4,26 @@ import { PortableTextComponents } from '@portabletext/react';
 import CodeBlock from './CodeBlock';
 import AutoPlayVideo from './AutoPlayVideo';
 import { urlFor } from '@/sanity/lib/image';
+import ResponsiveImage from '@/components/blog/ResponsiveImage';
+
+// Normalized heading styles for consistent typography across all post sources
+const normalizedHeadingStyles = {
+  h1: "text-4xl md:text-5xl font-bold text-forest-900 mt-12 mb-6 leading-tight",
+  h2: "text-3xl md:text-4xl font-semibold text-forest-900 mt-10 mb-5 leading-tight",
+  h3: "text-2xl md:text-3xl font-semibold text-forest-700 mt-8 mb-4 leading-snug",
+  h4: "text-xl md:text-2xl font-medium text-forest-700 mt-6 mb-3 leading-snug",
+  h5: "text-lg md:text-xl font-medium text-forest-500 mt-4 mb-2 leading-normal",
+  h6: "text-base md:text-lg font-medium text-forest-500 mt-4 mb-2 leading-normal"
+} as const;
 
 export const portableTextComponents: PortableTextComponents = {
   block: {
-    h1: ({children}) => <h1 className="text-3xl text-forest-900 font-serif mt-12 mb-6">{children}</h1>,
-    h2: ({children}) => <h2 className="text-2xl text-forest-900 font-serif mt-12 mb-6">{children}</h2>,
-    h3: ({children}) => <h3 className="text-xl text-forest-700 font-serif mt-8 mb-3">{children}</h3>,
-    h4: ({children}) => <h4 className="text-lg text-forest-500 font-serif mt-4 mb-2">{children}</h4>,
+    h1: ({children}) => <h1 className={normalizedHeadingStyles.h1}>{children}</h1>,
+    h2: ({children}) => <h2 className={normalizedHeadingStyles.h2}>{children}</h2>,
+    h3: ({children}) => <h3 className={normalizedHeadingStyles.h3}>{children}</h3>,
+    h4: ({children}) => <h4 className={normalizedHeadingStyles.h4}>{children}</h4>,
+    h5: ({children}) => <h5 className={normalizedHeadingStyles.h5}>{children}</h5>,
+    h6: ({children}) => <h6 className={normalizedHeadingStyles.h6}>{children}</h6>,
     normal: ({children, value}) => {
       const indentMark = value?.markDefs?.find(mark => mark._type === 'indent');
       const indent = typeof indentMark?.level === 'number' ? indentMark.level : 0;
@@ -33,7 +46,7 @@ export const portableTextComponents: PortableTextComponents = {
     ),
   },
   marks: {
-    strong: ({children}) => <strong className="font-bold text-forest-500">{children}</strong>,
+    strong: ({children}) => <strong className="font-bold text-forest-900">{children}</strong>,
     em: ({children}) => <em className="italic text-forest-700">{children}</em>,
     code: ({children}) => (
       <code className="bg-sage-100 text-forest-900 rounded px-1 py-0.5 font-mono text-sm">
@@ -94,21 +107,13 @@ export const portableTextComponents: PortableTextComponents = {
     image: ({value}) => {
       const {alt, caption} = value;
       return (
-        <figure className="my-8">
-          <Image
-            src={urlFor(value).url()}
-            alt={alt || ' '}
-            className="rounded-3xl border-4 border-white shadow-xl shadow-sage-300"
-            width={800}
-            height={500}
-            priority
-          />
-          {caption && (
-            <figcaption className="mt-3 text-center text-sm text-gray-500">
-              {caption}
-            </figcaption>
-          )}
-        </figure>
+        <ResponsiveImage
+          value={value}
+          alt={alt}
+          caption={caption}
+          maxWidth={600}
+          priority={false}
+        />
       );
     },
     video: ({value}) => {

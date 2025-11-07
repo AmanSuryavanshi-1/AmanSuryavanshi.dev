@@ -38,3 +38,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Kiro IDE specs (development planning files)
+.kiro/
+
+# VSCode settings (personal IDE preferences)
+.vscode/

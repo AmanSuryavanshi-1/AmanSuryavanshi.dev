@@ -7,6 +7,8 @@ import { urlFor } from '@/sanity/lib/image';
 import type { Post, PortableTextBlockType } from '@/sanity/sanity';
 import { calculateReadTime } from './calculateReadTime';
 import ViewCounter from './ViewCounter';
+import { getFirstAssetFromBody } from '@/lib/asset-extraction';
+import { FallbackImageManager } from '@/lib/fallback-image-manager';
 
 interface BlogPostCardProps {
   post: Post;
@@ -33,19 +35,43 @@ const extractTextFromBody = (body: PortableTextBlockType[] | undefined): string 
 const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false }) => {
   const readTime = calculateReadTime(post.body);
 
+  // Smart header image selection: mainImage → first asset → fallback
+  const getCardImage = () => {
+    if (post.mainImage) {
+      return {
+        url: urlFor(post.mainImage).url(),
+        alt: post.mainImage.alt || post.title
+      };
+    }
+
+    const firstAsset = getFirstAssetFromBody(post.body);
+    if (firstAsset) {
+      return {
+        url: urlFor(firstAsset.image).url(),
+        alt: firstAsset.alt || post.title
+      };
+    }
+
+    const fallback = FallbackImageManager.getRandomFallback();
+    return {
+      url: fallback.path,
+      alt: fallback.alt
+    };
+  };
+
+  const cardImage = getCardImage();
+
   return (
     <Link href={`/blogs/${post.slug.current}`} className="group">
       <article className="overflow-hidden rounded-3xl border-4 border-white backdrop-blur-sm shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 bg-white">
         <div className="relative h-52 w-full overflow-hidden">
-          {post.mainImage && (
-            <Image
-              src={urlFor(post.mainImage).url()}
-              alt={post.mainImage.alt || 'Blog post image'}
-              fill
-              priority={priority}
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          )}
+          <Image
+            src={cardImage.url}
+            alt={cardImage.alt}
+            fill
+            priority={priority}
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
           {post.categories && post.categories.length > 0 && (
             <div className="absolute z-10 top-3 right-3 flex flex-wrap gap-2">
               {post.categories.map(category => (
