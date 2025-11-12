@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Twitter, Linkedin, Facebook, Copy } from 'lucide-react';
+import { Twitter as X, Linkedin, Facebook, Copy } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import { toast } from 'sonner';
 
@@ -35,7 +35,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
   const shareLinks = [
     {
       name: 'Twitter',
-      icon: Twitter,
+      icon: X,
       href: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
     },
     {

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion';
-import { Linkedin, Github, Instagram, Twitter } from 'lucide-react';
+import { Linkedin, Github, Instagram, Twitter as X } from 'lucide-react';
 import type { FC } from 'react';
 
 interface HeaderSocialProps {
@@ -10,9 +10,9 @@ interface HeaderSocialProps {
 
 const HeaderSocial: FC<HeaderSocialProps> = ({ className = '' }) => {
   const socialIcons = [
-    { Icon: Twitter, href: "https://twitter.com/_AmanSurya", label: "Twitter" },
+    { Icon: X, href: "https://twitter.com/_AmanSurya", label: "Twitter" },
     { Icon: Github, href: "https://github.com/AmanSuryavanshi-1", label: "GitHub" },
-    { Icon: Linkedin, href: "https://www.linkedin.com/in/amansuryavanshi/", label: "LinkedIn" },
+    { Icon: Linkedin, href: "https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/", label: "LinkedIn" },
     { Icon: Instagram, href: "https://www.instagram.com/__aman_suryavanshi__/", label: "Instagram" },    
   ];
 

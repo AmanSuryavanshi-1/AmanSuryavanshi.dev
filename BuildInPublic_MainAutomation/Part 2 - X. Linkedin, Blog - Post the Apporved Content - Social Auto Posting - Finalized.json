@@ -1,0 +1,1689 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "21a34bf1-f7e5-8035-b16f-d5ebf63a86a9",
+          "mode": "list",
+          "cachedResultName": "Social Content Queue",
+          "cachedResultUrl": "https://www.notion.so/21a34bf1f7e58035b16fd5ebf63a86a9"
+        },
+        "returnAll": true,
+        "filterType": "manual",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Status|select",
+              "condition": "equals",
+              "selectValue": "Approved"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9cb842db-a4c4-42b1-963a-b0525d9e777e",
+      "name": "Notion – Get Approved",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2,
+      "position": [
+        -5376,
+        -672
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "je8hKPK6RzYSk4JA",
+          "name": "Notion account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "d726cd21-68c1-42a9-9ef5-742759a14ab7",
+      "name": "Start Posting",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -5600,
+        -672
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Takes a single Notion item and finds all associated files in Google Drive.\n\nconst item = $input.first().json;\n\n// --- 1. Extract Core Information ---\n// Property names\nconst driveFolderUrl = item.property_drive_folder_link;\nconst sessionId = item.property_session_id;\nconst twitterDraftUrl = item.property_twitter_draft_url;\nconst linkedinDraftUrl = item.property_linked_in_draft_url;\nconst blogDraftUrl = item.property_blog_draft_url;\n\nif (!driveFolderUrl) {\n  throw new Error('FATAL: Drive Folder Link is missing from Notion item.');\n}\n\n// --- 2. Extract Folder ID from URL ---\nconst folderIdMatch = driveFolderUrl.match(/folders\\/([a-zA-Z0-9_-]+)/);\nconst folderId = folderIdMatch ? folderIdMatch[1] : null;\n\nif (!folderId) {\n  throw new Error(`FATAL: Could not extract Folder ID from URL: ${driveFolderUrl}`);\n}\n\n// --- 3. Pass Folder ID to the next node ---\n// The next node will list all files in this folder.\nreturn {\n  json: {\n    notionItem: $input.first().json, // Keep the original Notion data\n    sessionId: sessionId,\n    folderId: folderId,\n     draftUrls: {\n      twitter: twitterDraftUrl,\n      linkedin: linkedinDraftUrl,\n      blog: blogDraftUrl\n    }\n  }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -5152,
+        -672
+      ],
+      "id": "045762d8-1d2c-412a-84bd-d9df5aa3aa07",
+      "name": "Extract Folder Details"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "=parents = '{{$json.folderId}}' and trashed = false",
+        "returnAll": true,
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -4928,
+        -672
+      ],
+      "id": "12897751-e114-4326-87c3-3a5f5d1ddc34",
+      "name": "List Drive Folder Files",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "1hcyFpBqSOMDRDna",
+          "name": "Google Drive Adude"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// FINAL, 100% ROBUST ASSET ORGANIZER (Nov 2025 revision)\ntry {\n  // Input from \"List Drive Files\"\n  const files = $input.all();\n  // Input from \"Extract Folder Details\"\n  const { notionItem, sessionId } = $('Extract Folder Details').first().json;\n\n  // --- Helpers ---\n  // Safely gets a property from either .json or top-level\n  function getProp(item, propName) {\n    if (item.json && typeof item.json === 'object' && propName in item.json) {\n      return item.json[propName];\n    }\n    if (propName in item) {\n      return item[propName];\n    }\n    return null;\n  }\n  // Robustly extracts fileId from Google Drive URL\n  function extractFileIdFromUrl(url) {\n    if (!url) return null;\n    let match = url.match(/file\\/d\\/([a-zA-Z0-9_-]+)/);\n    if (match) return match[1];\n    match = url.match(/id=([a-zA-Z0-9_-]+)/);\n    if (match) return match[1];\n    return null;\n  }\n\n  // --- Draft Identification (using URLs from Notion) ---\n  const drafts = {\n    twitter: { fileId: extractFileIdFromUrl(notionItem.property_twitter_draft_url) },\n    linkedin: { fileId: extractFileIdFromUrl(notionItem.property_linked_in_draft_url) },\n    blog: { fileId: extractFileIdFromUrl(notionItem.property_blog_draft_url) },\n    imageTaskList: { fileId: extractFileIdFromUrl(notionItem.property_image_task_list_url) }\n  };\n\n  // --- Image Identification (using file list from Drive) ---\n  // Acceptable image extensions\n  const validExtensions = ['.jpeg', '.jpg', '.png', '.webp'];\n  // Sort by asset number in file name (asset-<n>)\n  const availableImages = files\n    .map(item => {\n      const name = getProp(item, 'name');\n      const id = getProp(item, 'id');\n      // Must have valid name/id and begin with \"asset-<n>\"\n      if (\n        !name ||\n        !id ||\n        !name.match(/^asset-\\d+-session_/) || // regex matches asset-number-session\n        !validExtensions.some(ext => name.toLowerCase().endsWith(ext))\n      ) {\n        return null;\n      }\n      // Extract asset number robustly\n      const assetMatch = name.match(/^asset-(\\d+)-session_/);\n      if (assetMatch) {\n        return {\n          assetNumber: parseInt(assetMatch[1], 10),\n          fileId: id,\n          fileName: name\n        };\n      }\n      return null;\n    })\n    .filter(img => img !== null)\n    .sort((a, b) => a.assetNumber - b.assetNumber);\n\n  // --- Debugging: Log edge cases to n8n console (viewable in browser logs)\n  console.log('[DEBUG: organize assets] files:', files);\n  console.log('[DEBUG: organize assets] availableImages:', availableImages);\n\n  // --- Final Output ---\n  return [{\n    json: {\n      notionItem,\n      sessionId,\n      assets: {\n        availableImages,\n        drafts\n      }\n    }\n  }];\n} catch (error) {\n  return [{\n    json: {\n      error: true,\n      message: \"Error in Organize Assets: \" + error.message\n    }\n  }];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4704,
+        -672
+      ],
+      "id": "8f0c159a-ef7d-4a08-aabe-bc7dac6f0775",
+      "name": "Organize Assets"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.assets.drafts.imageTaskList.fileId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "3258ac9e-afa0-414a-bdd9-4b78dcdc9125",
+      "name": "Download – Image Task list",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -4496,
+        -1008
+      ],
+      "retryOnFail": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "1hcyFpBqSOMDRDna",
+          "name": "Google Drive Adude"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// This node creates the definitive list of required images for the session.\ntry {\n    const taskListText = $input.first()?.json?.data;\n    // If the download failed, the input will be empty. This is expected.\n    if (!taskListText) {\n        // This is Scenario 1: No images are required for this content.\n        return [{ json: { expectedImageNumbers: [] } }];\n    }\n    \n    const imageNumbers = [];\n    // Find all instances of \"Asset X\" to determine planned images.\n    const assetMatches = taskListText.matchAll(/Asset (\\d+)/g);\n    for (const match of assetMatches) {\n        imageNumbers.push(parseInt(match[1]));\n    }\n\n    return [{\n        json: {\n            // Return a unique, sorted list of image numbers.\n            expectedImageNumbers: [...new Set(imageNumbers)].sort((a, b) => a - b)\n        }\n    }];\n} catch (error) {\n    return [{ json: { error: true, message: \"Error parsing image manifest: \" + error.message } }];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4064,
+        -1008
+      ],
+      "id": "f0a17ec9-cd3c-415b-8a99-bf1fa962f568",
+      "name": "Parse Image Manifest"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -3440,
+        -768
+      ],
+      "id": "b94b74a2-cae3-498d-83e5-1464c8af5619",
+      "name": "Loop to Download Images",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.fileId }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "e6764cd9-8936-4b18-93b1-8a3593b9c335",
+      "name": "Download Image Binary",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -3200,
+        -752
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "1hcyFpBqSOMDRDna",
+          "name": "Google Drive Adude"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.notionItem.property_twitter_draft_url }}",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "id": "11eb8183-f558-445b-ba62-9e8f1f61dc75",
+      "name": "Download – Twitter Draft",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -4496,
+        -784
+      ],
+      "retryOnFail": false,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "1hcyFpBqSOMDRDna",
+          "name": "Google Drive Adude"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.notionItem.property_linked_in_draft_url }}",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "id": "4e1e20c0-ba16-4404-8133-97ebbab4f604",
+      "name": "Download – LinkedIn Draft",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -4496,
+        -560
+      ],
+      "retryOnFail": false,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "1hcyFpBqSOMDRDna",
+          "name": "Google Drive Adude"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.notionItem.property_blog_draft_url }}",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "id": "edaaf5ee-4da2-4050-99b0-fb16808d57d9",
+      "name": "Download – Blog Draft",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -4496,
+        -336
+      ],
+      "retryOnFail": false,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "1hcyFpBqSOMDRDna",
+          "name": "Google Drive Adude"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -4288,
+        -1008
+      ],
+      "id": "70d62cec-f8fa-4ac6-8acb-aee085858bad",
+      "name": "Extract from File - ImageTaskList",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "destinationKey": "TwitterData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -4272,
+        -784
+      ],
+      "id": "6bdc53da-ec5d-44f6-9ff8-bcbdbe85d6dd",
+      "name": "Extract from File - Twitter"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "destinationKey": "LinkedInData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -4272,
+        -560
+      ],
+      "id": "73dc8f50-dd19-4a79-9827-3c30b874cee3",
+      "name": "Extract from File - LinkedIn"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "destinationKey": "BlogData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -4272,
+        -336
+      ],
+      "id": "c2307c61-3af6-4bfe-95bc-6b6d8af59b60",
+      "name": "Extract from File - Blog"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -4048,
+        -576
+      ],
+      "id": "feb0bb09-492b-4d50-ad84-c9ac0a6ce6dd",
+      "name": "Merge - All Text Ready",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -3856,
+        -768
+      ],
+      "id": "b45f5c67-02ab-4137-adca-4d0e3611166c",
+      "name": "Merge - All Assets Ready",
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "jsCode": "// This node creates a final download queue.\nconst availableImages = $('Organize Assets').first().json.assets.availableImages || [];\n\nreturn availableImages.map(img => ({ json: img }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3664,
+        -768
+      ],
+      "id": "b8375df8-4475-49ce-9461-89d1c805e803",
+      "name": "Code - Prepare Image Downloads"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a096b267-4bd1-4456-967e-5fb6c886280f",
+              "name": "dataReady",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "2dd9f062-c8df-4b7c-9152-9968f289cdfc",
+              "name": "twitterDraft",
+              "value": "={{ $('Extract from File - Twitter').first().json.TwitterData }}",
+              "type": "string"
+            },
+            {
+              "id": "37686633-743a-4c7a-a158-df29afad8ffc",
+              "name": "linkedinDraft",
+              "value": "={{ $('Extract from File - LinkedIn').first().json.LinkedInData }}",
+              "type": "string"
+            },
+            {
+              "id": "9a2f68a9-fa02-44e0-84d4-6f959b216994",
+              "name": "blogDraft",
+              "value": "={{ $('Extract from File - Blog').first().json.BlogData }}",
+              "type": "string"
+            },
+            {
+              "id": "5d5eff14-59ba-4e64-9826-54ebbbdbc086",
+              "name": "expectedImages",
+              "value": "={{ $('Parse Image Manifest').first().json.expectedImageNumbers }}",
+              "type": "string"
+            },
+            {
+              "id": "b7c37642-57e0-4e1f-9754-3b8edf404332",
+              "name": "availableImages",
+              "value": "={{ $('Organize Assets').first().json.assets.availableImages }}",
+              "type": "string"
+            },
+            {
+              "id": "8de84e43-ad79-472c-8b72-014cd4d957be",
+              "name": "notionItem.property_blog_slug",
+              "value": "={{ $('Organize Assets').all()[0].json.notionItem.property_blog_slug }}",
+              "type": "string"
+            },
+            {
+              "id": "d5e0f69b-d3dd-406c-8c15-14e816ff688a",
+              "name": "notionItem.property_blog_seo_description",
+              "value": "={{ $('Organize Assets').all()[0].json.notionItem.property_blog_seo_description }}",
+              "type": "string"
+            },
+            {
+              "id": "e476b316-bc71-4111-bbf4-e3df6eaba90f",
+              "name": "notionItem.property_blog_seo_keywords",
+              "value": "={{ $('Organize Assets').all()[0].json.notionItem.property_blog_seo_keywords }}",
+              "type": "string"
+            },
+            {
+              "id": "aca30f87-abc4-4feb-9e56-98a92f69d7ec",
+              "name": "notionItem.property_blog_seo_title",
+              "value": "={{ $('Organize Assets').all()[0].json.notionItem.property_blog_seo_title }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3408,
+        -352
+      ],
+      "id": "51b06550-8f68-4b88-9ead-d64c80f2795c",
+      "name": "Set - All Data Ready",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// FINAL DECISION ENGINE V5.0\n// This node analyzes all data and creates a definitive plan for each platform.\ntry {\n  // --- 1. GATHER ALL EVIDENCE ---\n  // All data is now guaranteed to be ready from the \"Set - All Data Ready\" node.\n  const { twitterDraft, linkedinDraft, blogDraft, expectedImages } = $input.first().json;\n\n  // --- 2. EXTRACT MARKERS & BUILD GLOBAL CONTEXT ---\n  // This helper function finds all image markers (e.g., [1, 2]) in a text.\n  const getMarkers = (text) => Array.from(text.matchAll(/<<IMAGE_(\\d+)>>/g), m => parseInt(m[1]));\n  \n  const twitterMarkers = getMarkers(twitterDraft || '');\n  const linkedinMarkers = getMarkers(linkedinDraft || '');\n  const blogMarkers = getMarkers(blogDraft || '');\n\n  // This is the \"global context\"—all markers found across all drafts.\n  const allDiscoveredMarkers = [...new Set([...twitterMarkers, ...linkedinMarkers, ...blogMarkers])];\n  const manifestHasImages = expectedImages && expectedImages.length > 0;\n\n  // --- 3. THE HIERARCHY OF TRUTH (Per Platform) ---\n  // This function decides the image plan for ONE platform.\n  const determineImagePlan = (platformMarkers, isSocialPlatform = false) => {\n    \n    // SCENARIO 3 (Highest Truth): Markers are present in *this* draft.\n    // This is your Rule #3: Obey the markers.\n    if (platformMarkers.length > 0) {\n      return platformMarkers;\n    }\n    \n    // SCENARIO 2 (AI Failure Fallback): This draft has no markers, \n    // but we know images *should* exist (either from other drafts or the manifest).\n    if (allDiscoveredMarkers.length > 0 || manifestHasImages) {\n      if (isSocialPlatform) {\n         // For social (Twitter/LinkedIn), just attach the most important image, Asset 1.\n        return [1];\n      } else {\n        // For the blog, attach all expected images.\n        return expectedImages || [];\n      }\n    }\n    \n    // SCENARIO 1 (No Images Intended): No markers anywhere, manifest is empty.\n    return [];\n  };\n\n  // --- 4. CREATE THE FINAL, UNAMBIGUOUS PLAN ---\n  const finalPlan = {\n    scenario: 'Definitive_Image_Plan_V5.0',\n    twitter: { imageNumbers: determineImagePlan(twitterMarkers, true) },\n    linkedin: { imageNumbers: determineImagePlan(linkedinMarkers, true) },\n    blog: { imageNumbers: determineImagePlan(blogMarkers, false) },\n  };\n\n  // --- 5. CREATE THE MASTER DOWNLOAD LIST ---\n  // This is a small optimization for your \"Prepare Image Downloads\" node.\n  // We can update that node later to only download images that are *actually* needed.\n  finalPlan.allImagesToDownload = [...new Set([\n    ...finalPlan.twitter.imageNumbers,\n    ...finalPlan.linkedin.imageNumbers,\n    ...finalPlan.blog.imageNumbers,\n  ])].sort((a, b) => a - b);\n\n  return [ { json: finalPlan } ];\n\n} catch (error) {\n  return [{ json: { error: true, message: \"Error in Decision Engine: \" + error.message, scenario: 'ERROR' } }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -5680,
+        256
+      ],
+      "id": "c55a8222-d11a-453a-8c24-fe9f7bb0a9c0",
+      "name": "Detect Images Needed vs Present"
+    },
+    {
+      "parameters": {
+        "jsCode": "// FINAL ROBUST BLOG PARSER & ATTACHER V9.0\ntry {\n  // --- 1. Gather Data ---\n  const masterData = $('Set - All Data Ready').first().json;\n  const markdownText = masterData.blogDraft;\n  if (!markdownText) throw new Error('Blog draft content is empty.');\n\n  const allCachedImages = $('Loop to Download Images').all(); // Ensure this is correct node!\n  console.log('Image cache:', allCachedImages.map(img => img.json.fileName));\n\n  // Sanity SEO fields\n  const title = masterData.notionItem.property_blog_seo_title || 'Untitled Post';\n  const slug = masterData.notionItem.property_blog_slug || '';\n  const description = masterData.notionItem.property_blog_seo_description || '';\n  const keywords = masterData.notionItem.property_blog_seo_keywords || '';\n  if (!slug) throw new Error('BlogSlug property missing.');\n\n  // --- 2. Split Markdown Into Blocks (text + image tags)\n  // Regex splits at every <<IMAGE_x>>\n  const blockPattern = /<<IMAGE_(\\d+)>>/g;\n  let lastIdx = 0;\n  let match;\n  let blocks = [];\n\n  while ((match = blockPattern.exec(markdownText)) !== null) {\n    // Text before this image tag\n    if (match.index > lastIdx) {\n      blocks.push({ type: 'text', content: markdownText.slice(lastIdx, match.index) });\n    }\n    // Image block for this marker\n    blocks.push({ type: 'image', imageNumber: parseInt(match[1]), marker: match[0] });\n    lastIdx = blockPattern.lastIndex;\n  }\n  // Any trailing text after last marker\n  if (lastIdx < markdownText.length) {\n    blocks.push({ type: 'text', content: markdownText.slice(lastIdx) });\n  }\n\n  // --- 3. Process Blocks and Attach Images\n  let outputBlocks = [];\n  blocks.forEach(block => {\n    if (block.type === 'text') {\n      // Only push non-empty blocks\n      if (block.content && block.content.trim().length > 0) {\n        outputBlocks.push({ type: 'text', content: block.content.trim() });\n      }\n    } else if (block.type === 'image') {\n      // Find the correct cached image\n      const targetImage = allCachedImages.find(\n        img => typeof img.json.fileName === 'string' && img.json.fileName.includes(`asset-${block.imageNumber}`)\n      );\n      if (!targetImage) {\n        throw new Error(`Blog Image asset-${block.imageNumber} missing in cache for marker ${block.marker}`);\n      }\n      outputBlocks.push({ \n        type: 'image', \n        marker: block.marker, // For debugging\n        imageNumber: block.imageNumber,\n        binary: targetImage.binary\n      });\n    }\n  });\n\n  // --- 4. Optional: Attach SEO/meta info for Sanity\n  return [{\n    json: {\n      title,\n      slug,\n      description,\n      keywords: keywords.split(',').map(k => k.trim()),\n      blocks: outputBlocks // This is the key array for posting!\n    }\n  }];\n\n} catch (error) {\n  return [{ json: { error: true, message: `[Blog Parse]: ${error.message}` } }];\n}\n"
+      },
+      "id": "68c368e4-7467-4c5e-93e9-adcedce4fec5",
+      "name": "Code - Parse Blog Content",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -5376,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://ero5c9mt.api.sanity.io/v2021-06-07/assets/images/production",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "imageBinary",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "cec16145-cd1f-4d22-bc35-467252073412",
+      "name": "Upload Image to Sanity",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4656,
+        32
+      ],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "apbyWqfBZDKKduxM",
+          "name": "Sanity API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://ero5c9mt.api.sanity.io/v2021-06-07/data/mutate/production",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "af53937d-f57a-4de0-b892-b911bc514f8f",
+      "name": "POST Blog to Sanity",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4208,
+        -144
+      ],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "apbyWqfBZDKKduxM",
+          "name": "Sanity API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "try {\n  // Get data from the previous node\n  const data_node = $('Set - All Data Ready').first().json;\n  const markdownText = data_node.twitterDraft;\n  \n  // Get the image cache, which is now 100% ready.\n  const allCachedImages = $('Loop to Download Images').all();\n  \n  // Split by \"Tweet X/Y\" pattern to separate individual tweets\n  // The regex captures \"Tweet 1/4\", \"Tweet 2/4\", etc.\n  const tweetBlocks = markdownText.match(/\\d+\\/\\d+[\\s\\S]*?(?=\\n\\n---\\n\\nTweet \\d+\\/\\d+|\\n\\n---\\n\\n$|$)/g);\n  \n  if (!tweetBlocks) throw new Error('No tweet blocks found in Twitter draft.');\n  \n  const tweets = tweetBlocks.map((block, index) => {\n    // Extract the tweet number from \"Tweet X/Y\"\n    const markerMatch = block.match(/(Tweet \\d+\\/\\d+)/);\n    const marker = markerMatch ? markerMatch[1] : null;\n    \n    // Find image placeholders like <<IMAGE_1>>\n    const imageMatch = block.match(/<<IMAGE_(\\d+)>>/);\n    let imageBinary = null;\n    \n    if (imageMatch) {\n      const imageNumber = parseInt(imageMatch[1]);\n      const targetImage = allCachedImages.find(img => \n        img.json.fileName.includes(`asset-${imageNumber}-`)\n      );\n      \n      if (!targetImage) {\n        // This will cause the workflow to fail and retry, as you requested.\n        throw new Error(`Image asset-${imageNumber} was required but not found in cache.`);\n      }\n      \n      imageBinary = targetImage.binary.data;\n    }\n    \n    // Clean the text: remove the marker, image placeholder, and \"---\" separators\n    const cleanText = block\n      .replace(/Tweet \\d+\\/\\d+/, '')  // Remove \"Tweet X/Y\"\n      .replace(/<<IMAGE_\\d+>>/, '')    // Remove image placeholders\n      .replace(/\\n\\n---\\n\\n$/, '')    // Remove trailing separator\n      .replace(/^\\n+/, '')             // Remove leading newlines\n      .replace(/\\n+$/, '')             // Remove trailing newlines\n      .replace(/^(Tweet\\s+)?\\d+\\/\\d+\\s*\\n*/mi, '')  // Remove \"Tweet X/Y\" or just \"X/Y\"\n      .trim();\n    \n    return {\n      json: {\n        order: index + 1,\n        text: cleanText,\n        inReplyTo: index > 0,\n        imageBinary: imageBinary\n      }\n    };\n  });\n  \n  return tweets;\n} catch (error) {\n  return [{ json: { error: true, message: `[Twitter Parse]: ${error.message}` } }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -5360,
+        528
+      ],
+      "id": "bc7068af-aa6a-4736-b01f-de091dcfa59e",
+      "name": "Code - Parse & Attach Tweets"
+    },
+    {
+      "parameters": {
+        "jsCode": "// PRODUCTION LINKEDIN PARSER & ATTACHER - FIXED v10.0\n// Handles \"# LinkedIn Draft\" header with flexible spacing\ntry {\n  // Get the plan from the decision engine\n  const plan = $input.first().json.linkedin;\n  \n  // Get the draft text from our master data node\n  let fullFileContent = $('Set - All Data Ready').first().json.linkedinDraft;\n  \n  if (!fullFileContent) {\n    throw new Error('LinkedIn draft content is empty.');\n  }\n\n  const allCachedImages = $('Loop to Download Images').all();\n\n  // CRITICAL FIX: Remove \"# LinkedIn Draft\" header AND the first \"---\" separator\n  // The format is: \"# LinkedIn Draft\\n \\n---\\n \\n[Content]\"\n  // We need to handle flexible whitespace around the separator\n  \n  // Step 1: Remove the header (case-insensitive, handles extra whitespace)\n  fullFileContent = fullFileContent.replace(/^#\\s*LinkedIn\\s*Draft\\s*/i, '').trim();\n  \n  // Step 2: Remove the FIRST \"---\" separator (handles whitespace before/after dashes)\n  // This regex matches: optional whitespace, 3+ dashes, optional whitespace\n  fullFileContent = fullFileContent.replace(/^\\s*-{3,}\\s*/, '').trim();\n\n  // Step 3: NOW split by \"---\" for multiple posts (if strategy requires 2+ posts)\n  // Use flexible regex that handles whitespace around separators\n  const postBlocks = fullFileContent\n    .split(/\\s*\\n-{3,}\\n\\s*/)  // Matches: whitespace-newline-dashes-newline-whitespace\n    .map(block => block.trim())\n    .filter(block => block.length > 20); // Ignore blocks shorter than 20 chars\n  \n  if (postBlocks.length === 0) {\n    throw new Error('No valid post content found after parsing LinkedIn draft.');\n  }\n\n  const postsToExecute = postBlocks.map((block, index) => {\n    let imageNumbersToAttach = [];\n    \n    // Find all image markers within this specific block\n    const markersInThisBlock = Array.from(\n      block.matchAll(/<<IMAGE_(\\d+)>>/g), \n      m => parseInt(m[1])\n    );\n\n    if (markersInThisBlock.length > 0) {\n      // Scenario 3: Markers are present in content. Use them.\n      imageNumbersToAttach = markersInThisBlock;\n    } else if (index === 0 && plan && plan.imageNumbers && plan.imageNumbers.length > 0) {\n      // Scenario 2 (Fallback): No markers, but it's the 1st post and plan says attach images\n      imageNumbersToAttach = plan.imageNumbers;\n    }\n    // Scenario 1 (No images) is handled by default (array remains empty)\n\n    // Clean the text: remove image markers\n    const cleanText = block.replace(/<<IMAGE_\\d+>>/g, '').trim();\n\n    // Validation: Ensure we have meaningful content\n    if (cleanText.length < 10) {\n      throw new Error(`Post ${index + 1} is too short (${cleanText.length} chars). Possible parsing error.`);\n    }\n\n    // Additional validation: Check if post is just the header\n    if (cleanText.toLowerCase().includes('linkedin draft') && cleanText.length < 30) {\n      throw new Error(`Post ${index + 1} appears to be just the header. Content: \"${cleanText}\"`);\n    }\n\n    // TRUST, BUT VERIFY: For each required image number, find its binary from cache\n    const imageBinaries = imageNumbersToAttach.map(num => {\n      const targetImage = allCachedImages.find(img => \n        img.json && img.json.fileName && img.json.fileName.includes(`asset-${num}`)\n      );\n      if (!targetImage) {\n        throw new Error(`Image asset-${num} was required but not found in cache.`);\n      }\n      return targetImage.binary;\n    });\n\n    return {\n      json: {\n        order: index + 1,\n        text: cleanText,\n        imageCount: imageBinaries.length,\n        charCount: cleanText.length,\n        imageBinaries: imageBinaries\n      }\n    };\n  });\n\n  // Debug logging\n  console.log(`✅ LinkedIn Parser: Generated ${postsToExecute.length} post(s)`);\n  postsToExecute.forEach((post, idx) => {\n    const preview = post.json.text.substring(0, 50).replace(/\\n/g, ' ');\n    console.log(`   Post ${idx + 1}: ${post.json.charCount} chars, ${post.json.imageCount} image(s)`);\n    console.log(`   Preview: \"${preview}...\"`);\n  });\n\n  return postsToExecute;\n\n} catch (error) {\n  console.error('❌ LinkedIn Parse Error:', error);\n  return [{ \n    json: { \n      error: true, \n      message: `[LinkedIn Parse]: ${error.message}`,\n      stack: error.stack,\n      timestamp: new Date().toISOString()\n    } \n  }];\n}"
+      },
+      "id": "1d07a1ba-1a63-45fe-8850-e81cc7ba99a8",
+      "name": "Code - Parse & Attach LinkedIn Post",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -5376,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "attachments": "={{ $json.media_id_string }}"
+        }
+      },
+      "type": "n8n-nodes-base.twitter",
+      "typeVersion": 2,
+      "position": [
+        -3472,
+        656
+      ],
+      "id": "907b8830-3170-4fb4-a665-cc91b93746cb",
+      "name": "Create Tweet",
+      "retryOnFail": false,
+      "waitBetweenTries": 5000,
+      "alwaysOutputData": false,
+      "maxTries": 5,
+      "credentials": {
+        "twitterOAuth2Api": {
+          "id": "KgoQ7hy5adHEKxP8",
+          "name": "X Main account - _AmanSurya BIP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -5040,
+        528
+      ],
+      "id": "4eec5035-dcf3-40f2-aae5-261e8284a8ec",
+      "name": "SplitInBatches - Loop Tweets"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://upload.twitter.com/1.1/media/upload.json",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "twitterOAuth1Api",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "media",
+              "inputDataFieldName": "imageBinary"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4384,
+        640
+      ],
+      "id": "48c8f634-dcfe-42f7-a9b8-694ce690bdd6",
+      "name": "Upload Media to Twitter",
+      "credentials": {
+        "twitterOAuth1Api": {
+          "id": "jXvbly02NqW5WcTI",
+          "name": "X OAuth Main account - _AmanSurya BIP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// FINAL BINARY DATA PREPARATION FOR TWITTER UPLOAD\n// This node flattens the nested binary structure for the HTTP Request node.\ntry {\n  const tweetData = $input.first().json;\n\n  // Extract the actual binary data from the nested structure\nconst actualBinary = tweetData.imageBinary;\n\n\n  // Return the tweet data with the binary at the correct level\n  return [{\n    json: {\n      text: tweetData.text,\n      inReplyTo: tweetData.inReplyTo,\n      order: tweetData.order\n    },\n    binary: {\n      // This is the key - we're putting the binary data at the top level\n      imageBinary: actualBinary\n    }\n  }];\n\n} catch (error) {\n  return [{\n    json: {\n      error: true,\n      message: `[Prepare Binary for Upload]: ${error.message}`\n    }\n  }];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4608,
+        640
+      ],
+      "id": "2dbf95cf-7703-4098-8529-4ec91313563e",
+      "name": "Prepare Binary for Upload"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "35a1052d-9e1e-4099-ad8c-865729382f75",
+              "leftValue": "={{ $json.imageBinary }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -4816,
+        736
+      ],
+      "id": "fe85b064-3be0-41e0-9839-468a6e3f360d",
+      "name": "IF - Image Exists?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// UNIFIED TWEET PREPARATION - CORRECTED FOR FLAT DATA STRUCTURE\n// Input comes directly from IF node (no Set nodes)\ntry {\n  const input = $input.first().json;\n  \n  // Extract text directly - it's already a string from the IF node\n  const text = $('SplitInBatches - Loop Tweets').first().json.text|| \"\";\n  \n  // Extract media_id_string if it exists (from image path via Upload Media)\n  // If coming from false path (text-only), media_id_string won't exist\n  const media_id_string = input.media_id_string || \"\";\n  \n  // Extract inReplyTo flag\n  const inReplyTo = $('SplitInBatches - Loop Tweets').first().json.inReplyTo || false;\n  \n  // Extract order\n  const order = $('SplitInBatches - Loop Tweets').first().json.order || 0;\n  \n  // Return the flat, clean structure\n  return [{\n    json: {\n      text: text,\n      media_id_string: media_id_string,\n      inReplyTo: inReplyTo,\n      order: order\n    }\n  }];\n  \n} catch (error) {\n  return [{\n    json: {\n      error: true,\n      message: `[Unified Prep]: ${error.message}`,\n      text: input?.text || \"Error preparing tweet\",\n      media_id_string: \"\",\n      inReplyTo: false,\n      order: 0\n    }\n  }];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4160,
+        752
+      ],
+      "id": "d45032bf-daa4-4cf8-9373-e223b5f0906f",
+      "name": "Code - Unified Tweet Preparation"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n// ADD PARENT TWEET ID - WITH ID CLEANING\n// ============================================================\n\ntry {\n  const tweetData = $input.first()?.json || {};\n  const order = tweetData.order || 1;\n  \n  console.log(`[Threading] ========================================`);\n  console.log(`[Threading] Processing tweet ${order}`);\n  \n  let parentTweetId = null;\n  let isFirstTweet = false;\n  \n  // ============================================================\n  // CASE 1: First Tweet (order === 1)\n  // ============================================================\n  if (order === 1) {\n    console.log(`[Threading] ✓ Tweet ${order}: FIRST TWEET`);\n    parentTweetId = null;\n    isFirstTweet = true;\n    \n    return [{\n      json: {\n        text: tweetData.text,\n        media_id_string: tweetData.media_id_string || \"\",\n        inReplyTo: tweetData.inReplyTo || false,\n        order: order,\n        parentTweetId: parentTweetId,\n        isFirstTweet: isFirstTweet\n      }\n    }];\n  }\n  \n  // ============================================================\n  // CASE 2: Subsequent Tweets (order > 1)\n  // ============================================================\n  if (order > 1 && tweetData.inReplyTo === true) {\n    console.log(`[Threading] → Tweet ${order}: Getting parent tweet ID...`);\n    \n    try {\n      const prepareNode = $('Prepare for Next Loop').first()?.json;\n      console.log(`[Threading] Raw lastTweetId:`, prepareNode?.lastTweetId);\n      console.log(`[Threading] Type:`, typeof prepareNode?.lastTweetId);\n      \n      if (prepareNode?.lastTweetId) {\n        // CRITICAL FIX: Clean the tweet ID thoroughly\n        const rawId = prepareNode.lastTweetId;\n        \n        // Convert to string and remove all unwanted characters\n        parentTweetId = String(rawId)\n          .replace(/[\"\\t\\n\\r\\\\]/g, '')  // Remove quotes, tabs, newlines, backslashes\n          .replace(/\\s+/g, '')           // Remove all whitespace\n          .trim();                       // Trim edges\n        \n        console.log(`[Threading] ✓ Cleaned parent tweet ID: ${parentTweetId}`);\n        console.log(`[Threading] ✓ Length: ${parentTweetId.length}`);\n        console.log(`[Threading] ✓ Is numeric: ${/^[0-9]+$/.test(parentTweetId)}`);\n        \n        // Validate it's a valid tweet ID (numeric, 1-19 digits)\n        if (!/^[0-9]{1,19}$/.test(parentTweetId)) {\n          console.error(`[Threading] ✗ Invalid tweet ID format after cleaning!`);\n          console.error(`[Threading] Cleaned ID: \"${parentTweetId}\"`);\n          console.error(`[Threading] Character codes:`, Array.from(parentTweetId).map(c => c.charCodeAt(0)));\n          parentTweetId = null;\n        }\n      } else {\n        console.error(`[Threading] ✗ No lastTweetId found`);\n      }\n    } catch (error) {\n      console.error(`[Threading] ✗ Error:`, error.message);\n    }\n    \n    isFirstTweet = false;\n    \n    if (!parentTweetId) {\n      console.error(`[Threading] ✗✗✗ CRITICAL ERROR ✗✗✗`);\n      console.error(`[Threading] No valid parent tweet ID for tweet ${order}`);\n      \n      return [{\n        json: {\n          text: tweetData.text,\n          media_id_string: tweetData.media_id_string || \"\",\n          inReplyTo: tweetData.inReplyTo,\n          order: order,\n          parentTweetId: null,\n          isFirstTweet: false,\n          error: true,\n          errorMessage: `Cannot find valid parent tweet ID for tweet ${order}`,\n          errorType: 'MISSING_PARENT_ID'\n        }\n      }];\n    }\n    \n    console.log(`[Threading] ✓ Tweet ${order} will reply to: ${parentTweetId}`);\n  }\n  \n  // ============================================================\n  // CASE 3: Non-reply tweet\n  // ============================================================\n  else if (tweetData.inReplyTo === false) {\n    console.log(`[Threading] → Tweet ${order}: Standalone tweet`);\n    parentTweetId = null;\n    isFirstTweet = (order === 1);\n  }\n  \n  console.log(`[Threading] ✓ Final output - isFirstTweet: ${isFirstTweet}, parentTweetId: ${parentTweetId || 'null'}`);\n  console.log(`[Threading] ========================================`);\n  \n  return [{\n    json: {\n      text: tweetData.text,\n      media_id_string: tweetData.media_id_string || \"\",\n      inReplyTo: tweetData.inReplyTo,\n      order: order,\n      parentTweetId: parentTweetId,\n      isFirstTweet: isFirstTweet\n    }\n  }];\n  \n} catch (error) {\n  console.error(`[Threading] ✗ EXCEPTION:`, error.message);\n  \n  const inputData = $input.first()?.json || {};\n  \n  return [{\n    json: {\n      text: inputData.text || \"\",\n      media_id_string: inputData.media_id_string || \"\",\n      inReplyTo: inputData.inReplyTo || false,\n      order: inputData.order || 1,\n      parentTweetId: null,\n      isFirstTweet: (inputData.order === 1),\n      error: true,\n      errorMessage: `Exception: ${error.message}`,\n      errorType: 'EXCEPTION'\n    }\n  }];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3936,
+        752
+      ],
+      "id": "56c140f6-0566-49ca-b88a-7478fd9517a4",
+      "name": "Code - Add Parent Tweet ID"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ccf1adf1-54d6-463c-8ee5-b0703c3d3254",
+              "leftValue": "={{ $json.isFirstTweet }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": "",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -3696,
+        752
+      ],
+      "id": "34c194f0-5d49-4e1f-90ed-c6d8a1a1f04f",
+      "name": "IF - Is This First Tweet?"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "attachments": "={{ $json.media_id_string }}",
+          "inReplyToStatusId": {
+            "__rl": true,
+            "value": "={{ $json.parentTweetId }}",
+            "mode": "id"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.twitter",
+      "typeVersion": 2,
+      "position": [
+        -3472,
+        832
+      ],
+      "id": "5e6a792e-8da9-426c-8064-2c0edc879667",
+      "name": "Create Tweet Reply",
+      "retryOnFail": false,
+      "maxTries": 5,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "twitterOAuth2Api": {
+          "id": "KgoQ7hy5adHEKxP8",
+          "name": "X Main account - _AmanSurya BIP"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -3248,
+        752
+      ],
+      "id": "2f827c11-fade-46e5-b2fd-6021e31f055c",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// FINAL LINKEDIN DATA PREPARATION V9.1 (with Markdown Cleaning)\n// This node flattens the binary array AND cleans the post text.\ntry {\n  const post = $input.first().json;\n  let finalBinaryObject = null; // Default to null (text-only post)\n\n  // --- 1. Image Preparation (This part is working perfectly) ---\n  if (post.imageBinaries && Array.isArray(post.imageBinaries) && post.imageBinaries.length > 0) {\n    \n    // Select only the first image (since the node only supports one)\n    const firstImageWrapper = post.imageBinaries[0];\n    if (firstImageWrapper && firstImageWrapper.data) {\n      finalBinaryObject = firstImageWrapper.data;\n    } else if (firstImageWrapper) {\n      finalBinaryObject = firstImageWrapper;\n    }\n    \n    console.log(`[LinkedIn] Image found. Preparing to attach: ${finalBinaryObject?.fileName}`);\n  } else {\n    console.log('[LinkedIn] No images found for this post. Posting as text-only.');\n  }\n\n  // --- 2. Text Cleaning (THE FIX) ---\n  let cleanText = post.text;\n  \n  // Remove markdown bolding (e.g., **The Problem:** -> The Problem:)\n  cleanText = cleanText.replace(/\\*\\*(.*?)\\*\\*/g, '$1');\n  \n  // Remove markdown italics (e.g., *text* -> text)\n  cleanText = cleanText.replace(/\\*(.*?)\\*/g, '$1');\n  \n  // Remove any lingering markdown headers (e.g., ### Title -> Title)\n  cleanText = cleanText.replace(/^#+\\s+(.*)$/gm, '$1');\n\n  // Replace the arrow emoji with a standard dash or bullet (LinkedIn prefers this)\n  cleanText = cleanText.replace(/→/g, '•');\n\n  // Trim any leading/trailing whitespace left over from cleaning\n  cleanText = cleanText.trim();\n\n  // --- 3. Final Output Assembly ---\n  const outputItem = {\n    json: {\n      text: cleanText // Pass the CLEANED text\n    }\n  };\n\n  // If an image was prepared, add it to the 'binary' property\n  if (finalBinaryObject) {\n    outputItem.binary = {\n      \"linkedInImage\": finalBinaryObject \n    };\n  }\n\n  return [outputItem];\n\n} catch (error) {\n  return [{\n    json: {\n      ...$input.first().json, // Pass original data on error\n      error: true,\n      message: `[Prepare LinkedIn Data]: ${error.message}`\n    }\n  }];\n}"
+      },
+      "id": "cba189fb-9d10-4984-a1db-87b31f0e08e1",
+      "name": "Code - Prepare LinkedIn Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4880,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "person": "tSx0BZlecQ",
+        "text": "={{ $json.text }}",
+        "shareMediaCategory": "IMAGE",
+        "binaryPropertyName": "linkedInImage",
+        "additionalFields": {}
+      },
+      "id": "86c06936-f6fe-4970-8dff-84dd4fd6ded1",
+      "name": "LinkedIn Post",
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        -4656,
+        304
+      ],
+      "retryOnFail": false,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "xiSrU49BXf76VXS1",
+          "name": "LinkedIn account aman-suryavanshi-6b0aba347"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "unit": "minutes"
+      },
+      "id": "05d770ab-cc53-45a8-be92-7368de61f597",
+      "name": "Wait - LinkedIn Rate Limit",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        -4432,
+        304
+      ],
+      "webhookId": "9dd7f716-9ae4-40d4-900e-e840da9e1721"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -5136,
+        256
+      ],
+      "id": "d886169c-28d5-40c8-812c-cfa49d5cad76",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Code - Prepare Image Uploads\ntry {\n  const blogData = $input.first().json;\n  // Filter out all image blocks\n  const imageBlocks = blogData.blocks.filter(b => b.type === 'image' && b.binary);\n  // Prepare items for upload: put binary at top-level\n  return imageBlocks.map(img => ({\n    json: {\n      marker: img.marker,\n      imageNumber: img.imageNumber,\n      alt: img.alt || 'Blog image',          // fallback alt\n      caption: img.caption || '',            // optional\n      fileName: img.binary.data.fileName\n    },\n    binary: {\n      imageBinary: img.binary.data           // flatten actual binary\n    }\n  }));\n} catch (error) {\n  return [{json: {error: true, message: `[Prepare Image Uploads]: ${error.message}`}}];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -5136,
+        -64
+      ],
+      "id": "30a96f6e-11b7-4319-ad4d-98493153a009",
+      "name": "Prepare Image"
+    },
+    {
+      "parameters": {
+        "jsCode": "// --- FINAL PRODUCTION V12.0 ---\n// DEPLOYMENT-READY, HIGH-PERFORMANCE PARSER\n//\n// AUTHOR: Gemini\n// DATE: 2025-11-08\n//\n// V12.0 CHANGELOG:\n// - CRITICAL FIX (Headings): Rewrote 'detectHeadingLevel'.\n//   - It now correctly handles text with or without a space (e.g., \"##Heading\" vs \"## Heading\").\n//   - It now *guarantees* the removal of all hash prefixes from the returned text.\n//\n// - CRITICAL FIX (Lists): Rewrote 'isListItem' and 'cleanListItemText'.\n//   - 'isListItem' is now more robust and correctly identifies list items, even with leading spaces.\n//   - 'cleanListItemText' is updated to perfectly mirror 'isListItem', ensuring the bullet/number\n//     is stripped *before* 'parseInlineFormatting' is called.\n//   - This prevents the 'currentParagraph' bug that was mangling your lists.\n//\n// - KEPT (V11 Fixes):\n//   - The high-performance 'parseInlineFormatting' tokenizer (to prevent timeouts).\n//   - The 'pre-cleaning' step (to fix the '```markdown' wrapper bug).\n// ---\n\ntry {\n  // --- 1. Get Data ---\n\n  // Get the parsed blocks from 'Code - Parse Blog Content'\n  const blogData = $('Code - Parse Blog Content').first().json;\n\n  // Get the map of uploaded images\n  let imageMap;\n  if ($input.all().length > 0 && $input.first().json.marker) {\n    imageMap = $input.all();\n  } else {\n    // Fallback if the input is empty (e.g., text-only post)\n    imageMap = $('Code - Build Image Reference Map').all() || [];\n  }\n\n  console.log('Blog blocks (raw):', blogData.blocks.length, 'Images:', imageMap.length);\n\n  // --- 2. PRE-CLEANING STEP (FIX FOR '```markdown' BUG) ---\n  if (blogData.blocks && blogData.blocks.length > 0) {\n    // Clean the FIRST block\n    const firstBlock = blogData.blocks[0];\n    if (firstBlock.type === 'text' && firstBlock.content) {\n      firstBlock.content = firstBlock.content.trimStart().replace(/^```(markdown|md)?\\s*/, '');\n    }\n    // Clean the LAST block\n    const lastBlock = blogData.blocks[blogData.blocks.length - 1];\n    if (lastBlock.type === 'text' && lastBlock.content) {\n      lastBlock.content = lastBlock.content.trimEnd().replace(/```$/, '');\n    }\n  }\n\n  // --- 3. High-Performance Helper Functions (V12) ---\n\n  const BACKTICK = String.fromCharCode(96);\n  const CODE_FENCE = BACKTICK + BACKTICK + BACKTICK;\n\n  // Finds the uploaded image asset ID from the map\n  function getAssetForMarker(marker) {\n    if (!imageMap || imageMap.length === 0) return null;\n    const found = imageMap.find(m => m.json && m.json.marker === marker);\n    return found ? found.json : null;\n  }\n\n  // Checks if a text block is a fenced code block\n  function isCodeBlock(text) {\n    if (!text || typeof text !== 'string') return false;\n    return text.trim().startsWith(CODE_FENCE);\n  }\n\n  // Parses a fenced code block\n  function parseCodeBlock(text) {\n    if (!text || typeof text !== 'string') return { language: 'text', code: '' };\n    const lines = text.trim().split('\\n');\n    const firstLine = lines[0] || '';\n    const language = firstLine.replace(CODE_FENCE, '').trim() || 'text';\n    const code = lines.slice(1, -1).join('\\n');\n    return { language, code };\n  }\n\n  // --- (FIX V12.0: LISTS) ---\n  // More robust check for list items. Allows optional leading whitespace.\n  function isListItem(text) {\n    if (!text || typeof text !== 'string') return false;\n    const trimmed = text.trim();\n    // Matches '  * item' or '1. item'\n    return /^\\s*[*\\-]\\s+/.test(trimmed) || /^\\s*\\d+[\\.\\)]\\s+/.test(trimmed);\n  }\n\n  // --- (FIX V12.0: LISTS) ---\n  // Mirrors 'isListItem' to perfectly clean the text.\n  function cleanListItemText(text) {\n    if (!text || typeof text !== 'string') return '';\n    const trimmed = text.trim();\n    // Replaces '  * item' with 'item'\n    return trimmed.replace(/^\\s*[*\\-]\\s+/, '').replace(/^\\s*\\d+[\\.\\)]\\s+/, '').trim();\n  }\n\n  // Detects the list type for Sanity\n  function detectListType(text) {\n    if (!text || typeof text !== 'string') return null;\n    const trimmed = text.trim();\n    if (/^\\s*\\d+[\\.\\)]\\s+/.test(trimmed)) return 'number';\n    if (/^\\s*[*\\-]\\s+/.test(trimmed)) return 'bullet';\n    return null;\n  }\n  // --- (END LIST FIX V12.0) ---\n\n\n  // --- (CRITICAL FIX V11.0: TIMEOUTS) ---\n  // High-performance, non-blocking tokenizer for inline formatting.\n  function parseInlineFormatting(text) {\n    if (!text || typeof text !== 'string') {\n        return [{ _type: 'span', text: String(text || '') }];\n    }\n    \n    // Split by all known delimiters, keeping the delimiters in the array\n    const tokens = text.split(/(\\*\\*|__|\\*|_|`)/g);\n    const children = [];\n    let i = 0;\n\n    while (i < tokens.length) {\n        const token = tokens[i];\n\n        if (!token) { // Handle empty strings from split\n            i++;\n            continue;\n        }\n\n        let mark = null;\n        if (token === '**' || token === '__') mark = 'strong';\n        else if (token === '*' || token === '_') mark = 'em';\n        else if (token === '`') mark = 'code';\n\n        // Check for a valid 3-part marked span: [delimiter, content, delimiter]\n        if (mark && tokens[i+1] && tokens[i+2] === token) {\n            // Found a valid marked span\n            children.push({\n                _type: 'span',\n                text: tokens[i+1], // The content\n                marks: [mark]\n            });\n            i += 3; // Consume all 3 tokens (e.g., '**', 'bold', '**')\n        } else {\n            // Not a valid mark, or just plain text\n            children.push({\n                _type: 'span',\n                text: token,\n                marks: [] // No marks\n            });\n            i++;\n        }\n    }\n    return children;\n  }\n  // --- (END CRITICAL FIX V11.0) ---\n\n\n  // Parses a block of list items\n  function parseListItems(items) {\n    return items.map(item => {\n      // Use the V12 cleaned text\n      const cleanText = cleanListItemText(item); \n      const listType = detectListType(item);\n      \n      return {\n        _type: 'block',\n        style: 'normal',\n        listItem: listType,\n        level: 1, // Required by Sanity\n        // Parse *after* cleaning\n        children: parseInlineFormatting(cleanText), \n        markDefs: []\n      };\n    });\n  }\n\n  // --- (FIX V12.0: HEADINGS) ---\n  // More robust heading detection.\n  // Handles '#Heading' and '# Heading' and cleans both.\n  function detectHeadingLevel(text) {\n    if (!text || typeof text !== 'string') return null;\n    const trimmed = text.trim();\n    \n    // Use 'startsWith' for detection, but 'replace' for cleaning\n    if (trimmed.startsWith('####')) return { level: 'h4', text: trimmed.replace(/^####\\s*/, '').trim() };\n    if (trimmed.startsWith('###')) return { level: 'h3', text: trimmed.replace(/^###\\s*/, '').trim() };\n    if (trimmed.startsWith('##')) return { level: 'h2', text: trimmed.replace(/^##\\s*/, '').trim() };\n    if (trimmed.startsWith('#')) return { level: 'h1', text: trimmed.replace(/^#\\s*/, '').trim() };\n    return null;\n  }\n  // --- (END HEADING FIX V12.0) ---\n\n\n  // --- 4. Main Parsing Logic (Unchanged from V11) ---\n  // This logic is now correct because the helper functions it calls are fixed.\n  const finalBlocks = [];\n  const codeBlockPattern = new RegExp('(' + CODE_FENCE + '[\\\\s\\\\S]*?' + CODE_FENCE + ')', 'g');\n  \n  for (const block of blogData.blocks) {\n    if (block.type === 'text') {\n      const parts = block.content.split(codeBlockPattern);\n      \n      for (const part of parts) {\n        if (!part || !part.trim()) continue;\n        \n        if (isCodeBlock(part)) {\n          // This is a fenced code block\n          const parsed = parseCodeBlock(part);\n          finalBlocks.push({\n            _type: 'code',\n            language: parsed.language,\n            code: parsed.code\n          });\n        } else {\n          // This is regular paragraph/list/heading text\n          const lines = part.split('\\n');\n          let currentParagraph = [];\n          let currentListItems = [];\n          \n          for (let i = 0; i < lines.length; i++) {\n            const line = lines[i];\n            const trimmed = line.trim();\n            \n            if (!trimmed) { // Empty line\n              // Flush list if one was active\n              if (currentListItems.length > 0) {\n                finalBlocks.push(...parseListItems(currentListItems));\n                currentListItems = [];\n              }\n              // Flush paragraph if one was active\n              if (currentParagraph.length > 0) {\n                const paraText = currentParagraph.join(' ').trim();\n                // Check for '---' horizontal rule\n                if (paraText && !/^(---|___|\\\\*\\\\*\\\\*)$/.test(paraText)) {\n                  // CALLS V12 HEADING FIX\n                  const heading = detectHeadingLevel(paraText); \n                  if (heading) {\n                    finalBlocks.push({\n                      _type: 'block',\n                      style: heading.level,\n                      // 'heading.text' is now guaranteed clean\n                      children: parseInlineFormatting(heading.text), \n                      markDefs: []\n                    });\n                  } else {\n                    finalBlocks.push({\n                      _type: 'block',\n                      style: 'normal',\n                      children: parseInlineFormatting(paraText),\n                      markDefs: []\n                    });\n                  }\n                }\n                currentParagraph = [];\n              }\n              continue;\n            }\n            \n            // CALLS V12 LIST FIX\n            if (isListItem(trimmed)) { \n              // Flush paragraph if switching to list\n              if (currentParagraph.length > 0) {\n                const paraText = currentParagraph.join(' ').trim();\n                if (paraText) {\n                    // CALLS V12 HEADING FIX\n                    const heading = detectHeadingLevel(paraText); \n                    if (heading) {\n                      finalBlocks.push({ _type: 'block', style: heading.level, children: parseInlineFormatting(heading.text), markDefs: [] });\n                    } else {\n                      finalBlocks.push({ _type: 'block', style: 'normal', children: parseInlineFormatting(paraText), markDefs: [] });\n                    }\n                }\n                currentParagraph = [];\n              }\n              currentListItems.push(trimmed);\n            } else {\n              // Flush list if switching to paragraph\n              if (currentListItems.length > 0) {\n                finalBlocks.push(...parseListItems(currentListItems));\n                currentListItems = [];\n              }\n              currentParagraph.push(trimmed);\n            }\n          }\n          \n          // Final flush at end of part\n          if (currentListItems.length > 0) {\n            finalBlocks.push(...parseListItems(currentListItems));\n          }\n          if (currentParagraph.length > 0) {\n            const paraText = currentParagraph.join(' ').trim();\n            if (paraText && !/^(---|___|\\\\*\\\\*\\\\*)$/.test(paraText)) {\n              // CALLS V12 HEADING FIX\n              const heading = detectHeadingLevel(paraText); \n              if (heading) {\n                finalBlocks.push({ _type: 'block', style: heading.level, children: parseInlineFormatting(heading.text), markDefs: [] });\n              } else {\n                finalBlocks.push({ _type: 'block', style: 'normal', children: parseInlineFormatting(paraText), markDefs: [] });\n              }\n            }\n          }\n        }\n      }\n    } else if (block.type === 'image') {\n      // This is an image block\n      const assetEntry = getAssetForMarker(block.marker);\n      if (!assetEntry) {\n        // Don't throw error, just log it.\n        console.warn('Image ' + block.marker + ' was defined in markdown but not found in imageMap');\n      } else {\n        finalBlocks.push({\n          _type: 'image',\n          asset: { _type: 'reference', _ref: assetEntry.assetId },\n          alt: assetEntry.alt || 'Blog image',\n          caption: assetEntry.caption || ''\n        });\n      }\n    }\n  }\n\n  // --- 5. Final Mutation Assembly (Unchanged) ---\n  const mutation = {\n    mutations: [{\n      create: {\n        _type: \"post\",\n        title: blogData.title,\n        slug: { _type: \"slug\", current: blogData.slug },\n        status: \"published\", // or \"draft\"\n        excerpt: blogData.description.slice(0, 160),\n        seoTitle: blogData.title.slice(0, 60),\n        seoDescription: blogData.description.slice(0, 160),\n        tags: blogData.keywords || [],\n        publishedAt: new Date().toISOString(),\n        viewCount: 0,\n        body: finalBlocks\n      }\n    }]\n  };\n\n  console.log('Final Sanity blocks generated:', finalBlocks.length);\n  return [{ json: mutation }];\n  \n} catch (error) {\n  console.error('[CRITICAL: Build PT Mutation]', error);\n  // Return detailed error for easier debugging in n8n\n  return [{ json: { error: true, message: '[Build PT Mutation]: ' + error.message, stack: error.stack } }];\n}"
+      },
+      "id": "9e4c63cf-4444-4db8-ad6e-007e92a6fc53",
+      "name": "Code - Rebuild Blog Blocks with Image References",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4416,
+        -144
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -4928,
+        -64
+      ],
+      "id": "6046715a-9e85-4894-bded-fadec0e2194c",
+      "name": "Loop Over Images"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Code - Build Uploaded Image Map (CORRECTED)\ntry {\n  // Get all uploaded image responses from Sanity\n  const uploads = $input.all();\n  \n  // Get original image metadata from \"Prepare Image\" node\n  const preparedImages = $('Prepare Image').all();\n  \n  // Build map by matching fileName or imageNumber\n  return uploads.map((upload, index) => {\n    const originalMeta = preparedImages[index]; // Match by order/index\n    \n    return {\n      marker: originalMeta.json.marker,           // <<IMAGE_1>>\n      imageNumber: originalMeta.json.imageNumber, // 1, 2, 3\n      assetId: upload.json.body.document._id,     // from Sanity upload response\n      alt: originalMeta.json.alt,                 // \"Blog image\"\n      caption: originalMeta.json.caption          // \"\"\n    };\n  });\n} catch (error) {\n  return [{json: {error: true, message: `[Build Image Map]: ${error.message}`}}];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4656,
+        -144
+      ],
+      "id": "05adb76b-abd4-45dd-bb56-abe6cad3298e",
+      "name": "Code - Build Image Reference Map"
+    },
+    {
+      "parameters": {
+        "content": "# Extracting content & Organizing Assets from notion database \n",
+        "height": 272,
+        "width": 1040
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -5632,
+        -784
+      ],
+      "typeVersion": 1,
+      "id": "a48242f5-0f25-48fa-9fcd-717b75e3812d",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Downloading all the Social Drafts / image task list from drive ",
+        "height": 928,
+        "width": 384,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4528,
+        -1120
+      ],
+      "typeVersion": 1,
+      "id": "3f7c9209-829a-4268-96f6-46e851ec4493",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Downloading image binary & storing them\n",
+        "height": 256,
+        "width": 672,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3712,
+        -848
+      ],
+      "typeVersion": 1,
+      "id": "77cc6f1f-5149-47d8-a3bc-12cd18dc2dd4",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "### Arrange all the post & the image required in proper format",
+        "height": 224,
+        "width": 272,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3504,
+        -416
+      ],
+      "typeVersion": 1,
+      "id": "4c503b03-7947-4de1-a4e3-09ec84c76618",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## 1. Blog post branch",
+        "height": 336,
+        "width": 1392,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -5440,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "fcc90473-9566-4e04-814f-cc4d4e221ebc",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## 2. LinkedIn Branch",
+        "height": 272,
+        "width": 1392,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -5440,
+        192
+      ],
+      "typeVersion": 1,
+      "id": "2fee6c26-5833-4d1e-8b95-e278e1d1c302",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## 3. Twitter branch",
+        "height": 496,
+        "width": 2592,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -5440,
+        480
+      ],
+      "typeVersion": 1,
+      "id": "5e2d6d16-6fa2-465f-abf2-1d507f448c9c",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -3936,
+        224
+      ],
+      "id": "befae64c-873e-4a3c-8293-e866264810a8",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('Notion – Get Approved').all()[0].json.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "PostedAt|date",
+              "date": "={{ new Date().toLocaleString(\"en-IN\", { timeZone: \"Asia/Kolkata\" }) }}",
+              "timezone": "Asia/Calcutta"
+            },
+            {
+              "key": "Post Status|multi_select",
+              "multiSelectValue": [
+                "Posted at X",
+                "Posted at LinkedIn",
+                "Posted as blog at site"
+              ]
+            },
+            {
+              "key": "Status|select",
+              "selectValue": "Posted To All Platforms"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -3696,
+        240
+      ],
+      "id": "69f9ca19-90c9-4e2f-95c4-559a0f1feeed",
+      "name": "Update Notion database",
+      "credentials": {
+        "notionApi": {
+          "id": "je8hKPK6RzYSk4JA",
+          "name": "Notion account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b5b97b8-1def-48af-b6ad-eec7731ea64e",
+              "name": "lastTweetId",
+              "value": "=\t{{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "f99478fe-d478-49f2-95e1-2a45aa89abac",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "5f1cd919-4e31-425f-819c-96fa3eeaef20",
+              "name": "order",
+              "value": "={{ $('IF - Is This First Tweet?').item.json.order }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3040,
+        752
+      ],
+      "id": "710fad2e-2da9-481d-b256-a4ec8e4499f2",
+      "name": "Prepare for Next Loop"
+    }
+  ],
+  "connections": {
+    "Notion – Get Approved": {
+      "main": [
+        [
+          {
+            "node": "Extract Folder Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Posting": {
+      "main": [
+        [
+          {
+            "node": "Notion – Get Approved",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Folder Details": {
+      "main": [
+        [
+          {
+            "node": "List Drive Folder Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Drive Folder Files": {
+      "main": [
+        [
+          {
+            "node": "Organize Assets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Organize Assets": {
+      "main": [
+        [
+          {
+            "node": "Download – Image Task list",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Download – Twitter Draft",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Download – LinkedIn Draft",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Download – Blog Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download – Image Task list": {
+      "main": [
+        [
+          {
+            "node": "Extract from File - ImageTaskList",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Image Manifest": {
+      "main": [
+        [
+          {
+            "node": "Merge - All Assets Ready",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop to Download Images": {
+      "main": [
+        [
+          {
+            "node": "Set - All Data Ready",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Download Image Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Image Binary": {
+      "main": [
+        [
+          {
+            "node": "Loop to Download Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download – Twitter Draft": {
+      "main": [
+        [
+          {
+            "node": "Extract from File - Twitter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download – LinkedIn Draft": {
+      "main": [
+        [
+          {
+            "node": "Extract from File - LinkedIn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download – Blog Draft": {
+      "main": [
+        [
+          {
+            "node": "Extract from File - Blog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File - ImageTaskList": {
+      "main": [
+        [
+          {
+            "node": "Parse Image Manifest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File - Twitter": {
+      "main": [
+        [
+          {
+            "node": "Merge - All Text Ready",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File - LinkedIn": {
+      "main": [
+        [
+          {
+            "node": "Merge - All Text Ready",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Extract from File - Blog": {
+      "main": [
+        [
+          {
+            "node": "Merge - All Text Ready",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge - All Text Ready": {
+      "main": [
+        [
+          {
+            "node": "Merge - All Assets Ready",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge - All Assets Ready": {
+      "main": [
+        [
+          {
+            "node": "Code - Prepare Image Downloads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Prepare Image Downloads": {
+      "main": [
+        [
+          {
+            "node": "Loop to Download Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set - All Data Ready": {
+      "main": [
+        [
+          {
+            "node": "Detect Images Needed vs Present",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detect Images Needed vs Present": {
+      "main": [
+        [
+          {
+            "node": "Code - Parse Blog Content",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code - Parse & Attach LinkedIn Post",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code - Parse & Attach Tweets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Parse Blog Content": {
+      "main": [
+        [
+          {
+            "node": "Prepare Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Image to Sanity": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST Blog to Sanity": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Parse & Attach Tweets": {
+      "main": [
+        [
+          {
+            "node": "SplitInBatches - Loop Tweets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Parse & Attach LinkedIn Post": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Tweet": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SplitInBatches - Loop Tweets": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ],
+        [
+          {
+            "node": "IF - Image Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Media to Twitter": {
+      "main": [
+        [
+          {
+            "node": "Code - Unified Tweet Preparation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Binary for Upload": {
+      "main": [
+        [
+          {
+            "node": "Upload Media to Twitter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF - Image Exists?": {
+      "main": [
+        [
+          {
+            "node": "Prepare Binary for Upload",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code - Unified Tweet Preparation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Unified Tweet Preparation": {
+      "main": [
+        [
+          {
+            "node": "Code - Add Parent Tweet ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Add Parent Tweet ID": {
+      "main": [
+        [
+          {
+            "node": "IF - Is This First Tweet?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF - Is This First Tweet?": {
+      "main": [
+        [
+          {
+            "node": "Create Tweet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Tweet Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Tweet Reply": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Prepare for Next Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Prepare LinkedIn Data": {
+      "main": [
+        [
+          {
+            "node": "LinkedIn Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LinkedIn Post": {
+      "main": [
+        [
+          {
+            "node": "Wait - LinkedIn Rate Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait - LinkedIn Rate Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Code - Prepare LinkedIn Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Image": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Rebuild Blog Blocks with Image References": {
+      "main": [
+        [
+          {
+            "node": "POST Blog to Sanity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Images": {
+      "main": [
+        [
+          {
+            "node": "Code - Build Image Reference Map",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Upload Image to Sanity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Build Image Reference Map": {
+      "main": [
+        [
+          {
+            "node": "Code - Rebuild Blog Blocks with Image References",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Update Notion database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare for Next Loop": {
+      "main": [
+        [
+          {
+            "node": "SplitInBatches - Loop Tweets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "2aff0c99a9b9ea9c976d68c5887d32445a6bdc6f59f99592eb5b4c4dbaf3d92e"
+  }
+}

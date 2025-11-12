@@ -111,7 +111,7 @@ const aboutStructuredData = {
       jobTitle: "Web Developer & UI/UX Designer",
       sameAs: [
         "https://github.com/AmanSuryavanshi-1",
-        "https://www.linkedin.com/in/amansuryavanshi/"
+        "https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/"
       ],
       knowsAbout: [
         "Web Development",
