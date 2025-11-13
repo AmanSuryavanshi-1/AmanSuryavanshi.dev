@@ -1765,10 +1765,12 @@ TOTAL END-TO-END: 65-111 seconds (avg: 88 seconds)
 
 ### 24. Engagement & Analytics
 
+> **Note**: v1 = Initial manual system, v4 = Current production system (see [Evolution Timeline](#1-introduction) for full version history)
+
 #### Twitter Engagement
 
-- **Before (v1)**: 60% engagement (generic content, low reach)
-- **After (v4)**: 85% engagement (+42% improvement)
+- **Before (v1 - Manual)**: 60% engagement (generic content, low reach)
+- **After (v4 - Current System)**: 85% engagement (+42% improvement)
 - **Note**: Twitter suppresses automated content, but specific technical content performs significantly better
 - **Data Collection**: Ongoing (30-day verification in progress)
 
@@ -1781,11 +1783,13 @@ TOTAL END-TO-END: 65-111 seconds (avg: 88 seconds)
 
 #### Blog Performance
 
-- **Bounce Rate**: 45% (v1) → 12% (v4) = -73% improvement
-- **Avg Time on Page**: 1:00 min (v1) → 2:00 min (v4) = +100% improvement
+- **Bounce Rate**: 45% (v1 - Manual) → 12% (v4 - Current) = -73% improvement
+- **Avg Time on Page**: 1:00 min (v1 - Manual) → 2:00 min (v4 - Current) = +100% improvement
 - **SEO Optimization**: Applied (titles, meta descriptions, keywords)
 - **Readability**: Hierarchical structure (H2/H3), code examples, images
 
+![Content Evolution Comparison](./Asset%207%20Content%20Evolution%20Comparison%20Visual%20AS.png)
+*Figure 7: Evolution of content quality from before the original manual system (v1) to after current AI-automated system (v4), showing dramatic improvement in engagement, credibility, and authenticity*
 ---
 
 ## Part VII: Lessons & Future Work
