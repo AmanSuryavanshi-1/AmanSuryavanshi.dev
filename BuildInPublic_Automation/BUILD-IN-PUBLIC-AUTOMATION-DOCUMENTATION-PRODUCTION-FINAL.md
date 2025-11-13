@@ -107,8 +107,10 @@ This is a **production-grade, bi-part n8n automation** consisting of 74 nodes or
 
 **Evolution Timeline:**
 
-![Content Evolution Comparison](./Asset%201%20Timeline%20diagram%20showing%204%20iterations%20with%20key%20metrics].png)
-*Figure 0: Evolution of content quality from manual posting (v1) to AI-automated system (v4), showing dramatic improvement in engagement, technical depth, and authenticity*
+<p align="center">
+  <img src="./Asset%201%20Timeline%20diagram%20showing%204%20iterations%20with%20key%20metrics].png" alt="Content Evolution Comparison" width="85%">
+</p>
+<p align="center"><em>Figure 0: Evolution of content quality from manual posting (v1) to AI-automated system (v4), showing dramatic improvement in engagement, technical depth, and authenticity</em></p>
 
 **v1 (Twitter-Only, Manual)**: 
 - Simple Telegram bot for Twitter posting
@@ -137,12 +139,16 @@ This is a **production-grade, bi-part n8n automation** consisting of 74 nodes or
 ### System Architecture Diagrams
 
 **Part 1: Content Generation Pipeline (28 Nodes)**
-![Part 1 of the automation](./Part-1%20Automation%20-%20Content%20Repurposing%20for%20Socials%20AS.png)
-*Figure 1: Content Generation workflow showing Notion extraction, AI processing, and Google Drive storage*
+<p align="center">
+  <img src="./Part-1%20Automation%20-%20Content%20Repurposing%20for%20Socials%20AS.png" alt="Part 1 of the automation" width="95%">
+</p>
+<p align="center"><em>Figure 1: Content Generation workflow showing Notion extraction, AI processing, and Google Drive storage</em></p>
 
 **Part 2: Content Distribution Pipeline (46 Nodes)**
-![Part 2 of the automation](./Part%202%20-%20Automation%20-%20Content%20Posting%20To%20Socials%20AS.png)
-*Figure 2: Distribution workflow showing asset organization, platform-specific parsing, and multi-platform posting*
+<p align="center">
+  <img src="./Part%202%20-%20Automation%20-%20Content%20Posting%20To%20Socials%20AS.png" alt="Part 2 of the automation" width="95%">
+</p>
+<p align="center"><em>Figure 2: Distribution workflow showing asset organization, platform-specific parsing, and multi-platform posting</em></p>
 
 ---
 
@@ -174,8 +180,10 @@ Notion serves as the single source of truth for three technical reasons:
 
 **Technical Advantage**: By using Notion's block API with recursive traversal, I can extract content with full structural context (3-4 levels deep), which significantly improves AI-generated output quality compared to flat text extraction.
 
-![Notion Database Schema](./Asset%202%20Notion%20Database%20Schema%20Screenshot.png)
-*Figure 3: Social Content Queue database structure showing all tracking properties including SessionID, Status workflow, Draft URLs, SEO metadata, and posting timestamps for complete content lifecycle management*
+<p align="center">
+  <img src="./Asset%202%20Notion%20Database%20Schema%20Screenshot.png" alt="Notion Database Schema" width="80%">
+</p>
+<p align="center"><em>Figure 3: Social Content Queue database structure showing all tracking properties including SessionID, Status workflow, Draft URLs, SEO metadata, and posting timestamps for complete content lifecycle management</em></p>
 
 ---
 
@@ -275,8 +283,10 @@ LinkedIn Interactions:
 └─ Target Metrics: Comments, shares, connection requests
 ```
 
-![Metrics Dashboard](./Asset%203%20Metrics%20Dashboard%20Visualization.png)
-*Figure 4: Production system performance dashboard showing 99.7% reliability, 88-second average processing time, zero operational cost, 85% engagement rate, and 1000+ successful executions*
+<p align="center">
+  <img src="./Asset%203%20Metrics%20Dashboard%20Visualization.png" alt="Metrics Dashboard" width="80%">
+</p>
+<p align="center"><em>Figure 4: Production system performance dashboard showing 99.7% reliability, 88-second average processing time, zero operational cost, 85% engagement rate, and 1000+ successful executions</em></p>
 
 ---
 
@@ -292,8 +302,10 @@ LinkedIn Interactions:
 - **Secondary LLM**: Google Gemini 2.5 Flash (fallback for speed)
 - **Research API**: Perplexity Sonar (free tier, keyword research & hashtags)
 
-![LLM Routing Decision Tree](./Asset%205%20LLM%20Routing%20Decision%20Tree.png)
-*Figure 6: LLM routing strategy showing model selection based on content type - Gemini 2.5 Pro for technical deep dives, Gemini Flash for quick updates, and Perplexity Sonar for research-heavy content*
+<p align="center">
+  <img src="./Asset%205%20LLM%20Routing%20Decision%20Tree.png" alt="LLM Routing Decision Tree" width="75%">
+</p>
+<p align="center"><em>Figure 6: LLM routing strategy showing model selection based on content type - Gemini 2.5 Pro for technical deep dives, Gemini Flash for quick updates, and Perplexity Sonar for research-heavy content</em></p>
 
 #### Content Management
 - **Source**: Notion API (custom database schema)
@@ -1360,8 +1372,10 @@ const fileName = `twitter_draft_${sessionId}.md`;
 const imageFileName = `asset-${assetNumber}-${sessionId}.png`;
 ```
 
-![Session-Based File Structure](./Asset%206%20Session-Based%20File%20Structure.png)
-*Figure 7: Google Drive folder structure showing session-based organization with unique session IDs for each content piece, enabling concurrent processing without file conflicts. Each session folder contains all drafts and assets with consistent naming conventions.*
+<p align="center">
+  <img src="./Asset%206%20Session-Based%20File%20Structure.png" alt="Session-Based File Structure" width="80%">
+</p>
+<p align="center"><em>Figure 7: Google Drive folder structure showing session-based organization with unique session IDs for each content piece, enabling concurrent processing without file conflicts. Each session folder contains all drafts and assets with consistent naming conventions.</em></p>
 
 **Notion Tracking:**
 
@@ -1538,8 +1552,10 @@ function renderBlock(block, level = 0) {
 
 #### My Solution: Multi-Layer Error Handling
 
-![3-Tier Error Handling Architecture](./Asset%204%203-Tier%20Error%20Handling%20Architecture.png)
-*Figure 5: Multi-layer error handling strategy showing three tiers - Node-level retry for transient errors, graceful degradation for optional data, and fail-fast for critical data - ensuring 99.7% reliability*
+<p align="center">
+  <img src="./Asset%204%203-Tier%20Error%20Handling%20Architecture.png" alt="3-Tier Error Handling Architecture" width="85%">
+</p>
+<p align="center"><em>Figure 5: Multi-layer error handling strategy showing three tiers - Node-level retry for transient errors, graceful degradation for optional data, and fail-fast for critical data - ensuring 99.7% reliability</em></p>
 
 **Layer 1: Node-Level Retry**
 
@@ -1788,8 +1804,10 @@ TOTAL END-TO-END: 65-111 seconds (avg: 88 seconds)
 - **SEO Optimization**: Applied (titles, meta descriptions, keywords)
 - **Readability**: Hierarchical structure (H2/H3), code examples, images
 
-![Content Evolution Comparison](./Asset%207%20Content%20Evolution%20Comparison%20Visual%20AS.png)
-*Figure 7: Evolution of content quality from before the original manual system (v1) to after current AI-automated system (v4), showing dramatic improvement in engagement, credibility, and authenticity*
+<p align="center">
+  <img src="./Asset%207%20Content%20Evolution%20Comparison%20Visual%20AS.png" alt="Content Evolution Comparison" width="85%">
+</p>
+<p align="center"><em>Figure 7: Evolution of content quality from before the original manual system (v1) to after current AI-automated system (v4), showing dramatic improvement in engagement, credibility, and authenticity</em></p>
 ---
 
 ## Part VII: Lessons & Future Work
