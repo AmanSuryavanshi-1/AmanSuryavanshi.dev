@@ -181,7 +181,9 @@ Notion serves as the single source of truth for three technical reasons:
 **Technical Advantage**: By using Notion's block API with recursive traversal, I can extract content with full structural context (3-4 levels deep), which significantly improves AI-generated output quality compared to flat text extraction.
 
 <p align="center">
-  <img src="./Asset%202%20Notion%20Database%20Schema%20Screenshot.png" alt="Notion Database Schema" width="80%" style="max-height: 80vh; object-fit: contain;">
+  <img src="./Asset 2 Notion Content Queue - Database-1.png" alt="Notion Database Schema" width="80%" style="max-height: 80vh; object-fit: contain;">
+  <img src="./Asset 2 Notion Content Queue - Database-2.png" alt="Notion Database Schema" width="80%" style="max-height: 80vh; object-fit: contain;">
+  <img src="./Asset 2 Notion Content Queue - Database-3.png" alt="Notion Database Schema" width="80%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 3: Social Content Queue database structure showing all tracking properties including SessionID, Status workflow, Draft URLs, SEO metadata, and posting timestamps for complete content lifecycle management</em></p>
 
