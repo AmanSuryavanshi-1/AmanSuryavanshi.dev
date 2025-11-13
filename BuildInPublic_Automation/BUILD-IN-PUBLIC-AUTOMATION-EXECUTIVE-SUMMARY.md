@@ -65,7 +65,7 @@ Notion (Approved Content)
 ```
 
 <p align="center">
-  <img src="./ASSET-3%20Content%20Evolution%20Comparison%20Visual%20AS.png" alt="Content Evolution" width="85%">
+  <img src="./Asset 1 Timeline diagram showing 4 iterations with key metrics].png" alt="Content Evolution" width="85%">
 </p>
 <p align="center"><em>Evolution from manual, generic content (v1) to AI-automated, platform-optimized content (v4) showing dramatic quality improvement</em></p>
 

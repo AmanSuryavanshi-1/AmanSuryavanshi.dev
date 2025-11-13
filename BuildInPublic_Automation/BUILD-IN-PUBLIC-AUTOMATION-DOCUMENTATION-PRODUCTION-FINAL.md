@@ -108,7 +108,7 @@ This is a **production-grade, bi-part n8n automation** consisting of 74 nodes or
 **Evolution Timeline:**
 
 <p align="center">
-  <img src="./Asset%201%20Timeline%20diagram%20showing%204%20iterations%20with%20key%20metrics].png" alt="Content Evolution Comparison" width="85%">
+  <img src="./Asset 1 Timeline diagram showing 4 iterations with key metrics].png" alt="Content Evolution Comparison" width="85%">
 </p>
 <p align="center"><em>Figure 0: Evolution of content quality from manual posting (v1) to AI-automated system (v4), showing dramatic improvement in engagement, technical depth, and authenticity</em></p>
 
