@@ -107,7 +107,7 @@ This is a **production-grade, bi-part n8n automation** consisting of 74 nodes or
 
 **Evolution Timeline:**
 
-![Content Evolution Comparison](./ASSET-3%20Content%20Evolution%20Comparison%20Visual%20AS.png)
+![Content Evolution Comparison](./Asset%201%20Timeline%20diagram%20showing%204%20iterations%20with%20key%20metrics].png)
 *Figure 0: Evolution of content quality from manual posting (v1) to AI-automated system (v4), showing dramatic improvement in engagement, technical depth, and authenticity*
 
 **v1 (Twitter-Only, Manual)**: 
