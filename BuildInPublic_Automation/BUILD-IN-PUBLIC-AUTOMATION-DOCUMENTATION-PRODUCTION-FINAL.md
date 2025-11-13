@@ -1807,7 +1807,7 @@ TOTAL END-TO-END: 65-111 seconds (avg: 88 seconds)
 - **Readability**: Hierarchical structure (H2/H3), code examples, images
 
 <p align="center">
-  <img src="./Asset%207%20Content%20Evolution%20Comparison%20Visual%20AS.png" alt="Content Evolution Comparison" width="85%" style="max-height: 80vh; object-fit: contain;">
+  <img src="./Asset 1 Timeline diagram showing 4 iterations with key metrics.png" alt="Content Evolution Comparison" width="85%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 7: Evolution of content quality from before the original manual system (v1) to after current AI-automated system (v4), showing dramatic improvement in engagement, credibility, and authenticity</em></p>
 ---
