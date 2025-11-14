@@ -155,7 +155,7 @@ Omni-Post-AI/
 │           • Business impact & ROI analysis
 │           • Quick reference for interviews
 │
-├── BIP_Assets/ (Visual Documentation - 11 Professional Diagrams)
+├── OMNI-POST-AI-Assets/ (Visual Documentation - 11 Professional Diagrams)
 │   ├── Asset 1 Timeline diagram showing 4 iterations with key metrics.png
 │   │   └── Evolution timeline (v1 → v4) with engagement metrics
 │   │
@@ -186,10 +186,10 @@ Omni-Post-AI/
 │       └── Distribution Pipeline (46 nodes, 17-31 sec)
 │
 └── Workflow Files (n8n JSON Exports)
-    ├── Part 1 - X, LinkedIn, Blog - Personalized Content Generation - Social Auto Posting - Finalized.json
+    ├── Part 1 - Part 1 - X, LinkedIn, Blog - Personalized Content Generation - OMNI-POST-AI.json
     │   └── Generation workflow: Notion → AI → Google Drive (28 nodes)
     │
-    └── Part 2 - X. Linkedin, Blog - Post the Apporved Content - Social Auto Posting - Finalized.json
+    └── Part 2 - Part 2 - X. Linkedin, Blog - Post the Apporved Content - Social Auto Posting - OMNI-POST-AI.json
         └── Distribution workflow: Drive → Twitter/LinkedIn/Blog (46 nodes)
 ```
 
