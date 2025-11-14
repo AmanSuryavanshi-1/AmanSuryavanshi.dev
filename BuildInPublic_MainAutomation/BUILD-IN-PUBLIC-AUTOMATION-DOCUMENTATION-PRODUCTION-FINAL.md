@@ -19,12 +19,12 @@
 - Review [Technical Challenges & Solutions](#part-v-technical-challenges--solutions) for implementation details
 - Check [Technology Stack](#4-technology-stack) for integration patterns
 
-**For Hiring Managers**:
+**For Business Stakeholders**:
 - Begin with [Business Impact & Metrics](#3-project-metrics--results) for quantifiable results
 - Read [Problem Statement](#2-the-problem-i-solved) to understand the value proposition
 - Review [Results & Performance](#part-vi-results--performance) for engagement metrics
 
-**For CTOs/Technical Decision Makers**:
+**For Technical Leadership**:
 - Start with [Free-Tier API Strategy](#16-free-tier-api-strategy) for cost analysis
 - Review [Key Architectural Decisions](#25-key-architectural-decisions) for scalability insights
 - Check [Future Enhancements](#27-future-enhancements) for roadmap
