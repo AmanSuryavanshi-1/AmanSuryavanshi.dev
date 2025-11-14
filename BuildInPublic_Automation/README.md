@@ -79,7 +79,7 @@
 
 ---
 
-## � Veisual Documentation
+## Visual Documentation
 
 This project includes **8 professional diagrams** that illustrate the system architecture and technical decisions:
 
