@@ -1,12 +1,20 @@
-# Build-in-Public Social Media Automation
-## Production-Grade AI Content Distribution System
+# Omni-Post AI
+## Intelligent Multi-Platform Content Distribution Engine
 
-> **Author**: Aman Suryavanshi  
-> **Status**: Production Ready (1000+ executions)  
-> **Last Updated**: November 13, 2025  
-> **ROI**: $0/month operational cost, 15-20 hours/month saved  
-> **Reliability**: 99.7% success rate across 1000+ production executions  
-> **Tech Stack**: n8n, Gemini 2.5 Pro, Notion API, Twitter/LinkedIn APIs, Sanity CMS
+> **One idea, three platforms, zero manual work**
+
+**Author**: Aman Suryavanshi  
+**Status**: Production Ready (1000+ executions)  
+**Last Updated**: November 14, 2025  
+**ROI**: $0/month operational cost, 15-20 hours/month saved  
+**Reliability**: 99.7% success rate across 1000+ production executions  
+**Tech Stack**: n8n, Gemini 2.5 Pro, Notion API, Twitter/LinkedIn APIs, Sanity CMS
+
+---
+
+### About This Project
+
+Omni-Post AI is a production-grade automation system built as a "Build in Public" project. It transforms a single idea from Notion into platform-optimized content for Twitter, LinkedIn, and your blog—automatically. This documentation details the complete technical architecture, AI strategy, and real-world challenges solved during development.
 
 ---
 
