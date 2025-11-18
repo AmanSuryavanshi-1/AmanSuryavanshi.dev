@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "amansuryavanshi-dev.vercel.app"
+        }
+      ],
+      "destination": "https://amansuryavanshi.me/:path*",
+      "permanent": false
+    }
+  ]
+}
