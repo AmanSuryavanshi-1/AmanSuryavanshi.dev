@@ -60,4 +60,5 @@ export interface Post {
   _createdAt: string;
   _updatedAt: string;
   viewCount?: number;
+  views?: number;
 }

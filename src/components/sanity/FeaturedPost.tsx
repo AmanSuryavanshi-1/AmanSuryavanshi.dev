@@ -18,7 +18,7 @@ interface FeaturedPostProps {
 
 const extractTextFromBody = (body: PortableTextBlockType[] | undefined): string => {
     if (!body) return '';
-    
+
     let text = '';
     body.forEach(block => {
         if (block._type === 'block') {
@@ -29,7 +29,7 @@ const extractTextFromBody = (body: PortableTextBlockType[] | undefined): string 
             });
         }
     });
-    
+
     return text.trim().slice(0, 200) + (text.length > 200 ? '...' : '');
 };
 
@@ -67,9 +67,8 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle }) => {
 
     return (
         <Link href={`/blogs/${post.slug.current}`} className="group">
-            <article className={`relative overflow-hidden ${
-                isSingle ? 'aspect-[16/9]' : 'aspect-[4/3]'
-            } rounded-3xl shadow-lg shadow-forest-500 border-4 border-sage-100 
+            <article className={`relative overflow-hidden ${isSingle ? 'aspect-[16/9]' : 'aspect-[4/5] lg:aspect-[4/3]'
+                } rounded-3xl shadow-lg shadow-forest-500 border-4 border-sage-100 
             bg-gradient-to-br from-lime-500 to-lime-300/10 
             hover:from-forest-900 hover:to-forest-500 
             transition-all duration-300 group`}>
@@ -115,50 +114,48 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle }) => {
 
                     {/* Title & Description */}
                     <div className="space-y-1.5 sm:space-y-2">
-                        <h2 className={`font-heading ${
-                            isSingle 
-                                ? 'text-xl sm:text-3xl md:text-4xl' 
-                                : 'text-lg sm:text-xl md:text-2xl'
-                        } font-bold leading-tight group-hover:text-lime-500 transition-colors duration-300`}>
+                        <h2 className={`font-heading ${isSingle
+                            ? 'text-xl sm:text-3xl md:text-4xl'
+                            : 'text-lg sm:text-xl md:text-2xl'
+                            } font-bold leading-tight group-hover:text-lime-500 transition-colors duration-300 line-clamp-2`}>
                             {post.title}
                         </h2>
-                        
-                        <p className={`text-lime-100 line-clamp-2 sm:line-clamp-3 ${
-                            isSingle 
-                                ? 'text-sm sm:text-base md:text-lg group-hover:text-lime-700' 
-                                : 'text-xs sm:text-sm md:text-base group-hover:text-sage-300'
-                        }`}>
+
+                        <p className={`text-lime-100 line-clamp-2 ${isSingle
+                            ? 'text-sm sm:text-base md:text-lg group-hover:text-lime-700'
+                            : 'text-xs sm:text-sm md:text-base group-hover:text-sage-300'
+                            }`}>
                             {excerpt}
                         </p>
                     </div>
 
                     {/* Metadata */}
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-4 sm:mt-6 pt-3 sm:pt-4 border-t-2 border-lime-500 gap-3 sm:gap-0">
-                        <div className="flex items-center space-x-3 sm:space-x-4">
+                    <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between mt-4 sm:mt-6 pt-3 sm:pt-4 border-t-2 border-lime-500 gap-3 xl:gap-0">
+                        <div className="flex items-center space-x-3">
                             {post.author?.image && (
                                 <Image
                                     src={urlFor(post.author.image).url()}
                                     alt={post.author.name || 'Author'}
                                     width={24}
                                     height={24}
-                                    className="rounded-full ring-2 bg-lime-500 ring-sage-100 group-hover:ring-lime-500 transition-colors duration-300 sm:w-8 sm:h-8"
+                                    className="rounded-full ring-2 bg-lime-500 ring-sage-100 group-hover:ring-lime-500 transition-colors duration-300 sm:w-8 sm:h-8 shrink-0"
                                 />
                             )}
                             <div>
-                                <p className="text-xs sm:text-sm font-medium text-sage-100">{post.author?.name}</p>
+                                <p className="text-xs sm:text-sm font-medium text-sage-100 whitespace-nowrap">{post.author?.name}</p>
                             </div>
                         </div>
-                        
-                        <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm">
-                            <div className="flex items-center gap-1 text-sage-100">
+
+                        <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-sage-200">
+                            <div className="flex items-center gap-1 whitespace-nowrap">
                                 <BiTime className="h-3 w-3 sm:h-4 sm:w-4" />
-                                <span>{readTime} min read</span>
+                                <span>{readTime} min</span>
                             </div>
-                            <div className="flex items-center gap-1 text-sage-100">
+                            <div className="flex items-center gap-1 whitespace-nowrap">
                                 <BsEye className="h-3 w-3 sm:h-4 sm:w-4" />
                                 <ViewCounter postId={post._id} />
                             </div>
-                            <time className="flex items-center gap-1 text-sage-100 ">
+                            <time className="flex items-center gap-1 whitespace-nowrap">
                                 {format(new Date(post._createdAt), 'MMM dd, yyyy')}
                             </time>
                         </div>
