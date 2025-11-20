@@ -25,13 +25,15 @@ export function ProjectCard({ project }: { project: Project }) {
       { threshold: 0.5 }
     )
 
-    if (videoRef.current) {
-      observer.observe(videoRef.current)
+    const currentVideoRef = videoRef.current
+
+    if (currentVideoRef) {
+      observer.observe(currentVideoRef)
     }
 
     return () => {
-      if (videoRef.current) {
-        observer.unobserve(videoRef.current)
+      if (currentVideoRef) {
+        observer.unobserve(currentVideoRef)
       }
     }
   }, [])
@@ -72,7 +74,7 @@ export function ProjectCard({ project }: { project: Project }) {
           className="w-full h-full object-cover"
         />
       ) : null}
-      
+
       <div className="absolute inset-0 bg-gradient-to-t from-forest-900/95 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out">
         <div className="absolute inset-0 p-5 flex flex-col justify-end bg-gradient-to-t from-black/95 via-forest-900/90 to-transparent">
           <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
@@ -106,8 +108,8 @@ export function ProjectCard({ project }: { project: Project }) {
                   <div className="flex items-center justify-between">
                     <div className="flex gap-2">
                       <Link href={project.links.live} target="_blank">
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           variant="ghost"
                           className="p-2 text-lime-400 hover:text-forest-900 hover:bg-lime-400 
                                   border border-lime-400/20 hover:border-lime-400 
@@ -117,8 +119,8 @@ export function ProjectCard({ project }: { project: Project }) {
                         </Button>
                       </Link>
                       <Link href={project.links.github} target="_blank">
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           variant="ghost"
                           className="p-2 text-lime-400 hover:text-forest-900 hover:bg-lime-400 
                                   border border-lime-400/20 hover:border-lime-400 
@@ -130,8 +132,8 @@ export function ProjectCard({ project }: { project: Project }) {
                     </div>
                     {project.slug && (
                       <Link href={`/blogs/${project.slug}`}>
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           className="px-2 py-2 bg-lime-500 hover:bg-lime-400 text-forest-900 
                                   font-semibold transition-all duration-300 rounded-full 
                                   border border-white/20 hover:border-white/40 shadow-lg text-[10px] shrink-0"
@@ -156,8 +158,8 @@ export function ProjectCard({ project }: { project: Project }) {
                   </div>
                   <div className="flex gap-2">
                     <Link href={project.links.live} target="_blank">
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         variant="ghost"
                         className="p-2 text-lime-400 hover:text-forest-900 hover:bg-lime-400 
                                 border border-lime-400/20 hover:border-lime-400 
@@ -167,8 +169,8 @@ export function ProjectCard({ project }: { project: Project }) {
                       </Button>
                     </Link>
                     <Link href={project.links.github} target="_blank">
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         variant="ghost"
                         className="p-2 text-lime-400 hover:text-forest-900 hover:bg-lime-400 
                                 border border-lime-400/20 hover:border-lime-400 
@@ -195,8 +197,8 @@ export function ProjectCard({ project }: { project: Project }) {
                   </div>
                   {project.slug && (
                     <Link href={`/blogs/${project.slug}`}>
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         className="ml-2 px-2 py-2 bg-lime-500 hover:bg-lime-400 text-forest-900 
                                 font-semibold transition-all duration-300 rounded-full 
                                 border border-white/20 hover:border-white/40 shadow-lg text-[10px] shrink-0"

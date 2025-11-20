@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 const Tree = ({ height = '30vh', left = 0, delay = 0 }) => (
   <motion.div
     className="absolute bottom-0"
-    style={{ 
+    style={{
       left: `${left}%`,
       height,
       aspectRatio: '1/2',
@@ -19,10 +19,10 @@ const Tree = ({ height = '30vh', left = 0, delay = 0 }) => (
     transition={{ duration: 0.5, delay }}
   >
     <svg viewBox="0 0 100 200" className="w-full h-full text-forest-900/40">
-      <path d="M50 0 L10 80 H90 Z" fill="currentColor"/>
-      <path d="M50 40 L0 120 H100 Z" fill="currentColor"/>
-      <path d="M50 80 L5 160 H95 Z" fill="currentColor"/>
-      <rect x="45" y="160" width="10" height="40" fill="currentColor"/>
+      <path d="M50 0 L10 80 H90 Z" fill="currentColor" />
+      <path d="M50 40 L0 120 H100 Z" fill="currentColor" />
+      <path d="M50 80 L5 160 H95 Z" fill="currentColor" />
+      <rect x="45" y="160" width="10" height="40" fill="currentColor" />
     </svg>
   </motion.div>
 )
@@ -30,7 +30,7 @@ const Tree = ({ height = '30vh', left = 0, delay = 0 }) => (
 const GlowingBall = ({ delay = 0, left = 50 }) => (
   <motion.div
     className="absolute top-0 pointer-events-none"
-    style={{ 
+    style={{
       left: `${left}%`,
       width: '6px',
       height: '6px',
@@ -61,18 +61,18 @@ const EyesAnimation = () => {
   const leftEyeControls = useAnimationControls()
   const rightEyeControls = useAnimationControls()
 
-  const blink = async () => {
-    await Promise.all([
-      leftEyeControls.start({ scaleY: 0.2 }, { duration: 0.1 }),
-      rightEyeControls.start({ scaleY: 0.2 }, { duration: 0.1 })
-    ])
-    await Promise.all([
-      leftEyeControls.start({ scaleY: 1 }, { duration: 0.1 }),
-      rightEyeControls.start({ scaleY: 1 }, { duration: 0.1 })
-    ])
-  }
-
   useEffect(() => {
+    const blink = async () => {
+      await Promise.all([
+        leftEyeControls.start({ scaleY: 0.2 }, { duration: 0.1 }),
+        rightEyeControls.start({ scaleY: 0.2 }, { duration: 0.1 })
+      ])
+      await Promise.all([
+        leftEyeControls.start({ scaleY: 1 }, { duration: 0.1 }),
+        rightEyeControls.start({ scaleY: 1 }, { duration: 0.1 })
+      ])
+    }
+
     const blinkInterval = setInterval(() => {
       if (Math.random() < 0.7) {
         blink()
@@ -100,7 +100,7 @@ const EyesAnimation = () => {
         await readLine(-3, 3, 4)
         await readLine(-4, 4, 6)
         await readLine(-4, 4, 7)
-        
+
         for (let i = 0; i < 3; i++) {
           const x = Math.random() * 6 - 3
           const y = Math.random() * 4
@@ -115,17 +115,17 @@ const EyesAnimation = () => {
 
     sequence()
     return () => clearInterval(blinkInterval)
-  }, [leftEyeControls, rightEyeControls, blink])
+  }, [leftEyeControls, rightEyeControls])
 
   return (
-    <motion.div 
+    <motion.div
       className="w-40 h-40 md:w-44 md:h-44 mx-auto mb-8 relative"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ duration: 0.3 }}
     >
       {/* Spring Antenna */}
-      <motion.div 
+      <motion.div
         className="absolute -top-6 left-1/2 -translate-x-1/2"
         animate={{
           rotateZ: [-4, 4, -4],
@@ -167,7 +167,7 @@ const EyesAnimation = () => {
         <div className="flex gap-6 -mt-2">
           <div className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-sage-300 flex items-center justify-center relative
                        border-2 border-forest-900">
-            <motion.div 
+            <motion.div
               className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-lime-500 absolute
                        shadow-[0_0_8px_rgba(157,207,111,0.4)]"
               animate={leftEyeControls}
@@ -180,7 +180,7 @@ const EyesAnimation = () => {
           </div>
           <div className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-sage-300 flex items-center justify-center relative
                        border-2 border-forest-900">
-            <motion.div 
+            <motion.div
               className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-lime-500 absolute
                        shadow-[0_0_8px_rgba(157,207,111,0.4)]"
               animate={rightEyeControls}
@@ -210,9 +210,9 @@ export default function NotFound() {
 
       {/* Glowing Balls */}
       {[...Array(30)].map((_, i) => (
-        <GlowingBall 
-          key={i} 
-          delay={i * 0.2} 
+        <GlowingBall
+          key={i}
+          delay={i * 0.2}
           left={Math.random() * 100}
         />
       ))}
@@ -224,7 +224,7 @@ export default function NotFound() {
           transition={{ duration: 0.6 }}
         >
           <EyesAnimation />
-          
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -244,7 +244,7 @@ export default function NotFound() {
           <h1 className="text-3xl md:text-4xl font-bold text-sage-100 leading-tight">
             Oops! You&apos;ve wandered off the trail.
           </h1>
-          
+
           <p className="text-xl text-sage-300 max-w-lg mx-auto leading-relaxed">
             Don&apos;t worry, even the most experienced explorers get lost sometimes. Let&apos;s get you back on track!
           </p>

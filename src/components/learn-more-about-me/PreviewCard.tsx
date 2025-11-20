@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowUpRight} from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { projects } from '@/components/projects/projectsData'
 import { useRef, useEffect, useState } from 'react'
 import { client } from '@/sanity/lib/client'
@@ -18,7 +18,7 @@ export default function PreviewCard({ type, onEnter }: PreviewCardProps) {
   const videoRef1 = useRef<HTMLVideoElement>(null)
   const videoRef2 = useRef<HTMLVideoElement>(null)
   const [posts, setPosts] = useState<Post[]>([])
-  
+
   const videoProjects = projects.filter(project => project.video).slice(0, 2)
 
   useEffect(() => {
@@ -38,12 +38,15 @@ export default function PreviewCard({ type, onEnter }: PreviewCardProps) {
       { threshold: 0.5 }
     )
 
-    if (videoRef1.current) observer.observe(videoRef1.current)
-    if (videoRef2.current) observer.observe(videoRef2.current)
+    const currentVideoRef1 = videoRef1.current
+    const currentVideoRef2 = videoRef2.current
+
+    if (currentVideoRef1) observer.observe(currentVideoRef1)
+    if (currentVideoRef2) observer.observe(currentVideoRef2)
 
     return () => {
-      if (videoRef1.current) observer.unobserve(videoRef1.current)
-      if (videoRef2.current) observer.unobserve(videoRef2.current)
+      if (currentVideoRef1) observer.unobserve(currentVideoRef1)
+      if (currentVideoRef2) observer.unobserve(currentVideoRef2)
     }
   }, [])
 
@@ -84,8 +87,8 @@ export default function PreviewCard({ type, onEnter }: PreviewCardProps) {
           {type === 'projects' ? (
             <div className="grid grid-cols-2 gap-2">
               {videoProjects.map((project, index) => (
-                <div 
-                  key={project.id} 
+                <div
+                  key={project.id}
                   className="bg-forest-700 p-2 rounded group hover:bg-forest-500 transition-colors duration-300"
                 >
                   <video
@@ -127,7 +130,7 @@ export default function PreviewCard({ type, onEnter }: PreviewCardProps) {
             </div>
           )}
         </div>
-        <Button 
+        <Button
           onClick={onEnter}
           className="w-full bg-lime-500 hover:bg-lime-700 text-forest-900 font-semibold group"
         >
