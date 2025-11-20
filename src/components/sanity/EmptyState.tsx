@@ -22,7 +22,7 @@ export default function EmptyState({ onClear }: EmptyStateProps) {
                 No posts found matching your criteria
             </h3>
             <p className="text-forest-500 mb-8 max-w-md mx-auto">
-                Try adjusting your search or filters to find what you're looking for.
+                Try adjusting your search or filters to find what you&apos;re looking for.
             </p>
 
             <button
