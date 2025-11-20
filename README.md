@@ -3,7 +3,7 @@
 
 > **A modern, full-stack portfolio website with integrated blog and AI-powered content automation**
 
-**Live Site**: [amansuryavanshi-dev.vercel.app](https://amansuryavanshi-dev.vercel.app/)  
+**Live Site**: [amansuryavanshi.me](https://amansuryavanshi-dev.vercel.app/)  
 **Author**: Aman Suryavanshi  
 **Tech Stack**: Next.js 15, TypeScript, Sanity CMS, Tailwind CSS, n8n Automation
 
