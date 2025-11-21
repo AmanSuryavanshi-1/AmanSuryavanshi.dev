@@ -10,18 +10,19 @@ import { toast } from 'sonner';
 interface ShareButtonsProps {
   title: string;
   url: string;
+  vertical?: boolean;
 }
 
-export default function ShareButtons({ title, url }: ShareButtonsProps) {
+export default function ShareButtons({ title, url, vertical = false }: ShareButtonsProps) {
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
 
   const containerVariants = {
     hidden: { opacity: 0, x: -20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       x: 0,
-      transition: { 
+      transition: {
         staggerChildren: 0.1,
         delayChildren: 0.3,
       }
@@ -67,7 +68,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
 
   return (
     <motion.div
-      className="flex items-center gap-4"
+      className={`flex ${vertical ? 'flex-col' : 'flex-row'} items-center gap-4`}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -78,7 +79,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
           href={link.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-forest-900 hover:text-lime-700 transition-colors duration-300"
+          className={`text-forest-900 hover:text-lime-700 transition-colors duration-300 ${vertical ? 'p-2 rounded-full hover:bg-sage-50' : ''}`}
           variants={itemVariants}
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.95 }}
@@ -89,7 +90,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
       ))}
       <motion.button
         onClick={copyToClipboard}
-        className="text-forest-900 hover:text-lime-700 transition-colors duration-300"
+        className={`text-forest-900 hover:text-lime-700 transition-colors duration-300 ${vertical ? 'p-2 rounded-full hover:bg-sage-50' : ''}`}
         variants={itemVariants}
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.95 }}

@@ -1,5 +1,5 @@
-import {TagIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import { TagIcon } from '@sanity/icons'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export const categoryType = defineType({
   name: 'category',
@@ -21,6 +21,14 @@ export const categoryType = defineType({
     defineField({
       name: 'description',
       type: 'text',
+      rows: 3,
+    }),
+    defineField({
+      name: 'tags',
+      title: 'Related Tags',
+      type: 'array',
+      description: 'Tags commonly associated with this category (used for suggestions)',
+      of: [defineArrayMember({ type: 'reference', to: { type: 'tag' } })],
     }),
   ],
 })

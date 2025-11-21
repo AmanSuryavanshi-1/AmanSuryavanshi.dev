@@ -31,6 +31,12 @@ export const postType = defineType({
       validation: (Rule) => Rule.max(160),
     }),
     defineField({
+      name: 'focusKeyword',
+      type: 'string',
+      title: 'Focus Keyword',
+      description: 'Primary keyword for SEO optimization',
+    }),
+    defineField({
       name: 'author',
       type: 'reference',
       to: { type: 'author' },
@@ -52,17 +58,27 @@ export const postType = defineType({
       ],
     }),
     defineField({
+      name: 'socialImage',
+      type: 'image',
+      title: 'Social Share Image',
+      description: 'Image for social media sharing (OG tags). Recommended size: 1200x630',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
       name: 'categories',
       type: 'array',
       title: 'Categories',
       of: [defineArrayMember({ type: 'reference', to: { type: 'category' } })],
+      hidden: true, // Deprecated: Using tags instead
     }),
     defineField({
       name: 'tags',
       type: 'array',
       title: 'Tags',
       description: 'Add tags for better content organization',
-      of: [defineArrayMember({ type: 'string' })],
+      of: [defineArrayMember({ type: 'reference', to: { type: 'tag' } })],
       options: {
         layout: 'tags',
       },
@@ -76,12 +92,18 @@ export const postType = defineType({
         list: [
           { title: 'Draft', value: 'draft' },
           { title: 'Published', value: 'published' },
-          { title: 'Needs Review', value: 'needs-review' },
+          { title: 'Archived', value: 'archived' },
         ],
         layout: 'radio',
       },
       initialValue: 'draft',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'featured',
+      type: 'boolean',
+      title: 'Featured Post',
+      initialValue: false,
     }),
     defineField({
       name: 'publishedAt',
@@ -95,6 +117,28 @@ export const postType = defineType({
       title: 'Body Content'
     }),
     defineField({
+      name: 'readingTime',
+      type: 'number',
+      title: 'Reading Time (minutes)',
+      description: 'Estimated reading time. Can be auto-calculated or overridden.',
+    }),
+    defineField({
+      name: 'tableOfContents',
+      type: 'array',
+      title: 'Table of Contents',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            { name: 'title', type: 'string' },
+            { name: 'slug', type: 'string' },
+            { name: 'level', type: 'number' },
+          ]
+        })
+      ],
+      hidden: true, // We might want to auto-generate this, so hiding from manual edit for now or making it read-only
+    }),
+    defineField({
       name: 'seoTitle',
       type: 'string',
       title: 'SEO Title',
@@ -102,9 +146,9 @@ export const postType = defineType({
       validation: (Rule) => Rule.max(60),
     }),
     defineField({
-      name: 'seoDescription',
+      name: 'metaDescription',
       type: 'text',
-      title: 'SEO Description',
+      title: 'Meta Description',
       description: 'Custom description for search engines (leave empty to use excerpt)',
       rows: 3,
       validation: (Rule) => Rule.max(160),
@@ -114,6 +158,7 @@ export const postType = defineType({
       type: 'number',
       title: 'View Count',
       initialValue: 0,
+      readOnly: true,
       validation: (Rule) => Rule.min(0)
     }),
   ],

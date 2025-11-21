@@ -107,88 +107,93 @@ export default function FilterSort({ value, onChange }: FilterSortProps) {
             {/* Dropdown Menu */}
             <AnimatePresence>
                 {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                        transition={{ duration: 0.2, ease: 'easeOut' }}
-                        className="absolute top-full left-0 right-0 mt-2 z-50"
-                    >
-                        <div className="relative">
-                            {/* Background glow */}
-                            <div className="absolute -inset-0.5 bg-gradient-to-br from-lime-500 via-sage-300 to-forest-500 rounded-xl opacity-20 blur" />
+                    <>
+                        {/* Backdrop overlay to block content behind */}
+                        <div className="fixed inset-0" onClick={() => setIsOpen(false)} />
 
-                            {/* Menu container */}
-                            <div className="relative bg-white/95 backdrop-blur-md rounded-xl border-2 border-forest-200 shadow-2xl overflow-hidden">
-                                <div className="p-1.5">
-                                    {sortOptions.map((option, index) => {
-                                        const isSelected = option.value === value;
+                        <motion.div
+                            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                            transition={{ duration: 0.2, ease: 'easeOut' }}
+                            className="absolute top-full left-0 right-0 mt-2 z-[9999]"
+                        >
+                            <div className="relative">
+                                {/* Background glow - behind the menu */}
+                                <div className="absolute -inset-0.5 bg-gradient-to-br from-lime-500 via-sage-300 to-forest-500 rounded-xl opacity-20 blur-sm -z-10" />
 
-                                        return (
-                                            <motion.button
-                                                key={option.value}
-                                                initial={{ opacity: 0, x: -20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: index * 0.05 }}
-                                                onClick={() => handleSelect(option.value)}
-                                                className={`
+                                {/* Menu container - Fully opaque background */}
+                                <div className="relative bg-white rounded-xl border-2 border-forest-200 shadow-2xl overflow-hidden">
+                                    <div className="p-1.5">
+                                        {sortOptions.map((option, index) => {
+                                            const isSelected = option.value === value;
+
+                                            return (
+                                                <motion.button
+                                                    key={option.value}
+                                                    initial={{ opacity: 0, x: -20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: index * 0.05 }}
+                                                    onClick={() => handleSelect(option.value)}
+                                                    className={`
                           group/item relative w-full
                           flex items-center justify-between gap-3
                           px-4 py-3 rounded-lg
                           transition-all duration-200
                           ${isSelected
-                                                        ? 'bg-gradient-to-r from-lime-500/20 to-sage-300/20 text-forest-900'
-                                                        : 'hover:bg-sage-100/50 text-forest-700'
-                                                    }
+                                                            ? 'bg-gradient-to-r from-lime-500/20 to-sage-300/20 text-forest-900'
+                                                            : 'hover:bg-sage-100/50 text-forest-700'
+                                                        }
                         `}
-                                            >
-                                                {/* Animated background highlight */}
-                                                <motion.div
-                                                    className="absolute inset-0 bg-gradient-to-r from-lime-500/10 to-sage-300/10 rounded-lg"
-                                                    initial={{ opacity: 0, scale: 0.8 }}
-                                                    whileHover={{ opacity: 1, scale: 1 }}
-                                                    transition={{ duration: 0.2 }}
-                                                />
+                                                >
+                                                    {/* Animated background highlight */}
+                                                    <motion.div
+                                                        className="absolute inset-0 bg-gradient-to-r from-lime-500/10 to-sage-300/10 rounded-lg"
+                                                        initial={{ opacity: 0, scale: 0.8 }}
+                                                        whileHover={{ opacity: 1, scale: 1 }}
+                                                        transition={{ duration: 0.2 }}
+                                                    />
 
-                                                {/* Content */}
-                                                <div className="relative flex items-center gap-3">
-                                                    <div
-                                                        className={`transition-all duration-200 ${isSelected
+                                                    {/* Content */}
+                                                    <div className="relative flex items-center gap-3">
+                                                        <div
+                                                            className={`transition-all duration-200 ${isSelected
                                                                 ? 'text-lime-500 scale-110'
                                                                 : 'text-forest-500 group-hover/item:text-forest-700 group-hover/item:scale-105'
-                                                            }`}
-                                                    >
-                                                        {option.icon}
-                                                    </div>
-                                                    <div className="text-left">
-                                                        <div className={`font-semibold text-sm ${isSelected ? 'text-forest-900' : ''}`}>
-                                                            {option.label}
+                                                                }`}
+                                                        >
+                                                            {option.icon}
                                                         </div>
-                                                        <div className="text-xs text-forest-400 mt-0.5">
-                                                            {option.description}
+                                                        <div className="text-left">
+                                                            <div className={`font-semibold text-sm ${isSelected ? 'text-forest-900' : ''}`}>
+                                                                {option.label}
+                                                            </div>
+                                                            <div className="text-xs text-forest-400 mt-0.5">
+                                                                {option.description}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                {/* Check mark */}
-                                                {isSelected && (
-                                                    <motion.div
-                                                        initial={{ scale: 0, rotate: -180 }}
-                                                        animate={{ scale: 1, rotate: 0 }}
-                                                        transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-                                                        className="relative"
-                                                    >
-                                                        <Check className="h-5 w-5 text-lime-500" />
-                                                        <div className="absolute inset-0 bg-lime-500/20 rounded-full animate-ping" />
-                                                    </motion.div>
-                                                )}
-                                            </motion.button>
-                                        );
-                                    })}
+                                                    {/* Check mark */}
+                                                    {isSelected && (
+                                                        <motion.div
+                                                            initial={{ scale: 0, rotate: -180 }}
+                                                            animate={{ scale: 1, rotate: 0 }}
+                                                            transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+                                                            className="relative"
+                                                        >
+                                                            <Check className="h-5 w-5 text-lime-500" />
+                                                            <div className="absolute inset-0 bg-lime-500/20 rounded-full animate-ping" />
+                                                        </motion.div>
+                                                    )}
+                                                </motion.button>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    </>
                 )}
             </AnimatePresence>
         </div>
