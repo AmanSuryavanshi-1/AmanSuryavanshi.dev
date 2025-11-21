@@ -67,7 +67,7 @@ export default function ResponsiveImage({
     <figure className={`my-8 ${className}`}>
       {/* Loading skeleton */}
       {isLoading && (
-        <div 
+        <div
           className="animate-pulse bg-gray-200 rounded-3xl border-4 border-white shadow-xl shadow-sage-300"
           style={{
             width: '100%',
@@ -77,28 +77,45 @@ export default function ResponsiveImage({
           }}
         />
       )}
-      
+
       {/* Responsive image container */}
-      <div 
-        className="relative mx-auto overflow-hidden rounded-3xl border-4 border-white shadow-xl shadow-sage-300"
+      <div
+        className="relative mx-auto overflow-hidden rounded-3xl border-4 border-white shadow-xl shadow-sage-300 bg-gray-50"
         style={{
           width: '100%',
           maxWidth: `min(${maxWidth}px, 85vw)`,
           minWidth: '280px',
-          aspectRatio: '1 / 1'
+          aspectRatio: '16 / 9'
         }}
       >
+        {/* Blurred Background Layer */}
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src={imageUrl}
+            alt=""
+            fill
+            priority={false}
+            className="scale-110 blur-2xl opacity-50 saturate-150"
+            style={{
+              objectFit: 'cover',
+            }}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-black/10" /> {/* Subtle overlay for contrast */}
+        </div>
+
+        {/* Main Foreground Image */}
         <Image
           src={imageUrl}
           alt={imageAlt}
           fill
           priority={priority}
           className={`
-            transition-opacity duration-300
+            relative z-10 transition-opacity duration-300
             ${isLoading ? 'opacity-0' : 'opacity-100'}
           `}
           style={{
-            objectFit: 'cover'
+            objectFit: 'contain'
           }}
           sizes="(max-width: 640px) 85vw, (max-width: 768px) 75vw, (max-width: 1024px) 65vw, 600px"
           onError={handleImageError}

@@ -1,14 +1,14 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import { format } from 'date-fns';
+import Link from 'next/link';
 
-import { BiTime } from 'react-icons/bi';
+import { BiTime, BiLogoTwitter, BiLogoLinkedin, BiLogoGithub, BiGlobe } from 'react-icons/bi';
 import { PortableText } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import { calculateReadTime } from '@/components/sanity/calculateReadTime';
 import { client } from '@/sanity/lib/client';
 import type { Post } from '@/sanity/sanity';
-import ShareButtons from '@/components/sanity/ShareButtons';
 import { portableTextComponents } from '@/components/sanity/PortableTextComponents';
 
 import NotFound from '@/app/not-found';
@@ -20,6 +20,11 @@ import { BlogErrorBoundary } from '@/components/blog/BlogErrorBoundary';
 import ReadingProgress from '@/components/blog/ReadingProgress';
 import Breadcrumbs from '@/components/blog/Breadcrumbs';
 import TableOfContents from '@/components/blog/TableOfContents';
+import FloatingActions from '@/components/blog/FloatingActions';
+import MobileActionBar from '@/components/blog/MobileActionBar';
+import RelatedPosts from '@/components/blog/RelatedPosts';
+import ShareBar from '@/components/blog/ShareBar';
+import AllTags from '@/components/blog/AllTags';
 
 type NextPageProps = {
   params: Promise<{ slug: string }>;
@@ -130,13 +135,27 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
 
   const readTime = calculateReadTime(post.body);
 
+  // Fetch related posts
+  const relatedPostsQuery = `*[_type == "post" && slug.current != $slug && count((tags[]->slug.current)[@ in $tags]) > 0] | order(_createdAt desc)[0...3]{
+    _id,
+    title,
+    slug,
+    excerpt,
+    mainImage,
+    _createdAt,
+    "readTime": round(length(pt::text(body)) / 5 / 180 )
+  }`;
+
+  const tags = post.tags?.map(t => t.slug.current) || [];
+  const relatedPosts = await client.fetch(relatedPostsQuery, { slug, tags });
+
   return (
     <BlogErrorBoundary>
       <ReadingProgress />
 
-      <article className="min-h-screen bg-white">
+      <article className="min-h-screen bg-white pb-20 lg:pb-0">
         {/* Hero Section */}
-        <div className="relative h-[70vh] min-h-[500px] w-full overflow-hidden">
+        <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
           <BlogHeaderImage
             post={post}
             priority={true}
@@ -209,28 +228,23 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
         </div>
 
         {/* Main Content Area */}
-        <div className="container mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="container mx-auto max-w-[90rem] px-4 sm:px-6 py-16 lg:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
 
-            {/* Left Sidebar: Share (Desktop) */}
-            <div className="hidden lg:block lg:col-span-1">
-              <div className="sticky top-32 space-y-6">
-                <ShareButtons
-                  title={post.title}
-                  url={`${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${post.slug.current}`}
-                  vertical
-                />
+            {/* Left Sidebar: Floating Actions (Desktop > 1024px) */}
+            <div className="hidden lg:block lg:col-span-2">
+              <div className="sticky top-32">
+                <FloatingActions title={post.title} slug={post.slug.current} />
               </div>
             </div>
 
             {/* Center: Content */}
-            <div className="lg:col-span-8">
+            <div className="lg:col-span-7 xl:col-span-7">
               <div className="prose prose-lg md:prose-xl max-w-none 
                 prose-headings:font-bold prose-headings:text-forest-900 
                 prose-p:text-gray-700 prose-p:leading-relaxed
                 prose-a:text-lime-600 prose-a:no-underline hover:prose-a:text-lime-700 hover:prose-a:underline
                 prose-strong:text-forest-800
-                prose-blockquote:border-l-4 prose-blockquote:border-lime-500 prose-blockquote:bg-sage-50 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-lg prose-blockquote:not-italic
                 prose-img:rounded-2xl prose-img:shadow-lg
                 prose-code:text-lime-700 prose-code:bg-lime-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none">
                 <PortableText
@@ -239,18 +253,12 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                 />
               </div>
 
-              {/* Mobile Share */}
-              <div className="lg:hidden mt-12 pt-8 border-t border-gray-100">
-                <h3 className="text-lg font-bold text-forest-900 mb-4">Share this article</h3>
-                <ShareButtons
-                  title={post.title}
-                  url={`${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${post.slug.current}`}
-                />
-              </div>
+              {/* All Tags Section */}
+              {post.tags && <AllTags tags={post.tags} />}
 
-              {/* Author Bio Box */}
+              {/* Author Bio Card */}
               {post.author && (
-                <div className="mt-16 p-8 bg-sage-50 rounded-3xl border border-sage-100 flex flex-col sm:flex-row gap-6 items-start">
+                <div className="mt-12 mb-12 p-8 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-emerald-100 flex flex-col sm:flex-row gap-6 items-start">
                   {post.author.image && (
                     <Image
                       src={urlFor(post.author.image).url()}
@@ -260,8 +268,27 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                       className="rounded-full ring-4 ring-white shadow-md shrink-0"
                     />
                   )}
-                  <div>
-                    <h3 className="text-xl font-bold text-forest-900 mb-2">About {post.author.name}</h3>
+                  <div className="flex-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                      <h3 className="text-xl font-bold text-forest-900">{post.author.name}</h3>
+                      {/* Hardcoded Socials for Aman */}
+                      {post.author.name.includes('Aman') && (
+                        <div className="flex gap-3 text-forest-600">
+                          <a href="https://twitter.com/amansuryavanshi" target="_blank" rel="noopener noreferrer" className="hover:text-[#059669] transition-colors">
+                            <BiLogoTwitter size={20} />
+                          </a>
+                          <a href="https://linkedin.com/in/amansuryavanshi" target="_blank" rel="noopener noreferrer" className="hover:text-[#059669] transition-colors">
+                            <BiLogoLinkedin size={20} />
+                          </a>
+                          <a href="https://github.com/amansuryavanshi" target="_blank" rel="noopener noreferrer" className="hover:text-[#059669] transition-colors">
+                            <BiLogoGithub size={20} />
+                          </a>
+                          <a href="https://amansuryavanshi.dev" target="_blank" rel="noopener noreferrer" className="hover:text-[#059669] transition-colors">
+                            <BiGlobe size={20} />
+                          </a>
+                        </div>
+                      )}
+                    </div>
                     {post.author.bio && (
                       <div className="text-forest-700 prose-sm">
                         <PortableText value={post.author.bio} />
@@ -270,14 +297,23 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                   </div>
                 </div>
               )}
+
+              {/* Share Bar */}
+              <ShareBar title={post.title} slug={post.slug.current} />
+
+              {/* Related Posts */}
+              <RelatedPosts posts={relatedPosts} />
             </div>
 
-            {/* Right Sidebar: Table of Contents */}
-            <div className="hidden lg:block lg:col-span-3">
-              <TableOfContents />
+            {/* Right Sidebar: Table of Contents (Desktop > 1280px) */}
+            <div className="hidden xl:block xl:col-span-3">
+              <TableOfContents readTime={readTime} />
             </div>
           </div>
         </div>
+
+        {/* Mobile Action Bar */}
+        <MobileActionBar title={post.title} slug={post.slug.current} />
 
         {/* CTA Section */}
         <CTA />

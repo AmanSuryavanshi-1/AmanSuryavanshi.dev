@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
+import { BiTime } from 'react-icons/bi';
 
 interface TOCItem {
     id: string;
@@ -9,9 +9,16 @@ interface TOCItem {
     level: number;
 }
 
-export default function TableOfContents() {
+interface TableOfContentsProps {
+    mobile?: boolean;
+    onClose?: () => void;
+    readTime?: number;
+}
+
+export default function TableOfContents({ mobile, onClose, readTime = 5 }: TableOfContentsProps) {
     const [headings, setHeadings] = useState<TOCItem[]>([]);
     const [activeId, setActiveId] = useState<string>('');
+    const [timeRemaining, setTimeRemaining] = useState<number>(readTime);
 
     useEffect(() => {
         // Find all h2 and h3 elements in the article body
@@ -49,17 +56,45 @@ export default function TableOfContents() {
 
         elements.forEach((elem) => observer.observe(elem));
 
-        return () => observer.disconnect();
-    }, []);
+        // Time remaining calculation
+        const handleScroll = () => {
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = window.scrollY / totalHeight;
+            const remaining = Math.ceil(readTime * (1 - progress));
+            setTimeRemaining(remaining > 0 ? remaining : 0);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            observer.disconnect();
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [readTime]);
 
     if (headings.length === 0) return null;
 
     return (
-        <nav className="hidden lg:block sticky top-32 max-h-[calc(100vh-8rem)] overflow-y-auto pl-4">
+        <nav className={`${mobile ? '' : 'hidden lg:block sticky top-32 max-h-[calc(100vh-8rem)] overflow-y-auto pl-4'}`}>
+            {!mobile && (
+                <div className="mb-6 p-4 bg-sage-50 rounded-xl border border-sage-100">
+                    <div className="flex items-center gap-2 text-forest-700 font-medium text-sm mb-1">
+                        <BiTime className="text-lime-600" />
+                        <span>{timeRemaining} min remaining</span>
+                    </div>
+                    <div className="w-full bg-sage-200 rounded-full h-1.5 mt-2">
+                        <div
+                            className="bg-lime-500 h-1.5 rounded-full transition-all duration-300"
+                            style={{ width: `${Math.max(0, Math.min(100, 100 - (timeRemaining / readTime) * 100))}%` }}
+                        />
+                    </div>
+                </div>
+            )}
+
             <h4 className="text-sm font-bold text-forest-900 uppercase tracking-wider mb-4">
                 On this page
             </h4>
-            <ul className="space-y-3 text-sm border-l border-forest-100">
+            <ul className={`space-y-3 text-sm ${mobile ? '' : 'border-l border-forest-100'}`}>
                 {headings.map((heading) => (
                     <li
                         key={heading.id}
@@ -73,8 +108,9 @@ export default function TableOfContents() {
                                     behavior: 'smooth',
                                     block: 'start'
                                 });
+                                if (onClose) onClose();
                             }}
-                            className={`block pl-4 border-l-2 -ml-[1px] transition-all duration-200 ${activeId === heading.id
+                            className={`block ${mobile ? 'py-2' : 'pl-4 border-l-2 -ml-[1px]'} transition-all duration-200 ${activeId === heading.id
                                 ? 'border-lime-500 text-lime-600 font-medium'
                                 : 'border-transparent text-forest-500 hover:text-forest-800 hover:border-forest-300'
                                 }`}
