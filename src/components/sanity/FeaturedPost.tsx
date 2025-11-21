@@ -2,12 +2,12 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { format } from 'date-fns';
-import { BsEye } from 'react-icons/bs';
+
 import { BiTime } from 'react-icons/bi';
 import { urlFor } from '@/sanity/lib/image';
 import type { Post, PortableTextBlockType } from '@/sanity/sanity';
 import { calculateReadTime } from './calculateReadTime';
-import ViewCounter from './ViewCounter';
+
 import { getFirstAssetFromBody } from '@/lib/asset-extraction';
 import { FallbackImageManager } from '@/lib/fallback-image-manager';
 

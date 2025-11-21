@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+
 
 interface TOCItem {
     id: string;
@@ -75,8 +75,8 @@ export default function TableOfContents() {
                                 });
                             }}
                             className={`block pl-4 border-l-2 -ml-[1px] transition-all duration-200 ${activeId === heading.id
-                                    ? 'border-lime-500 text-lime-600 font-medium'
-                                    : 'border-transparent text-forest-500 hover:text-forest-800 hover:border-forest-300'
+                                ? 'border-lime-500 text-lime-600 font-medium'
+                                : 'border-transparent text-forest-500 hover:text-forest-800 hover:border-forest-300'
                                 }`}
                         >
                             {heading.text}

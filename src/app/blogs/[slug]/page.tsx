@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import { format } from 'date-fns';
-import { BsEye } from 'react-icons/bs';
+
 import { BiTime } from 'react-icons/bi';
 import { PortableText } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
@@ -10,7 +10,7 @@ import { client } from '@/sanity/lib/client';
 import type { Post } from '@/sanity/sanity';
 import ShareButtons from '@/components/sanity/ShareButtons';
 import { portableTextComponents } from '@/components/sanity/PortableTextComponents';
-import ViewCounter from '@/components/sanity/ViewCounter';
+
 import NotFound from '@/app/not-found';
 import { notFound } from 'next/navigation';
 import CTA from '@/components/learn-more-about-me/CTA';
