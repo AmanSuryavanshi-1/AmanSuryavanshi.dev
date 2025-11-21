@@ -1,11 +1,11 @@
-const path = require('path')
+const pathModule = require('path')
 const { createClient } = require('@sanity/client')
 const slugify = require('slugify')
 const fs = require('fs')
 
 // Load env vars
 try {
-    const envPath = path.resolve(process.cwd(), '.env.local')
+    const envPath = pathModule.resolve(process.cwd(), '.env.local')
     if (fs.existsSync(envPath)) {
         require('dotenv').config({ path: envPath })
         const envConfig = require('dotenv').parse(fs.readFileSync(envPath))
@@ -177,3 +177,5 @@ migrateTags().catch((err: any) => {
     console.error('Migration failed:', err)
     process.exit(1)
 })
+
+export { }
