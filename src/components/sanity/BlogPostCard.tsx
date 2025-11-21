@@ -40,8 +40,11 @@ const TAG_PRIORITY = ['Projects', 'Featured', 'AI Agents', 'n8n automation'];
 const getPrioritizedTags = (tags: Post['tags']) => {
     if (!tags) return [];
 
+    // Deduplicate tags based on name (to handle multiple tags with same name but different IDs)
+    const uniqueTags = Array.from(new Map(tags.map(tag => [tag.name, tag])).values());
+
     // Sort tags: priority tags first, then others
-    return [...tags].sort((a, b) => {
+    return uniqueTags.sort((a, b) => {
         const aPriority = TAG_PRIORITY.indexOf(a.name);
         const bPriority = TAG_PRIORITY.indexOf(b.name);
 
