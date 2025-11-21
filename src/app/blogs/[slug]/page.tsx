@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import { format } from 'date-fns';
-import Link from 'next/link';
 
 import { BiTime, BiLogoTwitter, BiLogoLinkedin, BiLogoGithub, BiGlobe } from 'react-icons/bi';
 import { PortableText } from '@portabletext/react';

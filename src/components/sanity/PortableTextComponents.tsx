@@ -82,7 +82,7 @@ export const portableTextComponents: PortableTextComponents = {
       // Default Pull Quote
       return (
         <blockquote className="my-10 p-8 bg-gradient-to-br from-sage-50 to-white rounded-2xl border border-sage-100 shadow-sm relative overflow-hidden">
-          <div className="absolute top-0 left-0 text-9xl leading-none text-lime-500/10 font-serif -translate-x-4 -translate-y-8">"</div>
+          <div className="absolute top-0 left-0 text-9xl leading-none text-lime-500/10 font-serif -translate-x-4 -translate-y-8">&quot;</div>
           <div className="relative z-10 text-xl md:text-2xl font-serif italic text-forest-800 leading-relaxed text-center">
             {children}
           </div>
