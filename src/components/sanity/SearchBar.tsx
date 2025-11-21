@@ -40,11 +40,11 @@ export default function SearchBar({ onSearch, placeholder = 'Search posts...', v
             {/* Main search container */}
             <div className="relative">
                 {/* Search icon with pulse animation */}
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
                     <Search
                         className={`h-5 w-5 transition-all duration-300 ${isFocused
-                                ? 'text-lime-500 scale-110'
-                                : 'text-forest-500'
+                            ? 'text-lime-600 scale-110'
+                            : 'text-forest-700'
                             }`}
                     />
                     {isFocused && (
@@ -56,15 +56,15 @@ export default function SearchBar({ onSearch, placeholder = 'Search posts...', v
                 <input
                     type="text"
                     className={`block w-full pl-12 pr-12 py-3.5 rounded-full leading-5 
-                        bg-white/90 backdrop-blur-sm
+                        bg-white
                         border-2 transition-all duration-300
-                        placeholder-forest-400/60
+                        placeholder-forest-500
                         text-forest-900 font-medium
                         shadow-lg shadow-forest-900/5
                         focus:outline-none 
                         sm:text-sm
                         ${isFocused
-                            ? 'border-lime-500 bg-white shadow-xl shadow-lime-500/10 scale-[1.02]'
+                            ? 'border-lime-500 shadow-xl shadow-lime-500/10 scale-[1.02]'
                             : 'border-forest-200 hover:border-sage-300 hover:shadow-xl hover:shadow-forest-900/10'
                         }`}
                     placeholder={placeholder}

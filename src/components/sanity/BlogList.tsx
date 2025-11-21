@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { client } from '@/sanity/lib/client';
-import type { Post } from '@/sanity/sanity';
+import type { Post, Tag } from '@/sanity/sanity';
 import FeaturedPost from './FeaturedPost';
 import BlogPostCard, { BlogPostSkeleton } from './BlogPostCard';
 import TagCloud from './TagCloud';
@@ -42,17 +42,21 @@ const POSTS_QUERY = `*[ _type == "post" && defined(slug.current) && status == "p
     },
     bio
   },
-  categories[]->{
+  tags[]->{
     _id,
-    _type,
-    title,
-    description
+    name,
+    slug,
+    color
   },
-  tags,
   status
 }`;
 
-const TAGS_QUERY = `*[_type == "category"] {title}`;
+const TAGS_QUERY = `*[_type == "tag"] {
+  _id,
+  name,
+  slug,
+  color
+}`;
 
 const DEFAULT_AUTHOR_QUERY = `*[_type == "author" && name == "Aman Suryavanshi"][0]{
   _id,
@@ -72,7 +76,7 @@ type ViewMode = 'grid' | 'list';
 
 export default function BlogList() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [allSanityTags, setAllSanityTags] = useState<{ title: string }[]>([]);
+  const [allSanityTags, setAllSanityTags] = useState<Tag[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -120,18 +124,20 @@ export default function BlogList() {
         post.excerpt?.toLowerCase().includes(searchQuery.toLowerCase());
 
       const matchesTags = selectedTags.length === 0 ||
-        selectedTags.every(tag => {
-          const relatedTags = getAllRelatedTags(tag);
+        selectedTags.every(selectedTag => {
+          // Get all aliases for the selected tag (e.g., 'Next.js' -> ['Next.js', 'react'])
+          const relatedTags = getAllRelatedTags(selectedTag);
 
-          const hasMatchingTag = post.tags?.some(postTag =>
-            relatedTags.some(related => related.toLowerCase() === postTag.toLowerCase())
-          );
+          return post.tags?.some(postTag => {
+            const tagName = postTag.name.toLowerCase();
+            const tagSlug = postTag.slug?.current.toLowerCase();
 
-          const hasMatchingCategory = post.categories?.some(cat =>
-            relatedTags.some(related => related.toLowerCase() === cat.title?.toLowerCase())
-          );
-
-          return hasMatchingTag || hasMatchingCategory;
+            // Check if the post's tag matches any of the related tags
+            return relatedTags.some(related =>
+              related.toLowerCase() === tagName ||
+              related.toLowerCase() === tagSlug
+            );
+          });
         });
 
       return matchesSearch && matchesTags;
@@ -179,7 +185,7 @@ export default function BlogList() {
 
   // Featured Posts
   const featuredPosts = posts.filter(post =>
-    post.categories?.some(c => c.title?.toLowerCase() === 'featured')
+    post.tags?.some(t => t.name.toLowerCase() === 'featured' || t.slug?.current === 'featured')
   );
 
   if (error) {
@@ -204,7 +210,7 @@ export default function BlogList() {
         {!isLoading && currentPage === 1 && featuredPosts.length > 0 && (
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-forest-900 mb-8">Featured Articles</h2>
-            <div className="grid gap-8 md:grid-cols-2">
+            <div className="grid gap-6 xl:gap-8 md:grid-cols-2">
               {featuredPosts.slice(0, 2).map(post => (
                 <FeaturedPost key={post._id} post={post} isSingle={false} />
               ))}
@@ -212,58 +218,75 @@ export default function BlogList() {
           </div>
         )}
 
-        {/* Controls Section */}
-        <div className="flex flex-col lg:flex-row gap-8 mb-12">
-          {/* Left: Search & Tags */}
-          <div className="flex-grow space-y-6">
-            <SearchBar value={searchQuery} onSearch={setSearchQuery} />
+        {/* Unified Control Panel */}
+        <div className="mb-12 bg-white/40 backdrop-blur-md border border-white/20 shadow-xl rounded-3xl p-6 sm:p-8 relative overflow-hidden group">
+          {/* Decorative background gradient */}
+          <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-lime-500/5 via-transparent to-forest-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+
+          {/* Top Row: Header & Controls */}
+          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between mb-8 relative z-20">
+
+            {/* Left: Title & Search */}
+            <div className="flex flex-col md:flex-row items-center gap-6 w-full lg:w-auto lg:flex-1">
+              <h2 id="all-articles" className="text-2xl md:text-3xl font-bold text-forest-900 whitespace-nowrap flex items-center gap-3">
+                All Articles
+                <span className="px-3 py-1 rounded-full bg-forest-900/5 text-forest-500 text-sm font-medium">
+                  {filteredPosts.length}
+                </span>
+              </h2>
+
+              <div className="w-full md:max-w-md">
+                <SearchBar value={searchQuery} onSearch={setSearchQuery} />
+              </div>
+            </div>
+
+            {/* Right: Filters & View */}
+            <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
+              <FilterSort value={sortBy} onChange={setSortBy} />
+
+              <div className="bg-white/60 p-1.5 rounded-xl border border-forest-200/50 flex items-center gap-1 shadow-sm backdrop-blur-sm">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`p-2.5 rounded-lg transition-all duration-300 ${viewMode === 'grid'
+                    ? 'bg-forest-900 text-white shadow-md scale-105'
+                    : 'text-forest-500 hover:bg-forest-50 hover:text-forest-700'
+                    }`}
+                  aria-label="Grid view"
+                >
+                  <LayoutGrid size={18} />
+                </button>
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`p-2.5 rounded-lg transition-all duration-300 ${viewMode === 'list'
+                    ? 'bg-forest-900 text-white shadow-md scale-105'
+                    : 'text-forest-500 hover:bg-forest-50 hover:text-forest-700'
+                    }`}
+                  aria-label="List view"
+                >
+                  <ListIcon size={18} />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Row: Tags */}
+          <div className="border-t border-forest-900/5 pt-6 relative z-10">
+            <div className="flex items-center gap-2 mb-4 text-xs font-bold uppercase tracking-wider text-forest-500">
+              <span className="w-2 h-2 rounded-full bg-lime-500" />
+              Filter by Topic
+            </div>
             <TagCloud
               posts={posts}
               selectedTags={selectedTags}
               onTagSelect={handleTagSelect}
-              allTags={allSanityTags} // Pass all tags
+              allTags={allSanityTags}
             />
-          </div>
-
-          {/* Right: Sort & View Toggle */}
-          <div className="flex flex-row sm:flex-col gap-4 justify-between sm:justify-start shrink-0">
-            <div className="flex items-center gap-2 bg-white p-1 rounded-lg border border-forest-100 shadow-sm self-start">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-md transition-all ${viewMode === 'grid'
-                  ? 'bg-forest-900 text-white shadow-md'
-                  : 'text-forest-500 hover:bg-forest-50'
-                  }`}
-                aria-label="Grid view"
-              >
-                <LayoutGrid size={20} />
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={`p-2 rounded-md transition-all ${viewMode === 'list'
-                  ? 'bg-forest-900 text-white shadow-md'
-                  : 'text-forest-500 hover:bg-forest-50'
-                  }`}
-                aria-label="List view"
-              >
-                <ListIcon size={20} />
-              </button>
-            </div>
-
-            <FilterSort value={sortBy} onChange={setSortBy} />
           </div>
         </div>
 
         {/* Main Content */}
         <div className="space-y-8">
-          <div className="flex items-center justify-between border-b border-forest-100 pb-4 mt-16 mb-8">
-            <h2 id="all-articles" className="text-3xl md:text-4xl font-bold text-forest-900">
-              All Articles
-              <span className="ml-3 text-lg font-normal text-forest-500">
-                ({filteredPosts.length})
-              </span>
-            </h2>
-          </div>
+
 
           {isLoading ? (
             <div className={viewMode === 'grid'

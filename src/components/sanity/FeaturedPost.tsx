@@ -66,98 +66,103 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle }) => {
     const cardImage = getCardImage();
 
     return (
-        <Link href={`/blogs/${post.slug.current}`} className="group">
-            <article className={`relative overflow-hidden ${isSingle ? 'aspect-[16/9]' : 'aspect-[4/5] lg:aspect-[4/3]'
-                } rounded-3xl shadow-lg shadow-forest-500 border-4 border-sage-100 
-            bg-gradient-to-br from-lime-500 to-lime-300/10 
-            hover:from-forest-900 hover:to-forest-500 
-            transition-all duration-300 group`}>
-                {/* Main Image with Gradient Overlay */}
-                <Image
-                    src={cardImage.url}
-                    alt={cardImage.alt}
-                    fill
-                    priority
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-forest-900 via-forest-900/95 to-transparent"></div>
+        <Link href={`/blogs/${post.slug.current}`} className="group block h-full">
+            <article className={`relative overflow-hidden h-full ${isSingle ? 'aspect-[16/9]' : 'aspect-[4/5] md:aspect-[4/3] lg:aspect-[4/3]'
+                } rounded-[2rem] shadow-xl shadow-forest-900/5 border border-white/20 
+            bg-forest-900
+            transition-all duration-500 ease-out
+            hover:shadow-2xl hover:shadow-lime-500/10 hover:-translate-y-1`}>
+
+                {/* Main Image */}
+                <div className="absolute inset-0 z-0">
+                    <Image
+                        src={cardImage.url}
+                        alt={cardImage.alt}
+                        fill
+                        priority
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                    {/* Stronger Gradient Overlay - No opacity reduction on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-900/80 to-transparent opacity-90" />
+
+                    {/* Subtle Hover Tint - Reduced intensity */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-lime-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
 
                 {/* Featured Badge */}
-                <div className="absolute top-3 sm:top-4 right-3 sm:right-4 z-10">
-                    <div className="flex items-center gap-1.5 bg-lime-500/90 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full shadow-md">
-                        <span className="relative flex h-1.5 sm:h-2 w-1.5 sm:w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-forest-900 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-1.5 sm:h-2 w-1.5 sm:w-2 bg-forest-900"></span>
+                <div className="absolute top-4 right-4 z-20">
+                    <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full shadow-lg">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-lime-500"></span>
                         </span>
-                        <span className="text-forest-900 font-medium text-[10px] sm:text-xs">Featured</span>
+                        <span className="text-white font-semibold text-xs tracking-wide uppercase">Featured</span>
                     </div>
                 </div>
 
                 {/* Content */}
-                <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 text-sage-100">
-                    {/* Categories */}
-                    {post.categories && post.categories.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
-                            {post.categories
-                                .filter(category => category.title.toLowerCase() !== 'featured')
-                                .map(category => (
+                <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 xl:p-8 z-10">
+                    {/* Tags */}
+                    {post.tags && post.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-2 sm:mb-3 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
+                            {post.tags
+                                .filter(t => t.name.toLowerCase() !== 'featured' && t.slug?.current !== 'featured')
+                                .slice(0, 3)
+                                .map(tag => (
                                     <span
-                                        key={category._id}
-                                        className="px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-medium bg-forest-900 border-2 bg-opacity-80 border-white text-sage-100 backdrop-blur-sm rounded-full group-hover:bg-lime-500 group-hover:text-forest-900 transition-colors duration-300"
+                                        key={tag._id}
+                                        className="px-1.5 py-0.5 sm:px-2 sm:py-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-md sm:rounded-lg text-white/90 bg-white/10 backdrop-blur-md border border-white/10"
                                     >
-                                        {category.title}
+                                        {tag.name}
                                     </span>
-                                ))
-                            }
+                                ))}
                         </div>
                     )}
 
                     {/* Title & Description */}
-                    <div className="space-y-1.5 sm:space-y-2">
+                    <div className="space-y-2">
                         <h2 className={`font-heading ${isSingle
-                            ? 'text-xl sm:text-3xl md:text-4xl'
-                            : 'text-lg sm:text-xl md:text-2xl'
-                            } font-bold leading-tight group-hover:text-lime-500 transition-colors duration-300 line-clamp-2`}>
-                            {post.title}
+                            ? 'text-2xl sm:text-4xl md:text-5xl'
+                            : 'text-base sm:text-lg md:text-xl xl:text-2xl'
+                            } font-bold leading-tight text-white group-hover:text-lime-400 transition-colors duration-300 line-clamp-2`}>
+                            {post.title.split(' ').length > 10
+                                ? post.title.split(' ').slice(0, 10).join(' ') + '...'
+                                : post.title}
                         </h2>
 
-                        <p className={`text-lime-100 line-clamp-2 ${isSingle
-                            ? 'text-sm sm:text-base md:text-lg group-hover:text-lime-700'
-                            : 'text-xs sm:text-sm md:text-base group-hover:text-sage-300'
+                        <p className={`text-gray-300 font-light leading-relaxed ${isSingle
+                            ? 'text-base sm:text-lg max-w-2xl line-clamp-2'
+                            : 'text-[10px] sm:text-xs xl:text-sm line-clamp-1 xl:line-clamp-2'
                             }`}>
                             {excerpt}
                         </p>
                     </div>
 
-                    {/* Metadata */}
-                    <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between mt-4 sm:mt-6 pt-3 sm:pt-4 border-t-2 border-lime-500 gap-3 xl:gap-0">
-                        <div className="flex items-center space-x-3">
-                            {post.author?.image && (
-                                <Image
-                                    src={urlFor(post.author.image).url()}
-                                    alt={post.author.name || 'Author'}
-                                    width={24}
-                                    height={24}
-                                    className="rounded-full ring-2 bg-lime-500 ring-sage-100 group-hover:ring-lime-500 transition-colors duration-300 sm:w-8 sm:h-8 shrink-0"
-                                />
-                            )}
-                            <div>
-                                <p className="text-xs sm:text-sm font-medium text-sage-100 whitespace-nowrap">{post.author?.name}</p>
+                    {/* Metadata - Structured Layout */}
+                    <div className="mt-3 pt-3 border-t border-white/10">
+                        <div className="flex items-center justify-between gap-4">
+                            {/* Author */}
+                            <div className="flex items-center gap-2 min-w-0">
+                                {post.author?.image && (
+                                    <Image
+                                        src={urlFor(post.author.image).url()}
+                                        alt={post.author.name || 'Author'}
+                                        width={24}
+                                        height={24}
+                                        className="rounded-full ring-2 ring-white/20 w-5 h-5 sm:w-6 sm:h-6 shrink-0"
+                                    />
+                                )}
+                                <span className="text-white text-xs font-medium truncate">{post.author?.name}</span>
                             </div>
-                        </div>
 
-                        <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-sage-200">
-                            <div className="flex items-center gap-1 whitespace-nowrap">
-                                <BiTime className="h-3 w-3 sm:h-4 sm:w-4" />
-                                <span>{readTime} min</span>
+                            {/* Date & Time */}
+                            <div className="flex flex-col items-end text-[10px] sm:text-xs text-gray-400 font-medium shrink-0 leading-tight">
+                                <time className="text-gray-300">{format(new Date(post._createdAt), 'MMM d, yyyy')}</time>
+                                <div className="flex items-center gap-1 mt-0.5">
+                                    <BiTime className="w-3 h-3 text-lime-500" />
+                                    <span>{readTime} min</span>
+                                </div>
                             </div>
-                            <div className="flex items-center gap-1 whitespace-nowrap">
-                                <BsEye className="h-3 w-3 sm:h-4 sm:w-4" />
-                                <ViewCounter postId={post._id} />
-                            </div>
-                            <time className="flex items-center gap-1 whitespace-nowrap">
-                                {format(new Date(post._createdAt), 'MMM dd, yyyy')}
-                            </time>
                         </div>
                     </div>
                 </div>

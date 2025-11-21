@@ -35,11 +35,27 @@ export interface Author {
   bio?: PortableTextBlockType[];
 }
 
+export interface Tag {
+  _id: string;
+  _type: 'tag';
+  name: string;
+  slug: { current: string; _type: 'slug' };
+  description?: string;
+  color?: string;
+  icon?: string;
+  featured?: boolean;
+  seoMetadata?: {
+    title?: string;
+    description?: string;
+  };
+}
+
 export interface Category {
   _id: string;
   _type: 'category';
   title: string;
   description?: string;
+  tags?: Tag[];
 }
 
 export interface Post {
@@ -49,14 +65,18 @@ export interface Post {
   slug: { current: string; _type: 'slug' };
   excerpt?: string;
   mainImage?: SanityImage;
+  socialImage?: SanityImage;
   body: PortableTextBlockType[];
   author?: Author;
-  categories?: Category[];
-  tags?: string[];
-  status?: 'draft' | 'published' | 'needs-review';
+  // categories?: Category[]; // Deprecated
+  tags?: Tag[]; // Updated from string[] to Tag[]
+  status?: 'draft' | 'published' | 'archived';
+  featured?: boolean;
   publishedAt?: string;
+  readingTime?: number;
+  focusKeyword?: string;
   seoTitle?: string;
-  seoDescription?: string;
+  metaDescription?: string;
   _createdAt: string;
   _updatedAt: string;
   viewCount?: number;
