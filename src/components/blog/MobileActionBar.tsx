@@ -41,8 +41,20 @@ export default function MobileActionBar({ title, slug }: MobileActionBarProps) {
         const likedPosts = JSON.parse(localStorage.getItem('liked_posts') || '[]');
         setIsLiked(likedPosts.includes(slug));
 
+        // Listen for storage changes to sync like state
+        const handleStorageChange = (e: StorageEvent) => {
+            if (e.key === 'liked_posts') {
+                const likedPosts = JSON.parse(e.newValue || '[]');
+                setIsLiked(likedPosts.includes(slug));
+            }
+        };
+
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('storage', handleStorageChange);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('storage', handleStorageChange);
+        };
     }, [slug, lastScrollY]);
 
     const toggleLike = () => {
@@ -55,6 +67,13 @@ export default function MobileActionBar({ title, slug }: MobileActionBarProps) {
         } else {
             localStorage.setItem('liked_posts', JSON.stringify(likedPosts.filter((s: string) => s !== slug)));
         }
+
+        // Dispatch storage event to sync across components
+        window.dispatchEvent(new StorageEvent('storage', {
+            key: 'liked_posts',
+            newValue: localStorage.getItem('liked_posts'),
+            storageArea: localStorage
+        }));
     };
 
     const sharePost = async () => {
@@ -80,12 +99,12 @@ export default function MobileActionBar({ title, slug }: MobileActionBarProps) {
                 initial={{ y: 100 }}
                 animate={{ y: isVisible ? 0 : 100 }}
                 transition={{ duration: 0.3 }}
-                className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-gray-200 px-6 py-3 z-40 lg:hidden safe-area-bottom"
+                className="fixed bottom-0 left-0 right-0 bg-forest-900/95 backdrop-blur-lg border-t border-forest-800 px-6 py-3 z-40 lg:hidden safe-area-bottom"
             >
                 <div className="flex justify-around items-center max-w-md mx-auto">
                     <button
                         onClick={toggleLike}
-                        className={`flex flex-col items-center gap-1 text-xs font-medium ${isLiked ? 'text-[#059669]' : 'text-gray-600'}`}
+                        className={`flex flex-col items-center gap-1 text-xs font-medium ${isLiked ? 'text-lime-500' : 'text-sage-300'}`}
                     >
                         {isLiked ? <BiSolidLike size={24} /> : <BiLike size={24} />}
                         <span>Like</span>
@@ -93,7 +112,7 @@ export default function MobileActionBar({ title, slug }: MobileActionBarProps) {
 
                     <button
                         onClick={() => setShowToc(true)}
-                        className="flex flex-col items-center gap-1 text-xs font-medium text-gray-600"
+                        className="flex flex-col items-center gap-1 text-xs font-medium text-sage-300"
                     >
                         <BiListUl size={24} />
                         <span>Contents</span>
@@ -101,7 +120,7 @@ export default function MobileActionBar({ title, slug }: MobileActionBarProps) {
 
                     <button
                         onClick={sharePost}
-                        className="flex flex-col items-center gap-1 text-xs font-medium text-gray-600"
+                        className="flex flex-col items-center gap-1 text-xs font-medium text-sage-300"
                     >
                         <BiShareAlt size={24} />
                         <span>Share</span>

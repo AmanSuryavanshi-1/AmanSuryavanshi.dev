@@ -6,12 +6,12 @@ import ResponsiveImage from '@/components/blog/ResponsiveImage';
 
 // Normalized heading styles for consistent typography across all post sources
 const normalizedHeadingStyles = {
-  h1: "text-4xl md:text-5xl font-bold text-forest-900 mt-12 mb-6 leading-tight",
-  h2: "text-3xl md:text-4xl font-semibold text-forest-900 mt-10 mb-5 leading-tight",
-  h3: "text-2xl md:text-3xl font-semibold text-forest-700 mt-8 mb-4 leading-snug",
-  h4: "text-xl md:text-2xl font-medium text-forest-700 mt-6 mb-3 leading-snug",
-  h5: "text-lg md:text-xl font-medium text-forest-500 mt-4 mb-2 leading-normal",
-  h6: "text-base md:text-lg font-medium text-forest-500 mt-4 mb-2 leading-normal"
+  h1: "text-2xl md:text-4xl font-serif font-bold !text-forest-900 mt-10 mb-5 leading-tight",
+  h2: "text-xl md:text-3xl font-serif font-bold !text-forest-900 mt-8 mb-4 leading-tight",
+  h3: "text-lg md:text-2xl font-serif font-semibold !text-forest-900 mt-6 mb-3 leading-snug",
+  h4: "text-base md:text-xl font-serif font-semibold !text-forest-900 mt-5 mb-2 leading-snug",
+  h5: "text-base md:text-lg font-serif font-medium !text-forest-900 mt-4 mb-2 leading-normal",
+  h6: "text-sm md:text-base font-serif font-medium !text-forest-900 mt-4 mb-2 leading-normal"
 } as const;
 
 export const portableTextComponents: PortableTextComponents = {
@@ -26,7 +26,7 @@ export const portableTextComponents: PortableTextComponents = {
       const indentMark = value?.markDefs?.find(mark => mark._type === 'indent');
       const indent = typeof indentMark?.level === 'number' ? indentMark.level : 0;
       return (
-        <p className={`my-4 ${indent > 0 ? `pl-${indent * 4}` : ''}`}>
+        <p className={`my-4 text-forest-900 ${indent > 0 ? `pl-${indent * 4}` : ''}`}>
           {children}
         </p>
       );
@@ -137,9 +137,9 @@ export const portableTextComponents: PortableTextComponents = {
     },
   },
   list: {
-    bullet: ({ children }) => <ul className="list-disc marker:text-forest-900 pl-6 space-y-2 my-4">{children}</ul>,
+    bullet: ({ children }) => <ul className="list-disc marker:text-forest-900 pl-6 space-y-2 my-4 text-forest-900">{children}</ul>,
     number: ({ children }) => (
-      <ol className="list-decimal pl-6 space-y-2 my-4 [&>li]:pl-2 [&>li>ol]:my-2 [&>li>ol]:pl-4 [&>li>ol]:list-[lower-alpha] [&>li>ol>li>ol]:list-[lower-roman] marker:text-forest-900">
+      <ol className="list-decimal pl-6 space-y-2 my-4 [&>li]:pl-2 [&>li>ol]:my-2 [&>li>ol]:pl-4 [&>li>ol]:list-[lower-alpha] [&>li>ol>li>ol]:list-[lower-roman] marker:text-forest-900 text-forest-900">
         {children}
       </ol>
     ),

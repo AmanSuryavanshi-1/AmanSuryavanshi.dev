@@ -17,9 +17,9 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
 
     return (
         <section className="py-12 border-t border-gray-100">
-            <h3 className="text-2xl font-bold text-forest-900 mb-8">
+            <h2 className="text-2xl md:text-3xl font-serif font-bold text-forest-900 mb-8">
                 Read Next
-            </h3>
+            </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {posts.map((post) => (

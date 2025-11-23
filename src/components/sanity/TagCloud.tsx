@@ -79,64 +79,73 @@ export default function TagCloud({ posts, selectedTags, onTagSelect, allTags = [
     if (sortedTags.length === 0) return null;
 
     return (
-        <div className="flex flex-wrap gap-2.5 justify-start">
-            <button
-                onClick={() => selectedTags.length > 0 && onTagSelect('ALL')}
-                className={`group relative px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ease-out
-                    ${selectedTags.length === 0
-                        ? 'bg-forest-900 text-white shadow-lg shadow-forest-900/20 ring-2 ring-forest-900 ring-offset-2'
-                        : 'bg-white text-forest-600 border border-forest-200 hover:border-forest-400 hover:bg-forest-50 hover:shadow-sm'
-                    }`}
-            >
-                <span className="relative z-10 flex items-center gap-2">
-                    <Hash size={14} className={selectedTags.length === 0 ? "text-lime-400" : "text-forest-400"} />
-                    All
-                </span>
-            </button>
-
-            {sortedTags.map(([tagName, stat]) => {
-                const isSelected = selectedTags.includes(tagName);
-                const isProjectsTag = tagName === 'Projects';
-
-                // Dynamic styling based on tag color
-                const baseColor = stat.color || '#436850'; // Default to forest-500 if no color
-
-                const style = isSelected
-                    ? {
-                        backgroundColor: baseColor,
-                        borderColor: baseColor,
-                        boxShadow: `0 4px 12px -2px ${baseColor}66` // 40% opacity shadow
-                    }
-                    : {
-                        borderColor: stat.color ? `${baseColor}50` : undefined, // Increased border opacity
-                        color: stat.color ? baseColor : undefined,
-                        backgroundColor: stat.color ? `${baseColor}15` : undefined // Increased background opacity (approx 8%)
-                    };
-
-                return (
+        <div className="relative group/tags">
+            <div className="flex overflow-x-auto pb-2 py-2 -mx-4 px-4 sm:-mx-2 sm:px-2 scrollbar-hide snap-x">
+                <div className="flex gap-3 min-w-min pr-4">
+                    {/* ALL Tag */}
                     <button
-                        key={tagName}
-                        onClick={() => onTagSelect(tagName)}
-                        style={style}
-                        className={`group relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ease-out flex items-center gap-2 border
-                            ${isSelected
-                                ? 'text-white ring-2 ring-offset-2 ring-offset-white transform scale-105'
-                                : 'bg-white border-forest-200 text-forest-700 hover:border-forest-400 hover:shadow-md hover:-translate-y-0.5'
-                            }
-                            ${isProjectsTag && !isSelected ? 'ring-2 ring-lime-400 ring-opacity-60 animate-pulse-slow shadow-lg shadow-lime-400/30' : ''}`}
+                        onClick={() => selectedTags.length > 0 && onTagSelect('ALL')}
+                        className={`group relative px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 ease-out whitespace-nowrap snap-start
+                    ${selectedTags.length === 0
+                                ? 'bg-forest-900 text-white border-2 border-forest-900 shadow-lg shadow-forest-900/30 ring-2 ring-forest-900 ring-offset-2'
+                                : 'bg-white text-forest-900 border-2 border-forest-500 hover:border-forest-700 hover:bg-sage-100 hover:shadow-md'
+                            }`}
                     >
-                        <span>{tagName}</span>
-                        {isSelected ? (
-                            <X size={14} className="text-white/90" />
-                        ) : (
-                            <span className={`text-[10px] px-1.5 py-0.5 rounded-full bg-forest-900/10 font-bold ${stat.color ? '' : 'text-forest-500'}`}
-                                style={stat.color ? { backgroundColor: `${baseColor}20`, color: baseColor } : undefined}>
-                                {stat.count}
-                            </span>
-                        )}
+                        <span className="relative z-10 flex items-center gap-2">
+                            <Hash size={14} className={selectedTags.length === 0 ? "text-lime-500" : "text-forest-500"} />
+                            All
+                        </span>
                     </button>
-                );
-            })}
+
+                    {/* Individual Tags */}
+                    {sortedTags.map(([tagName, stat]) => {
+                        const isSelected = selectedTags.includes(tagName);
+                        const isProjectsTag = tagName === 'Projects';
+
+                        // Use forest-900 as default color
+                        const baseColor = stat.color || '#12372A';
+
+                        const style = isSelected
+                            ? {
+                                backgroundColor: baseColor,
+                                borderColor: baseColor,
+                                boxShadow: `0 6px 16px -4px ${baseColor}70`
+                            }
+                            : {};
+
+                        return (
+                            <button
+                                key={tagName}
+                                onClick={() => onTagSelect(tagName)}
+                                style={style}
+                                className={`group relative px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 ease-out flex items-center gap-2 border-2 whitespace-nowrap snap-start
+                            ${isSelected
+                                        ? 'text-white ring-2 ring-offset-2 ring-offset-white transform scale-105 shadow-lg'
+                                        : 'bg-white text-forest-900 border-forest-500 hover:border-forest-700 hover:shadow-md hover:-translate-y-0.5 hover:bg-sage-100'
+                                    }
+                            ${isProjectsTag && !isSelected
+                                        ? 'border-lime-500 bg-lime-500/5 ring-2 ring-lime-500/40 shadow-lg shadow-lime-500/30 hover:ring-lime-500/60 hover:shadow-lime-500/40 hover:bg-lime-500/10'
+                                        : ''
+                                    }`}
+                            >
+                                <span>{tagName}</span>
+                                {isSelected ? (
+                                    <X size={14} className="text-white/90" />
+                                ) : (
+                                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${isProjectsTag
+                                        ? 'bg-lime-500/20 text-lime-700'
+                                        : 'bg-forest-900/10 text-forest-900'
+                                        }`}>
+                                        {stat.count}
+                                    </span>
+                                )}
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
         </div>
     );
 }
+
+

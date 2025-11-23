@@ -60,7 +60,7 @@ export default function AutoPlayVideo({ videoUrl, alt, caption }: AutoPlayVideoP
         </video>
       </div>
       {caption && (
-        <figcaption className="mt-3 text-center text-sm text-gray-500">
+        <figcaption className="mt-3 text-center text-sm text-forest-700">
           {caption}
         </figcaption>
       )}
