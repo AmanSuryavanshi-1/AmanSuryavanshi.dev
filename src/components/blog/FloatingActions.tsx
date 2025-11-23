@@ -7,10 +7,10 @@ import {
     BiLike,
     BiSolidLike,
     BiUpArrowAlt,
-    BiLogoTwitter,
     BiLogoLinkedin,
     BiCopy
 } from 'react-icons/bi';
+import { FaXTwitter } from 'react-icons/fa6';
 
 interface FloatingActionsProps {
     title: string;
@@ -33,8 +33,20 @@ export default function FloatingActions({ title, slug }: FloatingActionsProps) {
         const likedPosts = JSON.parse(localStorage.getItem('liked_posts') || '[]');
         setIsLiked(likedPosts.includes(slug));
 
+        // Listen for storage changes to sync like state
+        const handleStorageChange = (e: StorageEvent) => {
+            if (e.key === 'liked_posts') {
+                const likedPosts = JSON.parse(e.newValue || '[]');
+                setIsLiked(likedPosts.includes(slug));
+            }
+        };
+
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('storage', handleStorageChange);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('storage', handleStorageChange);
+        };
     }, [slug]);
 
     const toggleLike = () => {
@@ -47,6 +59,13 @@ export default function FloatingActions({ title, slug }: FloatingActionsProps) {
         } else {
             localStorage.setItem('liked_posts', JSON.stringify(likedPosts.filter((s: string) => s !== slug)));
         }
+
+        // Dispatch storage event to sync across components
+        window.dispatchEvent(new StorageEvent('storage', {
+            key: 'liked_posts',
+            newValue: localStorage.getItem('liked_posts'),
+            storageArea: localStorage
+        }));
     };
 
     const scrollToTop = () => {
@@ -80,7 +99,7 @@ export default function FloatingActions({ title, slug }: FloatingActionsProps) {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={toggleLike}
-                className={`p-3 rounded-full shadow-md transition-colors ${isLiked ? 'bg-emerald-50 text-[#059669]' : 'bg-white text-gray-600 hover:text-[#059669]'
+                className={`p-3 rounded-full shadow-md transition-colors ${isLiked ? 'bg-lime-50 text-lime-500' : 'bg-white text-forest-700 hover:text-lime-500'
                     }`}
                 aria-label="Like post"
             >
@@ -107,8 +126,8 @@ export default function FloatingActions({ title, slug }: FloatingActionsProps) {
                             exit={{ opacity: 0, x: 20, scale: 0.9 }}
                             className="absolute left-full top-0 ml-4 flex flex-col gap-2 bg-white p-2 rounded-xl shadow-xl border border-gray-100 z-50"
                         >
-                            <button onClick={shareToTwitter} className="p-2 hover:bg-gray-50 rounded-lg text-blue-400 transition-colors" title="Share on Twitter">
-                                <BiLogoTwitter size={20} />
+                            <button onClick={shareToTwitter} className="p-2 hover:bg-gray-50 rounded-lg text-blue-400 transition-colors" title="Share on X">
+                                <FaXTwitter size={20} />
                             </button>
                             <button onClick={shareToLinkedin} className="p-2 hover:bg-gray-50 rounded-lg text-blue-700 transition-colors" title="Share on LinkedIn">
                                 <BiLogoLinkedin size={20} />
@@ -131,7 +150,7 @@ export default function FloatingActions({ title, slug }: FloatingActionsProps) {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={scrollToTop}
-                        className="mt-8 p-3 rounded-full shadow-md bg-gray-800 text-white hover:bg-gray-700 transition-colors"
+                        className="mt-8 p-3 rounded-full shadow-md bg-forest-900 text-white hover:bg-forest-700 transition-colors"
                         aria-label="Scroll to top"
                     >
                         <BiUpArrowAlt size={24} />

@@ -128,9 +128,9 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                                 <span>•</span>
                                 <span>{format(new Date(post._createdAt), 'MMM dd, yyyy')}</span>
                             </div>
-                            <h2 className="text-xl font-bold text-forest-900 group-hover:text-lime-500 transition-colors duration-300 mb-2 line-clamp-1">
+                            <h3 className="text-base md:text-lg font-serif font-semibold text-forest-900 group-hover:text-lime-500 transition-colors duration-300 mb-2 line-clamp-1">
                                 {post.title}
-                            </h2>
+                            </h3>
                             <p className="text-forest-700 text-sm line-clamp-2 mb-4">
                                 {extractTextFromBody(post.body)}
                             </p>
@@ -194,9 +194,9 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                     )}
                 </div>
                 <div className="p-4 sm:p-5 py-6 sm:py-7 flex flex-col flex-grow">
-                    <h2 className="text-lg line-clamp-1 sm:text-xl font-bold text-forest-900 group-hover:text-lime-500 transition-colors duration-300 mb-2">
+                    <h3 className="text-base md:text-lg font-serif font-semibold text-forest-900 group-hover:text-lime-500 transition-colors duration-300 mb-2 line-clamp-1">
                         {post.title}
-                    </h2>
+                    </h3>
                     <p className="text-forest-700 text-xs sm:text-sm line-clamp-4 mb-4 flex-grow">
                         {extractTextFromBody(post.body)}
                     </p>

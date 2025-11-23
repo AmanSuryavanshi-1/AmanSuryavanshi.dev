@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { client } from '@/sanity/lib/client';
 import type { Post, Tag } from '@/sanity/sanity';
-import FeaturedPost from './FeaturedPost';
+import FeaturedCarousel from './FeaturedCarousel';
 import BlogPostCard, { BlogPostSkeleton } from './BlogPostCard';
 import TagCloud from './TagCloud';
 import SearchBar from './SearchBar';
@@ -12,6 +12,7 @@ import EmptyState from './EmptyState';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutGrid, List as ListIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getAllRelatedTags } from '@/lib/tag-utils';
+import ActiveFilters from './ActiveFilters';
 
 const POSTS_QUERY = `*[ _type == "post" && defined(slug.current) && status == "published" ] | order(_createdAt desc) {
   _id,
@@ -208,86 +209,95 @@ export default function BlogList() {
 
         {/* Featured Section - Only show on first page */}
         {!isLoading && currentPage === 1 && featuredPosts.length > 0 && (
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-forest-900 mb-8">Featured Articles</h2>
-            <div className="grid gap-6 xl:gap-8 md:grid-cols-2">
-              {featuredPosts.slice(0, 2).map(post => (
-                <FeaturedPost key={post._id} post={post} isSingle={false} />
-              ))}
-            </div>
+          <div className="mb-4 sm:mb-8 flex flex-col">
+            <h2 className="text-2xl md:text-4xl font-serif font-bold tracking-tight mb-6 text-center">
+              <span className="text-forest-900">Featured </span>
+              <span className="text-lime-500">Articles</span>
+            </h2>
+            <FeaturedCarousel posts={featuredPosts} />
           </div>
         )}
 
+
+
+
+
         {/* Unified Control Panel */}
-        <div className="mb-12 bg-white/40 backdrop-blur-md border border-white/20 shadow-xl rounded-3xl p-6 sm:p-8 relative overflow-hidden group">
-          {/* Decorative background gradient */}
-          <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-lime-500/5 via-transparent to-forest-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+        <div className="relative px-4 sm:px-6 lg:px-8 bg-sage-50 border-b border-forest-900/5 shadow-sm transition-all duration-300 mb-8 py-4">
 
-          {/* Top Row: Header & Controls */}
-          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between mb-8 relative z-20">
+          <div className="max-w-7xl mx-auto space-y-4">
+            {/* Row 1: Title & View Toggle */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <h2 id="all-articles" className="text-2xl md:text-4xl font-serif font-bold tracking-tight whitespace-nowrap flex items-center gap-3">
+                  <span className="text-forest-900">All </span>
+                  <span className="text-lime-500">Articles</span>
+                  <span className="px-3 py-1 rounded-full bg-forest-900/5 text-forest-500 text-sm font-medium">
+                    {filteredPosts.length}
+                  </span>
+                </h2>
+              </div>
 
-            {/* Left: Title & Search */}
-            <div className="flex flex-col md:flex-row items-center gap-6 w-full lg:w-auto lg:flex-1">
-              <h2 id="all-articles" className="text-2xl md:text-3xl font-bold text-forest-900 whitespace-nowrap flex items-center gap-3">
-                All Articles
-                <span className="px-3 py-1 rounded-full bg-forest-900/5 text-forest-500 text-sm font-medium">
-                  {filteredPosts.length}
-                </span>
-              </h2>
+              {/* View Toggle - Hidden on mobile */}
+              <div className="hidden md:flex justify-end">
+                <div className="bg-white/60 p-1.5 rounded-xl border border-forest-200/50 flex items-center gap-1 shadow-sm backdrop-blur-sm">
+                  <button
+                    onClick={() => setViewMode('grid')}
+                    className={`p-2.5 rounded-lg transition-all duration-300 ${viewMode === 'grid'
+                      ? 'bg-forest-900 text-white shadow-md scale-105'
+                      : 'text-forest-500 hover:bg-forest-50 hover:text-forest-700'
+                      }`}
+                    aria-label="Grid view"
+                  >
+                    <LayoutGrid size={18} />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`p-2.5 rounded-lg transition-all duration-300 ${viewMode === 'list'
+                      ? 'bg-forest-900 text-white shadow-md scale-105'
+                      : 'text-forest-500 hover:bg-forest-50 hover:text-forest-700'
+                      }`}
+                    aria-label="List view"
+                  >
+                    <ListIcon size={18} />
+                  </button>
+                </div>
+              </div>
+            </div>
 
-              <div className="w-full md:max-w-md">
+            {/* Row 2: Search & Filters */}
+            <div className="flex flex-col md:flex-row items-center gap-3 md:gap-6">
+              <div className="w-full md:flex-1">
                 <SearchBar value={searchQuery} onSearch={setSearchQuery} />
               </div>
-            </div>
-
-            {/* Right: Filters & View */}
-            <div className="flex items-center gap-3 w-full lg:w-auto justify-end">
-              <FilterSort value={sortBy} onChange={setSortBy} />
-
-              <div className="bg-white/60 p-1.5 rounded-xl border border-forest-200/50 flex items-center gap-1 shadow-sm backdrop-blur-sm">
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={`p-2.5 rounded-lg transition-all duration-300 ${viewMode === 'grid'
-                    ? 'bg-forest-900 text-white shadow-md scale-105'
-                    : 'text-forest-500 hover:bg-forest-50 hover:text-forest-700'
-                    }`}
-                  aria-label="Grid view"
-                >
-                  <LayoutGrid size={18} />
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`p-2.5 rounded-lg transition-all duration-300 ${viewMode === 'list'
-                    ? 'bg-forest-900 text-white shadow-md scale-105'
-                    : 'text-forest-500 hover:bg-forest-50 hover:text-forest-700'
-                    }`}
-                  aria-label="List view"
-                >
-                  <ListIcon size={18} />
-                </button>
+              <div className="w-full md:w-auto md:shrink-0">
+                <FilterSort value={sortBy} onChange={setSortBy} />
               </div>
             </div>
-          </div>
 
-          {/* Bottom Row: Tags */}
-          <div className="border-t border-forest-900/5 pt-6 relative z-10">
-            <div className="flex items-center gap-2 mb-4 text-xs font-bold uppercase tracking-wider text-forest-500">
-              <span className="w-2 h-2 rounded-full bg-lime-500" />
-              Filter by Topic
+            {/* Row 3: Tags */}
+            <div className="relative">
+              <TagCloud
+                posts={posts}
+                selectedTags={selectedTags}
+                onTagSelect={handleTagSelect}
+                allTags={allSanityTags}
+              />
             </div>
-            <TagCloud
-              posts={posts}
+
+            {/* Row 4: Active Filters */}
+            <ActiveFilters
+              searchQuery={searchQuery}
               selectedTags={selectedTags}
-              onTagSelect={handleTagSelect}
-              allTags={allSanityTags}
+              onClearSearch={() => setSearchQuery('')}
+              onRemoveTag={(tag: string) => handleTagSelect(tag)}
+              onResetAll={handleClearFilters}
             />
           </div>
         </div>
 
         {/* Main Content */}
         <div className="space-y-8">
-
-
           {isLoading ? (
             <div className={viewMode === 'grid'
               ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"

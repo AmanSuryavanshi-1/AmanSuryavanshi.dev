@@ -2,7 +2,8 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import { format } from 'date-fns';
 
-import { BiTime, BiLogoTwitter, BiLogoLinkedin, BiLogoGithub, BiGlobe } from 'react-icons/bi';
+import { BiTime, BiLogoLinkedin, BiLogoGithub, BiGlobe } from 'react-icons/bi';
+import { FaXTwitter } from 'react-icons/fa6';
 import { PortableText } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import { calculateReadTime } from '@/components/sanity/calculateReadTime';
@@ -152,7 +153,7 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
     <BlogErrorBoundary>
       <ReadingProgress />
 
-      <article className="min-h-screen bg-white pb-20 lg:pb-0">
+      <article className="min-h-screen pb-20 lg:pb-0">
         {/* Hero Section */}
         <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
           <BlogHeaderImage
@@ -193,7 +194,7 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                 </div>
               )}
 
-              <h1 className="mb-6 text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight text-shadow-sm">
+              <h1 className="mb-6 text-2xl md:text-4xl font-serif font-bold text-white leading-tight text-shadow-sm">
                 {post.title}
               </h1>
 
@@ -239,13 +240,18 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
 
             {/* Center: Content */}
             <div className="lg:col-span-7 xl:col-span-7">
-              <div className="prose prose-lg md:prose-xl max-w-none 
-                prose-headings:font-bold prose-headings:text-forest-900 
-                prose-p:text-gray-700 prose-p:leading-relaxed
+              <div className="prose prose-lg md:prose-xl max-w-none text-forest-900
+                prose-headings:font-serif prose-headings:font-bold prose-headings:!text-forest-900
+                prose-h2:!text-forest-900 prose-h3:!text-forest-900 prose-h4:!text-forest-900
+                prose-p:!text-forest-900 prose-p:leading-relaxed
+                prose-li:!text-forest-900 prose-ul:!text-forest-900 prose-ol:!text-forest-900
+                prose-blockquote:!text-forest-900 prose-blockquote:border-l-forest-500
+                prose-strong:!text-forest-900
+                prose-th:!text-forest-900 prose-td:!text-forest-900
+                prose-figcaption:!text-forest-900
                 prose-a:text-lime-600 prose-a:no-underline hover:prose-a:text-lime-700 hover:prose-a:underline
-                prose-strong:text-forest-800
                 prose-img:rounded-2xl prose-img:shadow-lg
-                prose-code:text-lime-700 prose-code:bg-lime-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none">
+                prose-code:!text-lime-700 prose-code:bg-lime-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none">
                 <PortableText
                   value={post.body}
                   components={portableTextComponents}
@@ -257,7 +263,7 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
 
               {/* Author Bio Card */}
               {post.author && (
-                <div className="mt-12 mb-12 p-8 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-emerald-100 flex flex-col sm:flex-row gap-6 items-start">
+                <div className="mt-12 mb-12 p-8 bg-gradient-to-br from-sage-100/30 to-white rounded-2xl border border-sage-200 flex flex-col sm:flex-row gap-6 items-start">
                   {post.author.image && (
                     <Image
                       src={urlFor(post.author.image).url()}
@@ -272,17 +278,17 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                       <h3 className="text-xl font-bold text-forest-900">{post.author.name}</h3>
                       {/* Hardcoded Socials for Aman */}
                       {post.author.name.includes('Aman') && (
-                        <div className="flex gap-3 text-forest-600">
-                          <a href="https://twitter.com/amansuryavanshi" target="_blank" rel="noopener noreferrer" className="hover:text-[#059669] transition-colors">
-                            <BiLogoTwitter size={20} />
+                        <div className="flex gap-3 text-forest-900">
+                          <a href="https://twitter.com/_AmanSurya" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
+                            <FaXTwitter size={20} />
                           </a>
-                          <a href="https://linkedin.com/in/amansuryavanshi" target="_blank" rel="noopener noreferrer" className="hover:text-[#059669] transition-colors">
+                          <a href="https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
                             <BiLogoLinkedin size={20} />
                           </a>
-                          <a href="https://github.com/amansuryavanshi" target="_blank" rel="noopener noreferrer" className="hover:text-[#059669] transition-colors">
+                          <a href="https://github.com/AmanSuryavanshi-1" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
                             <BiLogoGithub size={20} />
                           </a>
-                          <a href="https://amansuryavanshi.dev" target="_blank" rel="noopener noreferrer" className="hover:text-[#059669] transition-colors">
+                          <a href="https://amansuryavanshi.dev" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
                             <BiGlobe size={20} />
                           </a>
                         </div>

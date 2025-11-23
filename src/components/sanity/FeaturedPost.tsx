@@ -13,7 +13,8 @@ import { FallbackImageManager } from '@/lib/fallback-image-manager';
 
 interface FeaturedPostProps {
     post: Post;
-    isSingle: boolean; // New prop to determine if it's a single post
+    isSingle: boolean;
+    className?: string;
 }
 
 const extractTextFromBody = (body: PortableTextBlockType[] | undefined): string => {
@@ -33,7 +34,7 @@ const extractTextFromBody = (body: PortableTextBlockType[] | undefined): string 
     return text.trim().slice(0, 200) + (text.length > 200 ? '...' : '');
 };
 
-const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle }) => {
+const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle, className = '' }) => {
     if (!post) return null;
 
     const readTime = calculateReadTime(post.body);
@@ -66,7 +67,7 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle }) => {
     const cardImage = getCardImage();
 
     return (
-        <Link href={`/blogs/${post.slug.current}`} className="group block h-full">
+        <Link href={`/blogs/${post.slug.current}`} className={`group block h-full ${className}`}>
             <article className={`relative overflow-hidden h-full ${isSingle ? 'aspect-[16/9]' : 'aspect-[4/5] md:aspect-[4/3] lg:aspect-[4/3]'
                 } rounded-[2rem] shadow-xl shadow-forest-900/5 border border-white/20 
             bg-forest-900
@@ -121,14 +122,11 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle }) => {
 
                     {/* Title & Description */}
                     <div className="space-y-2">
-                        <h2 className={`font-heading ${isSingle
-                            ? 'text-2xl sm:text-4xl md:text-5xl'
-                            : 'text-base sm:text-lg md:text-xl xl:text-2xl'
-                            } font-bold leading-tight text-white group-hover:text-lime-400 transition-colors duration-300 line-clamp-2`}>
+                        <h3 className="text-base md:text-lg font-serif font-semibold leading-tight text-white group-hover:text-lime-400 transition-colors duration-300 line-clamp-1">
                             {post.title.split(' ').length > 10
                                 ? post.title.split(' ').slice(0, 10).join(' ') + '...'
                                 : post.title}
-                        </h2>
+                        </h3>
 
                         <p className={`text-gray-300 font-light leading-relaxed ${isSingle
                             ? 'text-base sm:text-lg max-w-2xl line-clamp-2'

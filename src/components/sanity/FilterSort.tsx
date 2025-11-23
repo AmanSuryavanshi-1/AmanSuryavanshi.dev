@@ -68,12 +68,12 @@ export default function FilterSort({ value, onChange }: FilterSortProps) {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={`
-          group relative w-full sm:w-auto min-w-[200px]
-          flex items-center justify-between gap-3
-          px-5 py-3.5 rounded-xl
+          group relative w-full sm:w-auto min-w-[140px] sm:min-w-[200px]
+          flex items-center justify-between gap-2 sm:gap-3
+          px-3 sm:px-5 py-3.5 rounded-xl
           bg-white/90 backdrop-blur-sm
           border-2 transition-all duration-300
-          text-forest-900 font-medium text-sm
+          text-forest-900 font-medium text-xs sm:text-sm
           shadow-lg shadow-forest-900/5
           hover:shadow-xl hover:shadow-forest-900/10
           ${isOpen

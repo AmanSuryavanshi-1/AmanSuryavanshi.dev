@@ -188,4 +188,66 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Global Typography System */
+  h1 {
+    @apply text-3xl md:text-5xl font-serif font-bold text-forest-900 mb-4 leading-tight;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl font-serif font-bold text-forest-900 mb-3 leading-tight;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl font-serif font-semibold text-forest-900 mb-2 leading-snug;
+  }
+
+  h4 {
+    @apply text-lg md:text-xl font-serif font-semibold text-forest-900 mb-2 leading-snug;
+  }
+
+  h5 {
+    @apply text-base md:text-lg font-serif font-semibold text-forest-900 mb-2 leading-normal;
+  }
+
+  h6 {
+    @apply text-base font-serif font-medium text-forest-900 mb-2 leading-normal;
+  }
+}
+
+/* Typography Utility Classes for Dark Backgrounds */
+@layer utilities {
+  .heading-light {
+    @apply text-sage-100;
+  }
+
+  .heading-white {
+    @apply text-white;
+  }
+
+  /* Override default heading colors when on dark backgrounds */
+  .bg-forest-900 h1,
+  .bg-forest-800 h1,
+  .bg-forest-950 h1 {
+    @apply text-sage-100;
+  }
+
+  .bg-forest-900 h2,
+  .bg-forest-800 h2,
+  .bg-forest-950 h2 {
+    @apply text-sage-100;
+  }
+
+  .bg-forest-900 h3,
+  .bg-forest-800 h3,
+  .bg-forest-950 h3 {
+    @apply text-sage-100;
+  }
+}
+
+/* Table Styles for Blog Posts */
+@layer utilities {
+  .prose table {
+    @apply block w-full overflow-x-auto whitespace-nowrap;
+  }
 }
