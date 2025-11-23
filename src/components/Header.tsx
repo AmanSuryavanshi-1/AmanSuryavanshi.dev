@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion} from 'framer-motion' 
+import { motion } from 'framer-motion'
 //  useScroll, useTransform 
 import { Menu, X, Sun, Moon, Home, FolderGit2, User2, Briefcase, BookOpen, Mail } from 'lucide-react'
 import { Button } from "@/components/ui/button"
@@ -16,7 +16,7 @@ const Header = () => {
   const [activeItem, setActiveItem] = useState('Home')
   // const { scrollY } = useScroll()
   const { theme, setTheme } = useTheme()
-  
+
   // const headerBackground = useTransform(
   //   scrollY,
   //   [0, 50],
@@ -53,7 +53,7 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between">
           {/* Logo */}
-          <motion.div 
+          <motion.div
             className="w-40"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -71,7 +71,7 @@ const Header = () => {
 
           {/* Desktop Navigation - Centered with glass effect */}
           <div className="hidden md:flex flex-1 items-center justify-center">
-            <motion.div 
+            <motion.div
               className="flex items-center bg-forest-900/30 backdrop-blur-lg border border-forest-900/20 rounded-full px-1 py-1"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -90,8 +90,8 @@ const Header = () => {
                     onClick={() => setActiveItem(item.name)}
                     className={cn(
                       "relative px-4 py-2 text-sm font-medium flex items-center gap-2 transition-all duration-300 rounded-full",
-                      activeItem === item.name 
-                        ? "text-forest-900 bg-lime-500" 
+                      activeItem === item.name
+                        ? "text-forest-900 bg-lime-500"
                         : "text-sage-100 hover:text-forest-700"
                     )}
                   >
@@ -112,7 +112,8 @@ const Header = () => {
 
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center space-x-2 w-40 justify-end">
-            <motion.div
+            {/* Mode changer commented out - using default mode only */}
+            {/* <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -126,7 +127,7 @@ const Header = () => {
                 <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
               </Button>
-            </motion.div>
+            </motion.div> */}
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -144,7 +145,7 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <motion.div 
+          <motion.div
             className="md:hidden"
             whileTap={{ scale: 0.95 }}
           >
@@ -162,15 +163,15 @@ const Header = () => {
         {/* Mobile Menu */}
         <motion.div
           initial={false}
-          animate={isOpen ? { 
-            height: 'auto', 
+          animate={isOpen ? {
+            height: 'auto',
             opacity: 1,
             transition: {
               height: { duration: 0.3 },
               opacity: { duration: 0.2 }
             }
-          } : { 
-            height: 0, 
+          } : {
+            height: 0,
             opacity: 0,
             transition: {
               height: { duration: 0.3 },
@@ -195,8 +196,8 @@ const Header = () => {
                   }}
                   className={cn(
                     "flex items-center gap-2 px-3 py-2 text-base font-medium rounded-lg transition-colors",
-                    activeItem === item.name 
-                      ? "text-forest-900 bg-lime-500" 
+                    activeItem === item.name
+                      ? "text-forest-900 bg-lime-500"
                       : "text-sage-100 hover:text-lime-500"
                   )}
                 >
@@ -205,13 +206,14 @@ const Header = () => {
                 </Link>
               </motion.div>
             ))}
-            <motion.div 
+            <motion.div
               className="flex items-center justify-between px-3 py-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <Button
+              {/* Mode changer commented out - using default mode only */}
+              {/* <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -220,7 +222,7 @@ const Header = () => {
                 <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
-              </Button>
+              </Button> */}
               <Link href="/#contact">
                 <Button
                   variant="default"
