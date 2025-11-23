@@ -5,249 +5,249 @@
 /* custom scrollbar */
 @layer utilities {
 
-  /* Hide default scrollbar */
-  ::-webkit-scrollbar {
-    display: none;
-  }
+    /* Hide default scrollbar */
+    ::-webkit-scrollbar {
+        display: none;
+    }
 
-  /* Firefox */
-  * {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
+    /* Firefox */
+    * {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
 
-  /* Ensure transparent background */
-  html,
-  body {
-    background-color: transparent !important;
-  }
+    /* Ensure transparent background */
+    html,
+    body {
+        background-color: transparent !important;
+    }
 
-  /* Remove the padding-right since it might affect layout */
-  body {
-    margin-right: 0 !important;
-    padding-right: 0 !important;
-  }
+    /* Remove the padding-right since it might affect layout */
+    body {
+        margin-right: 0 !important;
+        padding-right: 0 !important;
+    }
 }
 
 /* Elegant Scrollbar Styles */
 @layer utilities {
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
 
-  ::-webkit-scrollbar-track {
-    background: rgba(18, 55, 42, 0.03);
-    border-radius: 100vh;
-  }
+    ::-webkit-scrollbar-track {
+        background: rgba(18, 55, 42, 0.03);
+        border-radius: 100vh;
+    }
 
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg,
-        rgba(18, 55, 42, 0.3) 0%,
-        rgba(67, 104, 80, 0.4) 50%,
-        rgba(157, 207, 111, 0.3) 100%);
-    border-radius: 100vh;
-    border: 2px solid transparent;
-    background-clip: content-box;
-    transition: all 0.3s ease;
-  }
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg,
+                rgba(18, 55, 42, 0.3) 0%,
+                rgba(67, 104, 80, 0.4) 50%,
+                rgba(157, 207, 111, 0.3) 100%);
+        border-radius: 100vh;
+        border: 2px solid transparent;
+        background-clip: content-box;
+        transition: all 0.3s ease;
+    }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg,
-        rgba(18, 55, 42, 0.5) 0%,
-        rgba(67, 104, 80, 0.6) 50%,
-        rgba(157, 207, 111, 0.5) 100%);
-  }
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg,
+                rgba(18, 55, 42, 0.5) 0%,
+                rgba(67, 104, 80, 0.6) 50%,
+                rgba(157, 207, 111, 0.5) 100%);
+    }
 
-  /* Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(67, 104, 80, 0.4) transparent;
-  }
+    /* Firefox */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(67, 104, 80, 0.4) transparent;
+    }
 
-  /* Ensure transparent background */
-  html,
-  body {
-    background-color: transparent !important;
-  }
+    /* Ensure transparent background */
+    html,
+    body {
+        background-color: transparent !important;
+    }
 
-  /* Hide scrollbar when not scrolling */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
+    /* Hide scrollbar when not scrolling */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
 
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 /* Header animation */
 @keyframes profile__animate {
-  0% {
-    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
-  }
+    0% {
+        border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+    }
 
-  50% {
-    border-radius: 30% 60% 70% 40%/50% 60% 30% 60%;
-  }
+    50% {
+        border-radius: 30% 60% 70% 40%/50% 60% 30% 60%;
+    }
 
-  100% {
-    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
-  }
+    100% {
+        border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+    }
 }
 
 @keyframes scroll {
-  0% {
-    transform: translateY(0);
-  }
+    0% {
+        transform: translateY(0);
+    }
 
-  30% {
-    transform: translateY(100px);
-  }
+    30% {
+        transform: translateY(100px);
+    }
 }
 
 @keyframes pulse-slow {
 
-  0%,
-  100% {
-    opacity: 1;
-  }
+    0%,
+    100% {
+        opacity: 1;
+    }
 
-  50% {
-    opacity: .5;
-  }
+    50% {
+        opacity: .5;
+    }
 }
 
 .animate-pulse-slow {
-  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-  }
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 0 0% 3.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 0 0% 3.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 0 0% 3.9%;
+        --primary: 0 0% 9%;
+        --primary-foreground: 0 0% 98%;
+        --secondary: 0 0% 96.1%;
+        --secondary-foreground: 0 0% 9%;
+        --muted: 0 0% 96.1%;
+        --muted-foreground: 0 0% 45.1%;
+        --accent: 0 0% 96.1%;
+        --accent-foreground: 0 0% 9%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 0 0% 89.8%;
+        --input: 0 0% 89.8%;
+        --ring: 0 0% 3.9%;
+        --chart-1: 12 76% 61%;
+        --chart-2: 173 58% 39%;
+        --chart-3: 197 37% 24%;
+        --chart-4: 43 74% 66%;
+        --chart-5: 27 87% 67%;
+        --radius: 0.5rem;
+    }
 
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-  }
+    .dark {
+        --background: 0 0% 3.9%;
+        --foreground: 0 0% 98%;
+        --card: 0 0% 3.9%;
+        --card-foreground: 0 0% 98%;
+        --popover: 0 0% 3.9%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 0 0% 98%;
+        --primary-foreground: 0 0% 9%;
+        --secondary: 0 0% 14.9%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 0 0% 14.9%;
+        --muted-foreground: 0 0% 63.9%;
+        --accent: 0 0% 14.9%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 0 0% 14.9%;
+        --input: 0 0% 14.9%;
+        --ring: 0 0% 83.1%;
+        --chart-1: 220 70% 50%;
+        --chart-2: 160 60% 45%;
+        --chart-3: 30 80% 55%;
+        --chart-4: 280 65% 60%;
+        --chart-5: 340 75% 55%;
+    }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+    * {
+        @apply border-border;
+    }
 
-  body {
-    @apply bg-background text-foreground;
-  }
+    body {
+        @apply bg-background text-foreground;
+    }
 
-  /* Global Typography System */
-  h1 {
-    @apply text-3xl md:text-5xl font-serif font-bold text-forest-900 mb-4 leading-tight;
-  }
+    /* Global Typography System */
+    h1 {
+        @apply text-3xl md:text-5xl font-serif font-bold text-forest-900 mb-4 leading-tight;
+    }
 
-  h2 {
-    @apply text-2xl md:text-3xl font-serif font-bold text-forest-900 mb-3 leading-tight;
-  }
+    h2 {
+        @apply text-2xl md:text-3xl font-serif font-bold text-forest-900 mb-3 leading-tight;
+    }
 
-  h3 {
-    @apply text-xl md:text-2xl font-serif font-semibold text-forest-900 mb-2 leading-snug;
-  }
+    h3 {
+        @apply text-xl md:text-2xl font-serif font-semibold text-forest-900 mb-2 leading-snug;
+    }
 
-  h4 {
-    @apply text-lg md:text-xl font-serif font-semibold text-forest-900 mb-2 leading-snug;
-  }
+    h4 {
+        @apply text-lg md:text-xl font-serif font-semibold text-forest-900 mb-2 leading-snug;
+    }
 
-  h5 {
-    @apply text-base md:text-lg font-serif font-semibold text-forest-900 mb-2 leading-normal;
-  }
+    h5 {
+        @apply text-base md:text-lg font-serif font-semibold text-forest-900 mb-2 leading-normal;
+    }
 
-  h6 {
-    @apply text-base font-serif font-medium text-forest-900 mb-2 leading-normal;
-  }
+    h6 {
+        @apply text-base font-serif font-medium text-forest-900 mb-2 leading-normal;
+    }
 }
 
 /* Typography Utility Classes for Dark Backgrounds */
 @layer utilities {
-  .heading-light {
-    @apply text-sage-100;
-  }
+    .heading-light {
+        @apply text-sage-100;
+    }
 
-  .heading-white {
-    @apply text-white;
-  }
+    .heading-white {
+        @apply text-white;
+    }
 
-  /* Override default heading colors when on dark backgrounds */
-  .bg-forest-900 h1,
-  .bg-forest-800 h1,
-  .bg-forest-950 h1 {
-    @apply text-sage-100;
-  }
+    /* Override default heading colors when on dark backgrounds */
+    .bg-forest-900 h1,
+    .bg-forest-800 h1,
+    .bg-forest-950 h1 {
+        @apply text-sage-100;
+    }
 
-  .bg-forest-900 h2,
-  .bg-forest-800 h2,
-  .bg-forest-950 h2 {
-    @apply text-sage-100;
-  }
+    .bg-forest-900 h2,
+    .bg-forest-800 h2,
+    .bg-forest-950 h2 {
+        @apply text-sage-100;
+    }
 
-  .bg-forest-900 h3,
-  .bg-forest-800 h3,
-  .bg-forest-950 h3 {
-    @apply text-sage-100;
-  }
+    .bg-forest-900 h3,
+    .bg-forest-800 h3,
+    .bg-forest-950 h3 {
+        @apply text-sage-100;
+    }
 }
 
 /* Table Styles for Blog Posts */
 @layer utilities {
-  .prose table {
-    @apply block w-full overflow-x-auto whitespace-nowrap;
-  }
+    .prose table {
+        @apply block w-full overflow-x-auto whitespace-nowrap;
+    }
 }
