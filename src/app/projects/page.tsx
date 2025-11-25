@@ -14,10 +14,8 @@ export default function ProjectsPage() {
     const activeIndex = ((virtualIndex % featuredProjects.length) + featuredProjects.length) % featuredProjects.length;
 
     return (
-        <main className="min-h-screen bg-transparent text-forest-900 relative selection:bg-lime-500/30 pt-24">
+        <main className="min-h-screen bg-transparent text-forest-900 relative selection:bg-lime-500/30 pt-16">
             <div className="relative z-10">
-                {/* Header / Nav - Removed as per request */}
-
 
                 {/* Featured Hero Section - Controlled Component */}
                 <FeaturedHero

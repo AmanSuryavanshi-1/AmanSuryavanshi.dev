@@ -36,7 +36,7 @@ export default function FeaturedCarousel() {
     return (
         <section className="relative py-12 overflow-hidden">
             <div className="container mx-auto px-4 mb-8 flex justify-between items-end">
-                <div>
+                {/* <div>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -47,7 +47,7 @@ export default function FeaturedCarousel() {
                     <p className="text-sage-300 max-w-xl">
                         A selection of projects that define my journey and technical expertise.
                     </p>
-                </div>
+                </div> */}
 
                 <div className="hidden md:flex gap-2">
                     <Button variant="outline" size="icon" onClick={scrollLeft} className="rounded-full border-forest-700 hover:bg-lime-500 hover:text-forest-950 hover:border-lime-500 transition-colors">
@@ -89,14 +89,14 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
 
     return (
         <motion.div
-            className="min-w-[85vw] md:min-w-[600px] lg:min-w-[700px] snap-center"
+            className="min-w-[90vw] md:min-w-[600px] lg:min-w-[700px] snap-center"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
         >
-            <div className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden group border border-forest-800 bg-forest-900/50">
+            <div className="relative h-[60vh] md:h-[500px] rounded-3xl overflow-hidden group border border-forest-800 bg-forest-900/50">
                 {/* Background Media */}
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
                     {project.video ? (
@@ -119,10 +119,10 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
                 </div>
 
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/80 to-transparent" />
 
                 {/* Content */}
-                <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end">
+                <div className="absolute inset-0 p-6 md:p-10 pb-12 md:pb-16 flex flex-col justify-end">
                     <div className="transform transition-transform duration-500 translate-y-4 group-hover:translate-y-0">
                         <div className="flex items-center gap-3 mb-4">
                             <Badge className="bg-lime-500 text-forest-950 hover:bg-lime-400 font-bold px-3 py-1">
@@ -135,11 +135,11 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
                             )}
                         </div>
 
-                        <h3 className="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
+                        <h3 className="text-2xl md:text-4xl font-bold text-white mb-3 leading-tight">
                             {project.title}
                         </h3>
 
-                        <p className="text-sage-200 text-lg mb-6 line-clamp-2 max-w-2xl group-hover:text-white transition-colors">
+                        <p className="text-sage-200 text-base md:text-lg mb-6 line-clamp-2 max-w-2xl group-hover:text-white transition-colors">
                             {project.description}
                         </p>
 
