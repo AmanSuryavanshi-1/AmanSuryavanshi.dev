@@ -95,6 +95,10 @@ export type Project = {
   }>;
   impactMetrics?: Array<{ label: string; value: string }>; // mapped from metrics
   detailedDescription?: string; // mapped from description
+  documentation?: readonly {
+    title: string;
+    url: string;
+  }[];
 };
 
 // --- Icon Mapping ---
@@ -220,7 +224,17 @@ const rawProjects = [
       lighthouse: "95+",
       seo: "96/100",
       views: "6,000+"
-    }
+    },
+    documentation: [
+      {
+        title: "Executive Summary",
+        url: "/docs/aviators-training-centre-executive-summary"
+      },
+      {
+        title: "Technical Documentation",
+        url: "/docs/aviators-training-centre-technical-documentation"
+      }
+    ]
   },
   {
     id: "barkat-enterprise",

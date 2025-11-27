@@ -15,9 +15,10 @@ interface FeaturedHeroProps {
     activeIndex: number;
     virtualIndex: number;
     onVirtualIndexChange: (index: number) => void;
+    className?: string;
 }
 
-export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVirtualIndexChange }: FeaturedHeroProps) {
+export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVirtualIndexChange, className }: FeaturedHeroProps) {
     const activeProject = projects[activeIndex];
 
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -66,11 +67,11 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
     const visibleIndices = Array.from({ length: VISIBLE_COUNT }, (_, i) => virtualIndex + VISIBLE_COUNT - 1 - i);
 
     return (
-        <section className="relative w-full min-h-screen lg:h-[100vh] overflow-hidden" aria-label="Featured Projects Carousel">
-            <div className="container mx-auto px-4 h-[90vh] flex flex-col lg:flex-row gap-4 lg:gap-0">
+        <section className={cn("relative w-full min-h-screen lg:h-[100vh] overflow-visible", className)} aria-label="Featured Projects Carousel">
+            <div className="container mx-auto px-4 h-auto flex flex-col lg:flex-row gap-4 lg:gap-0">
 
                 {/* LEFT COLUMN (Details & Thumbnails) - Order 2 on Mobile, Order 1 on Desktop */}
-                <div className="w-full lg:w-[50%] flex flex-col justify-end lg:justify-start lg:gap-8 h-auto lg:h-full order-2 lg:order-1 relative z-20 pointer-events-none">
+                <div className="w-full lg:w-[50%] flex flex-col justify-end lg:justify-start lg:gap-2 h-auto lg:h-full order-2 lg:order-1 relative z-20 pointer-events-none">
 
                     {/* TOP: Thumbnail Strip (Hidden on Mobile) */}
                     <div className="hidden lg:flex relative w-[120%] mr-[20%] h-[160px] items-center justify-end pointer-events-auto pl-4 flex-shrink-0">
@@ -123,7 +124,7 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
                                                     <motion.div
                                                         className="absolute inset-[-150%]"
                                                         style={{
-                                                            background: "conic-gradient(from 0deg, transparent 0deg, transparent 340deg, #84cc16 360deg)", // Lime-500
+                                                            background: "conic-gradient(from 0deg, transparent 0deg, transparent 340deg, #4c7f00ff 360deg)", // Lime-500
                                                         }}
                                                         animate={{ rotate: 360 }}
                                                         transition={{
@@ -155,7 +156,7 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
                     </div>
 
                     {/* BOTTOM: Project Details */}
-                    <div className="flex flex-col justify-start lg:justify-end pb-8 pl-2 pointer-events-auto pr-0 lg:pr-12 mt-4 lg:mt-0">
+                    <div className="flex flex-col justify-start lg:justify-end pb-8 pl-2 pointer-events-auto lg:pr-12 pr-0 mt-4 lg:mt-0">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={activeProject.id}
@@ -175,11 +176,11 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
                                     </div>
                                 </div>
 
-                                <h1 className="text-3xl md:text-4xl lg:text-4xl font-bold text-forest-900 mb-4 leading-[1.1] lg:leading-[0.9] tracking-tight">
+                                <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-forest-900 mb-4 leading-[1.1] lg:leading-[0.9] tracking-tight">
                                     {activeProject.title}
                                 </h1>
 
-                                <p className="text-forest-600 text-base leading-relaxed mb-6 max-w-lg font-medium">
+                                <p className="text-forest-600 text-base leading-relaxed mb-4 max-w-lg font-medium">
                                     {activeProject.description}
                                 </p>
 
@@ -236,11 +237,14 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
 
                             {/* Action Links */}
                             <div className="flex gap-4">
-                                {activeProject.blogUrl && (
-                                    <Link href={activeProject.blogUrl} target="_blank">
+                                {(activeProject.documentation?.[0]?.url || activeProject.blogUrl) && (
+                                    <Link
+                                        href={activeProject.documentation?.[0]?.url || activeProject.blogUrl!}
+                                        target={activeProject.documentation?.[0]?.url ? undefined : "_blank"}
+                                    >
                                         <Button className="h-12 px-6 rounded-full bg-white/20 hover:bg-white border border-white/30 text-white hover:text-forest-900 font-medium backdrop-blur-md shadow-lg transition-all hover:scale-105 text-sm group">
                                             <BookOpen className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                                            Technical Docs
+                                            {activeProject.documentation?.length ? "Documentation" : "Technical Docs"}
                                         </Button>
                                     </Link>
                                 )}

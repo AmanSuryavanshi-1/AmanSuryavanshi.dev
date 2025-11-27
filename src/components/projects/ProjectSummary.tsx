@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Project } from "@/components/projects/projectsData";
-import { ArrowUpRight, Code2, Lightbulb, Rocket, Target, Layers, Zap } from "lucide-react";
+import { ArrowUpRight, Code2, Lightbulb, Rocket, Target, Layers, Zap, FileJson } from "lucide-react";
 import Image from "next/image";
 
 interface ProjectSummaryProps {
@@ -65,6 +65,35 @@ export default function ProjectSummary({ project }: ProjectSummaryProps) {
                                 </p>
                             </div>
                         </div>
+
+                        {/* Documentation Section */}
+                        {project.documentation && project.documentation.length > 0 && (
+                            <div className="bg-white p-8 md:p-12 rounded-[2rem] border border-forest-100 shadow-sm">
+                                <div className="flex items-center gap-4 mb-8">
+                                    <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center">
+                                        <FileJson className="w-6 h-6 text-amber-500" />
+                                    </div>
+                                    <h3 className="text-2xl md:text-3xl font-bold text-forest-900">Documentation</h3>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {project.documentation.map((doc, idx) => (
+                                        <a
+                                            key={idx}
+                                            href={doc.url}
+                                            className="flex items-center justify-between p-4 rounded-xl border border-forest-100 hover:border-lime-500 hover:bg-lime-50/50 transition-all group"
+                                        >
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-lg bg-forest-50 flex items-center justify-center group-hover:bg-lime-100 transition-colors">
+                                                    <FileJson className="w-5 h-5 text-forest-600 group-hover:text-lime-600" />
+                                                </div>
+                                                <span className="font-medium text-forest-900">{doc.title}</span>
+                                            </div>
+                                            <ArrowUpRight className="w-5 h-5 text-forest-400 group-hover:text-lime-500 transition-colors" />
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         {/* Impact Section */}
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

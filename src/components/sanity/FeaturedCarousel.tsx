@@ -45,15 +45,17 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ posts }) => {
         return () => clearInterval(timer);
     }, [isAutoPlaying, posts.length]);
 
-    // Scroll active thumbnail into view
+    // Scroll active thumbnail into view (Container only)
     useEffect(() => {
         if (thumbnailsRef.current) {
             const activeThumbnail = thumbnailsRef.current.children[currentIndex] as HTMLElement;
             if (activeThumbnail) {
-                activeThumbnail.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'nearest',
-                    inline: 'center'
+                const container = thumbnailsRef.current;
+                const scrollLeft = activeThumbnail.offsetLeft - (container.clientWidth / 2) + (activeThumbnail.clientWidth / 2);
+
+                container.scrollTo({
+                    left: scrollLeft,
+                    behavior: 'smooth'
                 });
             }
         }
@@ -115,7 +117,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ posts }) => {
                 <div className="flex flex-col lg:flex-row h-full min-h-[400px] lg:h-[450px]">
 
                     {/* Left: Image Section */}
-                    <div className="relative w-full lg:w-[55%] h-[250px] lg:h-full overflow-hidden">
+                    <div className="relative w-full lg:w-1/2 h-[250px] lg:h-full overflow-hidden">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={currentPost._id}
@@ -146,7 +148,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ posts }) => {
                     </div>
 
                     {/* Right: Content Section */}
-                    <div className="relative w-full lg:w-[45%] p-6 lg:p-10 flex flex-col justify-center bg-white dark:bg-forest-900">
+                    <div className="relative w-full lg:w-1/2 p-6 lg:p-10 flex flex-col justify-center bg-white dark:bg-forest-900">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={currentPost._id}
@@ -244,16 +246,16 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ posts }) => {
                     {/* Thumbnails */}
                     <div
                         ref={thumbnailsRef}
-                        className="flex gap-4 overflow-x-auto py-4 px-4 sm:px-6 md:px-8 scrollbar-hide w-full max-w-3xl snap-x snap-mandatory justify-start"
+                        className="flex gap-4 overflow-x-auto py-4 px-4 sm:px-6 md:px-8 scrollbar-hide w-full max-w-3xl snap-x snap-mandatory justify-center"
                         style={{ scrollBehavior: 'smooth' }}
                     >
                         {posts.map((post, index) => (
                             <button
                                 key={post._id}
                                 onClick={() => setCurrentIndex(index)}
-                                className={`relative flex-shrink-0 w-32 h-20 rounded-xl overflow-hidden transition-all duration-500 snap-center ${index === currentIndex
+                                className={`relative flex-shrink-0 w-28 h-16 sm:w-32 sm:h-20 rounded-xl overflow-hidden transition-all duration-500 snap-center ${index === currentIndex
                                     ? 'ring-4 ring-lime-500 scale-110 opacity-100 shadow-xl z-10'
-                                    : 'opacity-40 hover:opacity-70 scale-90 grayscale hover:grayscale-0'
+                                    : 'opacity-40 hover:opacity-100 scale-90 grayscale hover:grayscale-0'
                                     }`}
                             >
                                 <Image
