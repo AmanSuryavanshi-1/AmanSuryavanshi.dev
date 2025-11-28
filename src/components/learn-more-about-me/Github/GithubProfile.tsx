@@ -52,7 +52,7 @@ export default function GithubProfile() {
 
         // Fetch latest repository with topics
         const reposResponse = await fetch(
-          'https://api.github.com/users/AmanSuryavanshi-1/repos?sort=updated&direction=desc', 
+          'https://api.github.com/users/AmanSuryavanshi-1/repos?sort=updated&direction=desc',
           {
             headers: {
               'Accept': 'application/vnd.github.v3+json'
@@ -89,7 +89,7 @@ export default function GithubProfile() {
         <div className="w-full max-w-5xl">
           {/* Skeleton for the title */}
           <Skeleton className="w-48 h-12 mx-auto mb-8 rounded-lg" />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div className="md:col-span-1">
               {/* Profile Card Skeleton */}
@@ -102,7 +102,7 @@ export default function GithubProfile() {
                   <Skeleton key={index} className="h-[80px] rounded-2xl" />
                 ))}
               </div>
-              
+
               {/* Latest Repo Card Skeleton */}
               <Skeleton className="w-full h-[200px] rounded-2xl" />
             </div>
@@ -117,10 +117,10 @@ export default function GithubProfile() {
   return (
     <section className="flex items-center justify-center w-full px-4 py-16">
       <div className="w-full max-w-5xl">
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-2xl sm:text-3xl md:text-5xl mb-6 md:mb-8 flex justify-center items-center font-bold font-serif text-forest-900">
+          className="text-xl sm:text-2xl md:text-3xl mb-6 md:mb-8 flex justify-center items-center font-bold font-serif text-forest-900">
           My <span className="text-lime-500 px-2"> GitHub</span> Profile
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-5 h-full">
@@ -146,7 +146,7 @@ export default function GithubProfile() {
               <StatCard icon={Users} title="Following" value={userData.following} />
               <StatCard icon={MapPin} title="Location" value={userData.location || 'India'} />
             </div>
-            
+
             {latestRepo && (
               <LatestRepoCard repo={latestRepo} topics={repoTopics} />
             )}

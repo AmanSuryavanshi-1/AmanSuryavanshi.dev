@@ -87,7 +87,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           {/* Header */}
           <div className="mb-6">
             <div className="flex flex-wrap items-center gap-3 mb-3">
-              <h2 className="text-2xl md:text-3xl font-bold text-forest-900 font-serif">
+              <h2 className="text-xl md:text-2xl font-bold text-forest-900 font-serif">
                 {project.title}
               </h2>
               <div className="h-px flex-1 bg-forest-100 min-w-[50px]" />

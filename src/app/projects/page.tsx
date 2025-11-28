@@ -42,7 +42,7 @@ export default function ProjectsPage() {
                         className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif tracking-tight"
                     >
                         <span className="text-forest-900">All </span>
-                        <span className="text-lime-600">Projects</span>
+                        <span className="text-lime-500">Projects</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}

@@ -24,7 +24,7 @@ const Banner = () => {
         <div className="flex flex-col items-center text-center">
           {/* Main Heading */}
           <motion.h1
-            className="font-serif text-3xl md:text-5xl font-bold tracking-tight text-sage-100 leading-[1.2]"
+            className="font-serif text-2xl md:text-4xl font-bold tracking-tight text-sage-100 leading-[1.2]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}

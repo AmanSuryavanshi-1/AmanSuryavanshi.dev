@@ -150,7 +150,7 @@ export default function AboutPage() {
           __html: JSON.stringify(aboutStructuredData)
         }}
       />
-      
+
       <article className="prose prose-lg max-w-none" itemScope itemType="http://schema.org/Article">
         <h1 className="sr-only">{ABOUT_TITLE}</h1>
         <div itemProp="articleBody">
@@ -161,32 +161,32 @@ export default function AboutPage() {
             // skillsData={myData.skillsData}
           /> */}
           <div className="container mx-auto px-4 py-16 max-w-6xl">
-            <SectionTitle/>
+            <SectionTitle />
 
             {/* About Image and Content Section */}
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
               <div className="lg:col-span-2 mx-8">
-                <ProfileImage/>
+                <ProfileImage />
               </div>
               <div className="lg:col-span-3">
-                <AboutContent/>
+                <AboutContent />
               </div>
             </div>
           </div>
 
-        {/* Content Cards Section */}
+          {/* Content Cards Section */}
           <div className="mb-12">
             <ContentCard />
           </div>
           {/* GitHub Section */}
-          <GithubProfile/>
-          <GithubCalendarComponent/>
+          <GithubProfile />
+          <GithubCalendarComponent />
 
-           {/* Skills Section */}
-           <MySkills />
+          {/* Skills Section */}
+          <MySkills />
 
           {/* CTA Section */}
-          <CTA/>
+          <CTA />
 
         </div>
       </article>

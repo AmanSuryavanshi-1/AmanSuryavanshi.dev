@@ -9,7 +9,7 @@
 
 ### What is Omni-Post AI?
 
-Omni-Post AI is a production-grade automation system that transforms a single idea from Notion into platform-optimized content for Twitter, LinkedIn, and your blog—automatically. Built as a "Build in Public" project, it demonstrates enterprise-level reliability using free-tier APIs and intelligent AI orchestration.
+Omni-Post AI is a production-grade automation system that transforms a single idea from Notion into platform-optimized content for Twitter, LinkedIn, and your blog-automatically. Built as a "Build in Public" project, it demonstrates enterprise-level reliability using free-tier APIs and intelligent AI orchestration.
 
 ---
 

@@ -1,9 +1,9 @@
 const myData = {
   personalInfo: {
     name: "Aman Suryavanshi",
-    title: "Web Developer & UI/UX Designer",
+    title: "Solutions Architect & Automation Consultant",
     description:
-      "Passionate about creating highly functional, visually captivating, and user-centered digital experiences. I bring a blend of creative flair and technical precision to every project, from frontend development to UX design.",
+      "Specializing in AI-powered workflow orchestration and intelligent system integration. I don't just build-I architect automation-first solutions that deliver measurable business impact through strategic use of AI, no-code tools, and modern tech stacks.",
     phone: "+91 8745030106",
     email: "amansurya.work@gmail.com",
     education: "B.Tech in Electronics and Communication",
@@ -56,6 +56,6 @@ const myData = {
     },
   },
 
-  };
+};
 
 export default myData;

@@ -30,7 +30,7 @@ export default function ProjectSummary({ project }: ProjectSummaryProps) {
                                     <div className="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center group-hover:scale-110 transition-transform">
                                         <Target className="w-6 h-6 text-red-500" />
                                     </div>
-                                    <h3 className="text-2xl font-bold text-forest-900">The Challenge</h3>
+                                    <h3 className="text-lg md:text-xl font-bold text-forest-900">The Challenge</h3>
                                 </div>
                                 <p className="text-forest-700 leading-relaxed text-lg">
                                     {project.challenge || project.problem || "Identifying the core user pain points and technical constraints was the first step in this journey."}
@@ -43,7 +43,7 @@ export default function ProjectSummary({ project }: ProjectSummaryProps) {
                                     <div className="w-12 h-12 rounded-2xl bg-lime-50 flex items-center justify-center group-hover:scale-110 transition-transform">
                                         <Lightbulb className="w-6 h-6 text-lime-600" />
                                     </div>
-                                    <h3 className="text-2xl font-bold text-forest-900">The Solution</h3>
+                                    <h3 className="text-lg md:text-xl font-bold text-forest-900">The Solution</h3>
                                 </div>
                                 <p className="text-forest-700 leading-relaxed text-lg">
                                     {project.solution || "Leveraging modern technologies to build a robust, scalable, and user-centric solution."}
@@ -57,7 +57,7 @@ export default function ProjectSummary({ project }: ProjectSummaryProps) {
                                 <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center">
                                     <Code2 className="w-6 h-6 text-blue-500" />
                                 </div>
-                                <h3 className="text-2xl md:text-3xl font-bold text-forest-900">Technical Overview</h3>
+                                <h3 className="text-xl md:text-2xl font-bold text-forest-900">Technical Overview</h3>
                             </div>
                             <div className="prose prose-forest max-w-none text-forest-700">
                                 <p className="text-lg leading-relaxed">
@@ -73,7 +73,7 @@ export default function ProjectSummary({ project }: ProjectSummaryProps) {
                                     <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center">
                                         <FileJson className="w-6 h-6 text-amber-500" />
                                     </div>
-                                    <h3 className="text-2xl md:text-3xl font-bold text-forest-900">Documentation</h3>
+                                    <h3 className="text-xl md:text-2xl font-bold text-forest-900">Documentation</h3>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {project.documentation.map((doc, idx) => (
@@ -103,7 +103,7 @@ export default function ProjectSummary({ project }: ProjectSummaryProps) {
                                     <div className="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center">
                                         <Rocket className="w-6 h-6 text-purple-500" />
                                     </div>
-                                    <h3 className="text-2xl font-bold text-forest-900">Key Impact</h3>
+                                    <h3 className="text-lg md:text-xl font-bold text-forest-900">Key Impact</h3>
                                 </div>
                                 <ul className="space-y-4">
                                     {Array.isArray(project.impact) ? (

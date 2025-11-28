@@ -20,7 +20,7 @@ export default function FeaturedProjectsSection() {
             <div className="container mx-auto px-4">
                 {/* Section Header */}
                 <div className="flex flex-col items-center justify-center mb-8 lg:mb-12 text-center">
-                    <h2 className="text-3xl md:text-5xl font-bold font-serif mb-4 tracking-tight">
+                    <h2 className="text-2xl md:text-4xl font-bold font-serif mb-4 tracking-tight">
                         <span className="text-forest-900">Featured </span>
                         <span className="text-lime-500">Projects</span>
                     </h2>
