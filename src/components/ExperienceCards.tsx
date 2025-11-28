@@ -80,7 +80,7 @@ const ExperienceCards = () => {
   return (
     <section id="experience" className="w-full py-16" aria-labelledby="experience-cards-heading" ref={ref}>
       <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 id="experience-cards-heading" className="text-3xl md:text-5xl font-bold font-serif text-forest-900 mb-8 text-center">
+        <h2 id="experience-cards-heading" className="text-2xl md:text-4xl font-bold font-serif text-forest-900 mb-8 text-center">
           My <span className="text-lime-500">Experience</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 py-8">
@@ -89,7 +89,7 @@ const ExperienceCards = () => {
               key={index}
               className="p-8 rounded-3xl bg-gradient-to-br from-lime-500 to-lime-300/10 border-4 shadow-lg  shadow-forest-500 border-sage-100 hover:from-forest-900 hover:to-forest-500  hover:text-sage-100 transition-colors duration-300 group"
               variants={{
-                hidden: { 
+                hidden: {
                   opacity: 0,
                   scale: 0.8,
                   x: index % 2 === 0 ? -50 : 50,
@@ -110,7 +110,7 @@ const ExperienceCards = () => {
               }}
               initial="hidden"
               animate={controls}
-              whileHover={{ 
+              whileHover={{
                 y: -20,
                 transition: { type: "spring", stiffness: 300 }
               }}

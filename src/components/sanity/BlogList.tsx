@@ -210,7 +210,7 @@ export default function BlogList() {
         {/* Featured Section - Only show on first page */}
         {!isLoading && currentPage === 1 && featuredPosts.length > 0 && (
           <div className="mb-4 sm:mb-8 flex flex-col">
-            <h2 className="text-2xl md:text-4xl font-serif font-bold tracking-tight mb-6 text-center">
+            <h2 className="text-xl md:text-2xl font-serif font-bold tracking-tight mb-6 text-center">
               <span className="text-forest-900">Featured </span>
               <span className="text-lime-500">Articles</span>
             </h2>

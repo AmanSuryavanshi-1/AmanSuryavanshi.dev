@@ -14,7 +14,7 @@
 
 ### About This Project
 
-Omni-Post AI is a production-grade automation system built as a "Build in Public" project. It transforms a single idea from Notion into platform-optimized content for Twitter, LinkedIn, and your blog—automatically. This documentation details the complete technical architecture, AI strategy, and real-world challenges solved during development.
+Omni-Post AI is a production-grade automation system built as a "Build in Public" project. It transforms a single idea from Notion into platform-optimized content for Twitter, LinkedIn, and your blog-automatically. This documentation details the complete technical architecture, AI strategy, and real-world challenges solved during development.
 
 ---
 
@@ -88,7 +88,7 @@ Omni-Post AI is a production-grade automation system built as a "Build in Public
 
 ### 1. Introduction
 
-I built this automation system to solve a specific problem: **consistent, high-quality content distribution across multiple platforms without manual repetition**. The challenge wasn't creating content—I had hundreds of technical notes in Notion. The challenge was transforming those notes into platform-optimized posts for Twitter, LinkedIn, and my blog, which was consuming 15-20 hours per month.
+I built this automation system to solve a specific problem: **consistent, high-quality content distribution across multiple platforms without manual repetition**. The challenge wasn't creating content-I had hundreds of technical notes in Notion. The challenge was transforming those notes into platform-optimized posts for Twitter, LinkedIn, and my blog, which was consuming 15-20 hours per month.
 
 **Business Impact:**
 - **Cost Savings**: $0/month operational cost vs. $60-300/month for commercial tools (Buffer, Zapier Premium, Make)
@@ -164,7 +164,7 @@ This is a **production-grade, bi-part n8n automation** consisting of 74 nodes or
 
 #### The Content Distribution Challenge
 
-The core problem: **I had valuable technical content in Notion, but distributing it across platforms was consuming 15-20 hours per month**. This wasn't a content creation problem—it was a distribution and adaptation problem.
+The core problem: **I had valuable technical content in Notion, but distributing it across platforms was consuming 15-20 hours per month**. This wasn't a content creation problem-it was a distribution and adaptation problem.
 
 **The Friction Points:**
 
@@ -176,13 +176,13 @@ The core problem: **I had valuable technical content in Notion, but distributing
 | **Low Authenticity** | Generic templates feel impersonal | Premium AI tools | $50-200/mo |
 | **Platform Constraints** | LinkedIn 1-image limit, Twitter threads, etc. | Manual workarounds | Labor-intensive |
 
-**My Solution**: Build an automation that handles platform-specific adaptation while preserving technical depth and authentic voice—at zero monthly operational cost.
+**My Solution**: Build an automation that handles platform-specific adaptation while preserving technical depth and authentic voice-at zero monthly operational cost.
 
 **Why Notion as the Source?**
 
 Notion serves as the single source of truth for three technical reasons:
 
-1. **Existing Workflow Integration**: All project notes, learnings, and technical documentation already existed in Notion—no workflow disruption
+1. **Existing Workflow Integration**: All project notes, learnings, and technical documentation already existed in Notion-no workflow disruption
 2. **Hierarchical Data Structure**: Notion's nested blocks (toggles, headings, code blocks, lists) preserve content structure, which is critical for AI context
 3. **API Accessibility**: Notion API provides programmatic access to hierarchical content with parent-child relationships intact
 
@@ -1123,7 +1123,7 @@ async function postWithBackoff(platform, content, maxRetries = 5) {
 
 ## Part V: Technical Challenges & Solutions
 
-This section documents the real problems I encountered and how I solved them. These aren't theoretical challenges—these are issues that broke my workflow in production and forced me to rethink my approach.
+This section documents the real problems I encountered and how I solved them. These aren't theoretical challenges-these are issues that broke my workflow in production and forced me to rethink my approach.
 
 ---
 
@@ -1132,7 +1132,7 @@ This section documents the real problems I encountered and how I solved them. Th
 #### The Problem I Faced
 
 Each platform has different image requirements:
-- **LinkedIn**: 1 image max (API enforced—posting fails if you attach more)
+- **LinkedIn**: 1 image max (API enforced-posting fails if you attach more)
 - **Twitter**: Unlimited images (but bandwidth concerns)
 - **Blog**: Unlimited images (want multiple for visual richness)
 
@@ -2021,9 +2021,9 @@ I built this automation system to solve a real problem: **consistent, high-quali
 
 #### Final Thoughts
 
-This project demonstrates that sophisticated automation doesn't require expensive tools—it requires thoughtful architecture and robust error handling. The system processes content from ideation (Notion) to publication (Twitter, LinkedIn, Blog) in 65-111 seconds, with 99.7% reliability, at zero monthly cost.
+This project demonstrates that sophisticated automation doesn't require expensive tools-it requires thoughtful architecture and robust error handling. The system processes content from ideation (Notion) to publication (Twitter, LinkedIn, Blog) in 65-111 seconds, with 99.7% reliability, at zero monthly cost.
 
-The technical challenges I solved—concurrent execution safety, hierarchical data processing, platform-specific constraint handling, and graceful error recovery—are applicable to any complex automation or integration system.
+The technical challenges I solved-concurrent execution safety, hierarchical data processing, platform-specific constraint handling, and graceful error recovery-are applicable to any complex automation or integration system.
 
 ---
 

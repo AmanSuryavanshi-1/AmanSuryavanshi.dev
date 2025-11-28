@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { User, Phone, Mail, GraduationCap, MapPin, Languages} from 'lucide-react';
+import { User, Phone, Mail, GraduationCap, MapPin, Languages } from 'lucide-react';
 
 interface PersonalData {
   title?: string;
@@ -32,48 +32,39 @@ function PersonalInfo({ data }: PersonalInfoProps) {
       className="space-y-6"
     >
       <div className="prose prose-forest max-w-none" itemScope itemType="http://schema.org/Person">
-        <h2 className="text-xl font-semibold text-forest-900 mb-4">
-          {data?.title || "Unmatched Service Quality for Over 3 Years"}
+        <h2 className="text-lg font-semibold text-forest-900 mb-4">
+          Delivering Business Impact Through Intelligent Automation
         </h2>
         <p className="text-forest-700">
-          I specialize in crafting exceptional web experiences with modern technologies. 
-          My passion lies in transforming complex ideas into elegant, user-friendly solutions that drive business growth.
+          I specialize in architecting automation-first solutions that eliminate manual work and drive measurable ROI.
+          My expertise lies in orchestrating AI tools, workflow platforms (N8N, Make), and modern tech stacks to create systems that work smarter, not harder.
+          Every project I deliver comes with concrete metrics: time saved, revenue generated, processes automated.
         </p>
-        <div className="grid md:grid-cols-2 gap-5 mt-6">
-          <InfoItem 
-            icon={<User className="h-5 w-5"/>} 
+        <div className="grid md:grid-cols-2 gap-5 mt-5">
+          <InfoItem
+            icon={<User className="h-6 w-6" />}
             text={data?.name || "Your Name"}
             label="Name"
           />
-          <InfoItem 
-            icon={<Phone className="h-5 w-5"/>} 
-            text={data?.phone || "+012 345 6789"}
-            label="Phone"
-          />
-          <InfoItem 
-            icon={<Mail className="h-5 w-5"/>} 
-            text={data?.email || "youremail@email.com"}
-            label="Email"
-          />
-          <InfoItem 
-            icon={<GraduationCap className="h-5 w-5"/>} 
+          <InfoItem
+            icon={<GraduationCap className="h-6 w-6" />}
             text={data?.education || "Master in Computer Science"}
             label="Education"
           />
-          <InfoItem 
-            icon={<MapPin className="h-5 w-5"/>} 
+          <InfoItem
+            icon={<MapPin className="h-6 w-6" />}
             text={data?.address || "321 Blue Avenue, NY, USA"}
             label="Location"
           />
           <InfoItem
-            icon={<Languages className="h-5 w-5"/>} 
+            icon={<Languages className="h-6 w-6" />}
             text={data?.languages?.join(", ") || "English, Hindi"}
             label="Languages"
           />
         </div>
 
         <meta itemProp="name" content={data?.name || "Aman Suryavanshi"} />
-        <meta itemProp="description" content="Web developer and UI/UX designer dedicated to creating beautiful, functional, and user-centered digital experiences." />
+        <meta itemProp="description" content="Solutions Architect and Automation Consultant specializing in AI-powered workflow orchestration, business process automation, and intelligent system integration." />
       </div>
     </motion.div>
   );
@@ -81,7 +72,7 @@ function PersonalInfo({ data }: PersonalInfoProps) {
 
 function InfoItem({ icon, text, label }: InfoItemProps) {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       className="flex items-start gap-3"

@@ -24,8 +24,8 @@ const geistMono = localFont({
 
 // Site Constants
 const SITE_NAME = "Aman Suryavanshi";
-const SITE_TITLE = "Aman Suryavanshi | Web Developer Portfolio";
-const SITE_DESCRIPTION = "Discover the portfolio and blog of Aman Suryavanshi, showcasing web development projects, technical blogs on JavaScript, React, Next.js, and available freelance services.";
+const SITE_TITLE = "Aman Suryavanshi | Solutions Architect & Full-Stack Developer";
+const SITE_DESCRIPTION = "Solutions Architect specializing in Next.js full-stack development and AI automation. Built production systems generating ₹300K+ revenue. Available for remote projects and consulting.";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi-dev.vercel.app/";
 
 export const metadata: Metadata = {
@@ -36,20 +36,38 @@ export const metadata: Metadata = {
     },
     description: SITE_DESCRIPTION,
     keywords: [
-        "Aman Suryavanshi",
+        // Primary positioning
+        "solutions architect",
+        "full-stack developer",
+        "AI automation specialist",
+        "AI automation consultant",
+        "N8N consultant",
+        "N8N expert",
+        "workflow automation",
+        "system integration",
+        "technical architect India",
+        "remote automation specialist",
+        // Core skills
         "web developer",
         "freelance web developer",
-        "JavaScript developer",
-        "React developer",
+        "Next.js expert",
         "Next.js portfolio",
-        "frontend developer",
-        "web development blog",
-        "UI/UX designer",
+        "JavaScript developer",
         "TypeScript developer",
-        "full-stack developer",
+        "React developer",
+        "React developer India",
+        "frontend developer",
+        "Firebase expert",
+        "Supabase developer",
+        "remote developer",
+        "UI/UX designer",
+        "web development blog",
+        // Location-based
         "web developer india",
         "freelance web developer india",
-        "best web developer in delhi"
+        "best web developer in delhi",
+        // Personal brand
+        "Aman Suryavanshi"
     ],
     authors: [{ name: SITE_NAME, url: SITE_URL }],
     creator: SITE_NAME,

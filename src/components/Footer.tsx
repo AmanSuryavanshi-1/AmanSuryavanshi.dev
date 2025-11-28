@@ -3,14 +3,14 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { 
-  Mail, MapPin, Download, CodeIcon, Home, User2, 
-  Briefcase, FolderGit2, BookOpen, ArrowUpRight 
+import {
+  Mail, MapPin, Download, CodeIcon, Home, User2,
+  Briefcase, FolderGit2, BookOpen, ArrowUpRight
 } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { 
-  SiNextdotjs, SiTypescript, 
-  SiTailwindcss, SiVercel 
+import {
+  SiNextdotjs, SiTypescript,
+  SiTailwindcss, SiVercel
 } from 'react-icons/si'
 import HeaderSocial from './hero/HeroSocial'
 import { FaReact } from 'react-icons/fa'
@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12 px-4">
           {/* Personal Branding Section with HeaderSocial */}
-          <motion.div 
+          <motion.div
             className="flex flex-col items-center lg:items-start space-y-4"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -72,22 +72,22 @@ const Footer: React.FC = () => {
               <div className="flex flex-col items-center lg:items-start">
                 <div className="flex justify-center md:justify-start items-center space-x-4">
                   <div className='rounded-full p-2 border-4 border-sage-100 bg-lime-500'>
-                    <Image 
-                      src="/Profile/Logo.png" 
-                      alt="AS Logo" 
-                      width={37} 
-                      height={37} 
+                    <Image
+                      src="/Profile/Logo.png"
+                      alt="AS Logo"
+                      width={37}
+                      height={37}
                     />
                   </div>
-                  <Image 
-                    src="/Profile/PFP-Cricular.png" 
-                    alt="Aman Suryavanshi" 
-                    width={60} 
-                    height={60} 
+                  <Image
+                    src="/Profile/PFP-Cricular.png"
+                    alt="Aman Suryavanshi"
+                    width={60}
+                    height={60}
                     className="rounded-full border-4 border-sage-100"
                   />
                 </div>
-                <h3 className="text-2xl font-bold text-lime-500 my-4">Aman Suryavanshi</h3>
+                <h3 className="text-xl font-bold text-lime-500 my-4">Aman Suryavanshi</h3>
                 <p className="text-sage-300 text-lg">Web Developer & UX Designer</p>
               </div>
               {/* HeaderSocial with fixed width */}
@@ -106,10 +106,10 @@ const Footer: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h4 className="text-2xl font-semibold text-lime-500 border-b border-forest-700 pb-2 w-full text-center lg:text-left">Quick Links</h4>
+            <h4 className="text-xl font-semibold text-lime-500 border-b border-forest-700 pb-2 w-full text-center lg:text-left">Quick Links</h4>
             <div className="grid grid-cols-2 gap-6 w-full">
               {quickLinks.map((link) => (
-                <Link 
+                <Link
                   key={link.href}
                   href={link.href}
                   className="flex items-center space-x-2 font-semibold text-sage-100 hover:text-lime-500 transition-colors group justify-center lg:justify-start"
@@ -131,12 +131,12 @@ const Footer: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <h4 className="text-2xl font-semibold text-lime-500 border-b border-forest-700 pb-2 w-full text-center lg:text-left">Let&apos;s Connect</h4>
+            <h4 className="text-xl font-semibold text-lime-500 border-b border-forest-700 pb-2 w-full text-center lg:text-left">Let&apos;s Connect</h4>
             <div className="space-y-6 w-full flex flex-col">
               <div className="flex items-center space-x-3 justify-center lg:justify-start">
                 <Mail size={24} className="text-lime-500" />
-                <a 
-                  href="mailto:amansurya.work@gmail.com" 
+                <a
+                  href="mailto:amansurya.work@gmail.com"
                   className="hover:text-lime-500 transition-colors text-sage-300"
                 >
                   amansurya.work@gmail.com
@@ -147,7 +147,7 @@ const Footer: React.FC = () => {
                 <span className="text-sage-300">Delhi, India</span>
               </div>
               <div className='w-fit mt-16'>
-                <Link 
+                <Link
                   href="/#contact"
                   className="my-auto w-auto mx-auto bg-lime-300 text-forest-900 px-6 py-2 rounded-full font-semibold 
                   hover:bg-lime-500 transition-all duration-300 group flex items-center justify-center space-x-1"

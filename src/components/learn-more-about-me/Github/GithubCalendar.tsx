@@ -20,11 +20,11 @@ export const GithubCalendarComponent: React.FC = () => {
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-2xl sm:text-3xl md:text-5xl font-bold font-serif text-forest-900 mb-6 md:mb-4"
+          className="text-xl sm:text-2xl md:text-3xl font-bold font-serif text-forest-900 mb-6 md:mb-4"
         >
           My <span className="text-lime-500">GitHub</span> Contributions
         </motion.h2>
-        
+
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -38,7 +38,7 @@ export const GithubCalendarComponent: React.FC = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          whileHover={{ 
+          whileHover={{
             y: -10,
             transition: { type: "spring", stiffness: 300 }
           }}
@@ -54,7 +54,7 @@ export const GithubCalendarComponent: React.FC = () => {
                   Contribution Landscape
                 </h3>
               </div>
-              
+
               <div className="w-full overflow-x-auto flex justify-center items-center py-4">
                 <div className="flex justify-center min-w-fit text-forest-900 group-hover:text-lime-500">
                   <GitHubCalendar

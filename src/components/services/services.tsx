@@ -31,7 +31,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true }}
-      whileHover={{ 
+      whileHover={{
         y: -20,
         transition: { type: "spring", stiffness: 300 }
       }}
@@ -48,14 +48,14 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, index }) => {
               {service.title}
             </h3>
           </div>
-          
+
           <p className="text-forest-700 group-hover:text-sage-100 mb-6 text-sm transition-colors duration-300">
             {service.description}
           </p>
-          
+
           <ul className="space-y-3">
             {service.features.map((feature, idx) => (
-              <li 
+              <li
                 key={idx}
                 className="flex items-center text-sm text-forest-700 group-hover:text-lime-100 transition-colors duration-300"
               >
@@ -82,7 +82,7 @@ const ServicesSection: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-8 pt-12"
         >
-          <h2 className="text-3xl md:text-5xl font-bold font-serif mb-4">
+          <h2 className="text-2xl md:text-4xl font-bold font-serif mb-4">
             <span className="text-forest-900">Our </span>
             <span className="text-lime-500">Services</span>
           </h2>

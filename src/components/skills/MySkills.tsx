@@ -71,7 +71,7 @@ const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ data = skillsData }) =>
           transition={{ duration: 0.5 }}
           className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif mb-4 sm:mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-serif mb-4 sm:mb-6">
             <span className="text-forest-900">My </span>
             <span className="text-lime-500">Skills</span>
           </h2>
@@ -85,8 +85,8 @@ const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ data = skillsData }) =>
           <motion.button
             onClick={() => setSelectedCategory('All')}
             className={`px-3 md:px-4 py-1 sm:py-3 rounded-full text-sm sm:text-base font-bold border-[3px] border-sage-100 transition-all duration-300 shadow-md
-              ${selectedCategory === 'All' 
-                ? 'bg-forest-900 text-sage-100 scale-105 shadow-lg shadow-forest-500' 
+              ${selectedCategory === 'All'
+                ? 'bg-forest-900 text-sage-100 scale-105 shadow-lg shadow-forest-500'
                 : 'bg-lime-500 text-forest-900 hover:bg-forest-700 hover:text-sage-100'
               }`}
             whileHover={{ scale: 1.05 }}
@@ -104,8 +104,8 @@ const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ data = skillsData }) =>
                 key={name}
                 onClick={() => setSelectedCategory(name)}
                 className={`px-3 sm:px-4 md:px-5 py-2 sm:py-3 rounded-full text-sm sm:text-base font-bold border-[3px] border-sage-100 transition-all duration-300 shadow-md
-                  ${selectedCategory === name 
-                    ? 'bg-forest-900 text-sage-100 scale-105 shadow-lg shadow-forest-500' 
+                  ${selectedCategory === name
+                    ? 'bg-forest-900 text-sage-100 scale-105 shadow-lg shadow-forest-500'
                     : 'bg-lime-500 text-forest-900 hover:bg-forest-700 hover:text-sage-100'
                   }`}
                 whileHover={{ scale: 1.05 }}
@@ -121,7 +121,7 @@ const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ data = skillsData }) =>
         </div>
 
         {/* Skills Grid */}
-        <motion.div 
+        <motion.div
           className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4  gap-3 md:gap-4 max-w-5xl mx-auto lg:mx-28"
           layout
         >
@@ -135,7 +135,7 @@ const SkillsShowcase: React.FC<SkillsShowcaseProps> = ({ data = skillsData }) =>
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -5 }}
               >
-                <Card 
+                <Card
                   onClick={() => skill.url && window.open(skill.url, '_blank')}
                   className={`group h-24 sm:h-28 md:h-32 overflow-hidden rounded-3xl border-4 border-sage-100 
                     bg-gradient-to-br from-lime-500 to-lime-100 hover:from-forest-900 hover:to-forest-500 
