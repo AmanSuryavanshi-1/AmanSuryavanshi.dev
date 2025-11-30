@@ -1,13 +1,13 @@
 const myData = {
   personalInfo: {
     name: "Aman Suryavanshi",
-    title: "Solutions Architect & Automation Consultant",
+    title: "AI Automation Engineer + Full-Stack Developer",
     description:
-      "Specializing in AI-powered workflow orchestration and intelligent system integration. I don't just build-I architect automation-first solutions that deliver measurable business impact through strategic use of AI, no-code tools, and modern tech stacks.",
+      "Building Next.js apps with intelligent n8n automation backends. I create complete solutions where beautiful UIs meet powerful AI-powered workflows. Specializing in LangChain, OpenAI integration, and workflow orchestration that delivers measurable business impact.",
     phone: "+91 8745030106",
     email: "amansurya.work@gmail.com",
     education: "B.Tech in Electronics and Communication",
-    address: "Delhi, India",
+    address: "Bengaluru & Delhi, India | Remote",
     languages: ["English", "Hindi"],
   },
 
@@ -15,7 +15,7 @@ const myData = {
     qualifications: {
       EducationData: [
         {
-          title: "B.Tech in Electronics & Communication",
+          title: "Bachelor of Technology - Electronics",
           institution: "Maharaja Surajmal Institute of Technology",
           year: "2020 - 2024 (GGSIPU)",
           icon: "graduation-cap"

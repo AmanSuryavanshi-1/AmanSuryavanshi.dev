@@ -1,116 +1,399 @@
-const skillsData = {
-  categories: {
-    "Technical Skills": {
-      icon: "Code2",
-      skills: [
-        // Frontend Frameworks & Libraries
-        { name: "React", icon: "FaReact", url: "https://react.dev" },
-        { name: "C/C++", icon: "SiCplusplus", url: "https://www.cppreference.com" },
-        { name: "Data Structures & Algorithms", icon: "Binary", url: "https://www.geeksforgeeks.org/data-structures/" },
-        { name: "Object-Oriented Programming", icon: "Boxes", url: "https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_programming" },
-        { name: "Computer Networks", icon: "Network", url: "https://www.computernetworkingnotes.com/" },
-        { name: "JSON", icon: "Braces", url: "https://www.json.org/" },
-        { name: "Axios", icon: "SiAxios", url: "https://axios-http.com/" },
-        { name: "Web APIs", icon: "Globe", url: "https://developer.mozilla.org/en-US/docs/Web/API" },
-        { name: "Next.js", icon: "SiNextdotjs", url: "https://nextjs.org" },
-        { name: "Redux", icon: "SiRedux", url: "https://redux.js.org" },
-        { name: "TypeScript", icon: "SiTypescript", url: "https://www.typescriptlang.org" },
-        { name: "JavaScript", icon: "FaJs", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
-        { name: "HTML", icon: "FaHtml5", url: "https://developer.mozilla.org/en-US/docs/Web/HTML" },
-        { name: "CSS", icon: "FaCss3Alt", url: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
+import {
+  Workflow,
+  Bot,
+  Brain,
+  Zap,
+  Code2,
+  Layout,
+  Database,
+  Server,
+  Rocket,
+  Search,
+  Globe,
+  Puzzle,
+  Palette,
+  Terminal,
+  FileText,
+  Users,
+  Cpu,
+  Layers,
+  LineChart,
+  GitBranch,
+  Lock,
+  Smartphone,
+  MessageSquare,
+  Mic
+} from 'lucide-react';
 
-        { name: "Full Stack Development", icon: "FaLayerGroup", url: "https://roadmap.sh/full-stack" },
-        { name: "Frontend Development", icon: "LayoutDashboard", url: "https://roadmap.sh/frontend" },
-        
+export const skillsData = {
+  mainTitle: "Comprehensive Skills & Expertise",
+  subTitle: "A detailed breakdown of my technical capabilities and professional achievements",
 
-        // Build Tools
-        { name: "Webpack", icon: "SiWebpack", url: "https://webpack.js.org" },
-        { name: "Vite", icon: "SiVite", url: "https://vitejs.dev" },
-        { name: "Parcel", icon: "SiParcel", url: "https://parceljs.org" },
-        { name: "PostCSS", icon: "SiPostcss", url: "https://postcss.org" },
-          // "UI Libraries & Frameworks": [
-            { name: "Tailwind CSS", icon: "SiTailwindcss", url: "https://tailwindcss.com" },
-            { name: "Material UI", icon: "SiMaterialui", url: "https://mui.com" },
-            { name: "Shadcn UI", icon: "Component", url: "https://ui.shadcn.com" },
-            { name: "DaisyUI", icon: "SiDaisyui", url: "https://daisyui.com" },
-            { name: "Framer Motion", icon: "SiFramer", url: "https://www.framer.com/motion" },
-            { name: "Bootstrap", icon: "FaBootstrap", url: "https://getbootstrap.com" },
-          // ],
+  coreSpecialty: {
+    title: "AI & Automation Engineering",
+    icon: "Bot",
+    description: "Core Specialty - Designing and implementing intelligent workflows that operate autonomously",
+    skills: [
+      {
+        name: "n8n (Advanced)",
+        details: "80% process reduction achieved in production",
+        projectTitle: "Omni-Post AI Automation",
+        projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+      },
+      {
+        name: "Multi-LLM Integration",
+        details: "OpenAI GPT-4, Claude 3.5, Gemini Pro, Perplexity",
+        projectTitle: "Omni-Post AI Automation",
+        projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+      },
+      {
+        name: "RAG Systems",
+        details: "Document intelligence & contextual querying",
+        projectTitle: "Omni-Post AI Automation",
+        projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+      },
+      { name: "Prompt Engineering", details: "Advanced techniques for optimal LLM outputs" },
+      { name: "MCP (Model Context Protocol)", details: "Cutting-edge AI tooling" },
+      { name: "OAuth2 & Webhooks", details: "Secure API integrations" },
+      {
+        name: "Python",
+        details: "Automation scripts & AI workflows",
+        projectTitle: "Omni-Post AI Automation",
+        projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+      }
+    ],
+    impact: "Reduced manual processes by 80% through intelligent automation"
+  },
 
-          { name: "REST APIs", icon: "FaCode", url: "https://restfulapi.net" },
-        // { name: "GitHub API", icon: "FaGithub", url: "https://docs.github.com/en/rest" },
-        // { name: "YouTube API", icon: "FaYoutube", url: "https://developers.google.com/youtube/v3" },
-          { name: "Email JS", icon: "Mail", url: "https://www.emailjs.com/" },
-        ]
+  categories: [
+    {
+      id: "frontend",
+      title: "Frontend Development",
+      icon: "Layout",
+      description: "Building responsive, accessible, and performant user interfaces",
+      groups: [
+        {
+          title: "Core Frameworks",
+          items: [
+            {
+              label: "Next.js",
+              value: "App Router, Server Actions, SSR/ISR",
+              projectTitle: "AmanSuryavanshi.dev",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev"
+            },
+            {
+              label: "React",
+              value: "Hooks, Context, Custom Components",
+              projectTitle: "BarkatEnterprise",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/BarkatEnterprise"
+            },
+            {
+              label: "TypeScript",
+              value: "Strict typing, Interfaces, Generics",
+              projectTitle: "Omni-Post AI Automation",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+            }
+          ]
+        },
+        {
+          title: "Styling & UI",
+          items: [
+            {
+              label: "Tailwind CSS",
+              value: "Custom configs, Dark mode, Responsive design",
+              projectTitle: "AmanSuryavanshi.dev",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev"
+            },
+            { label: "Framer Motion", value: "Complex animations, Page transitions" },
+            { label: "Shadcn/UI", value: "Customized accessible components" }
+          ]
+        }
+      ],
+      footer: "Focus on pixel-perfect implementation and 95+ Lighthouse scores"
     },
-    // "APIs & Integration": {
-    //   icon: "Webhook",
-    //   skills: [
-    //     { name: "REST APIs", icon: "FaCode", url: "https://restfulapi.net" },
-    //     { name: "GitHub API", icon: "FaGithub", url: "https://docs.github.com/en/rest" },
-    //     { name: "YouTube API", icon: "FaYoutube", url: "https://developers.google.com/youtube/v3" },
-    //     { name: "Email Integration", icon: "Mail", url: "https://nodemailer.com" },
-    //     { name: "Responsive Design", icon: "Smartphone", url: "https://web.dev/responsive-web-design-basics" },
-    //   ]
-    // },
-    "Creative Skills": {
-      icon: "Palette",
-      skills: [
-        { name: "UI/UX Design", icon: "Palette", url: "https://careerfoundry.com/en/blog/ux-design/what-is-ui-ux-design/" },
-        { name: "Content Writing", icon: "PenLine", url: "https://www.hubspot.com/content-marketing" },
-        { name: "Figma", icon: "FaFigma", url: "https://help.figma.com" },
-        { name: "Creative Technology", icon: "Sparkles" },
-        { name: "Technical Writing", icon: "FileText", url: "https://developers.google.com/tech-writing" },
-        { name: "AI Video Creation", icon: "Video", url: "https://pictory.ai" },
-        { name: "AI Image Generation", icon: "ImagePlus", url: "https://openai.com/dall-e" },
-        { name: "User-Centered Design", icon: "UserCog", url: "https://www.nngroup.com/articles/usability-101-introduction-to-usability/" }
+    {
+      id: "backend",
+      title: "Backend & Infrastructure",
+      icon: "Server",
+      description: "Robust server-side solutions and cloud infrastructure",
+      groups: [
+        {
+          title: "Server & API",
+          items: [
+            { label: "Node.js", value: "REST APIs, Middleware, Auth" },
+            {
+              label: "Firebase",
+              value: "Auth, Firestore, Cloud Functions",
+              projectTitle: "Omni-Post AI Automation",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+            },
+            {
+              label: "Sanity CMS",
+              value: "Schema design, GROQ queries",
+              projectTitle: "AmanSuryavanshi.dev",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev"
+            }
+          ]
+        },
+        {
+          title: "DevOps & Cloud",
+          items: [
+            {
+              label: "Vercel",
+              value: "Deployments, Edge Functions, Analytics",
+              projectTitle: "AmanSuryavanshi.dev",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev"
+            },
+            {
+              label: "PowerShell",
+              value: "Automation scripting",
+              projectTitle: "N8N Repo",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/N8N"
+            },
+            { label: "Git & GitHub", value: "CI/CD workflows, Version control" }
+          ]
+        }
+      ],
+      footer: "Building scalable, secure, and cost-effective backend solutions"
+    },
+    {
+      id: "ai-engineering",
+      title: "Advanced AI Engineering",
+      icon: "Brain",
+      description: "Leveraging cutting-edge AI models and tools",
+      groups: [
+        {
+          title: "LLM Orchestration",
+          items: [
+            {
+              label: "LangChain",
+              value: "Chains, Agents, Memory",
+              projectTitle: "Omni-Post AI Automation",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+            },
+            {
+              label: "Groq",
+              value: "High-speed inference integration",
+              projectTitle: "Omni-Post AI Automation",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+            },
+            {
+              label: "SerpApi",
+              value: "Real-time search data integration",
+              projectTitle: "Omni-Post AI Automation",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+            }
+          ]
+        },
+        {
+          title: "Tools & APIs",
+          items: [
+            { label: "OpenAI API", value: "GPT-4o, Assistants API" },
+            { label: "Anthropic API", value: "Claude 3.5 Sonnet integration" },
+            { label: "Perplexity API", value: "Online research automation" }
+          ]
+        }
+      ],
+      footer: "Creating intelligent systems that understand and act on data"
+    },
+    {
+      id: "tools",
+      title: "Tools & Workflow",
+      icon: "Terminal",
+      description: "Essential tools for modern development",
+      groups: [
+        {
+          title: "Development",
+          items: [
+            { label: "VS Code", value: "Advanced extensions & config" },
+            { label: "Postman", value: "API testing & documentation" },
+            { label: "Figma", value: "UI/UX design & prototyping" }
+          ]
+        },
+        {
+          title: "Libraries",
+          items: [
+            {
+              label: "pdfjs-dist",
+              value: "PDF processing & rendering",
+              projectTitle: "BarkatEnterprise",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/BarkatEnterprise"
+            },
+            {
+              label: "React Icons",
+              value: "Icon integration",
+              projectTitle: "BarkatEnterprise",
+              projectUrl: "https://github.com/AmanSuryavanshi-1/BarkatEnterprise"
+            }
+          ]
+        }
+      ],
+      footer: "Optimizing developer experience and productivity"
+    },
+    {
+      id: "seo",
+      title: "SEO & Performance Optimization",
+      icon: "Search",
+      description: "Achieving top rankings and optimal web vitals",
+      groups: [
+        {
+          title: "Top Google Rankings & Web Vitals",
+          items: [
+            { label: "Strategies", value: "Advanced SEO Optimization, Core Web Vitals (95+ scores)" },
+            { label: "Technical", value: "Code Splitting, Tree Shaking, Lazy Loading, Suspense" },
+            { label: "Content", value: "Schema Markup, Rich Snippets, Meta Tags, Open Graph" },
+            { label: "Assets", value: "Image Optimization (WebP, lazy loading), Responsive images" },
+            { label: "Config", value: "Sitemap, Robots.txt, Accessibility (WCAG 2.1 AA)" }
+          ]
+        }
       ]
     },
-    "Optimization & Deployment": {
-      icon: "Rocket",
-      skills: [
-        { name: "Web Performance", icon: "Gauge", url: "https://web.dev/performance-scoring" },
-        { name: "SEO", icon: "Search", url: "https://developers.google.com/search/docs" },
-        { name: "Performance Optimization", icon: "Timer" },
-        { name: "Vercel", icon: "SiVercel", url: "https://vercel.com/docs" },
-        { name: "Netlify", icon: "SiNetlify", url: "https://docs.netlify.com" },
-        { name: "GitHub Pages", icon: "SiGithub", url: "https://docs.github.com/en/pages" },
-        { name: "Web Analytics", icon: "BarChart", url: "https://analytics.google.com" },
-        { name: "Vercel Analytics", icon: "SiVercel", url: "https://vercel.com/analytics" },
-        { name: "Google Analytics", icon: "SiGoogleanalytics", url: "https://analytics.google.com" },
-        { name: "Performance Monitoring", icon: "Activity", url: "https://web.dev/vitals" },
+    {
+      id: "api",
+      title: "API Integrations & Third-Party Services",
+      icon: "Globe",
+      description: "Connecting systems with external services and data sources",
+      groups: [
+        {
+          title: "External Services & Data Sources",
+          items: [
+            { label: "News & Content", value: "News API, GNews.io, Notion API" },
+            { label: "Social Media", value: "YouTube API v3, Twitter API, GitHub API" },
+            { label: "AI/Voice", value: "Alan AI, Web Speech API (Text-to-Speech, Speech Recognition)" },
+            { label: "Commerce", value: "Swiggy API, Fake Store API" },
+            { label: "Security", value: "CORS handling, Rate limiting, API security" }
+          ]
+        }
       ]
     },
-    "Tools & Technologies": {
-      icon: "Wrench",
-      skills: [
-        { name: "Git", icon: "GitBranch", url: "https://git-scm.com/doc" },
-        // { name: "Docker", icon: "FaDocker", url: "https://docs.docker.com" },
-        // { name: "AWS", icon: "FaAws", url: "https://aws.amazon.com/documentation" },
-        { name: "Figma", icon: "FaFigma", url: "https://help.figma.com" },
-        { name: "VS Code", icon: "SiVisualstudiocode", url: "https://code.visualstudio.com/docs" },
-        { name: "Terminal", icon: "Terminal", url: "https://ubuntu.com/tutorials/command-line-for-beginners" },
-        { name: "DevTools", icon: "FaTools", url: "https://developer.chrome.com/docs/devtools" },
-        { name: "Cursor AI", icon: "Terminal", url: "https://cursor.sh" },
-        { name: "Claude AI", icon: "Bot", url: "https://anthropic.com/claude" },
-        { name: "ChatGPT", icon: "MessageSquare", url: "https://chat.openai.com" },
-        { name: "Gemini", icon: "Bot", url: "https://gemini.google.com" },
-        { name: "v0.dev", icon: "Code", url: "https://v0.dev" },
-        { name: "Notion", icon: "SiNotion", url: "https://notion.so" },
-        { name: "Leonardo AI", icon: "Palette", url: "https://leonardo.ai" },
+    {
+      id: "cs",
+      title: "Programming & CS Fundamentals",
+      icon: "Terminal",
+      description: "Strong foundation in computer science principles",
+      groups: [
+        {
+          title: "Strong Foundation",
+          items: [
+            { label: "Languages", value: "C++, C (Competitive Programming)" },
+            { label: "DSA", value: "Data Structures & Algorithms (LeetCode)" },
+            { label: "Concepts", value: "OOP, Computer Networks, System Design basics" },
+            { label: "Problem Solving", value: "Algorithmic thinking, Optimization techniques" }
+          ]
+        }
       ]
     },
-    "Soft Skills": {
+    {
+      id: "communication",
+      title: "Content & Communication",
+      icon: "FileText",
+      description: "Translating technical complexity into clear documentation",
+      groups: [
+        {
+          title: "Technical Writing & Documentation",
+          items: [
+            { label: "Writing", value: "Technical Writing, Content Writing, Copywriting" },
+            { label: "Docs", value: "API docs, README files, User guides, Cataloging" },
+            { label: "Community", value: "Building in Public, Sharing knowledge" }
+          ]
+        }
+      ]
+    },
+    {
+      id: "soft",
+      title: "Professional Skills & Qualities",
       icon: "Users",
-      skills: [
-        { name: "Time Management", icon: "Clock", url: "https://www.mindtools.com/pages/article/newHTE_00.htm" },
-        { name: "Problem Solving", icon: "PuzzlePiece", url: "https://www.indeed.com/career-advice/career-development/problem-solving-skills" },
-        { name: "Teamwork", icon: "Users2", url: "https://www.indeed.com/career-advice/career-development/teamwork-skills" },
-        { name: "Meeting Deadlines", icon: "Calendar", url: "https://www.mindtools.com/pages/article/deadline-management.htm" },
-        { name: "Creativity", icon: "Lightbulb", url: "https://www.creativityatwork.com/what-is-creativity/" }
+      description: "Personal attributes that drive project success",
+      groups: [
+        {
+          title: "What Makes Me Effective",
+          items: [
+            { label: "Core", value: "Problem Solving, Time Management, Adaptability" },
+            { label: "Team", value: "Teamwork, Collaboration, Leadership, Mentoring" },
+            { label: "Mindset", value: "Creativity, Business Mindset (ROI focus), Building in Public" }
+          ]
+        }
       ]
     }
-  }
+  ],
+
+  specializedAchievements: [
+    {
+      title: "Performance Engineering",
+      icon: "Zap",
+      items: [
+        "Achieved 95+ Lighthouse scores across multiple production sites",
+        "Optimized Core Web Vitals (LCP, FID, CLS)",
+        "Reduced page load times by 60% through strategic optimization"
+      ]
+    },
+    {
+      title: "Automation Mastery",
+      icon: "Bot",
+      items: [
+        "Built multi-LLM RAG systems for intelligent document querying",
+        "Created automated social media posting workflows",
+        "Achieved 80% reduction in manual processes (Aviators Training Centre)"
+      ]
+    },
+    {
+      title: "SEO Excellence",
+      icon: "Search",
+      items: [
+        "Secured top Google rankings for competitive keywords",
+        "Implemented comprehensive technical SEO strategies",
+        "Schema markup & rich snippets implementation"
+      ]
+    },
+    {
+      title: "Real-Time Applications",
+      icon: "Cpu",
+      items: [
+        "Live data synchronization with Firebase",
+        "Real-time collaboration features",
+        "Voice-controlled interfaces (hands-free navigation)"
+      ]
+    },
+    {
+      title: "User Experience Innovation",
+      icon: "Palette",
+      items: [
+        "Shimmer UI & loading state patterns",
+        "Smooth animations with Framer Motion",
+        "Accessibility-first design approach",
+        "Mobile-first responsive design"
+      ]
+    }
+  ],
+
+  proficiencySummary: {
+    expert: {
+      title: "Expert (Production-Ready, 3+ Projects)",
+      skills: ["Next.js", "React", "TypeScript", "JavaScript", "Tailwind CSS", "Firebase", "n8n", "Git", "SEO", "Performance Optimization"]
+    },
+    advanced: {
+      title: "Advanced (Strong Working Knowledge, 2-3 Projects)",
+      skills: ["Redux Toolkit", "Node.js", "Express.js", "Sanity CMS", "Supabase", "LLM Integration", "Vercel", "Material UI"]
+    },
+    intermediate: {
+      title: "Intermediate (Solid Understanding, 1-2 Projects)",
+      skills: ["Python", "RAG Systems", "Framer Motion", "Bootstrap", "DaisyUI", "Webhooks", "OAuth2", "QuillJS"]
+    },
+    familiar: {
+      title: "Familiar (Learning/Used Once)",
+      skills: ["C++", "DSA", "Webpack", "Parcel", "Alan AI", "ExcaliDraw"]
+    }
+  },
+
+  currentlyLearning: [
+    "Advanced Product Management frameworks",
+    "Microservices architecture patterns",
+    "WebSockets & real-time communication",
+    "Advanced TypeScript patterns",
+    "Testing strategies (Jest, React Testing Library)",
+    "Docker & containerization",
+    "CI/CD pipeline optimization"
+  ]
 };
 
 export default skillsData;

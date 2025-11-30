@@ -13,7 +13,7 @@ import { portableTextComponents } from '@/components/sanity/PortableTextComponen
 
 import NotFound from '@/app/not-found';
 import { notFound } from 'next/navigation';
-import CTA from '@/components/learn-more-about-me/CTA';
+import CTA from '@/components/about-page/CTA';
 import BlogHeaderImage from '@/components/blog/BlogHeaderImage';
 import { getOpenGraphImage, getTwitterCardImage } from '@/lib/metadata-utils';
 import { BlogErrorBoundary } from '@/components/blog/BlogErrorBoundary';

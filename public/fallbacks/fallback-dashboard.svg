@@ -1,0 +1,31 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#12372A"/>
+  
+  <!-- Sidebar -->
+  <rect x="50" y="50" width="150" height="500" rx="5" fill="#05100C" fill-opacity="0.3"/>
+  <rect x="70" y="80" width="110" height="10" rx="2" fill="#436850"/>
+  <rect x="70" y="110" width="80" height="10" rx="2" fill="#436850" fill-opacity="0.5"/>
+  <rect x="70" y="140" width="90" height="10" rx="2" fill="#436850" fill-opacity="0.5"/>
+  
+  <!-- Main Content Area -->
+  <rect x="230" y="50" width="520" height="500" rx="5" fill="#05100C" fill-opacity="0.1"/>
+  
+  <!-- Chart Card 1 -->
+  <rect x="250" y="80" width="220" height="150" rx="5" fill="#1E4435"/>
+  <path d="M270 180 L300 160 L330 190 L360 140 L400 170 L450 120" stroke="#9DCF6F" stroke-width="3" fill="none"/>
+  <circle cx="450" cy="120" r="4" fill="#9DCF6F"/>
+  
+  <!-- Chart Card 2 -->
+  <rect x="500" y="80" width="220" height="150" rx="5" fill="#1E4435"/>
+  <rect x="520" y="110" width="20" height="80" rx="2" fill="#FBFADA" fill-opacity="0.2"/>
+  <rect x="550" y="130" width="20" height="60" rx="2" fill="#9DCF6F"/>
+  <rect x="580" y="100" width="20" height="90" rx="2" fill="#FBFADA" fill-opacity="0.2"/>
+  <rect x="610" y="140" width="20" height="50" rx="2" fill="#FBFADA" fill-opacity="0.2"/>
+  
+  <!-- Bottom Table -->
+  <rect x="250" y="260" width="470" height="200" rx="5" fill="#1E4435" fill-opacity="0.5"/>
+  <rect x="270" y="290" width="430" height="20" rx="2" fill="#436850" fill-opacity="0.3"/>
+  <rect x="270" y="330" width="430" height="20" rx="2" fill="#436850" fill-opacity="0.1"/>
+  <rect x="270" y="370" width="430" height="20" rx="2" fill="#436850" fill-opacity="0.1"/>
+  <rect x="270" y="410" width="430" height="20" rx="2" fill="#436850" fill-opacity="0.1"/>
+</svg>

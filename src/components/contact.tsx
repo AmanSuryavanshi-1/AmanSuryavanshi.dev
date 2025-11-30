@@ -23,15 +23,10 @@ const ContactForm = () => {
 
     setIsSubmitting(true);
 
-    // Log form data
-    const formData = new FormData(form.current);
-    console.log('Form Data:', Object.fromEntries(formData.entries()));
-
     // Send email to your email (template_md08ndx)
     emailjs
       .sendForm('service_ikm96zq', 'template_md08ndx', form.current, 'WKNcYnlqhtUUYRoXS')
       .then((result) => {
-        console.log('Message sent to you successfully:', result.text);
         setIsMessageSent(true);
         if (form.current) form.current.reset();
 

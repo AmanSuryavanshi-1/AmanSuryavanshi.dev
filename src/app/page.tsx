@@ -5,10 +5,10 @@ import WorkBanner from '@/components/WorkBanner'
 import Services from '@/components/services/services'
 import AboutMe from '../components/about/AboutMe'
 import myData from '../components/about/AboutData'
-// import skillsData  from '@/components/skills/SkillsData'
+import skillsData from '@/components/skills/SkillsData'
 import FeaturedProjectsSection from '@/components/home/FeaturedProjectsSection'
 import Contact from '@/components/contact'
-// import MySkills from '@/components/skills/MySkills'
+import MySkills from '@/components/skills/MySkills'
 
 const page = () => {
   return (
@@ -27,7 +27,7 @@ const page = () => {
         // skillsData={myData.skillsData}
         />
       </div>
-      {/* <MySkills data={skillsData} /> */}
+      <MySkills />
       <ExperienceCards />
       <Contact />
     </div>

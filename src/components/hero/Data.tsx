@@ -52,14 +52,13 @@ const Data: React.FC = () => {
                 ))}
             </motion.h1>
 
-            {/* Role with accent */}
             <motion.div
                 className="flex items-center justify-center md:justify-start gap-2"
                 variants={itemVariants}
             >
                 <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-lime-500" />
                 <h2 className="font-serif text-md md:text-lg font-semibold text-forest-900">
-                    Solutions Architect & AI Automation Consultant
+                    AI Automation Engineer + Full-Stack Developer
                 </h2>
             </motion.div>
 
@@ -68,7 +67,7 @@ const Data: React.FC = () => {
                 className="font-serif text-base md:text-md font-medium text-forest-700 leading-relaxed"
                 variants={itemVariants}
             >
-
+                Building Next.js apps with intelligent n8n automation backends
             </motion.h3>
 
             {/* Description */}
@@ -76,8 +75,8 @@ const Data: React.FC = () => {
                 className="max-w-xl mx-auto md:mx-0 text-sm md:text-base text-forest-700 leading-relaxed"
                 variants={itemVariants}
             >
-                <span className="font-serif text-base md:text-md font-medium text-forest-700 leading-relaxed block mb-1">Orchestrating Intelligent Systems That Eliminate 80% of Manual Work.</span>
-                I design and implement AI-powered automation architectures-from Next.js applications to intelligent workflows. Specialized in N8N orchestration, Firebase/Supabase integration, and RAG systems. Track record: ₹300K+ revenue generated, 80% operational cost reduction.
+                <span className="font-serif text-base md:text-md font-medium text-forest-700 leading-relaxed block mb-1">Gluing tools together to create powerful AI-driven solutions.</span>
+                I specialize in connecting apps, APIs, and services into seamless workflows. From integrating LangChain with n8n, connecting OpenAI to your database, or orchestrating multi-platform automation—I make different tools work together beautifully. Built production systems delivering ₹300K+ revenue with 80% cost reduction.
             </motion.p>
 
             {/* Key Stats */}
@@ -86,13 +85,13 @@ const Data: React.FC = () => {
                 variants={itemVariants}
             >
                 <div className="flex items-center px-3 py-1 rounded-full border-2 border-white bg-lime-500/50 shadow-md backdrop-blur-sm">
-                    <span className="text-forest-900 font-semibold">Next.js Expert</span>
+                    <span className="text-forest-900 font-semibold">Integration Specialist</span>
                 </div>
                 <div className="flex items-center px-3 py-1 rounded-full border-2 border-white bg-lime-500/50 shadow-md backdrop-blur-sm">
-                    <span className="text-forest-900 font-semibold">N8N & Integration Specialist</span>
+                    <span className="text-forest-900 font-semibold">n8n + AI Expert</span>
                 </div>
                 <div className="flex items-center px-3 py-1 rounded-full border-2 border-white bg-lime-500/50 shadow-md backdrop-blur-sm">
-                    <span className="text-forest-900 font-semibold">ROI-Focused</span>
+                    <span className="text-forest-900 font-semibold">Next.js Full-Stack</span>
                 </div>
             </motion.div>
 
@@ -115,7 +114,7 @@ const Data: React.FC = () => {
             </motion.div>
 
             <meta itemProp="name" content="Aman Suryavanshi" />
-            <meta itemProp="description" content="Solutions Architect specializing in AI automation, N8N workflow orchestration, and intelligent system integration." />
+            <meta itemProp="description" content="AI Automation Engineer specializing in gluing tools together. Expert at connecting apps, APIs, and services with n8n automation, LangChain, and OpenAI to create seamless workflows." />
         </motion.div>
     );
 }

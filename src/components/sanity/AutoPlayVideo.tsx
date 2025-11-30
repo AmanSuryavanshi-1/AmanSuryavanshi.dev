@@ -17,8 +17,7 @@ export default function AutoPlayVideo({ videoUrl, alt, caption }: AutoPlayVideoP
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             videoRef.current?.play().catch(() => {
-              // Autoplay might be blocked by browser policy
-              console.log('Autoplay prevented by browser policy');
+              // Autoplay might be blocked by browser policy - silently handled
             });
           } else {
             videoRef.current?.pause();
