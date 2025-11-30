@@ -31,20 +31,6 @@ const Header = () => {
     { name: 'Blogs', href: '/blogs', icon: <BookOpen className="w-4 h-4" /> },
   ]
 
-  // Animation variants for nav items
-  const navItemVariants = {
-    hover: {
-      scale: 1.05,
-      transition: {
-        duration: 0.2,
-        ease: "easeInOut"
-      }
-    },
-    tap: {
-      scale: 0.95
-    }
-  }
-
   return (
     <motion.header
       // style={{ background: headerBackground }}
@@ -78,13 +64,7 @@ const Header = () => {
               transition={{ duration: 0.5 }}
             >
               {navItems.map((item, index) => (
-                <motion.div
-                  key={item.name}
-                  variants={navItemVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                  custom={index}
-                >
+                <div key={item.name}>
                   <Link
                     href={item.href}
                     onClick={() => setActiveItem(item.name)}
@@ -92,7 +72,7 @@ const Header = () => {
                       "relative px-4 py-2 text-sm font-medium flex items-center gap-2 transition-all duration-300 rounded-full",
                       activeItem === item.name
                         ? "text-forest-900 bg-lime-500"
-                        : "text-sage-100 hover:text-forest-700"
+                        : "text-sage-100 hover:bg-white/10 hover:text-white"
                     )}
                   >
                     <motion.span
@@ -105,7 +85,7 @@ const Header = () => {
                       {item.name}
                     </motion.span>
                   </Link>
-                </motion.div>
+                </div>
               ))}
             </motion.div>
           </div>

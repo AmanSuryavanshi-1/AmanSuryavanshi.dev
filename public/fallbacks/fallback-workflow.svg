@@ -1,0 +1,33 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#12372A"/>
+  
+  <!-- Node 1 -->
+  <rect x="100" y="250" width="120" height="60" rx="10" fill="#1E4435" stroke="#9DCF6F" stroke-width="2"/>
+  <circle cx="120" cy="280" r="5" fill="#9DCF6F"/>
+  <rect x="140" y="275" width="60" height="10" rx="2" fill="#FBFADA" fill-opacity="0.8"/>
+  
+  <!-- Node 2 -->
+  <rect x="350" y="150" width="120" height="60" rx="10" fill="#1E4435" stroke="#436850" stroke-width="2"/>
+  <circle cx="370" cy="180" r="5" fill="#FBFADA"/>
+  <rect x="390" y="175" width="60" height="10" rx="2" fill="#FBFADA" fill-opacity="0.5"/>
+  
+  <!-- Node 3 -->
+  <rect x="350" y="350" width="120" height="60" rx="10" fill="#1E4435" stroke="#436850" stroke-width="2"/>
+  <circle cx="370" cy="380" r="5" fill="#FBFADA"/>
+  <rect x="390" y="375" width="60" height="10" rx="2" fill="#FBFADA" fill-opacity="0.5"/>
+  
+  <!-- Node 4 -->
+  <rect x="600" y="250" width="120" height="60" rx="10" fill="#05100C" stroke="#9DCF6F" stroke-width="2"/>
+  <circle cx="620" cy="280" r="5" fill="#9DCF6F"/>
+  <rect x="640" y="275" width="60" height="10" rx="2" fill="#9DCF6F"/>
+  
+  <!-- Connections -->
+  <path d="M220 280 C280 280, 280 180, 350 180" stroke="#436850" stroke-width="2" fill="none"/>
+  <path d="M220 280 C280 280, 280 380, 350 380" stroke="#436850" stroke-width="2" fill="none"/>
+  <path d="M470 180 C530 180, 530 280, 600 280" stroke="#436850" stroke-width="2" fill="none"/>
+  <path d="M470 380 C530 380, 530 280, 600 280" stroke="#436850" stroke-width="2" fill="none"/>
+  
+  <!-- Animated Dots on paths -->
+  <circle cx="285" cy="230" r="3" fill="#9DCF6F"/>
+  <circle cx="535" cy="230" r="3" fill="#9DCF6F"/>
+</svg>

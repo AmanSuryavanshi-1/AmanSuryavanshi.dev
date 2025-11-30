@@ -24,8 +24,8 @@ const geistMono = localFont({
 
 // Site Constants
 const SITE_NAME = "Aman Suryavanshi";
-const SITE_TITLE = "Aman Suryavanshi | Solutions Architect & Full-Stack Developer";
-const SITE_DESCRIPTION = "Solutions Architect specializing in Next.js full-stack development and AI automation. Built production systems generating ₹300K+ revenue. Available for remote projects and consulting.";
+const SITE_TITLE = "Aman Suryavanshi | AI Automation Engineer + Full-Stack Developer";
+const SITE_DESCRIPTION = "AI Automation Engineer specializing in gluing tools together. Expert at connecting apps, APIs, and services with n8n automation, LangChain, and OpenAI. I make different tools work together seamlessly to create powerful automation workflows.";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi-dev.vercel.app/";
 
 export const metadata: Metadata = {
@@ -37,37 +37,61 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     keywords: [
         // Primary positioning
-        "solutions architect",
+        "AI automation engineer",
         "full-stack developer",
-        "AI automation specialist",
-        "AI automation consultant",
-        "N8N consultant",
-        "N8N expert",
-        "workflow automation",
-        "system integration",
-        "technical architect India",
-        "remote automation specialist",
-        // Core skills
-        "web developer",
-        "freelance web developer",
-        "Next.js expert",
-        "Next.js portfolio",
-        "JavaScript developer",
+        "n8n automation expert",
+        "n8n consultant",
+        "n8n workflow automation",
+        "intelligent automation",
+        "AI-powered workflows",
+        "LangChain developer",
+        "OpenAI integration",
+        "AI workflow orchestration",
+        // Core technologies
+        "Next.js developer",
+        "Next.js automation",
+        "React automation solutions",
         "TypeScript developer",
-        "React developer",
-        "React developer India",
-        "frontend developer",
-        "Firebase expert",
-        "Supabase developer",
-        "remote developer",
-        "UI/UX designer",
-        "web development blog",
+        "Firebase integration",
+        "Sanity CMS developer",
+        "headless CMS automation",
+        // AI & Automation stack
+        "Groq AI",
+        "Anthropic Claude",
+        "GPT-4 integration",
+        "Perplexity AI",
+        "SerpAPI integration",
+        "RAG systems",
+        "vector databases",
+        "AI agents",
+        "multi-LLM integration",
+        // Automation specialties
+        "workflow automation specialist",
+        "business process automation",
+        "API integration expert",
+        "integration specialist",
+        "systems integration",
+        "app integration expert",
+        "tool connector",
+        "service orchestration",
+        "no-code automation",
+        "low-code development",
+        "automation consultant",
+        // Development
+        "full-stack automation",
+        "UI/UX developer",
+        "modern web apps",
+        "progressive web apps",
+        "responsive design",
         // Location-based
-        "web developer india",
-        "freelance web developer india",
-        "best web developer in delhi",
+        "automation developer India",
+        "n8n expert India",
+        "remote automation engineer",
+        "freelance automation developer",
         // Personal brand
-        "Aman Suryavanshi"
+        "Aman Suryavanshi",
+        "Aman Suryavanshi developer",
+        "Aman Suryavanshi AI automation"
     ],
     authors: [{ name: SITE_NAME, url: SITE_URL }],
     creator: SITE_NAME,
@@ -81,7 +105,7 @@ export const metadata: Metadata = {
                 url: "/Profile/me main.png",
                 width: 1200,
                 height: 630,
-                alt: "Aman Suryavanshi Portfolio Preview",
+                alt: "Aman Suryavanshi - AI Automation Engineer Portfolio",
             },
         ],
         locale: "en_US",
@@ -134,10 +158,41 @@ const structuredData = {
                 height: 630,
             },
             description: SITE_DESCRIPTION,
-            jobTitle: "Web Developer",
+            jobTitle: "AI Automation Engineer and Full-Stack Developer",
+            hasOccupation: {
+                "@type": "Occupation",
+                "name": "AI Automation Engineer",
+                "description": "Building intelligent automation workflows with n8n and AI integration",
+                "skills": [
+                    "n8n Automation",
+                    "Next.js Development",
+                    "AI Integration",
+                    "LangChain",
+                    "OpenAI API",
+                    "Workflow Orchestration",
+                    "TypeScript",
+                    "React",
+                    "Firebase"
+                ]
+            },
+            knowsAbout: [
+                "AI Automation",
+                "n8n",
+                "Next.js",
+                "LangChain",
+                "OpenAI",
+                "Workflow Automation",
+                "Full-Stack Development",
+                "TypeScript",
+                "React",
+                "Firebase",
+                "Sanity CMS",
+                "API Integration"
+            ],
             sameAs: [
                 "https://github.com/AmanSuryavanshi-1",
                 "https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/",
+                "https://twitter.com/_AmanSurya"
             ],
         },
         {
@@ -168,15 +223,11 @@ export default function RootLayout({
                     }}
                 />
             </head>
-            {/* <body 
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
-      > */}
-            {/* added custom scrollbar for site */}
             <body
                 className={cn(
                     `${geistSans.variable} ${geistMono.variable}`,
                     "antialiased min-h-screen flex flex-col",
-                    "bg-gradient-to-br from-sage-100 to-lime-500", // or whatever background you want
+                    "bg-gradient-to-br from-sage-100 to-lime-500",
                 )}
             >
                 <Header />

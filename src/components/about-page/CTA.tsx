@@ -13,7 +13,7 @@ export default function CTA() {
   const pathname = usePathname()
 
   const isInBlogPost = pathname?.startsWith('/blogs/')
-  const isInLearnMore = pathname === '/learn-more-about-me'
+  const isInLearnMore = pathname === '/about'
 
   const handleProjectsClick = () => {
     if (isInBlogPost) {
@@ -54,47 +54,49 @@ export default function CTA() {
   return (
     <section className="w-full py-12 space-y-16 sm:py-16 sm:pb-52">
       {/* Contact Section */}
-      <motion.div 
+      <motion.div
         initial="hidden"
-        animate="visible"
-        className="container max-w-4xl mx-auto px-4 sm:px-6"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="container max-w-5xl mx-auto px-4 sm:px-6"
       >
-        <motion.div 
+        <motion.div
           custom={0.2}
           variants={fadeInUpVariants}
-          className="text-center space-y-8 py-12 bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-forest-100"
+          className="text-center space-y-8 py-16 bg-white/40 backdrop-blur-md rounded-3xl p-8 md:p-12 shadow-xl border border-white/60 relative overflow-hidden"
         >
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-forest-900">Let&apos;s Create Something Amazing Together!</h3>
-            <p className="text-forest-900/70 max-w-2xl mx-auto">
+          {/* Background decoration */}
+          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-lime-400 via-lime-500 to-lime-600" />
+          <div className="absolute -top-24 -right-24 w-48 h-48 bg-lime-500/10 rounded-full blur-3xl" />
+          <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-forest-500/10 rounded-full blur-3xl" />
+
+          <div className="space-y-6 relative z-10">
+            <h3 className="text-3xl md:text-4xl font-bold font-serif text-forest-900">
+              Let&apos;s Create Something <span className="text-lime-600">Amazing</span> Together!
+            </h3>
+            <p className="text-forest-700 text-lg max-w-2xl mx-auto leading-relaxed">
               Whether you have a project in mind or just want to connect, I&apos;m always excited to collaborate and bring ideas to life.
             </p>
-            <div className="flex justify-center gap-4 flex-wrap">
-              {/* <SolidButton
-                    href="https://api.whatsapp.com/send?phone=+918745030106&text=Hello%20there!"
-                    icon={MessageSquare}
-                    label="Chat on WhatsApp"
-                    className="transform hover:scale-105 transition-transform"
-              /> */}
+            <div className="flex justify-center gap-4 flex-wrap pt-4">
               <TransparentButton
-                href="/#contact" 
+                href="/#contact"
                 icon={MessageSquare}
                 label="Let&apos;s Work Together"
               />
             </div>
           </div>
 
-          <div className="pt-8 border-t border-forest-100">
-            <p className="text-forest-900/70 mb-6">
+          <div className="pt-10 mt-10 border-t border-forest-900/5 relative z-10">
+            <p className="text-forest-900/60 mb-8 font-medium uppercase tracking-wider text-sm">
               Connect with me on social media
             </p>
-            <motion.div 
-              className="flex justify-center gap-8"
+            <motion.div
+              className="flex justify-center gap-6 md:gap-10"
               variants={{
                 hidden: { opacity: 0 },
-                visible: { 
+                visible: {
                   opacity: 1,
-                  transition: { 
+                  transition: {
                     staggerChildren: 0.1,
                     delayChildren: 0.4,
                   }
@@ -107,14 +109,14 @@ export default function CTA() {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`relative text-2xl text-forest-900 transition-all duration-300 ${color} transform hover:scale-110`}
+                  className={`relative p-3 rounded-xl bg-white/50 border border-white/50 text-forest-900 transition-all duration-300 ${color} hover:scale-110 hover:shadow-lg hover:bg-white`}
                   aria-label={`Visit Aman Suryavanshi's ${label} profile`}
                   variants={{
-                    hidden: { opacity: 0, y: -10 },
+                    hidden: { opacity: 0, y: 10 },
                     visible: { opacity: 1, y: 0 }
                   }}
                 >
-                  <Icon className="w-7 h-7" />
+                  <Icon className="w-6 h-6" />
                 </motion.a>
               ))}
             </motion.div>
@@ -122,7 +124,7 @@ export default function CTA() {
         </motion.div>
 
         {/* Journey Section */}
-        <motion.div 
+        <motion.div
           custom={0.4}
           variants={fadeInUpVariants}
           className="mt-24 space-y-8"
@@ -179,7 +181,7 @@ export default function CTA() {
                 </div>
               </motion.button>
               {activePreview === 'projects' && (
-                <PreviewCard 
+                <PreviewCard
                   type="projects"
                   onEnter={handleProjectsClick}
                 />
@@ -208,7 +210,7 @@ export default function CTA() {
                 </div>
               </motion.button>
               {activePreview === 'blogs' && (
-                <PreviewCard 
+                <PreviewCard
                   type="blogs"
                   onEnter={() => window.location.href = '/blogs'}
                 />

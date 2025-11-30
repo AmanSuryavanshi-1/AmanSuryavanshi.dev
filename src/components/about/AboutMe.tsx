@@ -62,7 +62,7 @@ const AboutMe = ({ personalInfo = defaultProps.personalInfo,
         <section aria-labelledby="about-heading">
           <SectionTitle />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 mb-8 gap-6 lg:gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 py-4 gap-6 lg:gap-12 items-start">
             <aside className="lg:col-span-4 py-2" aria-label="Profile image">
               <AboutImage />
             </aside>
