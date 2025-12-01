@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import HeaderSocial from './HeroSocial';
-import Data from './Data';
+import HeroData from './HeroData';
 import { ChevronDown } from 'lucide-react';
 import pfp from '../../../public/Profile/PFP.png'
 
@@ -56,7 +56,7 @@ export default function Header() {
                         <HeaderSocial />
                     </div>
                     <div className="order-3 md:order-2">
-                        <Data />
+                        <HeroData />
                     </div>
                 </div>
             </motion.div>

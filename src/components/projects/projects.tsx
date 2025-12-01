@@ -3,10 +3,10 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, MessageSquare } from 'lucide-react'
-import { projects } from './projectsData'
+import { portfolioData } from '@/data/portfolio'
 import { TransparentButton } from '../transparent-button'
 import { SolidButton } from '../solid-button'
-import { ProjectCard } from './projectCard'
+import ProjectCard from './ProjectCard'
 
 export default function ProjectsSection() {
     return (
@@ -20,8 +20,8 @@ export default function ProjectsSection() {
                     My <span className="text-lime-500">Projects</span>
                 </motion.h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[200px] gap-3 mb-12">
-                    {projects.map((project) => (
-                        <ProjectCard key={project.id} project={project} />
+                    {portfolioData.projects.map((project, index) => (
+                        <ProjectCard key={project.id} project={project} index={index} />
                     ))}
                 </div>
 

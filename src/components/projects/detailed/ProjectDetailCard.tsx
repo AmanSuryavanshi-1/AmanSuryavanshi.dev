@@ -5,7 +5,7 @@ import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Github, ExternalLink, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
-import { Project } from "@/components/projects/projectsData";
+import { Project } from "@/data/portfolio";
 import ImpactMetrics from "./ImpactMetrics";
 import TechnicalDeepDive from "./TechnicalDeepDive";
 import { Badge } from "@/components/ui/badge";
@@ -91,12 +91,12 @@ export default function ProjectDetailCard({ project, index }: ProjectDetailCardP
                 </div>
 
                 {/* Problem - Solution - Impact Grid */}
-                {(project.problem || project.solution || project.impact) && (
+                {(project.challenge || project.solution || project.impact) && (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                        {project.problem && (
+                        {project.challenge && (
                             <div className="p-4 rounded-xl bg-forest-950/50 border border-forest-800/50">
-                                <h4 className="text-xs font-bold text-red-400 uppercase tracking-wider mb-2">The Problem</h4>
-                                <p className="text-sage-300 text-sm leading-relaxed">{project.problem}</p>
+                                <h4 className="text-xs font-bold text-red-400 uppercase tracking-wider mb-2">The Challenge</h4>
+                                <p className="text-sage-300 text-sm leading-relaxed">{project.challenge}</p>
                             </div>
                         )}
                         {project.solution && (
@@ -114,24 +114,7 @@ export default function ProjectDetailCard({ project, index }: ProjectDetailCardP
                     </div>
                 )}
 
-                {/* Testimonial */}
-                {project.testimonial && (
-                    <div className="mb-8 relative">
-                        <div className="absolute -top-6 -left-4 text-6xl text-lime-500/20 font-serif select-none">"</div>
-                        <div className="relative z-10 p-6 rounded-2xl bg-gradient-to-br from-lime-500/10 to-transparent border border-lime-500/20 backdrop-blur-sm">
-                            <blockquote className="text-sage-100 text-lg italic text-center leading-relaxed">
-                                {project.testimonial.quote}
-                            </blockquote>
-                            <div className="mt-4 flex items-center justify-center gap-3">
-                                <div className="h-px w-8 bg-lime-500/30" />
-                                <cite className="text-lime-400 not-italic font-semibold text-sm tracking-wide uppercase">
-                                    {project.testimonial.author}
-                                </cite>
-                                <div className="h-px w-8 bg-lime-500/30" />
-                            </div>
-                        </div>
-                    </div>
-                )}
+
 
                 {/* Impact Metrics */}
                 {project.impactMetrics && <ImpactMetrics metrics={project.impactMetrics} />}

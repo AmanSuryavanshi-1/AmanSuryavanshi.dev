@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ArrowUpRight } from 'lucide-react'
-import { projects } from '@/components/projects/projectsData'
+import { portfolioData } from '@/data/portfolio'
 import { useRef, useEffect, useState } from 'react'
 import { client } from '@/sanity/lib/client'
 import type { Post } from '@/sanity/sanity'
@@ -19,7 +19,7 @@ export default function PreviewCard({ type, onEnter }: PreviewCardProps) {
   const videoRef2 = useRef<HTMLVideoElement>(null)
   const [posts, setPosts] = useState<Post[]>([])
 
-  const videoProjects = projects.filter(project => project.video).slice(0, 2)
+  const videoProjects = portfolioData.projects.filter(project => project.video).slice(0, 2)
 
   useEffect(() => {
     // Intersection Observer to play the videos when they are in view

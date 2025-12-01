@@ -1,4 +1,5 @@
 'use client';
+'use client';
 
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -6,10 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import servicesData from './servicesData';
+import { portfolioData, ServiceData } from '@/data/portfolio';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
-const ServiceCard: React.FC<{ service: typeof servicesData[0], index: number }> = ({ service, index }) => {
+const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ service, index }) => {
 
   return (
     <motion.div
@@ -112,7 +113,7 @@ const ServicesSection: React.FC = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {servicesData.map((service, index) => (
+          {portfolioData.services.map((service, index) => (
             <ServiceCard key={service.id} service={service} index={index} />
           ))}
         </div>

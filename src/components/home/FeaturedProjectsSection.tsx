@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import FeaturedHero from "@/components/projects/FeaturedHero";
-import { projects } from "@/components/projects/projectsData";
+import { portfolioData } from "@/data/portfolio";
 import { ArrowRight, MessageSquare } from "lucide-react";
 import { SolidButton } from "@/components/solid-button";
 import { TransparentButton } from "@/components/transparent-button";
 
 export default function FeaturedProjectsSection() {
     // Filter only featured projects
-    const featuredProjects = projects.filter(p => p.featured);
+    const featuredProjects = portfolioData.projects.filter(p => p.featured);
 
     // State for infinite carousel
     const [virtualIndex, setVirtualIndex] = useState(featuredProjects.length * 100);
