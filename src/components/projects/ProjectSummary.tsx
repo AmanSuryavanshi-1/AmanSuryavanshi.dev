@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Project } from "@/components/projects/projectsData";
+import { Project } from "@/data/portfolio";
 import { ArrowUpRight, Code2, Lightbulb, Rocket, Target, Layers, Zap, FileJson } from "lucide-react";
 import Image from "next/image";
 

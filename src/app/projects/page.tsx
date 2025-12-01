@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { projects } from "@/components/projects/projectsData";
+import { portfolioData } from "@/data/portfolio";
 import ProjectCard from "@/components/projects/ProjectCard";
 import ProjectsFilter from "@/components/projects/ProjectsFilter";
 import { motion } from "framer-motion";
@@ -12,18 +12,18 @@ export default function ProjectsPage() {
 
     // Extract unique categories and technologies
     const categories = useMemo(() => {
-        const cats = new Set(projects.map(p => p.category));
+        const cats = new Set(portfolioData.projects.map(p => p.category));
         return ["All", ...Array.from(cats)];
     }, []);
 
     const technologies = useMemo(() => {
-        const techs = new Set(projects.flatMap(p => p.techStack));
+        const techs = new Set(portfolioData.projects.flatMap(p => p.techStack));
         return ["All Tech", ...Array.from(techs).sort()];
     }, []);
 
     // Filter projects
     const filteredProjects = useMemo(() => {
-        return projects.filter(project => {
+        return portfolioData.projects.filter(project => {
             const matchesCategory = activeCategory === "All" || project.category === activeCategory;
             const matchesTech = activeTech === "All Tech" || project.techStack.includes(activeTech);
             return matchesCategory && matchesTech;

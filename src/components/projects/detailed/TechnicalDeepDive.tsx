@@ -6,7 +6,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Project } from "@/components/projects/projectsData";
+import { Project } from "@/data/portfolio";
 
 interface TechnicalDeepDiveProps {
     project: Project;

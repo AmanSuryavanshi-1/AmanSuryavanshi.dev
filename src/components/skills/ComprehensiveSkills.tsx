@@ -10,7 +10,7 @@ import {
     Package, Shield, Settings, LineChart, Mail, Calendar,
     Video, Image as ImageIcon, Share2
 } from 'lucide-react';
-import skillsData from './SkillsData';
+import { portfolioData } from '@/data/portfolio';
 
 // Skill Icon Mapping - Maps skill names to relevant icons
 const getSkillIcon = (skillName: string, category: string) => {
@@ -78,10 +78,10 @@ const ComprehensiveSkills = () => {
 
     // Extract all categories from skillsData
     const allCategories = useMemo(() => {
-        if (!skillsData.categories || !Array.isArray(skillsData.categories)) {
+        if (!portfolioData.skills.categories || !Array.isArray(portfolioData.skills.categories)) {
             return ['All'];
         }
-        return ['All', ...skillsData.categories.map(cat => cat.title)];
+        return ['All', ...portfolioData.skills.categories.map(cat => cat.title)];
     }, []);
 
     // Extract and flatten all skills with their category info
@@ -89,13 +89,13 @@ const ComprehensiveSkills = () => {
         const skills: any[] = [];
 
         // Add Core Specialty Skills
-        if (skillsData.coreSpecialty && Array.isArray(skillsData.coreSpecialty.skills)) {
-            skillsData.coreSpecialty.skills.forEach((skill) => {
+        if (portfolioData.skills.coreSpecialty && Array.isArray(portfolioData.skills.coreSpecialty.skills)) {
+            portfolioData.skills.coreSpecialty.skills.forEach((skill) => {
                 skills.push({
                     name: skill.name,
                     label: skill.name,
                     value: skill.details,
-                    category: skillsData.coreSpecialty.title,
+                    category: portfolioData.skills.coreSpecialty.title,
                     groupTitle: "Core Expertise",
                     projectTitle: skill.projectTitle,
                     projectUrl: skill.projectUrl
@@ -104,8 +104,8 @@ const ComprehensiveSkills = () => {
         }
 
         // Add Category Skills
-        if (skillsData.categories && Array.isArray(skillsData.categories)) {
-            skillsData.categories.forEach((category) => {
+        if (portfolioData.skills.categories && Array.isArray(portfolioData.skills.categories)) {
+            portfolioData.skills.categories.forEach((category) => {
                 if (category.groups && Array.isArray(category.groups)) {
                     category.groups.forEach((group) => {
                         if (group.items && Array.isArray(group.items)) {

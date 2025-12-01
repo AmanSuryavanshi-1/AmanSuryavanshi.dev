@@ -5,8 +5,11 @@ import { motion } from 'framer-motion';
 import { MessageCircle, ArrowRight, Sparkles } from 'lucide-react';
 import { TransparentButton } from '@/components/transparent-button';
 import { SolidButton } from '@/components/solid-button';
+import { portfolioData } from '@/data/portfolio';
 
 const Data: React.FC = () => {
+    const { name, title, subtitle, tagline, description, descriptionHighlight, stats, buttons, meta } = portfolioData.hero;
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -23,7 +26,7 @@ const Data: React.FC = () => {
         visible: { opacity: 1, y: 0 }
     };
 
-    const nameArray = "Aman Suryavanshi".split("");
+    const nameArray = name.split("");
 
     return (
         <motion.div
@@ -58,7 +61,7 @@ const Data: React.FC = () => {
             >
                 <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-lime-500" />
                 <h2 className="font-serif text-md md:text-lg font-semibold text-forest-900">
-                    AI Automation Engineer + Full-Stack Developer
+                    {subtitle}
                 </h2>
             </motion.div>
 
@@ -67,7 +70,7 @@ const Data: React.FC = () => {
                 className="font-serif text-base md:text-md font-medium text-forest-700 leading-relaxed"
                 variants={itemVariants}
             >
-                Building Next.js apps with intelligent n8n automation backends
+                {tagline}
             </motion.h3>
 
             {/* Description */}
@@ -75,8 +78,10 @@ const Data: React.FC = () => {
                 className="max-w-xl mx-auto md:mx-0 text-sm md:text-base text-forest-700 leading-relaxed"
                 variants={itemVariants}
             >
-                <span className="font-serif text-base md:text-md font-medium text-forest-700 leading-relaxed block mb-1">Gluing tools together to create powerful AI-driven solutions.</span>
-                I specialize in connecting apps, APIs, and services into seamless workflows. From integrating LangChain with n8n, connecting OpenAI to your database, or orchestrating multi-platform automation—I make different tools work together beautifully. Built production systems delivering ₹300K+ revenue with 80% cost reduction.
+                <span className="font-serif text-base md:text-md font-medium text-forest-700 leading-relaxed block mb-1">
+                    {descriptionHighlight}
+                </span>
+                {description}
             </motion.p>
 
             {/* Key Stats */}
@@ -84,15 +89,14 @@ const Data: React.FC = () => {
                 className="flex flex-wrap justify-center md:justify-start gap-2 text-xs md:text-sm"
                 variants={itemVariants}
             >
-                <div className="flex items-center px-3 py-1 rounded-full border-2 border-white bg-lime-500/50 shadow-md backdrop-blur-sm">
-                    <span className="text-forest-900 font-semibold">Integration Specialist</span>
-                </div>
-                <div className="flex items-center px-3 py-1 rounded-full border-2 border-white bg-lime-500/50 shadow-md backdrop-blur-sm">
-                    <span className="text-forest-900 font-semibold">n8n + AI Expert</span>
-                </div>
-                <div className="flex items-center px-3 py-1 rounded-full border-2 border-white bg-lime-500/50 shadow-md backdrop-blur-sm">
-                    <span className="text-forest-900 font-semibold">Next.js Full-Stack</span>
-                </div>
+                {stats.map((stat, index) => (
+                    <div
+                        key={index}
+                        className="flex items-center px-3 py-1 rounded-full border-2 border-white bg-lime-500/50 shadow-md backdrop-blur-sm"
+                    >
+                        <span className="text-forest-900 font-semibold">{stat}</span>
+                    </div>
+                ))}
             </motion.div>
 
             {/* CTAs */}
@@ -101,20 +105,20 @@ const Data: React.FC = () => {
                 variants={itemVariants}
             >
                 <SolidButton
-                    href="/#projects"
+                    href={buttons.primary.href}
                     icon={ArrowRight}
-                    label="View Portfolio"
+                    label={buttons.primary.label}
                 />
 
                 <TransparentButton
-                    href="/#contact"
+                    href={buttons.secondary.href}
                     icon={MessageCircle}
-                    label="Schedule Consultation"
+                    label={buttons.secondary.label}
                 />
             </motion.div>
 
-            <meta itemProp="name" content="Aman Suryavanshi" />
-            <meta itemProp="description" content="AI Automation Engineer specializing in gluing tools together. Expert at connecting apps, APIs, and services with n8n automation, LangChain, and OpenAI to create seamless workflows." />
+            <meta itemProp="name" content={meta.name} />
+            <meta itemProp="description" content={meta.description} />
         </motion.div>
     );
 }

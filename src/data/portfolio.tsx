@@ -1,67 +1,134 @@
+import React from 'react';
 import {
-    // React Icons - React/Framework
-    FaReact,
-    FaHtml5,
-    FaCss3Alt,
-    FaJsSquare,
-    FaGithub,
-    FaYoutube,
-    FaNewspaper,
-    FaLanguage,
-    FaPencilRuler,
-    FaGlobe,
-    FaMobileAlt,
-    FaChartLine,
-    FaFileArchive,
-    FaIcons,
-    FaDocker,
-    FaNodeJs
+    // Lucide React
+    MessageCircle, ArrowRight, Sparkles,
+    Workflow, Bot, Brain, Zap, Code2, Layout, Database, Server, Rocket, Search, Globe, Puzzle, Palette, Terminal, FileText, Users, Cpu, Layers, LineChart, GitBranch, Lock, Smartphone, MessageSquare, Mic,
+    Route, FileJson, Webhook, Component, PenTool, Cloud, Code
+} from 'lucide-react';
+
+import {
+    // React Icons
+    FaReact, FaHtml5, FaCss3Alt, FaJsSquare, FaGithub, FaYoutube, FaNewspaper, FaLanguage, FaPencilRuler, FaGlobe, FaMobileAlt, FaChartLine, FaFileArchive, FaIcons, FaDocker, FaNodeJs
 } from 'react-icons/fa';
 
 import {
-    SiRedux,
-    SiTailwindcss,
-    SiPostcss,
-    SiNetlify,
-    SiDaisyui,
-    SiVite,
-    SiMui,
-    SiTypescript,
-    SiNextdotjs,
-    SiShadcnui,
-    SiFramer,
-    SiIcon,
-    SiFirebase,
-    SiSanity,
-    SiN8N,
-    SiOpenai,
-    SiAirtable,
-    SiTelegram,
-    SiPostgresql,
-    SiNginx,
-    SiDigitalocean,
-    SiGreensock
+    SiRedux, SiTailwindcss, SiPostcss, SiNetlify, SiDaisyui, SiVite, SiMui, SiTypescript, SiNextdotjs, SiShadcnui, SiFramer, SiIcon, SiFirebase, SiSanity, SiN8N, SiOpenai, SiAirtable, SiTelegram, SiPostgresql, SiNginx, SiDigitalocean, SiGreensock
 } from 'react-icons/si';
-
-import {
-    // Lucide React - Fallback Icons
-    Route,
-    FileJson,
-    Webhook,
-    Component,
-    PenTool,
-    Database,
-    Server,
-    Cloud,
-    Cpu
-} from 'lucide-react';
 
 import { MdEmail, MdViewInAr } from 'react-icons/md';
 import { AiOutlineDeploymentUnit } from 'react-icons/ai';
 
-// --- Types ---
+// --- Interfaces ---
 
-export type Project = {
+export interface HeroData {
+    name: string;
+    title: string;
+    subtitle: string;
+    tagline: string;
+    description: string;
+    descriptionHighlight: string;
+    stats: string[];
+    buttons: {
+        primary: {
+            label: string;
+            href: string;
+        };
+        secondary: {
+            label: string;
+            href: string;
+        };
+    };
+    meta: {
+        name: string;
+        description: string;
+    };
+}
+
+export interface AboutData {
+    personalInfo: {
+        name: string;
+        title: string;
+        description: string;
+        phone: string;
+        email: string;
+        education: string;
+        address: string;
+        languages: string[];
+    };
+    qualificationsData: {
+        qualifications: {
+            EducationData: Array<{
+                title: string;
+                institution: string;
+                year: string;
+                icon: string;
+            }>;
+            CertificationData: Array<{
+                title: string;
+                institution: string;
+                year: string;
+                icon: string;
+            }>;
+        };
+    };
+}
+
+export interface SkillItem {
+    label?: string;
+    name?: string;
+    value?: string;
+    details?: string;
+    projectTitle?: string;
+    projectUrl?: string;
+}
+
+export interface SkillGroup {
+    title: string;
+    items: SkillItem[];
+}
+
+export interface SkillCategory {
+    id: string;
+    title: string;
+    icon: string;
+    description: string;
+    groups: SkillGroup[];
+    footer?: string;
+}
+
+export interface SpecializedAchievement {
+    title: string;
+    icon: string;
+    items: string[];
+}
+
+export interface ProficiencyLevel {
+    title: string;
+    skills: string[];
+}
+
+export interface SkillsData {
+    mainTitle: string;
+    subTitle: string;
+    coreSpecialty: {
+        title: string;
+        icon: string;
+        description: string;
+        skills: SkillItem[];
+        impact: string;
+    };
+    categories: SkillCategory[];
+    specializedAchievements: SpecializedAchievement[];
+    proficiencySummary: {
+        expert: ProficiencyLevel;
+        advanced: ProficiencyLevel;
+        intermediate: ProficiencyLevel;
+        familiar: ProficiencyLevel;
+    };
+    currentlyLearning: string[];
+}
+
+export interface Project {
     id: string;
     title: string;
     tagLine: string;
@@ -99,9 +166,487 @@ export type Project = {
         title: string;
         url: string;
     }[];
+}
+
+export interface ServiceData {
+    id: number;
+    title: string;
+    subtitle: string;
+    description: string;
+    features: string[];
+    icon: React.ReactNode;
+    image: string;
+}
+
+export interface PortfolioData {
+    hero: HeroData;
+    about: AboutData;
+    skills: SkillsData;
+    projects: Project[];
+    services: ServiceData[];
+}
+
+// --- Data Definitions ---
+
+const heroData: HeroData = {
+    name: "Aman Suryavanshi",
+    title: "Hello, I'm",
+    subtitle: "AI Automation Engineer + Full-Stack Developer",
+    tagline: "Building Next.js apps with intelligent n8n automation backends",
+    description: "I specialize in connecting apps, APIs, and services into seamless workflows. From integrating LangChain with n8n, connecting OpenAI to your database, or orchestrating multi-platform automation—I make different tools work together beautifully. Built production systems delivering ₹300K+ revenue with 80% cost reduction.",
+    descriptionHighlight: "Gluing tools together to create powerful AI-driven solutions.",
+    stats: [
+        "Integration Specialist",
+        "n8n + AI Expert",
+        "Next.js Full-Stack"
+    ],
+    buttons: {
+        primary: {
+            label: "View Portfolio",
+            href: "/#projects"
+        },
+        secondary: {
+            label: "Schedule Consultation",
+            href: "/#contact"
+        }
+    },
+    meta: {
+        name: "Aman Suryavanshi",
+        description: "AI Automation Engineer specializing in gluing tools together. Expert at connecting apps, APIs, and services with n8n automation, LangChain, and OpenAI to create seamless workflows."
+    }
 };
 
-// --- Icon Mapping ---
+const aboutData: AboutData = {
+    personalInfo: {
+        name: "Aman Suryavanshi",
+        title: "AI Automation Engineer + Full-Stack Developer",
+        description:
+            "Building Next.js apps with intelligent n8n automation backends. I create complete solutions where beautiful UIs meet powerful AI-powered workflows. Specializing in LangChain, OpenAI integration, and workflow orchestration that delivers measurable business impact.",
+        phone: "+91 8745030106",
+        email: "amansurya.work@gmail.com",
+        education: "B.Tech in Electronics and Communication",
+        address: "Bengaluru & Delhi, India | Remote",
+        languages: ["English", "Hindi"],
+    },
+
+    qualificationsData: {
+        qualifications: {
+            EducationData: [
+                {
+                    title: "Bachelor of Technology - Electronics",
+                    institution: "Maharaja Surajmal Institute of Technology",
+                    year: "2020 - 2024 (GGSIPU)",
+                    icon: "graduation-cap"
+                },
+                {
+                    title: "12th from CBSE Board - Science",
+                    institution: "Army Public School Delhi Cantt",
+                    year: "2019 - 2020",
+                    icon: "school"
+                },
+                {
+                    title: "10th from CBSE Board",
+                    institution: "Army Public School Delhi Cantt",
+                    year: "2017 - 2018",
+                    icon: "school"
+                },
+            ],
+            CertificationData: [
+                {
+                    title: "React JS Certification",
+                    institution: "Namaste React by Akshay Saini",
+                    year: "2024 Feb - May",
+                    icon: "code-2"
+                },
+                {
+                    title: "JavaScript Certification",
+                    institution: "Udemy",
+                    year: "2023 July - December",
+                    icon: "code"
+                },
+                {
+                    title: "HTML & CSS Certification",
+                    institution: "Cisco ThingQbator",
+                    year: "2022 - 2023",
+                    icon: "layout-template"
+                },
+            ],
+        },
+    },
+};
+
+const skillsData: SkillsData = {
+    mainTitle: "Comprehensive Skills & Expertise",
+    subTitle: "A detailed breakdown of my technical capabilities and professional achievements",
+
+    coreSpecialty: {
+        title: "AI & Automation Engineering",
+        icon: "Bot",
+        description: "Core Specialty - Designing and implementing intelligent workflows that operate autonomously",
+        skills: [
+            {
+                name: "n8n (Advanced)",
+                details: "80% process reduction achieved in production",
+                projectTitle: "Omni-Post AI Automation",
+                projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+            },
+            {
+                name: "Multi-LLM Integration",
+                details: "OpenAI GPT-4, Claude 3.5, Gemini Pro, Perplexity",
+                projectTitle: "Omni-Post AI Automation",
+                projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+            },
+            {
+                name: "RAG Systems",
+                details: "Document intelligence & contextual querying",
+                projectTitle: "Omni-Post AI Automation",
+                projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+            },
+            { name: "Prompt Engineering", details: "Advanced techniques for optimal LLM outputs" },
+            { name: "MCP (Model Context Protocol)", details: "Cutting-edge AI tooling" },
+            { name: "OAuth2 & Webhooks", details: "Secure API integrations" },
+            {
+                name: "Python",
+                details: "Automation scripts & AI workflows",
+                projectTitle: "Omni-Post AI Automation",
+                projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+            }
+        ],
+        impact: "Reduced manual processes by 80% through intelligent automation"
+    },
+
+    categories: [
+        {
+            id: "frontend",
+            title: "Frontend Development",
+            icon: "Layout",
+            description: "Building responsive, accessible, and performant user interfaces",
+            groups: [
+                {
+                    title: "Core Frameworks",
+                    items: [
+                        {
+                            label: "Next.js",
+                            value: "App Router, Server Actions, SSR/ISR",
+                            projectTitle: "AmanSuryavanshi.dev",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev"
+                        },
+                        {
+                            label: "React",
+                            value: "Hooks, Context, Custom Components",
+                            projectTitle: "BarkatEnterprise",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/BarkatEnterprise"
+                        },
+                        {
+                            label: "TypeScript",
+                            value: "Strict typing, Interfaces, Generics",
+                            projectTitle: "Omni-Post AI Automation",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                        }
+                    ]
+                },
+                {
+                    title: "Styling & UI",
+                    items: [
+                        {
+                            label: "Tailwind CSS",
+                            value: "Custom configs, Dark mode, Responsive design",
+                            projectTitle: "AmanSuryavanshi.dev",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev"
+                        },
+                        { label: "Framer Motion", value: "Complex animations, Page transitions" },
+                        { label: "Shadcn/UI", value: "Customized accessible components" }
+                    ]
+                }
+            ],
+            footer: "Focus on pixel-perfect implementation and 95+ Lighthouse scores"
+        },
+        {
+            id: "backend",
+            title: "Backend & Infrastructure",
+            icon: "Server",
+            description: "Robust server-side solutions and cloud infrastructure",
+            groups: [
+                {
+                    title: "Server & API",
+                    items: [
+                        { label: "Node.js", value: "REST APIs, Middleware, Auth" },
+                        {
+                            label: "Firebase",
+                            value: "Auth, Firestore, Cloud Functions",
+                            projectTitle: "Omni-Post AI Automation",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                        },
+                        {
+                            label: "Sanity CMS",
+                            value: "Schema design, GROQ queries",
+                            projectTitle: "AmanSuryavanshi.dev",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev"
+                        }
+                    ]
+                },
+                {
+                    title: "DevOps & Cloud",
+                    items: [
+                        {
+                            label: "Vercel",
+                            value: "Deployments, Edge Functions, Analytics",
+                            projectTitle: "AmanSuryavanshi.dev",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev"
+                        },
+                        {
+                            label: "PowerShell",
+                            value: "Automation scripting",
+                            projectTitle: "N8N Repo",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/N8N"
+                        },
+                        { label: "Git & GitHub", value: "CI/CD workflows, Version control" }
+                    ]
+                }
+            ],
+            footer: "Building scalable, secure, and cost-effective backend solutions"
+        },
+        {
+            id: "ai-engineering",
+            title: "Advanced AI Engineering",
+            icon: "Brain",
+            description: "Leveraging cutting-edge AI models and tools",
+            groups: [
+                {
+                    title: "LLM Orchestration",
+                    items: [
+                        {
+                            label: "LangChain",
+                            value: "Chains, Agents, Memory",
+                            projectTitle: "Omni-Post AI Automation",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                        },
+                        {
+                            label: "Groq",
+                            value: "High-speed inference integration",
+                            projectTitle: "Omni-Post AI Automation",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                        },
+                        {
+                            label: "SerpApi",
+                            value: "Real-time search data integration",
+                            projectTitle: "Omni-Post AI Automation",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                        }
+                    ]
+                },
+                {
+                    title: "Tools & APIs",
+                    items: [
+                        { label: "OpenAI API", value: "GPT-4o, Assistants API" },
+                        { label: "Anthropic API", value: "Claude 3.5 Sonnet integration" },
+                        { label: "Perplexity API", value: "Online research automation" }
+                    ]
+                }
+            ],
+            footer: "Creating intelligent systems that understand and act on data"
+        },
+        {
+            id: "tools",
+            title: "Tools & Workflow",
+            icon: "Terminal",
+            description: "Essential tools for modern development",
+            groups: [
+                {
+                    title: "Development",
+                    items: [
+                        { label: "VS Code", value: "Advanced extensions & config" },
+                        { label: "Postman", value: "API testing & documentation" },
+                        { label: "Figma", value: "UI/UX design & prototyping" }
+                    ]
+                },
+                {
+                    title: "Libraries",
+                    items: [
+                        {
+                            label: "pdfjs-dist",
+                            value: "PDF processing & rendering",
+                            projectTitle: "BarkatEnterprise",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/BarkatEnterprise"
+                        },
+                        {
+                            label: "React Icons",
+                            value: "Icon integration",
+                            projectTitle: "BarkatEnterprise",
+                            projectUrl: "https://github.com/AmanSuryavanshi-1/BarkatEnterprise"
+                        }
+                    ]
+                }
+            ],
+            footer: "Optimizing developer experience and productivity"
+        },
+        {
+            id: "seo",
+            title: "SEO & Performance Optimization",
+            icon: "Search",
+            description: "Achieving top rankings and optimal web vitals",
+            groups: [
+                {
+                    title: "Top Google Rankings & Web Vitals",
+                    items: [
+                        { label: "Strategies", value: "Advanced SEO Optimization, Core Web Vitals (95+ scores)" },
+                        { label: "Technical", value: "Code Splitting, Tree Shaking, Lazy Loading, Suspense" },
+                        { label: "Content", value: "Schema Markup, Rich Snippets, Meta Tags, Open Graph" },
+                        { label: "Assets", value: "Image Optimization (WebP, lazy loading), Responsive images" },
+                        { label: "Config", value: "Sitemap, Robots.txt, Accessibility (WCAG 2.1 AA)" }
+                    ]
+                }
+            ]
+        },
+        {
+            id: "api",
+            title: "API Integrations & Third-Party Services",
+            icon: "Globe",
+            description: "Connecting systems with external services and data sources",
+            groups: [
+                {
+                    title: "External Services & Data Sources",
+                    items: [
+                        { label: "News & Content", value: "News API, GNews.io, Notion API" },
+                        { label: "Social Media", value: "YouTube API v3, Twitter API, GitHub API" },
+                        { label: "AI/Voice", value: "Alan AI, Web Speech API (Text-to-Speech, Speech Recognition)" },
+                        { label: "Commerce", value: "Swiggy API, Fake Store API" },
+                        { label: "Security", value: "CORS handling, Rate limiting, API security" }
+                    ]
+                }
+            ]
+        },
+        {
+            id: "cs",
+            title: "Programming & CS Fundamentals",
+            icon: "Terminal",
+            description: "Strong foundation in computer science principles",
+            groups: [
+                {
+                    title: "Strong Foundation",
+                    items: [
+                        { label: "Languages", value: "C++, C (Competitive Programming)" },
+                        { label: "DSA", value: "Data Structures & Algorithms (LeetCode)" },
+                        { label: "Concepts", value: "OOP, Computer Networks, System Design basics" },
+                        { label: "Problem Solving", value: "Algorithmic thinking, Optimization techniques" }
+                    ]
+                }
+            ]
+        },
+        {
+            id: "communication",
+            title: "Content & Communication",
+            icon: "FileText",
+            description: "Translating technical complexity into clear documentation",
+            groups: [
+                {
+                    title: "Technical Writing & Documentation",
+                    items: [
+                        { label: "Writing", value: "Technical Writing, Content Writing, Copywriting" },
+                        { label: "Docs", value: "API docs, README files, User guides, Cataloging" },
+                        { label: "Community", value: "Building in Public, Sharing knowledge" }
+                    ]
+                }
+            ]
+        },
+        {
+            id: "soft",
+            title: "Professional Skills & Qualities",
+            icon: "Users",
+            description: "Personal attributes that drive project success",
+            groups: [
+                {
+                    title: "What Makes Me Effective",
+                    items: [
+                        { label: "Core", value: "Problem Solving, Time Management, Adaptability" },
+                        { label: "Team", value: "Teamwork, Collaboration, Leadership, Mentoring" },
+                        { label: "Mindset", value: "Creativity, Business Mindset (ROI focus), Building in Public" }
+                    ]
+                }
+            ]
+        }
+    ],
+
+    specializedAchievements: [
+        {
+            title: "Performance Engineering",
+            icon: "Zap",
+            items: [
+                "Achieved 95+ Lighthouse scores across multiple production sites",
+                "Optimized Core Web Vitals (LCP, FID, CLS)",
+                "Reduced page load times by 60% through strategic optimization"
+            ]
+        },
+        {
+            title: "Automation Mastery",
+            icon: "Bot",
+            items: [
+                "Built multi-LLM RAG systems for intelligent document querying",
+                "Created automated social media posting workflows",
+                "Achieved 80% reduction in manual processes (Aviators Training Centre)"
+            ]
+        },
+        {
+            title: "SEO Excellence",
+            icon: "Search",
+            items: [
+                "Secured top Google rankings for competitive keywords",
+                "Implemented comprehensive technical SEO strategies",
+                "Schema markup & rich snippets implementation"
+            ]
+        },
+        {
+            title: "Real-Time Applications",
+            icon: "Cpu",
+            items: [
+                "Live data synchronization with Firebase",
+                "Real-time collaboration features",
+                "Voice-controlled interfaces (hands-free navigation)"
+            ]
+        },
+        {
+            title: "User Experience Innovation",
+            icon: "Palette",
+            items: [
+                "Shimmer UI & loading state patterns",
+                "Smooth animations with Framer Motion",
+                "Accessibility-first design approach",
+                "Mobile-first responsive design"
+            ]
+        }
+    ],
+
+    proficiencySummary: {
+        expert: {
+            title: "Expert (Production-Ready, 3+ Projects)",
+            skills: ["Next.js", "React", "TypeScript", "JavaScript", "Tailwind CSS", "Firebase", "n8n", "Git", "SEO", "Performance Optimization"]
+        },
+        advanced: {
+            title: "Advanced (Strong Working Knowledge, 2-3 Projects)",
+            skills: ["Redux Toolkit", "Node.js", "Express.js", "Sanity CMS", "Supabase", "LLM Integration", "Vercel", "Material UI"]
+        },
+        intermediate: {
+            title: "Intermediate (Solid Understanding, 1-2 Projects)",
+            skills: ["Python", "RAG Systems", "Framer Motion", "Bootstrap", "DaisyUI", "Webhooks", "OAuth2", "QuillJS"]
+        },
+        familiar: {
+            title: "Familiar (Learning/Used Once)",
+            skills: ["C++", "DSA", "Webpack", "Parcel", "Alan AI", "ExcaliDraw"]
+        }
+    },
+
+    currentlyLearning: [
+        "Advanced Product Management frameworks",
+        "Microservices architecture patterns",
+        "WebSockets & real-time communication",
+        "Advanced TypeScript patterns",
+        "Testing strategies (Jest, React Testing Library)",
+        "Docker & containerization",
+        "CI/CD pipeline optimization"
+    ]
+};
+
+// --- Projects Data ---
 
 const TechIconMap: Record<string, React.ElementType> = {
     "React": FaReact,
@@ -112,11 +657,11 @@ const TechIconMap: Record<string, React.ElementType> = {
     "TypeScript": SiTypescript,
     "JavaScript": FaJsSquare,
     "JavaScript ES6+": FaJsSquare,
-    "Firebase": SiFirebase, // Need to ensure SiFirebase is available or use FaGlobe
+    "Firebase": SiFirebase,
     "Firestore": Database,
-    "Sanity": SiSanity, // Need to ensure SiSanity is available
+    "Sanity": SiSanity,
     "Sanity CMS": SiSanity,
-    "n8n": SiN8N, // Need to ensure SiN8N is available or use AiOutlineDeploymentUnit
+    "n8n": SiN8N,
     "Tailwind CSS": SiTailwindcss,
     "Tailwind": SiTailwindcss,
     "Shadcn UI": SiShadcnui,
@@ -125,7 +670,7 @@ const TechIconMap: Record<string, React.ElementType> = {
     "Cal.com API": FaGlobe,
     "Airtable API": SiAirtable,
     "Telegram Bot API": SiTelegram,
-    "Vercel": FaGlobe, // or SiVite/SiNextdotjs related
+    "Vercel": FaGlobe,
     "Docker": FaDocker,
     "Node.js": FaNodeJs,
     "Vite": SiVite,
@@ -185,10 +730,7 @@ const TechIconMap: Record<string, React.ElementType> = {
     "Text Processing": FaPencilRuler
 };
 
-// Helper to get icon
 const getIcon = (name: string) => TechIconMap[name] || FaGlobe;
-
-// --- Data ---
 
 const rawProjects = [
     {
@@ -462,13 +1004,10 @@ const rawProjects = [
     }
 ] as const;
 
-// --- Exported Data with Mapped Fields ---
-
-export const projects: Project[] = rawProjects.map(p => ({
+const projectsData: Project[] = rawProjects.map(p => ({
     ...p,
-    // Map new fields to old fields for compatibility
-    description: p.shortDescription, // Use short description for cards/hero
-    detailedDescription: p.description, // Use full description for details
+    description: p.shortDescription,
+    detailedDescription: p.description,
     image: p.imageUrl,
     links: {
         live: p.liveUrl,
@@ -479,7 +1018,106 @@ export const projects: Project[] = rawProjects.map(p => ({
         icon: getIcon(name)
     })),
     impactMetrics: p.metrics ? Object.entries(p.metrics).map(([key, value]) => ({
-        label: key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1'), // CamelCase to Title Case
+        label: key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1'),
         value
     })) : []
 }));
+
+// --- Services Data ---
+
+const servicesData: ServiceData[] = [
+    {
+        id: 1,
+        title: "Frontend-Focused Web Development",
+        subtitle: "Transform Ideas into Fast, Beautiful, and Engaging Websites",
+        description: "Specializing in frontend development, we craft sleek, responsive interfaces that prioritize speed, accessibility, and user engagement.",
+        features: [
+            "Custom Frontend Development",
+            "API Integration",
+            "Responsive & Adaptive Design",
+            "Performance Optimization"
+        ],
+        icon: <Code className="w-5 h-5" />,
+        image: "/services/frontend.jpg"
+    },
+    {
+        id: 2,
+        title: "User Experience (UX) Design",
+        subtitle: "Designing with Purpose to Elevate User Satisfaction",
+        description: "Prioritizing UX design, we create intuitive, user-centered interfaces that enhance usability, accessibility, and overall engagement.",
+        features: [
+            "User Research & Persona Development",
+            "Wireframing & Prototyping",
+            "Usability Testing",
+            "Accessibility-First Approach"
+        ],
+        icon: <Palette className="w-5 h-5" />,
+        image: "/services/ux.jpg"
+    },
+    {
+        id: 3,
+        title: "AI-Enhanced Multimedia Creation",
+        subtitle: "Bring Creativity to Life with AI-Driven Media",
+        description: "Using advanced AI technology to produce cutting-edge image and video content, ideal for marketing, branding, and digital storytelling.",
+        features: [
+            "AI Video & Image Generation",
+            "Content Personalization",
+            "Automated Design Elements",
+            "Creative Tech Solutions"
+        ],
+        icon: <Bot className="w-5 h-5" />,
+        image: "/services/ai.jpg"
+    },
+    {
+        id: 4,
+        title: "Technical Writing & Content Creation",
+        subtitle: "Clear, Compelling Content that Connects with Readers",
+        description: "Professional technical writing services that transform complex ideas into clear, engaging content. Perfect for documentation, tutorials, blogs, and more.",
+        features: [
+            "Documentation & Guides",
+            "Blog & Article Writing",
+            "SEO-Optimized Content",
+            "Tutorials & How-To Guides"
+        ],
+        icon: <FileText className="w-5 h-5" />,
+        image: "/services/writing.jpg"
+    },
+    {
+        id: 5,
+        title: "SEO & Web Performance Optimization",
+        subtitle: "Maximize Visibility and Speed for a Better User Experience",
+        description: "Boost your site's search engine ranking and load speed to ensure a seamless experience for visitors.",
+        features: [
+            "On-Page SEO Optimization",
+            "Page Speed & Load Time Optimization",
+            "Mobile Responsiveness",
+            "Analytics Setup & Monitoring"
+        ],
+        icon: <Search className="w-5 h-5" />,
+        image: "/services/seo.jpg"
+    },
+    {
+        id: 6,
+        title: "Agile Development & Project Management",
+        subtitle: "Flexible, Goal-Oriented Project Management That Delivers",
+        description: "Efficient project management using agile methodologies ensures that projects are delivered on time, adapt to changes, and exceed client expectations.",
+        features: [
+            "Agile & Iterative Development",
+            "Collaborative Workflows",
+            "Regular Updates & Feedback Integration",
+            "Goal-Oriented Project Planning"
+        ],
+        icon: <GitBranch className="w-5 h-5" />,
+        image: "/services/agile.jpg"
+    }
+];
+
+// --- Export ---
+
+export const portfolioData: PortfolioData = {
+    hero: heroData,
+    about: aboutData,
+    skills: skillsData,
+    projects: projectsData,
+    services: servicesData
+};

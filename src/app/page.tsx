@@ -4,8 +4,7 @@ import ExperienceCards from '@/components/ExperienceCards'
 import WorkBanner from '@/components/WorkBanner'
 import Services from '@/components/services/services'
 import AboutMe from '../components/about/AboutMe'
-import myData from '../components/about/AboutData'
-import skillsData from '@/components/skills/SkillsData'
+import { portfolioData } from '@/data/portfolio'
 import FeaturedProjectsSection from '@/components/home/FeaturedProjectsSection'
 import Contact from '@/components/contact'
 import MySkills from '@/components/skills/MySkills'
@@ -22,8 +21,8 @@ const page = () => {
       <Services />
       <div className='py-16'>
         <AboutMe
-          personalInfo={myData.personalInfo}
-          qualificationsData={myData.qualificationsData}
+          personalInfo={portfolioData.about.personalInfo}
+          qualificationsData={portfolioData.about.qualificationsData}
         // skillsData={myData.skillsData}
         />
       </div>

@@ -5,13 +5,13 @@ import { motion, useScroll, useTransform, useSpring, useMotionValue } from "fram
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
-import { projects, Project } from "@/components/projects/projectsData";
+import { portfolioData, Project } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 export default function FeaturedCarousel() {
-    const featuredProjects = projects.filter((p) => p.featured);
+    const featuredProjects = portfolioData.projects.filter((p) => p.featured);
     const carouselRef = useRef<HTMLDivElement>(null);
     const [width, setWidth] = useState(0);
 

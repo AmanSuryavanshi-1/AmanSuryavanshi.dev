@@ -1,27 +1,26 @@
-'use client';
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import skillsData from './SkillsData';
-import * as LucideIcons from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+"use client";
 
-// Helper to get icon component dynamically
-const getIconComponent = (iconName: string): React.ElementType => {
-    // Check if it's a valid Lucide icon
-    const Icon = (LucideIcons as unknown as Record<string, React.ElementType>)[iconName];
-    return Icon || LucideIcons.Boxes; // Default fallback
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { portfolioData } from "@/data/portfolio";
+import * as LucideIcons from "lucide-react";
+
+const getIconComponent = (iconName: string) => {
+    const Icon = (LucideIcons as any)[iconName];
+    return Icon || LucideIcons.Code; // Default to Code icon if not found
 };
 
-const SkillsShowcase: React.FC = () => {
-    const { categories, subTitle } = skillsData;
-    const [activeTab, setActiveTab] = useState(categories[0]?.id || 'frontend');
+const SkillsShowcase = () => {
+    const { skills: { categories, subTitle } } = portfolioData;
+    const [activeTab, setActiveTab] = useState(categories[0]?.id);
 
     return (
-        <section className="w-full py-20 px-4 sm:px-6 md:px-8 relative overflow-hidden">
+        <section className="py-24 bg-forest-50/50 relative overflow-hidden">
             {/* Background Elements */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+            <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-[-10%] left-[-5%] w-96 h-96 bg-lime-500/10 rounded-full blur-3xl" />
                 <div className="absolute bottom-[-10%] right-[-5%] w-96 h-96 bg-forest-900/5 rounded-full blur-3xl" />
             </div>
@@ -58,10 +57,10 @@ const SkillsShowcase: React.FC = () => {
                                         key={category.id}
                                         value={category.id}
                                         className="data-[state=active]:bg-forest-900 data-[state=active]:text-sage-100 
-                                                 bg-white border-2 border-sage-100 text-forest-700 
-                                                 px-4 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-base font-medium transition-all duration-300
-                                                 hover:border-lime-500 hover:text-forest-900
-                                                 flex items-center gap-2 shadow-sm"
+                                                         bg-white border-2 border-sage-100 text-forest-700 
+                                                         px-4 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-base font-medium transition-all duration-300
+                                                         hover:border-lime-500 hover:text-forest-900
+                                                         flex items-center gap-2 shadow-sm"
                                     >
                                         <Icon className="w-4 h-4" />
                                         {category.title}
@@ -96,8 +95,8 @@ const SkillsShowcase: React.FC = () => {
                                                 >
                                                     <Card
                                                         className="group h-full overflow-hidden border-2 border-sage-100 bg-white/50 backdrop-blur-sm 
-                                                                 hover:border-lime-500 hover:shadow-lg hover:shadow-lime-500/10 transition-all duration-300
-                                                                 cursor-pointer relative"
+                                                                         hover:border-lime-500 hover:shadow-lg hover:shadow-lime-500/10 transition-all duration-300
+                                                                         cursor-pointer relative"
                                                     >
                                                         <CardContent className="p-6 flex flex-col items-start gap-4 h-full relative z-10">
                                                             <div className="flex items-center gap-3 w-full">
