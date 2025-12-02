@@ -24,8 +24,8 @@ const geistMono = localFont({
 
 // Site Constants
 const SITE_NAME = "Aman Suryavanshi";
-const SITE_TITLE = "Aman Suryavanshi | AI Automation Engineer + Full-Stack Developer";
-const SITE_DESCRIPTION = "AI Automation Engineer specializing in gluing tools together. Expert at connecting apps, APIs, and services with n8n automation, LangChain, and OpenAI. I make different tools work together seamlessly to create powerful automation workflows.";
+const SITE_TITLE = "Aman Suryavanshi | AI Automation Engineer | N8N & Next.js Specialist";
+const SITE_DESCRIPTION = "AI automation developer specializing in n8n workflow orchestration, Next.js development, and AI integration. Built systems generating ₹300K revenue with 80% automation. Remote opportunities.";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi-dev.vercel.app/";
 
 export const metadata: Metadata = {
