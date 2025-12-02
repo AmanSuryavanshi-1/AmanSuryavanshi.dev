@@ -63,7 +63,7 @@ const ActionButton = ({ href, icon: Icon, text, variant }: {
 const ActionButtons = () => {
   return (
     <motion.div
-      className="flex flex-col mt-8 gap-4 md:flex-row md:gap-5 max-lg:justify-center"
+      className="flex flex-col mt-8 gap-4 md:flex-row md:gap-5 justify-center"
       variants={itemVariants}
     >
       <ActionButton

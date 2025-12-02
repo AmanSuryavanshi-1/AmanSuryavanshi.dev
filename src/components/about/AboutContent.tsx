@@ -1,52 +1,103 @@
-import { Sparkles, Workflow, TrendingUp, MousePointerClick } from 'lucide-react';
+import { Sparkles, Workflow, TrendingUp, MousePointerClick, CheckCircle2, ArrowRight, Quote } from 'lucide-react';
+import { portfolioData } from '@/data/portfolio';
+import Link from 'next/link';
+
 const AboutContent = () => {
+  const { title, intro, journey, philosophy, differentiators, cta, keywords } = portfolioData.about;
+
+  // Parse journey data
+  const journeySteps = journey[0].split('→').map(s => s.trim());
+  const experienceText = journey[1];
+
   return (
-    <div className="prose prose-forest max-w-none">
-      <section itemScope itemType="http://schema.org/Person" className="flex flex-col gap-2.5">
-        <h2 className="text-lg font-semibold text-forest-900 mb-0" itemProp="jobTitle">
-          From Building Code to Orchestrating Intelligence
-        </h2>
+    <div className="w-full">
+      <section itemScope itemType="http://schema.org/Person" className="flex flex-col gap-4">
 
-        <div className="flex items-start gap-3">
-          <Sparkles className="w-6 h-6 mt-1 flex-shrink-0 text-lime-500" aria-hidden="true" />
-          <p className="text-forest-700 leading-normal max-w-2xl">
-            Most developers write code. I design systems that write themselves. After building multiple applications, I discovered solutions aren&apos;t coded from scratch-they&apos;re intelligently orchestrated. That&apos;s when I became a <span itemProp="jobTitle">Solutions Architect specializing in AI automation</span>.
-          </p>
+        {/* Header Card with Philosophy */}
+        <div className="bg-white/50 border border-sage-100 rounded-2xl p-5 shadow-sm">
+          <h2 className="text-lg font-bold text-forest-900 mb-3 leading-tight" itemProp="jobTitle">
+            {title}
+          </h2>
+          <div className="flex flex-col gap-3">
+            <div className="flex items-start gap-3">
+              <Sparkles className="w-5 h-5 mt-0.5 flex-shrink-0 text-lime-500" aria-hidden="true" />
+              <p className="text-forest-700 text-sm leading-relaxed">
+                {intro}
+              </p>
+            </div>
+
+            <div className="flex items-start gap-3 pt-2 border-t border-sage-100/50">
+              <Quote className="w-5 h-5 mt-0.5 flex-shrink-0 text-lime-500" aria-hidden="true" />
+              <p className="text-forest-700 text-sm leading-relaxed italic">
+                "{philosophy}"
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="flex items-start gap-3">
-          <Workflow className="w-6 h-6 mt-1 flex-shrink-0 text-lime-500" aria-hidden="true" />
-          <p className="text-forest-700 leading-normal max-w-2xl">
-            Take my Aviators Training Centre project: I orchestrated <span itemProp="knowsAbout">N8N workflows</span>, <span itemProp="knowsAbout">AI responses</span>, <span itemProp="knowsAbout">Firebase</span>, and <span itemProp="knowsAbout">Next.js</span>. <strong className="text-forest-900" itemProp="award">Result: ₹300K revenue, 50+ organic leads, 80% less manual work.</strong>
-          </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Journey Card */}
+          <div className="bg-white/50 border border-sage-100 rounded-2xl p-5 shadow-sm flex flex-col gap-3 h-full">
+            <div className="flex items-center gap-2 mb-1">
+              <Workflow className="w-4 h-4 text-lime-600" aria-hidden="true" />
+              <h3 className="font-semibold text-forest-900 text-xs uppercase tracking-wide">My Journey</h3>
+            </div>
+
+            <div className="flex flex-col gap-2 text-xs text-forest-700 flex-grow">
+              {journeySteps.map((step, index) => (
+                <div key={index} className="flex items-start gap-2 relative">
+                  <div className="flex flex-col items-center mt-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-lime-500 flex-shrink-0" />
+                    {index < journeySteps.length - 1 && (
+                      <div className="w-0.5 h-full bg-sage-200 absolute top-2 left-[2.5px] -z-10 min-h-[16px]" />
+                    )}
+                  </div>
+                  <span className="leading-tight pb-1">{step}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Why Me Card */}
+          <div className="bg-white/50 border border-sage-100 rounded-2xl p-5 shadow-sm flex flex-col gap-3 h-full">
+            <div className="flex items-center gap-2 mb-1">
+              <CheckCircle2 className="w-4 h-4 text-lime-600" aria-hidden="true" />
+              <h3 className="font-semibold text-forest-900 text-xs uppercase tracking-wide">Why Work With Me?</h3>
+            </div>
+            <div className="grid grid-cols-1 gap-2 flex-grow">
+              {differentiators.map((item, index) => (
+                <div key={index} className="text-forest-700 text-xs flex items-start gap-2">
+                  <span className="text-lime-600 mt-0.5">✓</span>
+                  <span className="leading-tight">{item.replace('✅ ', '')}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="flex items-start gap-3">
-          <TrendingUp className="w-6 h-6 mt-1 flex-shrink-0 text-lime-500" aria-hidden="true" />
-          <p className="text-forest-700 leading-normal max-w-2xl">
-            I eliminate features through automation, command AI to execute faster, and architect systems that grow value after deployment. <strong className="text-forest-900">Orchestration &gt; Execution. Strategy &gt; Syntax.</strong>
-          </p>
+        {/* Experience Text at Bottom */}
+        <div className="text-[10px] text-forest-600 bg-sage-50 p-3 rounded-xl border border-sage-100 italic text-center">
+          {experienceText}
         </div>
 
-        <div className="flex items-start gap-3 mt-1">
-          <MousePointerClick className="w-5 h-5 mt-1 flex-shrink-0 text-lime-500" aria-hidden="true" />
-          <p className="text-forest-700/80 leading-normal italic text-sm max-w-2xl">
-            Click on &apos;Personal Info&apos; or &apos;Qualifications&apos; to explore my background &amp; expertise
+        {/* CTA */}
+        <div className="flex items-center justify-center gap-2 pt-1">
+          <MousePointerClick className="w-4 h-4 text-lime-600 animate-bounce" aria-hidden="true" />
+          <p className="text-forest-900 font-medium text-sm">
+            {cta}
+            <Link href="/#projects" className="text-lime-600 hover:text-lime-700 hover:underline font-normal ml-2 transition-colors">
+              (Check out my projects below)
+            </Link>
           </p>
         </div>
 
         {/* Enhanced SEO Schema.org markup */}
         <meta itemProp="name" content="Aman Suryavanshi" />
-        <meta itemProp="alternateName" content="Aman - Solutions Architect" />
-        <meta itemProp="description" content="Solutions Architect and Automation Consultant specializing in AI-powered workflow orchestration, business process automation, and intelligent system integration. Delivering measurable ROI through strategic automation architecture." />
-        <meta itemProp="knowsAbout" content="AI Automation" />
-        <meta itemProp="knowsAbout" content="Workflow Orchestration" />
-        <meta itemProp="knowsAbout" content="N8N Automation" />
-        <meta itemProp="knowsAbout" content="Next.js Development" />
-        <meta itemProp="knowsAbout" content="Firebase Integration" />
-        <meta itemProp="knowsAbout" content="Business Process Automation" />
-        <meta itemProp="knowsAbout" content="System Architecture" />
-        <meta itemProp="knowsAbout" content="RAG Systems" />
+        <meta itemProp="alternateName" content="Aman - AI Solutions Architect" />
+        <meta itemProp="description" content={intro} />
+        {keywords.map((keyword, index) => (
+          <meta key={index} itemProp="knowsAbout" content={keyword} />
+        ))}
         <link itemProp="additionalType" href="http://schema.org/EngineeringProfessional" />
         <link itemProp="sameAs" href="https://github.com/amansuryavanshi" />
         <link itemProp="sameAs" href="https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/" />

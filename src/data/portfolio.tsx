@@ -45,6 +45,13 @@ export interface HeroData {
 }
 
 export interface AboutData {
+    title: string;
+    intro: string;
+    journey: string[];
+    philosophy: string;
+    differentiators: string[];
+    cta: string;
+    keywords: string[];
     personalInfo: {
         name: string;
         title: string;
@@ -190,10 +197,10 @@ export interface PortfolioData {
 
 const heroData: HeroData = {
     name: "Aman Suryavanshi",
-    title: "Hello, I'm",
+    title: "Aman Suryavanshi",
     subtitle: "AI Automation Engineer + Full-Stack Developer",
     tagline: "Building Next.js apps with intelligent n8n automation backends",
-    description: "I specialize in connecting apps, APIs, and services into seamless workflows. From integrating LangChain with n8n, connecting OpenAI to your database, or orchestrating multi-platform automation—I make different tools work together beautifully. Built production systems delivering ₹300K+ revenue with 80% cost reduction.",
+    description: "Gluing tools together to create powerful AI-driven solutions. I specialize in connecting apps, APIs, and services into seamless workflows. From integrating LangChain with n8n, connecting OpenAI to your database, or orchestrating multi-platform automation—I make different tools work together beautifully. Built production systems delivering ₹300K+ revenue with 80% cost reduction.",
     descriptionHighlight: "Gluing tools together to create powerful AI-driven solutions.",
     stats: [
         "Integration Specialist",
@@ -202,21 +209,41 @@ const heroData: HeroData = {
     ],
     buttons: {
         primary: {
-            label: "View Portfolio",
-            href: "/#projects"
+            label: "View Automation Work",
+            href: "/projects"
         },
         secondary: {
-            label: "Schedule Consultation",
-            href: "/#contact"
+            label: "Download Resume",
+            href: "/AmanSuryavanshi_Resume_Latest.pdf"
         }
     },
     meta: {
         name: "Aman Suryavanshi",
-        description: "AI Automation Engineer specializing in gluing tools together. Expert at connecting apps, APIs, and services with n8n automation, LangChain, and OpenAI to create seamless workflows."
+        description: "AI automation developer specializing in n8n workflow orchestration, Next.js development, and AI integration. Built systems generating ₹300K revenue with 80% automation. Remote opportunities."
     }
 };
 
 const aboutData: AboutData = {
+    title: "I Orchestrate AI Systems That Deliver Business Results",
+    intro: "From manual chaos to intelligent automation—I build agentic systems that connect tools, eliminate busywork, and scale operations. n8n + Next.js + Claude AI = 80% time savings.",
+    journey: [
+        "Started building web apps → Discovered n8n automation → Realized 90% of business problems are integration problems → Now create complete AI-orchestrated systems",
+        "Production experience: Aviators Training Centre (50+ users, enterprise-grade), Barkat Enterprise (₹300K sales), Omni-Post AI (6K+ views)"
+    ],
+    philosophy: "I don't just code—I connect. My strength is making disparate systems work together seamlessly to solve \"glue code\" nightmares.",
+    differentiators: [
+        "✅ n8n Production Expertise (self-hosted, Docker, security-hardened)",
+        "✅ Next.js 15 + AI Integration (Claude, LangChain, RAG)",
+        "✅ Real Revenue Impact (₹300K+ generated, 80% automation)",
+        "✅ Complete Systems (frontend → backend → automation → analytics)"
+    ],
+    cta: "Ready to automate your operations?",
+    keywords: [
+        "hire AI automation developer",
+        "n8n expert business automation",
+        "technical solutions architect",
+        "automation product owner India"
+    ],
     personalInfo: {
         name: "Aman Suryavanshi",
         title: "AI Automation Engineer + Full-Stack Developer",
