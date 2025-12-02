@@ -49,7 +49,7 @@ const AboutContent = () => {
         <meta itemProp="knowsAbout" content="RAG Systems" />
         <link itemProp="additionalType" href="http://schema.org/EngineeringProfessional" />
         <link itemProp="sameAs" href="https://github.com/amansuryavanshi" />
-        <link itemProp="sameAs" href="https://linkedin.com/in/amansuryavanshi" />
+        <link itemProp="sameAs" href="https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/" />
       </section>
     </div>
   );

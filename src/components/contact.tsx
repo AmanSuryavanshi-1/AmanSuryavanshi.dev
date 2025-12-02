@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
 import HeroSocial from '@/components/hero/HeroSocial';
-import emailjs from '@emailjs/browser';
 
 const containerVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -16,33 +15,52 @@ const ContactForm = () => {
   const form = useRef<HTMLFormElement>(null);
   const [isMessageSent, setIsMessageSent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const sendEmail = (e: React.FormEvent) => {
+  const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.current) return;
 
     setIsSubmitting(true);
+    setErrorMessage(null);
+    setIsMessageSent(false);
 
-    // Send email to your email (template_md08ndx)
-    emailjs
-      .sendForm('service_ikm96zq', 'template_md08ndx', form.current, 'WKNcYnlqhtUUYRoXS')
-      .then((result) => {
-        setIsMessageSent(true);
-        if (form.current) form.current.reset();
+    const formData = new FormData(form.current);
+    const data = {
+      from_name: formData.get('from_name'),
+      reply_to: formData.get('reply_to'),
+      message: formData.get('message'),
+    };
 
-        // Hide the success message after 5 seconds
-        setTimeout(() => {
-          setIsMessageSent(false);
-        }, 5000);
-      })
-      .catch((error) => {
-        console.error('Failed to send email to you:', error);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
-  };
 
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send message');
+      }
+
+      setIsMessageSent(true);
+      if (form.current) form.current.reset();
+
+      // Hide the success message after 5 seconds
+      setTimeout(() => {
+        setIsMessageSent(false);
+      }, 5000);
+    } catch (error: any) {
+      console.error('Failed to send email:', error);
+      setErrorMessage(error.message || 'Failed to send message. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <motion.div
@@ -128,6 +146,15 @@ const ContactForm = () => {
                       className="text-xs font-semibold text-center bg-lime-500 mx-auto border-2 py-1 px-2 shadow-md shadow-forest-900 rounded-full text-sage-100"
                     >
                       Message sent successfully!
+                    </motion.p>
+                  )}
+                  {errorMessage && (
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-xs font-semibold text-center bg-red-500 mx-auto border-2 py-1 px-2 shadow-md shadow-forest-900 rounded-full text-white"
+                    >
+                      {errorMessage}
                     </motion.p>
                   )}
                 </form>
