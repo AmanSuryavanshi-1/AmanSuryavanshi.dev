@@ -12,19 +12,29 @@ export interface FallbackImage {
 export class FallbackImageManager {
   private static readonly fallbackImages: FallbackImage[] = [
     {
-      filename: 'Blog_header_fallback_asset1.jpeg',
-      alt: 'Default blog header image 1',
-      path: '/Blog/Blog_header_fallback_asset1.jpeg'
+      filename: 'fallback-code.svg',
+      alt: 'Code development fallback image',
+      path: '/fallbacks/fallback-code.svg'
     },
     {
-      filename: 'Blog_header_fallback_asset2.jpeg', 
-      alt: 'Default blog header image 2',
-      path: '/Blog/Blog_header_fallback_asset2.jpeg'
+      filename: 'fallback-dashboard.svg',
+      alt: 'Dashboard analytics fallback image',
+      path: '/fallbacks/fallback-dashboard.svg'
     },
     {
-      filename: 'Blog_header_fallback_asset3.jpeg',
-      alt: 'Default blog header image 3', 
-      path: '/Blog/Blog_header_fallback_asset3.jpeg'
+      filename: 'fallback-mobile.svg',
+      alt: 'Mobile development fallback image',
+      path: '/fallbacks/fallback-mobile.svg'
+    },
+    {
+      filename: 'fallback-server.svg',
+      alt: 'Server infrastructure fallback image',
+      path: '/fallbacks/fallback-server.svg'
+    },
+    {
+      filename: 'fallback-workflow.svg',
+      alt: 'Workflow automation fallback image',
+      path: '/fallbacks/fallback-workflow.svg'
     }
   ];
 
