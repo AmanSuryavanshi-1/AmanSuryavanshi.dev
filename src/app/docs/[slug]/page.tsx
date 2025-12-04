@@ -1,8 +1,6 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import MarkdownViewer from '@/components/docs/MarkdownViewer';
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import DocPageClient from '@/components/docs/DocPageClient';
 
 // Map slugs to GitHub raw URLs
 const DOCS_MAP: Record<string, string> = {
@@ -45,6 +43,8 @@ export async function generateMetadata({ params }: PageProps) {
     };
 }
 
+import { portfolioData } from '@/data/portfolio';
+
 export default async function DocPage({ params }: PageProps) {
     const { slug } = await params;
     const content = await getDocContent(slug);
@@ -53,27 +53,10 @@ export default async function DocPage({ params }: PageProps) {
         notFound();
     }
 
-    return (
-        <main className="min-h-screen bg-forest-950 text-forest-100 pt-24 pb-16 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-                <div className="mb-8">
-                    <Link
-                        href="/projects"
-                        className="inline-flex items-center text-lime-400 hover:text-lime-300 transition-colors mb-4"
-                    >
-                        <ArrowLeft className="w-4 h-4 mr-2" />
-                        Back to Projects
-                    </Link>
-                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                        {TITLES_MAP[slug]}
-                    </h1>
-                    <div className="h-1 w-20 bg-lime-500 rounded-full"></div>
-                </div>
-
-                <div className="bg-forest-900/30 rounded-xl p-6 md:p-10 border border-forest-800/50 shadow-xl backdrop-blur-sm">
-                    <MarkdownViewer content={content} />
-                </div>
-            </div>
-        </main>
+    // Find the project that matches this documentation slug
+    const project = portfolioData.projects.find(p =>
+        p.documentation?.some(doc => doc.url.includes(slug))
     );
+
+    return <DocPageClient title={TITLES_MAP[slug]} content={content} slug={slug} project={project} />;
 }

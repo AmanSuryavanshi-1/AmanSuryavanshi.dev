@@ -67,7 +67,7 @@ Notion (Approved Content)
 ```
 
 <p align="center">
-  <img src="./Asset 1 Timeline diagram showing 4 iterations with key metrics.png" alt="Content Evolution" width="85%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_1_Timeline_diagram_showing_4_iterations_with_key_metrics?_a=BAMAMiJt0" alt="Content Evolution" width="85%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Evolution from manual, generic content (v1) to AI-automated, platform-optimized content (v4) showing dramatic quality improvement</em></p>
 
@@ -352,7 +352,7 @@ Cost Comparison:
 - Layer 4: Partial success tracking
 
 <p align="center">
-  <img src="./Asset%204%203-Tier%20Error%20Handling%20Architecture.png" alt="3-Tier Error Handling" width="85%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_4_3-Tier_Error_Handling_Architecture?_a=BAMAMiJt0" alt="3-Tier Error Handling" width="85%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Multi-layer error handling architecture ensuring 99.7% reliability through retry logic, graceful degradation, and fail-fast patterns</em></p>
 
@@ -493,7 +493,7 @@ This automation system demonstrates that sophisticated, production-grade automat
 - **Reliability**: 99.7% success rate in production
 
 <p align="center">
-  <img src="./Asset%203%20Metrics%20Dashboard%20Visualization.png" alt="Metrics Dashboard" width="80%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_3_Metrics_Dashboard_Visualization?_a=BAMAMiJt0" alt="Metrics Dashboard" width="80%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Production system performance dashboard showing key metrics: 99.7% reliability, 88-second processing time, $0 operational cost, and 1000+ successful executions</em></p>
 
