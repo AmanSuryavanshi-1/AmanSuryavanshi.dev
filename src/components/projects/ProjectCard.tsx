@@ -165,7 +165,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 <Link href={project.documentation?.[0]?.url || project.blogUrl!} target="_blank">
                   <Button className="rounded-full bg-forest-900 text-white hover:bg-forest-800 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
                     <BookOpen className="w-4 h-4 mr-2" />
-                    Read Case Study
+                    Executive Summary
                   </Button>
                 </Link>
               )}

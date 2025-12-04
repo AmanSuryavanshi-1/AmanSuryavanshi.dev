@@ -156,33 +156,33 @@ Omni-Post-AI/
 │           • Quick reference for interviews
 │
 ├── OMNI-POST-AI-Assets/ (Visual Documentation - 11 Professional Diagrams)
-│   ├── Asset 1 Timeline diagram showing 4 iterations with key metrics.png
+│   ├── https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_1_Timeline_diagram_showing_4_iterations_with_key_metrics?_a=BAMAMiJt0
 │   │   └── Evolution timeline (v1 → v4) with engagement metrics
 │   │
-│   ├── Asset 2 Notion Content Queue - Database-1.png
-│   ├── Asset 2 Notion Content Queue - Database-2.png
-│   ├── Asset 2 Notion Content Queue - Database-3.png
+│   ├── https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_2_Notion_Content_Queue_-_Database-1?_a=BAMAMiJt0
+│   ├── https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_2_Notion_Content_Queue_-_Database-2?_a=BAMAMiJt0
+│   ├── https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_2_Notion_Content_Queue_-_Database-3?_a=BAMAMiJt0
 │   │   └── Complete Notion database schema (3-part screenshot)
 │   │
-│   ├── Asset 2 Notion Database Schema Screenshot.png
+│   ├── https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_2_Notion_Database_Schema_Screenshot?_a=BAMAMiJt0
 │   │   └── Consolidated database structure view
 │   │
-│   ├── Asset 3 Metrics Dashboard Visualization.png
+│   ├── https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_3_Metrics_Dashboard_Visualization?_a=BAMAMiJt0
 │   │   └── Production metrics dashboard (reliability, performance, cost)
 │   │
-│   ├── Asset 4 3-Tier Error Handling Architecture.png
+│   ├── https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_4_3-Tier_Error_Handling_Architecture?_a=BAMAMiJt0
 │   │   └── Multi-layer error handling strategy diagram
 │   │
-│   ├── Asset 5 LLM Routing Decision Tree.png
+│   ├── https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_5_LLM_Routing_Decision_Tree?_a=BAMAMiJt0
 │   │   └── AI model selection logic (Gemini Pro vs Flash vs Perplexity)
 │   │
-│   ├── Asset 6 Session-Based File Structure.png
+│   ├── https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_6_Session-Based_File_Structure?_a=BAMAMiJt0
 │   │   └── Concurrent execution architecture & file organization
 │   │
-│   ├── Part-1 Automation - Content Repurposing for Socials AS.png
+│   ├── https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part-1_Automation_-_Content_Repurposing_for_Socials_AS?_a=BAMAMiJt0
 │   │   └── Content Generation Pipeline (28 nodes, 48-80 sec)
 │   │
-│   └── Part 2 - Automation - Content Posting To Socials AS.png
+│   └── https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_2_-_Automation_-_Content_Posting_To_Socials_AS?_a=BAMAMiJt0
 │       └── Distribution Pipeline (46 nodes, 17-31 sec)
 │
 └── Workflow Files (n8n JSON Exports)

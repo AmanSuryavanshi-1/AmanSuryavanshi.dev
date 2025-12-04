@@ -21,8 +21,15 @@ const config: Config = {
 				forest: {
 					950: '#05100C', // Very dark shade for gradients
 					900: '#12372A',  // Dark shade for primary text and backgrounds
+					800: '#1E4435',
 					700: '#2A5741',
+					600: '#375F4B',
 					500: '#436850',
+					400: '#5C8B6C',
+					300: '#78A689',
+					200: '#98C0A8',
+					100: '#BAD9C8',
+					50: '#E3F0E9',
 				},
 				sage: {
 					300: '#ADBC9F',
