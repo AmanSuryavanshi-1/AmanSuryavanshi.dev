@@ -1396,7 +1396,7 @@ const imageFileName = `asset-${assetNumber}-${sessionId}.png`;
 ```
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844292/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_6_Session-Based_File_Structure.png" alt="Session-Based File Structure" width="80%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844292/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_6_Session-Based_File_Structure.jpg" alt="Session-Based File Structure" width="80%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 7: Google Drive folder structure showing session-based organization with unique session IDs for each content piece, enabling concurrent processing without file conflicts. Each session folder contains all drafts and assets with consistent naming conventions.</em></p>
 
