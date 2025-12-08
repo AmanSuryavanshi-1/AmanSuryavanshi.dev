@@ -25,6 +25,7 @@ import MobileActionBar from '@/components/blog/MobileActionBar';
 import RelatedPosts from '@/components/blog/RelatedPosts';
 import ShareBar from '@/components/blog/ShareBar';
 import AllTags from '@/components/blog/AllTags';
+import BlogImageGalleryWrapper from '@/components/blog/BlogImageGalleryWrapper';
 
 type NextPageProps = {
   params: Promise<{ slug: string }>;
@@ -38,6 +39,15 @@ async function getPost(slug: string): Promise<Post | null> {
     slug,
     body[]{
       ...,
+      _type == "image" => {
+        ...,
+        asset->{
+          ...,
+          metadata {
+            dimensions
+          }
+        }
+      },
       _type == "video" => {
         "videoUrl": videoFile.asset->url,
         caption,
@@ -150,179 +160,181 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
   const relatedPosts = await client.fetch(relatedPostsQuery, { slug, tags });
 
   return (
-    <BlogErrorBoundary>
-      <ReadingProgress />
+    <BlogImageGalleryWrapper>
+      <BlogErrorBoundary>
+        <ReadingProgress />
 
-      <article className="min-h-screen pb-20 lg:pb-0">
-        {/* Hero Section */}
-        <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
-          <BlogHeaderImage
-            post={post}
-            priority={true}
-          />
+        <article className="min-h-screen pb-20 lg:pb-0">
+          {/* Hero Section */}
+          <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
+            <BlogHeaderImage
+              post={post}
+              priority={true}
+            />
 
-          {/* Gradient Overlay - Stronger and darker */}
-          <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-900/70 to-transparent z-10" />
+            {/* Gradient Overlay - Stronger and darker */}
+            <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-900/70 to-transparent z-10" />
 
-          {/* Hero Content */}
-          <div className="absolute inset-0 flex flex-col justify-end pb-16 sm:pb-24 z-20">
-            <div className="container mx-auto max-w-5xl px-4 sm:px-6">
-              {/* Breadcrumbs */}
-              <div className="mb-8 text-white/80">
-                <Breadcrumbs
-                  items={[
-                    { label: 'Blog', href: '/blogs' },
-                    { label: post.title }
-                  ]}
-                />
+            {/* Hero Content */}
+            <div className="absolute inset-0 flex flex-col justify-end pb-16 sm:pb-24 z-20">
+              <div className="container mx-auto max-w-5xl px-4 sm:px-6">
+                {/* Breadcrumbs */}
+                <div className="mb-8 text-white/80">
+                  <Breadcrumbs
+                    items={[
+                      { label: 'Blog', href: '/blogs' },
+                      { label: post.title }
+                    ]}
+                  />
+                </div>
+
+                {/* Tags */}
+                {post.tags && post.tags.length > 0 && (
+                  <div className="mb-6 flex flex-wrap gap-2">
+                    {post.tags.filter(tag => tag && tag.name).slice(0, 4).map((tag) => (
+                      <span
+                        key={tag._id}
+                        className="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-lg text-white border border-white/20 backdrop-blur-md bg-white/10"
+                        style={{
+                          borderColor: tag.color ? `${tag.color}60` : 'rgba(255,255,255,0.2)'
+                        }}
+                      >
+                        {tag.name}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                <h1 className="mb-6 text-2xl md:text-4xl font-serif font-bold text-white leading-tight text-shadow-sm">
+                  {post.title}
+                </h1>
+
+                <div className="flex flex-wrap items-center gap-6 text-sm sm:text-base text-gray-200 font-medium">
+                  {post.author && (
+                    <div className="flex items-center gap-3">
+                      {post.author.image && (
+                        <Image
+                          src={urlFor(post.author.image).url()}
+                          alt={post.author.name}
+                          width={40}
+                          height={40}
+                          className="rounded-full ring-2 ring-white/30"
+                        />
+                      )}
+                      <span>{post.author.name}</span>
+                    </div>
+                  )}
+                  <span className="hidden sm:block w-1.5 h-1.5 rounded-full bg-white/30" />
+                  <div className="flex items-center gap-2">
+                    <BiTime className="h-5 w-5 text-lime-400" />
+                    <span>{readTime} min read</span>
+                  </div>
+                  <span className="hidden sm:block w-1.5 h-1.5 rounded-full bg-white/30" />
+                  <time className="flex items-center gap-2">
+                    {format(new Date(post._createdAt), 'MMM dd, yyyy')}
+                  </time>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content Area */}
+          <div className="container mx-auto max-w-[90rem] px-4 sm:px-6 py-16 lg:py-24">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+
+              {/* Left Sidebar: Floating Actions (Desktop > 1024px) */}
+              <div className="hidden lg:block lg:col-span-2">
+                <div className="sticky top-32">
+                  <FloatingActions title={post.title} slug={post.slug.current} />
+                </div>
               </div>
 
-              {/* Tags */}
-              {post.tags && post.tags.length > 0 && (
-                <div className="mb-6 flex flex-wrap gap-2">
-                  {post.tags.slice(0, 4).map((tag) => (
-                    <span
-                      key={tag._id}
-                      className="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-lg text-white border border-white/20 backdrop-blur-md bg-white/10"
-                      style={{
-                        borderColor: tag.color ? `${tag.color}60` : 'rgba(255,255,255,0.2)'
-                      }}
-                    >
-                      {tag.name}
-                    </span>
-                  ))}
+              {/* Center: Content */}
+              <div className="lg:col-span-7 xl:col-span-7">
+                <div className="prose prose-lg md:prose-xl max-w-none text-forest-900
+                  prose-headings:font-serif prose-headings:font-bold prose-headings:!text-forest-900
+                  prose-h2:!text-forest-900 prose-h3:!text-forest-900 prose-h4:!text-forest-900
+                  prose-p:!text-forest-900 prose-p:leading-relaxed
+                  prose-li:!text-forest-900 prose-ul:!text-forest-900 prose-ol:!text-forest-900
+                  prose-blockquote:!text-forest-900 prose-blockquote:border-l-forest-500
+                  prose-strong:!text-forest-900
+                  prose-th:!text-forest-900 prose-td:!text-forest-900
+                  prose-figcaption:!text-forest-900
+                  prose-a:text-lime-600 prose-a:no-underline hover:prose-a:text-lime-700 hover:prose-a:underline
+                  prose-img:rounded-2xl prose-img:shadow-lg
+                  prose-code:!text-lime-700 prose-code:bg-lime-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none">
+                  <PortableText
+                    value={post.body}
+                    components={portableTextComponents}
+                  />
                 </div>
-              )}
 
-              <h1 className="mb-6 text-2xl md:text-4xl font-serif font-bold text-white leading-tight text-shadow-sm">
-                {post.title}
-              </h1>
+                {/* All Tags Section */}
+                {post.tags && <AllTags tags={post.tags} />}
 
-              <div className="flex flex-wrap items-center gap-6 text-sm sm:text-base text-gray-200 font-medium">
+                {/* Author Bio Card */}
                 {post.author && (
-                  <div className="flex items-center gap-3">
+                  <div className="mt-12 mb-12 p-8 bg-gradient-to-br from-sage-100/30 to-white rounded-2xl border border-sage-200 flex flex-col sm:flex-row gap-6 items-start">
                     {post.author.image && (
                       <Image
                         src={urlFor(post.author.image).url()}
                         alt={post.author.name}
-                        width={40}
-                        height={40}
-                        className="rounded-full ring-2 ring-white/30"
+                        width={80}
+                        height={80}
+                        className="rounded-full ring-4 ring-white shadow-md shrink-0"
                       />
                     )}
-                    <span>{post.author.name}</span>
-                  </div>
-                )}
-                <span className="hidden sm:block w-1.5 h-1.5 rounded-full bg-white/30" />
-                <div className="flex items-center gap-2">
-                  <BiTime className="h-5 w-5 text-lime-400" />
-                  <span>{readTime} min read</span>
-                </div>
-                <span className="hidden sm:block w-1.5 h-1.5 rounded-full bg-white/30" />
-                <time className="flex items-center gap-2">
-                  {format(new Date(post._createdAt), 'MMM dd, yyyy')}
-                </time>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content Area */}
-        <div className="container mx-auto max-w-[90rem] px-4 sm:px-6 py-16 lg:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
-
-            {/* Left Sidebar: Floating Actions (Desktop > 1024px) */}
-            <div className="hidden lg:block lg:col-span-2">
-              <div className="sticky top-32">
-                <FloatingActions title={post.title} slug={post.slug.current} />
-              </div>
-            </div>
-
-            {/* Center: Content */}
-            <div className="lg:col-span-7 xl:col-span-7">
-              <div className="prose prose-lg md:prose-xl max-w-none text-forest-900
-                prose-headings:font-serif prose-headings:font-bold prose-headings:!text-forest-900
-                prose-h2:!text-forest-900 prose-h3:!text-forest-900 prose-h4:!text-forest-900
-                prose-p:!text-forest-900 prose-p:leading-relaxed
-                prose-li:!text-forest-900 prose-ul:!text-forest-900 prose-ol:!text-forest-900
-                prose-blockquote:!text-forest-900 prose-blockquote:border-l-forest-500
-                prose-strong:!text-forest-900
-                prose-th:!text-forest-900 prose-td:!text-forest-900
-                prose-figcaption:!text-forest-900
-                prose-a:text-lime-600 prose-a:no-underline hover:prose-a:text-lime-700 hover:prose-a:underline
-                prose-img:rounded-2xl prose-img:shadow-lg
-                prose-code:!text-lime-700 prose-code:bg-lime-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none">
-                <PortableText
-                  value={post.body}
-                  components={portableTextComponents}
-                />
-              </div>
-
-              {/* All Tags Section */}
-              {post.tags && <AllTags tags={post.tags} />}
-
-              {/* Author Bio Card */}
-              {post.author && (
-                <div className="mt-12 mb-12 p-8 bg-gradient-to-br from-sage-100/30 to-white rounded-2xl border border-sage-200 flex flex-col sm:flex-row gap-6 items-start">
-                  {post.author.image && (
-                    <Image
-                      src={urlFor(post.author.image).url()}
-                      alt={post.author.name}
-                      width={80}
-                      height={80}
-                      className="rounded-full ring-4 ring-white shadow-md shrink-0"
-                    />
-                  )}
-                  <div className="flex-1">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                      <h3 className="text-xl font-bold text-forest-900">{post.author.name}</h3>
-                      {/* Hardcoded Socials for Aman */}
-                      {post.author.name.includes('Aman') && (
-                        <div className="flex gap-3 text-forest-900">
-                          <a href="https://twitter.com/_AmanSurya" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
-                            <FaXTwitter size={20} />
-                          </a>
-                          <a href="https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
-                            <BiLogoLinkedin size={20} />
-                          </a>
-                          <a href="https://github.com/AmanSuryavanshi-1" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
-                            <BiLogoGithub size={20} />
-                          </a>
-                          <a href="https://amansuryavanshi.dev" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
-                            <BiGlobe size={20} />
-                          </a>
+                    <div className="flex-1">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                        <h3 className="text-xl font-bold text-forest-900">{post.author.name}</h3>
+                        {/* Hardcoded Socials for Aman */}
+                        {post.author.name.includes('Aman') && (
+                          <div className="flex gap-3 text-forest-900">
+                            <a href="https://twitter.com/_AmanSurya" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
+                              <FaXTwitter size={20} />
+                            </a>
+                            <a href="https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
+                              <BiLogoLinkedin size={20} />
+                            </a>
+                            <a href="https://github.com/AmanSuryavanshi-1" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
+                              <BiLogoGithub size={20} />
+                            </a>
+                            <a href="https://amansuryavanshi.dev" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
+                              <BiGlobe size={20} />
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                      {post.author.bio && (
+                        <div className="text-forest-700 prose-sm">
+                          <PortableText value={post.author.bio} />
                         </div>
                       )}
                     </div>
-                    {post.author.bio && (
-                      <div className="text-forest-700 prose-sm">
-                        <PortableText value={post.author.bio} />
-                      </div>
-                    )}
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Share Bar */}
-              <ShareBar title={post.title} slug={post.slug.current} />
+                {/* Share Bar */}
+                <ShareBar title={post.title} slug={post.slug.current} />
 
-              {/* Related Posts */}
-              <RelatedPosts posts={relatedPosts} />
-            </div>
+                {/* Related Posts */}
+                <RelatedPosts posts={relatedPosts} />
+              </div>
 
-            {/* Right Sidebar: Table of Contents (Desktop > 1280px) */}
-            <div className="hidden xl:block xl:col-span-3">
-              <TableOfContents readTime={readTime} />
+              {/* Right Sidebar: Table of Contents (Desktop > 1280px) */}
+              <div className="hidden xl:block xl:col-span-3">
+                <TableOfContents readTime={readTime} />
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Mobile Action Bar */}
-        <MobileActionBar title={post.title} slug={post.slug.current} />
+          {/* Mobile Action Bar */}
+          <MobileActionBar title={post.title} slug={post.slug.current} />
 
-        {/* CTA Section */}
-        <CTA />
-      </article>
-    </BlogErrorBoundary>
+          {/* CTA Section */}
+          <CTA />
+        </article>
+      </BlogErrorBoundary>
+    </BlogImageGalleryWrapper>
   );
 }

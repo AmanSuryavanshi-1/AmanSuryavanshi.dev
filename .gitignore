@@ -45,3 +45,9 @@ next-env.d.ts
 
 # VSCode settings (personal IDE preferences)
 .vscode/
+
+# Large video files in public folder (too big for GitHub)
+public/Project/AV-NewsStream/AVNewsStream.webm
+public/Project/AviatorsTrainingCentre/AviatorsTrainingCenter_WalkThrough_720p.mp4
+public/Project/BarkatEnterprise/Enterprise_FullWalkThrough.mp4
+public/Project/Foodah/Foodah.webm

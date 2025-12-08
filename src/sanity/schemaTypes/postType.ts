@@ -154,12 +154,19 @@ export const postType = defineType({
       validation: (Rule) => Rule.max(160),
     }),
     defineField({
+      name: 'views',
+      type: 'number',
+      title: 'Views',
+      description: 'Total views. Can be manually edited.',
+      initialValue: 0,
+    }),
+    defineField({
       name: 'viewCount',
       type: 'number',
-      title: 'View Count',
-      initialValue: 0,
+      title: 'View Count (Deprecated)',
+      description: 'Legacy field. Use "views" instead.',
       readOnly: true,
-      validation: (Rule) => Rule.min(0)
+      hidden: true,
     }),
   ],
   preview: {

@@ -130,18 +130,22 @@ export default function DocPageClient({ title, content, slug, project }: DocPage
                             <div className="mt-24 pt-12 border-t border-forest-100">
                                 <h3 className="text-sm font-bold text-forest-400 uppercase tracking-widest mb-8">Continue Reading</h3>
                                 <div className="grid md:grid-cols-2 gap-6">
-                                    {/* Technical Documentation Link */}
-                                    <div className="group p-8 rounded-3xl bg-white border border-forest-100 hover:border-lime-200 hover:shadow-lg transition-all duration-300">
-                                        <div className="flex items-center gap-3 mb-4 text-forest-400 group-hover:text-lime-600 transition-colors">
-                                            <BookOpen className="w-6 h-6" />
-                                            <span className="text-xs font-bold uppercase tracking-wider">Deep Dive</span>
-                                        </div>
-                                        <h4 className="text-xl font-bold text-forest-900 mb-2 font-serif">Technical Docs</h4>
-                                        <p className="text-forest-500 text-sm mb-6">Architectural decisions & API specs.</p>
-                                        <button disabled className="text-xs font-bold px-3 py-1.5 rounded bg-forest-50 text-forest-400 uppercase tracking-wide">
-                                            Coming Soon
-                                        </button>
-                                    </div>
+                                    {/* Technical Documentation Link - Only show if blogUrl exists */}
+                                    {currentProject?.blogUrl && (
+                                        <Link href={currentProject.blogUrl} className="block">
+                                            <div className="group p-8 rounded-3xl bg-white border border-forest-100 hover:border-lime-200 hover:shadow-lg transition-all duration-300">
+                                                <div className="flex items-center gap-3 mb-4 text-forest-400 group-hover:text-lime-600 transition-colors">
+                                                    <BookOpen className="w-6 h-6" />
+                                                    <span className="text-xs font-bold uppercase tracking-wider">Deep Dive</span>
+                                                </div>
+                                                <h4 className="text-xl font-bold text-forest-900 mb-2 font-serif">Technical Documentation</h4>
+                                                <p className="text-forest-500 text-sm mb-6">Architectural decisions, code walkthrough & API specs.</p>
+                                                <div className="flex items-center text-lime-600 text-sm font-bold group-hover:translate-x-1 transition-transform">
+                                                    Read Full Documentation <ArrowRight className="w-4 h-4 ml-2" />
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    )}
 
                                     {/* Next Project Link */}
                                     {nextProject && (

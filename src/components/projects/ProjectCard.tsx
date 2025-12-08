@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Github, BookOpen, ChevronDown, ChevronUp, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useImageGallery } from "@/context/ImageGalleryContext";
 
 interface ProjectCardProps {
   project: Project;
@@ -19,6 +20,15 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const { registerImage, openGallery, images } = useImageGallery();
+  const imageSrc = project.image || "/placeholder.png";
+
+  useEffect(() => {
+    if (imageSrc) {
+      registerImage({ src: imageSrc, alt: project.title });
+    }
+  }, [imageSrc, project.title, registerImage]);
 
   const toggleVideo = () => {
     if (videoRef.current) {
@@ -63,15 +73,23 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               </div>
             </div>
           ) : (
-            <div className="relative w-full h-full group/image">
+            <button
+              type="button"
+              className="relative w-full h-full group/image cursor-zoom-in block border-none p-0 bg-transparent text-left"
+              onClick={(e) => {
+                e.stopPropagation();
+                const idx = images.findIndex(img => img.src === imageSrc);
+                if (idx !== -1) openGallery(idx);
+              }}
+            >
               <Image
-                src={project.image || "/placeholder.png"}
+                src={imageSrc}
                 alt={project.title}
                 fill
                 className="object-cover transition-transform duration-700 group-hover/image:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-forest-900/40 to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-500" />
-            </div>
+            </button>
           )}
 
           {/* Category Badge Overlay */}
@@ -161,11 +179,22 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 )}
               </Button>
 
-              {(project.documentation?.[0]?.url || project.blogUrl) && (
-                <Link href={project.documentation?.[0]?.url || project.blogUrl!} target="_blank">
+              {/* Executive Summary - only if project has documentation */}
+              {project.documentation?.[0]?.url && (
+                <Link href={project.documentation[0].url}>
                   <Button className="rounded-full bg-forest-900 text-white hover:bg-forest-800 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
                     <BookOpen className="w-4 h-4 mr-2" />
                     Executive Summary
+                  </Button>
+                </Link>
+              )}
+
+              {/* Technical Docs - only if project has blogUrl */}
+              {project.blogUrl && (
+                <Link href={project.blogUrl}>
+                  <Button variant="outline" className="rounded-full border-forest-300 text-forest-700 hover:bg-forest-50 hover:border-forest-400 transition-all">
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    Technical Docs
                   </Button>
                 </Link>
               )}

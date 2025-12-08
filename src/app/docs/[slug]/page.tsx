@@ -6,12 +6,14 @@ import DocPageClient from '@/components/docs/DocPageClient';
 const DOCS_MAP: Record<string, string> = {
     'aviators-training-centre-executive-summary': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/Aviators_Training_Centre/main/docs/aviators-training-centre-executive-summary.md',
     'aviators-training-centre-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/Aviators_Training_Centre/main/docs/aviators-training-centre-technical-documentation.md',
+    'omni-post-ai-executive-summary': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/main/Omni-Post-AI-Automation/OMNI-POST-AI-EXECUTIVE-SUMMARY.md',
 };
 
 // Map slugs to readable titles for metadata or breadcrumbs
 const TITLES_MAP: Record<string, string> = {
     'aviators-training-centre-executive-summary': 'Aviators Training Centre - Executive Summary',
     'aviators-training-centre-technical-documentation': 'Aviators Training Centre - Technical Documentation',
+    'omni-post-ai-executive-summary': 'Omni-Post AI - Executive Summary',
 };
 
 interface PageProps {
@@ -43,8 +45,6 @@ export async function generateMetadata({ params }: PageProps) {
     };
 }
 
-import { portfolioData } from '@/data/portfolio';
-
 export default async function DocPage({ params }: PageProps) {
     const { slug } = await params;
     const content = await getDocContent(slug);
@@ -53,10 +53,7 @@ export default async function DocPage({ params }: PageProps) {
         notFound();
     }
 
-    // Find the project that matches this documentation slug
-    const project = portfolioData.projects.find(p =>
-        p.documentation?.some(doc => doc.url.includes(slug))
-    );
-
-    return <DocPageClient title={TITLES_MAP[slug]} content={content} slug={slug} project={project} />;
+    // Note: Project lookup is done in DocPageClient to avoid serialization issues
+    // (project.technologies contains React component icons that can't be serialized)
+    return <DocPageClient title={TITLES_MAP[slug]} content={content} slug={slug} />;
 }

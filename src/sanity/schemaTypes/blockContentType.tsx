@@ -1,5 +1,6 @@
-import {defineType, defineArrayMember} from 'sanity'
-import {ImageIcon} from '@sanity/icons'
+import { defineType, defineArrayMember } from 'sanity'
+import { ImageIcon } from '@sanity/icons'
+import { BlockQuoteStyle } from '../components/BlockQuoteStyle'
 
 /**
  * This is the schema type for block content used in the post document type
@@ -20,26 +21,30 @@ export const blockContentType = defineType({
     defineArrayMember({
       type: 'block',
       styles: [
-        {title: 'Normal', value: 'normal'},
-        {title: 'H1', value: 'h1'},
-        {title: 'H2', value: 'h2'},
-        {title: 'H3', value: 'h3'},
-        {title: 'H4', value: 'h4'},
-        {title: 'Quote', value: 'blockquote'},
-        {title: 'Toggle', value: 'toggle'},
+        { title: 'Normal', value: 'normal' },
+        { title: 'H1', value: 'h1' },
+        { title: 'H2', value: 'h2' },
+        { title: 'H3', value: 'h3' },
+        { title: 'H4', value: 'h4' },
+        {
+          title: 'Quote',
+          value: 'blockquote',
+          component: BlockQuoteStyle,
+        },
+        { title: 'Toggle', value: 'toggle' },
       ],
       lists: [
-        {title: 'Bullet', value: 'bullet'},
-        {title: 'Numbered', value: 'number'},
-        {title: 'Checkbox', value: 'checkbox'}
+        { title: 'Bullet', value: 'bullet' },
+        { title: 'Numbered', value: 'number' },
+        { title: 'Checkbox', value: 'checkbox' }
       ],
       marks: {
         decorators: [
-          {title: 'Strong', value: 'strong'},
-          {title: 'Emphasis', value: 'em'},
-          {title: 'Code', value: 'code'},
-          {title: 'Underline', value: 'underline'},
-          {title: 'Highlight', value: 'highlight'},
+          { title: 'Strong', value: 'strong' },
+          { title: 'Emphasis', value: 'em' },
+          { title: 'Code', value: 'code' },
+          { title: 'Underline', value: 'underline' },
+          { title: 'Highlight', value: 'highlight' },
         ],
         annotations: [
           {
@@ -53,13 +58,13 @@ export const blockContentType = defineType({
                 title: 'Color',
                 options: {
                   list: [
-                    {title: 'Default', value: 'default'},
-                    {title: 'Primary', value: 'primary'},
-                    {title: 'Secondary', value: 'secondary'},
-                    {title: 'Success', value: 'success'},
-                    {title: 'Warning', value: 'warning'},
-                    {title: 'Danger', value: 'danger'},
-                    {title: 'Info', value: 'info'},
+                    { title: 'Default', value: 'default' },
+                    { title: 'Primary', value: 'primary' },
+                    { title: 'Secondary', value: 'secondary' },
+                    { title: 'Success', value: 'success' },
+                    { title: 'Warning', value: 'warning' },
+                    { title: 'Danger', value: 'danger' },
+                    { title: 'Info', value: 'info' },
                   ],
                 },
               },
@@ -96,14 +101,14 @@ export const blockContentType = defineType({
     defineArrayMember({
       type: 'image',
       icon: ImageIcon,
-      options: {hotspot: true},
+      options: { hotspot: true },
       fields: [
         {
           name: 'alt',
           type: 'string',
           title: 'Alternative text',
           description: 'Important for SEO and accessibility.',
-          validation: Rule => Rule.required(),
+          // validation: Rule => Rule.required(), // Removed to allow publishing existing content
         },
         {
           name: 'caption',
@@ -111,6 +116,45 @@ export const blockContentType = defineType({
           title: 'Caption',
         },
       ],
+    }),
+    // External Image type for Cloudinary/external URLs
+    defineArrayMember({
+      type: 'object',
+      name: 'externalImage',
+      title: 'External Image',
+      icon: ImageIcon,
+      fields: [
+        {
+          name: 'url',
+          type: 'url',
+          title: 'Image URL',
+          description: 'Full URL to the external image (e.g., Cloudinary)',
+          validation: Rule => Rule.required(),
+        },
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Important for SEO and accessibility.',
+        },
+        {
+          name: 'caption',
+          type: 'string',
+          title: 'Caption',
+        },
+      ],
+      preview: {
+        select: {
+          url: 'url',
+          alt: 'alt',
+        },
+        prepare({ url, alt }) {
+          return {
+            title: alt || 'External Image',
+            subtitle: url?.substring(0, 50) + '...',
+          };
+        },
+      },
     }),
     defineArrayMember({
       type: 'video',
@@ -129,18 +173,54 @@ export const blockContentType = defineType({
       options: {
         language: 'javascript',
         languageAlternatives: [
-          {title: 'JavaScript', value: 'javascript'},
-          {title: 'Python', value: 'python'},
-          {title: 'TypeScript', value: 'typescript'},
-          {title: 'HTML', value: 'html'},
-          {title: 'CSS', value: 'css'},
-          {title: 'JSON', value: 'json'},
-          {title: 'Markdown', value: 'markdown'},
-          {title: 'Bash', value: 'bash'},
-          {title: 'JSX', value: 'jsx'},
-          {title: 'TSX', value: 'tsx'},
+          { title: 'JavaScript', value: 'javascript' },
+          { title: 'Python', value: 'python' },
+          { title: 'TypeScript', value: 'typescript' },
+          { title: 'HTML', value: 'html' },
+          { title: 'CSS', value: 'css' },
+          { title: 'JSON', value: 'json' },
+          { title: 'Markdown', value: 'markdown' },
+          { title: 'Bash', value: 'bash' },
+          { title: 'JSX', value: 'jsx' },
+          { title: 'TSX', value: 'tsx' },
         ],
         withFilename: true,
+      },
+    }),
+    defineArrayMember({
+      type: 'object',
+      name: 'table',
+      title: 'Table',
+      fields: [
+        {
+          name: 'rows',
+          type: 'array',
+          title: 'Rows',
+          of: [
+            {
+              type: 'object',
+              name: 'row',
+              fields: [
+                {
+                  name: 'cells',
+                  type: 'array',
+                  title: 'Cells',
+                  of: [{ type: 'string' }],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      preview: {
+        select: {
+          rows: 'rows',
+        },
+        prepare({ rows }) {
+          return {
+            title: `Table (${rows?.length || 0} rows)`,
+          };
+        },
       },
     })
   ]
