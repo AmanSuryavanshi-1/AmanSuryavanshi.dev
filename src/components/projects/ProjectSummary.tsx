@@ -33,7 +33,7 @@ export default function ProjectSummary({ project }: ProjectSummaryProps) {
                                     <h3 className="text-lg md:text-xl font-bold text-forest-900">The Challenge</h3>
                                 </div>
                                 <p className="text-forest-700 leading-relaxed text-lg">
-                                    {project.challenge || project.problem || "Identifying the core user pain points and technical constraints was the first step in this journey."}
+                                    {project.challenge || "Identifying the core user pain points and technical constraints was the first step in this journey."}
                                 </p>
                             </div>
 
