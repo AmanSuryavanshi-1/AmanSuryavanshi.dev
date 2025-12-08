@@ -252,7 +252,7 @@ export const portableTextComponents: PortableTextComponents = {
     // Image spacing is handled inside ZoomableBlogImage component (my-4)
     image: ({ value }: any) => <ZoomableBlogImage value={value} />,
 
-    // External image (Cloudinary/direct URLs)
+    // External image (Cloudinary/direct URLs) - Use ZoomableBlogImage for gallery integration
     externalImage: ({ value }: any) => {
       const { url, alt, caption } = value || {};
       if (!url) {
@@ -262,21 +262,8 @@ export const portableTextComponents: PortableTextComponents = {
           </div>
         );
       }
-      return (
-        <figure className="my-4 flex flex-col items-center">
-          <img
-            src={url}
-            alt={alt || 'Blog Image'}
-            className="h-auto max-h-[70vh] w-auto mx-auto object-contain rounded-xl shadow-lg border border-sage-100"
-            loading="lazy"
-          />
-          {caption && (
-            <figcaption className="mt-3 text-center text-sm text-forest-500 italic font-serif max-w-2xl px-4">
-              {caption}
-            </figcaption>
-          )}
-        </figure>
-      );
+      // Pass the URL through the value prop so ZoomableBlogImage can detect it
+      return <ZoomableBlogImage value={{ url, alt, caption }} />;
     },
 
     video: ({ value }) => {
