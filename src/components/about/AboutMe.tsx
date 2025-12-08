@@ -69,45 +69,57 @@ const AboutMe = ({ personalInfo = defaultProps.personalInfo,
 
             <div className="lg:col-span-8">
               <Tabs defaultValue="about" className="w-full max-md:mx-auto max-md:h-auto max-[375px]:mt-8">
-                <TabsList
-                  className="py-5 rounded-3xl bg-forest-900 border-[3px] border-sage-100 shadow-lg shadow-forest-500 text-sage-100 
-                   w-full justify-center
-                   max-md:w-full max-md:min-h-[200px] max-md:flex max-md:flex-col max-md:justify-between max-md:gap-4 max-md:p-6
-                  max-[375px]:gap-2 max-[375px]:p-4"
-                  role="tablist"
-                  aria-label="About Aman Suryavanshi navigation"
-                >
-                  <TabsTrigger
-                    className="mr-1 rounded-3xl border-2 border-transparent data-[state=active]:bg-lime-500 data-[state=active]:border-sage-100 data-[state=active]:shadow-sm data-[state=active]:shadow-sage-300 hover:bg-forest-500
-                    max-md:w-full max-md:h-14 max-md:flex max-md:items-center max-md:justify-center max-md:mr-0 max-[375px]:h-12 max-[375px]:text-sm"
-                    value="about"
-                    role="tab"
-                    aria-label="About and professional background"
+                {/* Centered Tab Navigation Container */}
+                <div className="flex justify-center w-full mb-2">
+                  <TabsList
+                    className="inline-flex py-2 px-2 rounded-full bg-forest-900/95 backdrop-blur-sm border-2 border-forest-700/50 shadow-xl shadow-forest-900/20 text-sage-100 
+                     gap-1
+                     max-md:flex-col max-md:w-full max-md:rounded-2xl max-md:p-3 max-md:gap-2
+                     max-[375px]:gap-1.5 max-[375px]:p-2"
+                    role="tablist"
+                    aria-label="About Aman Suryavanshi navigation"
                   >
-                    <User2 className="w-4 h-4 mr-2" aria-hidden="true" />
-                    About
-                  </TabsTrigger>
-                  <TabsTrigger
-                    className="mr-1 rounded-3xl border-2 border-transparent data-[state=active]:bg-lime-500 data-[state=active]:border-sage-100 data-[state=active]:shadow-sm data-[state=active]:shadow-sage-300 hover:bg-forest-500
-                    max-md:w-full max-md:h-14 max-md:flex max-md:items-center max-md:justify-center max-md:mr-0"
-                    value="personal-info"
-                    role="tab"
-                    aria-label="Personal information and contact details"
-                  >
-                    <Info className="w-4 h-4 mr-2" aria-hidden="true" />
-                    Personal Info
-                  </TabsTrigger>
-                  <TabsTrigger
-                    className="mr-1 rounded-3xl border-2 border-transparent data-[state=active]:bg-lime-500 data-[state=active]:border-sage-100 data-[state=active]:shadow-sm data-[state=active]:shadow-sage-300 hover:bg-forest-500
-                    max-md:w-full max-md:h-14 max-md:flex max-md:items-center max-md:justify-center max-md:mr-0"
-                    value="qualifications"
-                    role="tab"
-                    aria-label="Education and certifications"
-                  >
-                    <GraduationCap className="w-4 h-4 mr-2" aria-hidden="true" />
-                    Qualifications
-                  </TabsTrigger>
-                </TabsList>
+                    <TabsTrigger
+                      className="px-5 py-2.5 rounded-full border-2 border-transparent font-medium text-sm transition-all duration-300 text-sage-100
+                      data-[state=active]:bg-gradient-to-r data-[state=active]:from-lime-500 data-[state=active]:to-lime-400 
+                      data-[state=active]:!text-forest-900 data-[state=active]:font-semibold data-[state=active]:border-lime-400/50 data-[state=active]:shadow-lg data-[state=active]:shadow-lime-500/30
+                      hover:bg-lime-500/20 hover:text-lime-100 hover:border-lime-500/30
+                      max-md:w-full max-md:py-3 max-md:justify-center max-[375px]:py-2.5 max-[375px]:text-sm"
+                      value="about"
+                      role="tab"
+                      aria-label="About and professional background"
+                    >
+                      <User2 className="w-4 h-4 mr-2" aria-hidden="true" />
+                      About
+                    </TabsTrigger>
+                    <TabsTrigger
+                      className="px-5 py-2.5 rounded-full border-2 border-transparent font-medium text-sm transition-all duration-300 text-sage-100
+                      data-[state=active]:bg-gradient-to-r data-[state=active]:from-lime-500 data-[state=active]:to-lime-400 
+                      data-[state=active]:!text-forest-900 data-[state=active]:font-semibold data-[state=active]:border-lime-400/50 data-[state=active]:shadow-lg data-[state=active]:shadow-lime-500/30
+                      hover:bg-lime-500/20 hover:text-lime-100 hover:border-lime-500/30
+                      max-md:w-full max-md:py-3 max-md:justify-center"
+                      value="personal-info"
+                      role="tab"
+                      aria-label="Personal information and contact details"
+                    >
+                      <Info className="w-4 h-4 mr-2" aria-hidden="true" />
+                      Personal Info
+                    </TabsTrigger>
+                    <TabsTrigger
+                      className="px-5 py-2.5 rounded-full border-2 border-transparent font-medium text-sm transition-all duration-300 text-sage-100
+                      data-[state=active]:bg-gradient-to-r data-[state=active]:from-lime-500 data-[state=active]:to-lime-400 
+                      data-[state=active]:!text-forest-900 data-[state=active]:font-semibold data-[state=active]:border-lime-400/50 data-[state=active]:shadow-lg data-[state=active]:shadow-lime-500/30
+                      hover:bg-lime-500/20 hover:text-lime-100 hover:border-lime-500/30
+                      max-md:w-full max-md:py-3 max-md:justify-center"
+                      value="qualifications"
+                      role="tab"
+                      aria-label="Education and certifications"
+                    >
+                      <GraduationCap className="w-4 h-4 mr-2" aria-hidden="true" />
+                      Qualifications
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
 
                 <TabsContent value="about" className="mt-6 min-h-[18rem]" role="tabpanel">
                   <AboutContent />

@@ -1,14 +1,13 @@
 'use client';
-'use client';
 
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { portfolioData, ServiceData } from '@/data/portfolio';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, AlertCircle, Lightbulb, Users, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
 
 const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ service, index }) => {
 
@@ -43,42 +42,81 @@ const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ servic
         </CardHeader>
 
         <CardContent className="flex-grow flex flex-col gap-4">
-          <p className="text-forest-700 text-sm leading-relaxed">
-            {service.description}
-          </p>
+          {/* Problem & Solution */}
+          <div className="space-y-3">
+            <div className="flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+              <p className="text-sm text-forest-700">
+                <span className="font-semibold text-forest-900">Problem: </span>
+                {service.problem}
+              </p>
+            </div>
+            <div className="flex items-start gap-2">
+              <Lightbulb className="w-4 h-4 text-lime-500 mt-0.5 flex-shrink-0" />
+              <p className="text-sm text-forest-700">
+                <span className="font-semibold text-forest-900">Solution: </span>
+                {service.solution}
+              </p>
+            </div>
+          </div>
 
-          <div className="mt-auto">
+          {/* Outcomes */}
+          <div className="bg-forest-50/50 rounded-xl p-3 border border-sage-100">
+            <p className="text-xs font-semibold text-forest-900 mb-2 uppercase tracking-wide">Outcomes</p>
+            <div className="flex flex-wrap gap-1.5">
+              {service.outcomes.map((outcome, idx) => (
+                <Badge key={idx} variant="secondary" className="bg-lime-100 text-forest-800 border-lime-200 text-xs">
+                  {outcome}
+                </Badge>
+              ))}
+            </div>
+          </div>
+
+          {/* Tech Stack */}
+          <div className="flex flex-wrap gap-1">
+            {service.tech.map((tech, idx) => (
+              <Badge key={idx} variant="outline" className="text-xs border-sage-200 text-forest-600 bg-white/50">
+                {tech}
+              </Badge>
+            ))}
+          </div>
+
+          {/* Ideal Client */}
+          <div className="flex items-start gap-2 text-xs text-forest-600 italic">
+            <Users className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+            <span><span className="font-medium">Ideal for:</span> {service.idealClient}</span>
+          </div>
+
+          <div className="mt-auto pt-2">
             <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="features" className="border-sage-100">
+              <AccordionItem value="projects" className="border-sage-100">
                 <AccordionTrigger className="text-sm font-semibold text-forest-900 hover:text-lime-600 hover:no-underline py-2">
-                  Key Features
+                  <span className="flex items-center gap-2">
+                    <ExternalLink className="w-4 h-4" />
+                    View Related Projects
+                  </span>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <ul className="space-y-2 pt-2">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-forest-700">
-                        <CheckCircle2 className="w-4 h-4 text-lime-500 mt-0.5 flex-shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {service.relatedProjects && service.relatedProjects.length > 0 ? (
+                    <ul className="space-y-2 pt-2">
+                      {service.relatedProjects.map((project, idx) => (
+                        <li key={idx}>
+                          <Link
+                            href={project.url}
+                            className="flex items-center gap-2 text-sm text-forest-700 hover:text-lime-600 transition-colors group/link"
+                          >
+                            <ArrowRight className="w-4 h-4 text-lime-500 transition-transform group-hover/link:translate-x-1" />
+                            <span>{project.title}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-forest-600 pt-2">Projects coming soon...</p>
+                  )}
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-
-            <Button
-              variant="ghost"
-              className="w-full mt-4 group/btn hover:bg-forest-50 hover:text-lime-600 justify-between"
-              onClick={() => {
-                const projectsSection = document.getElementById('projects');
-                if (projectsSection) {
-                  projectsSection.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-            >
-              <span>View Related Projects</span>
-              <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1" />
-            </Button>
           </div>
         </CardContent>
       </Card>
@@ -101,18 +139,18 @@ const ServicesSection: React.FC = () => {
           className="text-center mb-16"
         >
           <Badge variant="outline" className="mb-4 border-lime-500 text-forest-900 px-4 py-1">
-            What I Do
+            Consulting Services
           </Badge>
           <h2 className="text-3xl md:text-5xl font-bold font-serif mb-6">
-            <span className="text-forest-900">Premium </span>
-            <span className="text-lime-500">Services</span>
+            <span className="text-forest-900">Client Problems → </span>
+            <span className="text-lime-500">My Solutions</span>
           </h2>
           <p className="text-forest-700 max-w-2xl mx-auto text-lg">
-            Comprehensive design and development solutions tailored to elevate your digital presence.
+            I specialize in turning disconnected tools into seamless automated systems that deliver measurable business outcomes.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {portfolioData.services.map((service, index) => (
             <ServiceCard key={service.id} service={service} index={index} />
           ))}
