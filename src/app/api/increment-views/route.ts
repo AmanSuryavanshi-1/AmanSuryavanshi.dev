@@ -34,8 +34,8 @@ export async function POST(request: Request) {
     try {
       await writeClient
         .patch(postId)
-        .setIfMissing({ viewCount: 0 })
-        .inc({ viewCount: 1 })
+        .setIfMissing({ views: 0 })
+        .inc({ views: 1 })
         .commit();
 
       return NextResponse.json({ success: true });
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
       const sanityError = error as SanityError;
       console.error('Sanity mutation error:', sanityError);
       return NextResponse.json(
-        { 
+        {
           error: 'Failed to update Sanity document',
           details: sanityError.message
         },
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
     const requestError = error as RequestError;
     console.error('Error incrementing view count:', requestError);
     return NextResponse.json(
-      { 
+      {
         error: 'Failed to increment view count',
         details: requestError.message
       },

@@ -22,7 +22,7 @@ export default function AllTags({ tags }: AllTagsProps) {
                 Topics
             </h3>
             <div className="flex flex-wrap gap-3">
-                {tags.map((tag) => (
+                {tags.filter(tag => tag && tag.name).map((tag) => (
                     <Link
                         key={tag._id}
                         href={`/blogs?tag=${tag.slug.current}`}

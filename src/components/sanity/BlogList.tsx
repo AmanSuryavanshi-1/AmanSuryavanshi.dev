@@ -31,6 +31,7 @@ const POSTS_QUERY = `*[ _type == "post" && defined(slug.current) && status == "p
   excerpt,
   body,
   views,
+  featured,
   author->{
     _id,
     _type,
@@ -130,8 +131,9 @@ export default function BlogList() {
           const relatedTags = getAllRelatedTags(selectedTag);
 
           return post.tags?.some(postTag => {
-            const tagName = postTag.name.toLowerCase();
-            const tagSlug = postTag.slug?.current.toLowerCase();
+            if (!postTag) return false; // Skip null tag references
+            const tagName = postTag.name?.toLowerCase() || '';
+            const tagSlug = postTag.slug?.current?.toLowerCase() || '';
 
             // Check if the post's tag matches any of the related tags
             return relatedTags.some(related =>
@@ -184,10 +186,8 @@ export default function BlogList() {
     setCurrentPage(1);
   };
 
-  // Featured Posts
-  const featuredPosts = posts.filter(post =>
-    post.tags?.some(t => t.name.toLowerCase() === 'featured' || t.slug?.current === 'featured')
-  );
+  // Featured Posts - uses the 'featured' boolean field
+  const featuredPosts = posts.filter(post => post.featured === true);
 
   if (error) {
     return (

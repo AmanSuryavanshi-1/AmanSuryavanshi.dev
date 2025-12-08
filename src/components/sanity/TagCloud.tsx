@@ -61,6 +61,7 @@ export default function TagCloud({ posts, selectedTags, onTagSelect, allTags = [
         // 2. Count from posts
         posts.forEach(post => {
             post.tags?.forEach(tag => {
+                if (!tag) return; // Skip null tag references
                 countTag(tag.name, tag.color, tag.slug?.current);
             });
         });

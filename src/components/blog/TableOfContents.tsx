@@ -24,17 +24,42 @@ export default function TableOfContents({ mobile, onClose, readTime = 5 }: Table
         // Find all h2 and h3 elements in the article body
         const elements = Array.from(document.querySelectorAll('.prose h2, .prose h3'));
 
+        const usedIds = new Set<string>();
+
         const items = elements.map((elem) => {
-            // Generate id if missing
-            if (!elem.id) {
-                elem.id = elem.textContent
+            // Generate id if missing or ensure uniqueness
+            let id = elem.id;
+
+            if (!id) {
+                const baseId = elem.textContent
                     ?.toLowerCase()
                     .replace(/[^a-z0-9]+/g, '-')
-                    .replace(/(^-|-$)+/g, '') || '';
+                    .replace(/(^-|-$)+/g, '') || 'heading';
+
+                id = baseId;
+                let counter = 1;
+
+                // If ID already exists in our set, or (less likely) in DOM but not in our set yet
+                while (usedIds.has(id)) {
+                    id = `${baseId}-${counter}`;
+                    counter++;
+                }
+            } else {
+                // Elem had an ID, but we still need to track it to prevent future collisions
+                let baseId = id;
+                let counter = 1;
+                while (usedIds.has(id)) {
+                    id = `${baseId}-${counter}`;
+                    counter++;
+                }
             }
 
+            // Assign the unique ID back to the element so anchors work
+            elem.id = id;
+            usedIds.add(id);
+
             return {
-                id: elem.id,
+                id,
                 text: elem.textContent || '',
                 level: Number(elem.tagName.charAt(1)),
             };
@@ -104,10 +129,17 @@ export default function TableOfContents({ mobile, onClose, readTime = 5 }: Table
                             href={`#${heading.id}`}
                             onClick={(e) => {
                                 e.preventDefault();
-                                document.getElementById(heading.id)?.scrollIntoView({
-                                    behavior: 'smooth',
-                                    block: 'start'
-                                });
+                                const element = document.getElementById(heading.id);
+                                if (element) {
+                                    const headerOffset = 100; // Adjust for fixed header
+                                    const elementPosition = element.getBoundingClientRect().top;
+                                    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+                                    window.scrollTo({
+                                        top: offsetPosition,
+                                        behavior: 'smooth'
+                                    });
+                                }
                                 if (onClose) onClose();
                             }}
                             className={`block ${mobile ? 'py-2' : 'pl-4 border-l-2 -ml-[1px]'} transition-all duration-200 ${activeId === heading.id

@@ -27,12 +27,12 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                         {item.href ? (
                             <Link
                                 href={item.href}
-                                className="text-sm font-medium text-forest-500 hover:text-lime-600 transition-colors"
+                                className="text-base font-medium text-sage-300 hover:text-lime-400 transition-colors"
                             >
                                 {item.label}
                             </Link>
                         ) : (
-                            <span className="text-sm font-medium text-forest-800 line-clamp-1 max-w-[200px] sm:max-w-xs">
+                            <span className="text-base font-semibold text-white line-clamp-1 max-w-[300px] sm:max-w-md">
                                 {item.label}
                             </span>
                         )}

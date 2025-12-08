@@ -80,18 +80,46 @@ export default function Lightbox() {
 
                     {/* Image Container */}
                     <div
-                        className="relative w-full h-full flex items-center justify-center p-4 md:p-12"
-                        onClick={(e) => e.stopPropagation()}
+                        className="relative w-full h-full flex items-center justify-center p-4 md:p-12 overflow-hidden"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            // Optional: Click outside image to close
+                            // closeGallery();
+                        }}
+                        onWheel={(e) => {
+                            // Prevent default scroll behavior if possible, but mainly handle zoom
+                            // Note: e.preventDefault() might needed on a non-passive listener for window, 
+                            // but here we just handle the logic.
+                            if (e.ctrlKey || true) { // Always allow wheel zoom for better UX
+                                const delta = -e.deltaY * 0.005;
+                                setScale(s => Math.min(Math.max(1, s + delta), 4));
+                            }
+                        }}
                     >
                         <motion.div
                             key={currentIndex}
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: scale }}
-                            transition={{ duration: 0.3 }}
-                            className="relative max-w-full max-h-full"
-                            style={{ cursor: scale > 1 ? 'grab' : 'default' }}
+                            transition={{ duration: 0.2 }}
+                            className="relative"
+                            style={{
+                                cursor: scale > 1 ? 'grab' : 'zoom-in',
+                                touchAction: 'none' // Important for gestures
+                            }}
                             drag={scale > 1}
-                            dragConstraints={{ left: -100 * scale, right: 100 * scale, top: -100 * scale, bottom: 100 * scale }}
+                            dragConstraints={{
+                                left: -1000 * (scale - 1),
+                                right: 1000 * (scale - 1),
+                                top: -1000 * (scale - 1),
+                                bottom: 1000 * (scale - 1)
+                            }}
+                            dragElastic={0.05}
+                            dragMomentum={true}
+                            onDoubleClick={(e) => {
+                                e.stopPropagation();
+                                setScale(s => s > 1 ? 1 : 2.5); // Toggle zoom
+                            }}
+                            whileTap={{ cursor: scale > 1 ? 'grabbing' : 'zoom-in' }}
                         >
                             {/* We use standard img tag here for the lightbox to avoid Next.js Image complexity with dynamic external URLs if not fully configured, 
                                 but since we configured remotePatterns, we can try Next.js Image or fallback to img if needed. 
@@ -100,10 +128,11 @@ export default function Lightbox() {
                             <img
                                 src={currentImage.src}
                                 alt={currentImage.alt}
-                                className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
+                                className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl select-none"
+                                draggable={false}
                             />
                             {currentImage.alt && (
-                                <div className="absolute -bottom-12 left-0 right-0 text-center">
+                                <div className="absolute -bottom-16 left-0 right-0 text-center pointer-events-none">
                                     <p className="text-forest-100 text-lg font-medium bg-forest-900/50 inline-block px-4 py-2 rounded-full backdrop-blur-sm">
                                         {currentImage.alt}
                                     </p>

@@ -107,7 +107,7 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle, className =
                     {post.tags && post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-2 sm:mb-3 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
                             {post.tags
-                                .filter(t => t.name.toLowerCase() !== 'featured' && t.slug?.current !== 'featured')
+                                .filter(t => t && t.name && t.name.toLowerCase() !== 'featured' && t.slug?.current !== 'featured')
                                 .slice(0, 3)
                                 .map(tag => (
                                     <span

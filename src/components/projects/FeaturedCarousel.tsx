@@ -157,11 +157,20 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
                             )}
                         </div>
 
-                        <div className="flex gap-4">
-                            {project.slug && (
-                                <Link href={`/blogs/${project.slug}`}>
-                                    <Button className="bg-lime-500 hover:bg-lime-400 text-forest-950 font-bold rounded-full px-6">
-                                        View Case Study <ArrowRight className="ml-2 w-4 h-4" />
+                        <div className="flex flex-wrap gap-3">
+                            {/* Executive Summary - only if project has documentation */}
+                            {project.documentation?.[0]?.url && (
+                                <Link href={project.documentation[0].url}>
+                                    <Button className="bg-lime-500 hover:bg-lime-400 text-forest-950 font-bold rounded-full px-4 sm:px-6 text-sm sm:text-base">
+                                        Executive Summary <ArrowRight className="ml-2 w-4 h-4" />
+                                    </Button>
+                                </Link>
+                            )}
+                            {/* Technical Docs - only if project has blogUrl */}
+                            {project.blogUrl && (
+                                <Link href={project.blogUrl}>
+                                    <Button variant="outline" className="border-sage-100/50 text-sage-100 hover:bg-sage-100/10 rounded-full px-4 sm:px-6 text-sm sm:text-base">
+                                        Technical Docs <ExternalLink className="ml-2 w-4 h-4" />
                                     </Button>
                                 </Link>
                             )}

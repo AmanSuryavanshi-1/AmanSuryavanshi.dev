@@ -173,6 +173,11 @@ export interface Project {
         title: string;
         url: string;
     }[];
+    gallery?: readonly {
+        src: string;
+        alt: string;
+        type: 'image' | 'video';
+    }[];
 }
 
 export interface ServiceData {
@@ -781,7 +786,8 @@ const rawProjects = [
         technicalOverview: "Built on Next.js 15 with App Router architecture, leveraging TypeScript for complete type safety and enhanced developer experience. Sanity CMS powers the headless content management system with scheduled publishing, versioning, and real-time preview capabilities. Firebase Firestore and Realtime Database handle analytics and user data with millisecond-level synchronization. n8n orchestrates complex automation workflows including Cal.com meeting scheduling with timezone conversion, Airtable CRM updates with duplicate detection, Resend email campaigns with dynamic templating, and Telegram notifications for real-time business alerts. Advanced features include React Server Components for optimal performance, automatic image optimization with Next/Image and WebP conversion, lazy loading with Suspense boundaries, code splitting for faster initial loads, role-based access control with Firebase Auth, and comprehensive security measures. Deployed on Vercel with edge functions for global low-latency access and automatic CI/CD pipelines integrated with GitHub.",
         techStack: ["Next.js 15", "TypeScript", "React 18", "Firebase", "Firestore", "Sanity CMS", "n8n", "Tailwind CSS", "Shadcn UI", "Framer Motion", "Resend", "Cal.com API", "Airtable API", "Telegram Bot API", "Vercel", "Docker", "Node.js"],
         badges: ["Next.js", "TypeScript", "Firebase", "AI/Automation", "n8n", "Production", "Freelance", "CRM", "SEO", "Full-Stack"],
-        imageUrl: "/fallbacks/fallback-workflow.svg",
+        imageUrl: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768016/aviators-training-centre/docs-assets/ASSET-13_Homepage_Screenshot.png",
+        video: "https://res.cloudinary.com/dr0lrme36/video/upload/v1764914837/aviators-training-centre/docs-assets/AviatorsTrainingCenter_WalkThrough_720p.mp4",
         liveUrl: "https://www.aviatorstrainingcentre.in",
         codeUrl: "https://github.com/AmanSuryavanshi-1/Aviators_Training_Centre",
         blogUrl: "https://www.amansuryavanshi.me/blogs/aviators-training-centre",
@@ -803,6 +809,20 @@ const rawProjects = [
                 title: "Technical Documentation",
                 url: "/docs/aviators-training-centre-technical-documentation"
             }
+        ],
+        gallery: [
+            { src: "https://res.cloudinary.com/dr0lrme36/video/upload/v1764914837/aviators-training-centre/docs-assets/AviatorsTrainingCenter_WalkThrough_720p.mp4", alt: "Full Walkthrough Video", type: "video" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/aviators-training-centre/docs-assets/www_aviatorstrainingcentre_in_%20DarktMode_FullPage_ScreenShot", alt: "Dark Mode Full Page", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/aviators-training-centre/docs-assets/www_aviatorstrainingcentre_in_%20LightMode_FullPage_ScreenShot", alt: "Light Mode Full Page", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768024/aviators-training-centre/docs-assets/ASSET-19_Mobile_Homepage.png", alt: "Mobile Homepage View", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768017/aviators-training-centre/docs-assets/ASSET-14_Contact_Form_Screenshot.png", alt: "Contact Form", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/aviators-training-centre/docs-assets/www_aviatorstrainingcentre_in_Blog", alt: "Blog Section", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768027/aviators-training-centre/docs-assets/ASSET-20_AvaitorsTrainingCenter_LighthouseScores.png", alt: "Lighthouse Performance Scores", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768008/aviators-training-centre/docs-assets/ASSET-1_Complete_System_Architecture_Diagram.png", alt: "System Architecture Diagram", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768026/aviators-training-centre/docs-assets/ASSET-2_n8n_3_Production_Workflows_Overview.png", alt: "n8n Workflows Overview", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768031/aviators-training-centre/docs-assets/ASSET-4_Firebase_Trigger_Workflow_Detail.png", alt: "Firebase Trigger Workflow", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768040/aviators-training-centre/docs-assets/ASSET-9_Airtable_CRM_Schema_Views.png", alt: "Airtable CRM Schema", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768012/aviators-training-centre/docs-assets/ASSET-11_Lead_Generation_Funnel.png", alt: "Lead Generation Funnel", type: "image" }
         ]
     },
     {
@@ -826,8 +846,8 @@ const rawProjects = [
         technicalOverview: "React 18.3.1 with functional components and custom hooks architecture, built with Vite 5.4.1 for lightning-fast hot module replacement and optimized production builds with automatic code splitting. TailwindCSS 3.4.10 provides utility-first styling with custom design tokens for brand consistency and dark mode support. React Router DOM 6.27.0 handles client-side routing with smooth page transitions and nested routes. PDFJS-Dist enables full-featured in-browser PDF rendering without external downloads. EmailJS Browser 4.4.1 powers serverless contact forms with email template management. React LazyLoad 3.2.1 implements intersection observer-based image loading with placeholder components. Vercel Analytics tracks user behavior, conversion funnels, and performance metrics. PostCSS with Autoprefixer ensures cross-browser compatibility across legacy browsers. ESLint and Prettier maintain code quality standards throughout development.",
         techStack: ["React 18", "Vite", "Tailwind CSS", "JavaScript ES6+", "React Router", "PDFJS", "EmailJS", "React LazyLoad", "Vercel Analytics", "PostCSS", "React Icons"],
         badges: ["React", "Vite", "Tailwind", "Freelance", "E-Commerce", "PDF", "B2B", "Production", "JAMstack"],
-        imageUrl: "/Project/Enterprise.webp",
-        video: "/Project/Videos/BarkatEnterprise-Walkthrough.mp4",
+        imageUrl: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/BarkatEnterprise/Enterprise",
+        video: "https://res.cloudinary.com/dr0lrme36/video/upload/v1764915353/BarkatEnterprise/Enterprise_FullWalkThrough.mp4",
         liveUrl: "https://barkat-enterprise-copy.vercel.app/",
         codeUrl: "https://github.com/AmanSuryavanshi-1/BarkatEnterprise",
         blogUrl: "https://www.amansuryavanshi.me/blogs/a-freelance-project-for-an-enterprise",
@@ -837,7 +857,17 @@ const rawProjects = [
             leads: "50+",
             loadTime: "< 2s",
             imageOptimization: "30-50%"
-        }
+        },
+        gallery: [
+            { src: "https://res.cloudinary.com/dr0lrme36/video/upload/v1764915353/BarkatEnterprise/Enterprise_FullWalkThrough.mp4", alt: "Full Walkthrough Video", type: "video" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/BarkatEnterprise/Enterprise", alt: "Desktop Homepage", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/BarkatEnterprise/Enterprise-mobile", alt: "Mobile View", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/BarkatEnterprise/barkat-enterprise_Header_desktop", alt: "Header Section", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/BarkatEnterprise/barkat-enterprise_aboutus", alt: "About Us Section", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/BarkatEnterprise/barkat-enterprise_catalogues", alt: "Catalogues Section", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/BarkatEnterprise/barkat-enterprise_products", alt: "Products Section", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/BarkatEnterprise/barkat-enterprise_contact", alt: "Contact Section", type: "image" }
+        ]
     },
     {
         id: "av-newsstream",
@@ -860,8 +890,8 @@ const rawProjects = [
         technicalOverview: "React 18 frontend built with Vite for optimal development experience and minimal bundle size. Redux Toolkit manages global state with createSlice API for articles, filters, saved content, and user preferences. Node.js/Express backend implements RESTful API proxy with custom middleware for key rotation, in-memory caching with TTL expiration, CORS handling, and request logging. NewsAPI provides top headlines and search, GNews supplies global news coverage, YouTube Data API v3 fetches video content with metadata. Alan AI Studio integration enables voice commands with custom intents for navigation, search, article playback. DaisyUI component library built on TailwindCSS provides responsive, accessible UI components. Health check endpoint monitors API key status and system performance. Deployed on Vercel (frontend) with Vercel Serverless Functions and separate Node.js hosting (backend) with environment variable management for API keys and security.",
         techStack: ["React 18", "Redux Toolkit", "Node.js", "Express", "Vite", "DaisyUI", "Tailwind CSS", "Alan AI", "NewsAPI", "GNews", "YouTube API", "REST API", "Vercel"],
         badges: ["React", "Node.js", "AI", "Voice", "News", "API Integration", "Production", "Personal", "Real-time"],
-        imageUrl: "/Project/AV-NewsStream.webp",
-        video: "/Project/Videos/AVNewsStream.webm",
+        imageUrl: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/AV-NewsStream/AV-NewsStream",
+        video: "https://res.cloudinary.com/dr0lrme36/video/upload/v1764915323/AV-NewsStream/AVNewsStream.webm",
         liveUrl: "https://avnews.vercel.app",
         codeUrl: "https://github.com/AmanSuryavanshi-1/AV-News-Stream",
         blogUrl: "https://www.amansuryavanshi.me/blogs/av-news-stream",
@@ -871,7 +901,12 @@ const rawProjects = [
             capacity: "300/day",
             uptime: "99.9%",
             users: "1,000+"
-        }
+        },
+        gallery: [
+            { src: "https://res.cloudinary.com/dr0lrme36/video/upload/v1764915323/AV-NewsStream/AVNewsStream.webm", alt: "Full Walkthrough Video", type: "video" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/AV-NewsStream/AV-NewsStream", alt: "Desktop Homepage", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/AV-NewsStream/AV-NewsStream-mobile", alt: "Mobile View", type: "image" }
+        ]
     },
     {
         id: "foodah",
@@ -894,8 +929,8 @@ const rawProjects = [
         technicalOverview: "React 18 with functional components and hooks-based state management, following modern React patterns. Parcel bundler provides zero-config development environment with hot module replacement, automatic Babel transforms, PostCSS processing with Autoprefixer, and aggressive tree shaking for minimal production bundles. React Router DOM handles client-side routing with nested routes for restaurant details and lazy loading for code splitting. TailwindCSS utility classes enable rapid UI development with custom responsive design system. React Icons provide scalable SVG icon components for consistent iconography. EmailJS Browser enables serverless contact form submissions with email templates. Custom hooks abstract complex logic: useOnlineStatus monitors window online/offline events with state persistence, useRestaurantMenu fetches and caches menu data with AbortController for request cancellation and stale data handling, useFallbackImage implements onError handlers with fallback queue management. Deployed on Vercel with automatic HTTPS, global CDN distribution, and edge caching.",
         techStack: ["React 18", "JavaScript ES6+", "Parcel", "Tailwind CSS", "React Router", "Redux Toolkit", "EmailJS", "PostCSS", "React Icons", "Swiggy API", "GitHub API"],
         badges: ["React", "JavaScript", "Redux", "Tailwind", "API Integration", "SPA", "Personal", "Performance"],
-        imageUrl: "/Project/Foodah.webp",
-        video: "/Project/Videos/Foodah.webm",
+        imageUrl: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Foodah/Foodah",
+        video: "https://res.cloudinary.com/dr0lrme36/video/upload/v1764915368/Foodah/Foodah.webm",
         liveUrl: "https://foodah.vercel.app",
         codeUrl: "https://github.com/AmanSuryavanshi-1/Foodah",
         blogUrl: "https://www.amansuryavanshi.me/blogs/foodah",
@@ -904,7 +939,12 @@ const rawProjects = [
             loadReduction: "40%",
             performance: "60fps",
             dataSize: "14,000+ lines"
-        }
+        },
+        gallery: [
+            { src: "https://res.cloudinary.com/dr0lrme36/video/upload/v1764915368/Foodah/Foodah.webm", alt: "Full Walkthrough Video", type: "video" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Foodah/Foodah", alt: "Desktop Homepage", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Foodah/Foodah-mobile", alt: "Mobile View", type: "image" }
+        ]
     },
     {
         id: "n8n-automation-suite",
@@ -926,7 +966,7 @@ const rawProjects = [
         technicalOverview: "Built entirely in n8n with a modular node architecture. Leverages OpenAI GPT-4 for intelligent content processing with custom prompt engineering for platform-specific tone and formatting. Integrates Twitter/X API v2 and LinkedIn API via OAuth2 for authenticated publishing. Uses Notion API for content archiving and logging. Implements robust error handling with retry logic, exponential backoff, and fallback mechanisms. Features custom HTTP nodes for data fetching and transformation, and Telegram/Email integrations for real-time notifications.",
         techStack: ["n8n", "OpenAI GPT-4", "Twitter API", "LinkedIn API", "Notion API", "Telegram API", "Node.js", "HTTP/REST", "OAuth2", "Webhooks"],
         badges: ["n8n", "AI", "Automation", "Content", "Build-in-Public", "Open Source", "Workflow", "GPT-4"],
-        imageUrl: "/fallbacks/fallback-workflow.svg",
+        imageUrl: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_1_Generation_Workflow?_a=BAMAMiJt0",
         liveUrl: "https://n8n.aviatorstrainingcentre.in",
         codeUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/tree/main/Omni-Post-AI-Automation",
         blogUrl: "https://www.amansuryavanshi.me/blogs/n8n-automation",
@@ -936,7 +976,21 @@ const rawProjects = [
             leads: "Dozens",
             friction: "Zero",
             distribution: "Omnichannel"
-        }
+        },
+        gallery: [
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_1_Generation_Workflow?_a=BAMAMiJt0", alt: "Part 1: Generation Workflow", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_2_Distribution_Workflow?_a=BAMAMiJt0", alt: "Part 2: Distribution Workflow", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_2_Notion_Database_Schema_FullSize_Screenshot?_a=BAMAMiJt0", alt: "Notion Database Schema", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_3_Metrics_Dashboard?_a=BAMAMiJt0", alt: "Metrics Dashboard", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_4_Error_Handling_Architecture?_a=BAMAMiJt0", alt: "Error Handling Architecture", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_5_LLM_Routing?_a=BAMAMiJt0", alt: "LLM Routing Architecture", type: "image" }
+        ],
+        documentation: [
+            {
+                title: "Executive Summary",
+                url: "/docs/omni-post-ai-executive-summary"
+            }
+        ]
     },
     {
         id: "portfolio-website",
@@ -959,7 +1013,7 @@ const rawProjects = [
         technicalOverview: "Next.js 14.2.5 with App Router enables file-based routing, React Server Components for optimal performance, automatic code splitting, and built-in image optimization. TypeScript 5.5.2 provides complete type safety across 100% of codebase with strict mode enabled. TailwindCSS 3.4.10 with custom design tokens ensures brand consistency and supports dark mode with system preference detection. Shadcn UI components built on Radix UI primitives offer accessible, customizable UI elements with keyboard navigation support. Framer Motion 11.5.4 powers declarative animations with spring physics and gesture recognition. Sanity.io (v3.88.2) serves as headless CMS with GROQ query language for efficient content fetching, real-time collaboration, and content versioning. Next.js Image component handles automatic WebP/AVIF conversion, lazy loading with blur placeholders, and responsive srcsets for optimal delivery. Vercel deployment provides global edge functions, automatic HTTPS with SSL, and CDN distribution. Omni-Post workflow uses n8n with OpenAI GPT-4 API for intelligent summarization considering platform context, Twitter API v2 and LinkedIn API for OAuth-authenticated posting with media upload, and Google Drive API for content archival.",
         techStack: ["Next.js 14", "TypeScript", "React 18", "Sanity CMS", "Tailwind CSS", "Shadcn UI", "Framer Motion", "MDX", "Prism.js", "n8n", "OpenAI API", "Vercel", "GROQ"],
         badges: ["Next.js", "TypeScript", "Sanity", "Blog", "SEO", "Automation", "Personal", "Portfolio", "MDX"],
-        imageUrl: "/fallbacks/fallback-workflow.svg",
+        imageUrl: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Portfolio/amansuryavanshi-dev_vercel_app_Header?_a=BAMAMiJt0",
         liveUrl: "https://www.amansuryavanshi.me",
         codeUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev",
         blogUrl: "https://www.amansuryavanshi.me/blogs",
@@ -968,8 +1022,15 @@ const rawProjects = [
             views: "6,000+",
             lighthouse: "95+",
             automation: "70%",
-            seo: "Optimized"
-        }
+            seo: "96/100"
+        },
+        gallery: [
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Portfolio/amansuryavanshi-dev_vercel_app_Header?_a=BAMAMiJt0", alt: "Homepage Header", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Portfolio/amansuryavanshi-dev_vercel_app_Projects?_a=BAMAMiJt0", alt: "Projects Section", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Portfolio/amansuryavanshi-dev_vercel_app_blogs?_a=BAMAMiJt0", alt: "Blogs Section", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Portfolio/amansuryavanshi-dev_vercel_app_contact_us?_a=BAMAMiJt0", alt: "Contact Section", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Portfolio/Portfolio-blog?_a=BAMAMiJt0", alt: "Blog Page", type: "image" }
+        ]
     },
     {
         id: "textwise",
@@ -1019,7 +1080,7 @@ const rawProjects = [
         technicalOverview: "React 18 application with Redux Toolkit for state management and Redux Persist for localStorage integration. React Router DOM handles multi-page navigation with nested routes. Material-UI provides component library with theming support. Custom hooks manage product filtering logic, cart calculations, and API data fetching. Deployed on Vercel with automatic builds and preview deployments.",
         techStack: ["React 18", "Redux Toolkit", "Material-UI", "React Router", "JavaScript ES6+", "LocalStorage", "Vercel"],
         badges: ["React", "Redux", "Material-UI", "E-Commerce", "Personal", "Full-Stack"],
-        imageUrl: "/Project/E-coomerce.webp",
+        imageUrl: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Ecommerce/E-coomerce",
         liveUrl: "https://ase-commerce.netlify.app",
         codeUrl: "https://github.com/AmanSuryavanshi-1/E-commerce-App",
         blogUrl: null,
@@ -1027,7 +1088,11 @@ const rawProjects = [
         metrics: {
             pages: "Multiple",
             stateManagement: "Redux"
-        }
+        },
+        gallery: [
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Ecommerce/E-coomerce", alt: "Homepage", type: "image" },
+            { src: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Ecommerce/E-coomerce-mobile", alt: "Mobile View", type: "image" }
+        ]
     }
 ] as const;
 

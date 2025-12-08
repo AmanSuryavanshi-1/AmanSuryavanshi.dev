@@ -19,7 +19,7 @@ export default function ViewCounter({ postId, noCount = false, increment = false
       try {
         // Get the current views
         const currentViews = await client.fetch(
-          `*[_id == $postId][0].viewCount`,
+          `*[_id == $postId][0].views`,
           { postId }
         );
 
@@ -28,7 +28,7 @@ export default function ViewCounter({ postId, noCount = false, increment = false
         // Only increment if we're on the blog post page and haven't incremented yet
         if (increment && !hasIncremented.current) {
           hasIncremented.current = true;
-          
+
           try {
             const response = await fetch('/api/increment-views', {
               method: 'POST',
