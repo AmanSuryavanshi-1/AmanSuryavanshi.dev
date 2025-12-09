@@ -87,6 +87,10 @@ export interface SkillItem {
     details?: string;
     projectTitle?: string;
     projectUrl?: string;
+    relatedProjects?: {
+        title: string;
+        url: string;
+    }[];
 }
 
 export interface SkillGroup {
@@ -133,6 +137,27 @@ export interface SkillsData {
         familiar: ProficiencyLevel;
     };
     currentlyLearning: string[];
+}
+
+// Landing Page Skills - Solution Architect Stack
+export interface LandingSkillItem {
+    name: string;
+    level: 'Expert' | 'Advanced' | 'Production' | 'Intermediate';
+    projects: string;
+    relatedProjects?: {
+        title: string;
+        url: string;
+    }[];
+}
+
+export interface LandingSkillCategory {
+    title: string;
+    skills: LandingSkillItem[];
+}
+
+export interface LandingSkillsData {
+    categories: LandingSkillCategory[];
+    keywords: string[];
 }
 
 export interface Project {
@@ -197,12 +222,29 @@ export interface ServiceData {
     }[];
 }
 
+export interface ExperienceProject {
+    title: string;
+    url?: string;
+    github?: string;
+}
+
+export interface ExperienceItem {
+    role: string;
+    type: string;
+    period: string;
+    duration: string;
+    achievements: string[];
+    keyProjects: ExperienceProject[];
+}
+
 export interface PortfolioData {
     hero: HeroData;
     about: AboutData;
     skills: SkillsData;
+    landingSkills: LandingSkillsData;
     projects: Project[];
     services: ServiceData[];
+    experience: ExperienceItem[];
 }
 
 // --- Data Definitions ---
@@ -325,30 +367,54 @@ const skillsData: SkillsData = {
         skills: [
             {
                 name: "n8n (Advanced)",
-                details: "80% process reduction achieved in production",
-                projectTitle: "Omni-Post AI Automation",
-                projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                details: "Webhook triggers, HTTP requests, binary handling, JSON parsing, SplitInBatches, loops, conditional branching, error handling/retries",
+                relatedProjects: [
+                    { title: "Omni-Post AI Automation", url: "/projects#n8n-automation-suite" },
+                    { title: "Aviators Training Centre", url: "/projects#aviators-training-centre" }
+                ]
             },
             {
-                name: "Multi-LLM Integration",
-                details: "OpenAI GPT-4, Claude 3.5, Gemini Pro, Perplexity",
-                projectTitle: "Omni-Post AI Automation",
-                projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                name: "Multi-LLM & API Integration",
+                details: "GPT-4, Claude, Google Gemini (Pro & Flash), OpenRouter API, Llama, Perplexity, Groq",
+                relatedProjects: [
+                    { title: "Omni-Post AI Automation", url: "/projects#n8n-automation-suite" }
+                ]
             },
             {
-                name: "RAG Systems",
-                details: "Document intelligence & contextual querying",
-                projectTitle: "Omni-Post AI Automation",
-                projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                name: "RAG & Vector DBs",
+                details: "Retrieval-augmented generation, vector stores, PGVector, Supabase vector features",
+                relatedProjects: [
+                    { title: "Omni-Post AI Automation", url: "/projects#n8n-automation-suite" }
+                ]
             },
-            { name: "Prompt Engineering", details: "Advanced techniques for optimal LLM outputs" },
-            { name: "MCP (Model Context Protocol)", details: "Cutting-edge AI tooling" },
-            { name: "OAuth2 & Webhooks", details: "Secure API integrations" },
             {
-                name: "Python",
-                details: "Automation scripts & AI workflows",
-                projectTitle: "Omni-Post AI Automation",
-                projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                name: "Prompt Engineering",
+                details: "Chain-of-Thought, few-shot, role prompting, structured JSON outputs",
+                relatedProjects: [
+                    { title: "Omni-Post AI Automation", url: "/projects#n8n-automation-suite" }
+                ]
+            },
+            {
+                name: "MCP (Model Context Protocol)",
+                details: "Documented implementations connecting LLMs to external tools",
+                relatedProjects: [
+                    { title: "Omni-Post AI Automation", url: "/projects#n8n-automation-suite" }
+                ]
+            },
+            {
+                name: "Web Scraping & Automation",
+                details: "Firecrawl, Apify for data extraction workflows",
+                relatedProjects: [
+                    { title: "Omni-Post AI Automation", url: "/projects#n8n-automation-suite" }
+                ]
+            },
+            {
+                name: "Speech & Audio APIs",
+                details: "Web Speech API (STT/TTS) for voice-controlled apps",
+                relatedProjects: [
+                    { title: "AV NewsStream", url: "/projects#av-newsstream" },
+                    { title: "TextWise", url: "/projects#textwise" }
+                ]
             }
         ],
         impact: "Reduced manual processes by 80% through intelligent automation"
@@ -365,36 +431,76 @@ const skillsData: SkillsData = {
                     title: "Core Frameworks",
                     items: [
                         {
-                            label: "Next.js",
-                            value: "App Router, Server Actions, SSR/ISR",
-                            projectTitle: "AmanSuryavanshi.dev",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev"
+                            label: "React.js",
+                            value: "Hooks, Context, Custom Components, Suspense",
+                            relatedProjects: [
+                                { title: "Foodah", url: "/projects#foodah" },
+                                { title: "AV NewsStream", url: "/projects#av-newsstream" },
+                                { title: "TextWise", url: "/projects#textwise" },
+                                { title: "Barkat Enterprise", url: "/projects#barkat-enterprise" }
+                            ]
                         },
                         {
-                            label: "React",
-                            value: "Hooks, Context, Custom Components",
-                            projectTitle: "BarkatEnterprise",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/BarkatEnterprise"
+                            label: "Next.js (App Router)",
+                            value: "SSR/CSR, Server Actions, ISR, Dynamic Routes",
+                            relatedProjects: [
+                                { title: "Aviators Training Centre", url: "/projects#aviators-training-centre" },
+                                { title: "Portfolio", url: "/projects#portfolio-website" }
+                            ]
                         },
                         {
                             label: "TypeScript",
                             value: "Strict typing, Interfaces, Generics",
-                            projectTitle: "Omni-Post AI Automation",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                            relatedProjects: [
+                                { title: "Aviators Training Centre", url: "/projects#aviators-training-centre" },
+                                { title: "Portfolio", url: "/projects#portfolio-website" }
+                            ]
+                        },
+                        {
+                            label: "JavaScript (ES6+)",
+                            value: "Node context for code nodes, data transforms, regex, buffer manipulation",
+                            relatedProjects: [
+                                { title: "All Projects", url: "/projects" }
+                            ]
                         }
                     ]
                 },
                 {
-                    title: "Styling & UI",
+                    title: "Styling & UI Libraries",
                     items: [
                         {
                             label: "Tailwind CSS",
                             value: "Custom configs, Dark mode, Responsive design",
-                            projectTitle: "AmanSuryavanshi.dev",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev"
+                            relatedProjects: [
+                                { title: "Portfolio", url: "/projects#portfolio-website" },
+                                { title: "Foodah", url: "/projects#foodah" },
+                                { title: "Barkat Enterprise", url: "/projects#barkat-enterprise" }
+                            ]
                         },
-                        { label: "Framer Motion", value: "Complex animations, Page transitions" },
-                        { label: "Shadcn/UI", value: "Customized accessible components" }
+                        {
+                            label: "Redux Toolkit",
+                            value: "State management, Slices, Thunks",
+                            relatedProjects: [
+                                { title: "Foodah", url: "/projects#foodah" },
+                                { title: "AV NewsStream", url: "/projects#av-newsstream" }
+                            ]
+                        },
+                        {
+                            label: "Shadcn UI & Framer Motion",
+                            value: "UI components and animations",
+                            relatedProjects: [
+                                { title: "Portfolio", url: "/projects#portfolio-website" },
+                                { title: "Aviators", url: "/projects#aviators-training-centre" }
+                            ]
+                        },
+                        {
+                            label: "Material UI / DaisyUI",
+                            value: "Component libraries for rapid development",
+                            relatedProjects: [
+                                { title: "E-commerce", url: "/projects#ecommerce-platform" },
+                                { title: "AV NewsStream", url: "/projects#av-newsstream" }
+                            ]
+                        }
                     ]
                 }
             ],
@@ -407,20 +513,31 @@ const skillsData: SkillsData = {
             description: "Robust server-side solutions and cloud infrastructure",
             groups: [
                 {
-                    title: "Server & API",
+                    title: "Server & Databases",
                     items: [
-                        { label: "Node.js", value: "REST APIs, Middleware, Auth" },
                         {
-                            label: "Firebase",
-                            value: "Auth, Firestore, Cloud Functions",
-                            projectTitle: "Omni-Post AI Automation",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                            label: "Node.js & Express.js",
+                            value: "Proxy servers, API backends, middleware",
+                            projectTitle: "AV NewsStream, CloudNote",
+                            projectUrl: "/projects#av-newsstream"
+                        },
+                        {
+                            label: "Firebase (Firestore, Auth, Realtime DB)",
+                            value: "Authentication, real-time data, cloud functions",
+                            projectTitle: "Aviators Training Centre",
+                            projectUrl: "/projects#aviators-training-centre"
+                        },
+                        {
+                            label: "Supabase (Postgres + Vector)",
+                            value: "Database memory for AI agents, vector features",
+                            projectTitle: "Job Matching Automation",
+                            projectUrl: "/projects#n8n-automation-suite"
                         },
                         {
                             label: "Sanity CMS",
-                            value: "Schema design, GROQ queries",
-                            projectTitle: "AmanSuryavanshi.dev",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev"
+                            value: "Schema design, GROQ queries, Portable Text",
+                            projectTitle: "Portfolio, Aviators",
+                            projectUrl: "/projects#portfolio-website"
                         }
                     ]
                 },
@@ -428,18 +545,29 @@ const skillsData: SkillsData = {
                     title: "DevOps & Cloud",
                     items: [
                         {
-                            label: "Vercel",
-                            value: "Deployments, Edge Functions, Analytics",
-                            projectTitle: "AmanSuryavanshi.dev",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev"
+                            label: "Docker",
+                            value: "Containerized n8n, PGVector, self-hosting",
+                            projectTitle: "Personal Efficiency Agent",
+                            projectUrl: "/projects#n8n-automation-suite"
                         },
                         {
-                            label: "PowerShell",
-                            value: "Automation scripting",
-                            projectTitle: "N8N Repo",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/N8N"
+                            label: "Vercel & Netlify",
+                            value: "Deployments, Edge Functions, Analytics",
+                            projectTitle: "Portfolio, Aviators",
+                            projectUrl: "/projects#portfolio-website"
                         },
-                        { label: "Git & GitHub", value: "CI/CD workflows, Version control" }
+                        {
+                            label: "Cloudflare Workers & Hono",
+                            value: "Edge compute, Cloudflare Tunnel for secure local exposure",
+                            projectTitle: "Edge Experiments",
+                            projectUrl: "/projects#n8n-automation-suite"
+                        },
+                        {
+                            label: "Git & GitHub",
+                            value: "CI/CD workflows, Version control",
+                            projectTitle: "All Projects",
+                            projectUrl: "/projects"
+                        }
                     ]
                 }
             ],
@@ -457,20 +585,20 @@ const skillsData: SkillsData = {
                         {
                             label: "LangChain",
                             value: "Chains, Agents, Memory",
-                            projectTitle: "Omni-Post AI Automation",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                            projectTitle: "RAG Assistant",
+                            projectUrl: "/projects#n8n-automation-suite"
                         },
                         {
                             label: "Groq",
                             value: "High-speed inference integration",
-                            projectTitle: "Omni-Post AI Automation",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                            projectTitle: "Omni-Post AI",
+                            projectUrl: "/projects#n8n-automation-suite"
                         },
                         {
                             label: "SerpApi",
                             value: "Real-time search data integration",
-                            projectTitle: "Omni-Post AI Automation",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/Omni-Post-AI-Automation"
+                            projectTitle: "Job Scrapers",
+                            projectUrl: "/projects#n8n-automation-suite"
                         }
                     ]
                 },
@@ -492,27 +620,48 @@ const skillsData: SkillsData = {
             description: "Essential tools for modern development",
             groups: [
                 {
-                    title: "Development",
+                    title: "Development & Testing",
                     items: [
-                        { label: "VS Code", value: "Advanced extensions & config" },
-                        { label: "Postman", value: "API testing & documentation" },
-                        { label: "Figma", value: "UI/UX design & prototyping" }
+                        {
+                            label: "VS Code",
+                            value: "Advanced extensions & config",
+                            projectTitle: "All Projects",
+                            projectUrl: "/projects"
+                        },
+                        {
+                            label: "Postman & Jest",
+                            value: "API testing, Unit testing",
+                            projectTitle: "AV NewsStream",
+                            projectUrl: "/projects#av-newsstream"
+                        },
+                        {
+                            label: "Figma",
+                            value: "UI/UX design & prototyping",
+                            projectTitle: "Aviators, Portfolio",
+                            projectUrl: "/projects#aviators-training-centre"
+                        }
                     ]
                 },
                 {
-                    title: "Libraries",
+                    title: "Specialized Libraries",
                     items: [
                         {
-                            label: "pdfjs-dist",
+                            label: "PDF.js",
                             value: "PDF processing & rendering",
-                            projectTitle: "BarkatEnterprise",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/BarkatEnterprise"
+                            projectTitle: "Barkat Enterprise",
+                            projectUrl: "/projects#barkat-enterprise"
                         },
                         {
-                            label: "React Icons",
-                            value: "Icon integration",
-                            projectTitle: "BarkatEnterprise",
-                            projectUrl: "https://github.com/AmanSuryavanshi-1/BarkatEnterprise"
+                            label: "QuillJS & Excalidraw",
+                            value: "Rich text editors & visual tools",
+                            projectTitle: "AI Notion Clone",
+                            projectUrl: "/projects#n8n-automation-suite"
+                        },
+                        {
+                            label: "Markdown & Portable Text",
+                            value: "Programmatic content formats for Sanity",
+                            projectTitle: "Portfolio, Aviators",
+                            projectUrl: "/projects#portfolio-website"
                         }
                     ]
                 }
@@ -528,11 +677,36 @@ const skillsData: SkillsData = {
                 {
                     title: "Top Google Rankings & Web Vitals",
                     items: [
-                        { label: "Strategies", value: "Advanced SEO Optimization, Core Web Vitals (95+ scores)" },
-                        { label: "Technical", value: "Code Splitting, Tree Shaking, Lazy Loading, Suspense" },
-                        { label: "Content", value: "Schema Markup, Rich Snippets, Meta Tags, Open Graph" },
-                        { label: "Assets", value: "Image Optimization (WebP, lazy loading), Responsive images" },
-                        { label: "Config", value: "Sitemap, Robots.txt, Accessibility (WCAG 2.1 AA)" }
+                        {
+                            label: "Strategies",
+                            value: "Advanced SEO Optimization, Core Web Vitals (95+ scores)",
+                            projectTitle: "Aviators Training Centre",
+                            projectUrl: "/projects#aviators-training-centre"
+                        },
+                        {
+                            label: "Technical",
+                            value: "Code Splitting, Tree Shaking, Lazy Loading, Suspense",
+                            projectTitle: "Portfolio",
+                            projectUrl: "/projects#portfolio-website"
+                        },
+                        {
+                            label: "Content",
+                            value: "Schema Markup, Rich Snippets, Meta Tags, Open Graph",
+                            projectTitle: "Aviators Training Centre",
+                            projectUrl: "/projects#aviators-training-centre"
+                        },
+                        {
+                            label: "Assets",
+                            value: "Image Optimization (WebP, lazy loading), Responsive images",
+                            projectTitle: "Barkat Enterprise",
+                            projectUrl: "/projects#barkat-enterprise"
+                        },
+                        {
+                            label: "Lighthouse Optimization",
+                            value: "95+ scores, Performance audits",
+                            projectTitle: "Aviators, Portfolio",
+                            projectUrl: "/projects#aviators-training-centre"
+                        }
                     ]
                 }
             ]
@@ -544,13 +718,64 @@ const skillsData: SkillsData = {
             description: "Connecting systems with external services and data sources",
             groups: [
                 {
-                    title: "External Services & Data Sources",
+                    title: "Social & Media APIs",
                     items: [
-                        { label: "News & Content", value: "News API, GNews.io, Notion API" },
-                        { label: "Social Media", value: "YouTube API v3, Twitter API, GitHub API" },
-                        { label: "AI/Voice", value: "Alan AI, Web Speech API (Text-to-Speech, Speech Recognition)" },
-                        { label: "Commerce", value: "Swiggy API, Fake Store API" },
-                        { label: "Security", value: "CORS handling, Rate limiting, API security" }
+                        {
+                            label: "Twitter/X API",
+                            value: "v1.1 & v2, OAuth1.0a/OAuth2, media uploads, threading",
+                            relatedProjects: [
+                                { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" }
+                            ]
+                        },
+                        {
+                            label: "LinkedIn API",
+                            value: "Multi-image galleries, content distribution",
+                            relatedProjects: [
+                                { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" }
+                            ]
+                        },
+                        {
+                            label: "YouTube API v3",
+                            value: "Video embedding, channel data",
+                            relatedProjects: [
+                                { title: "AV NewsStream", url: "/projects#av-newsstream" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    title: "Productivity & Auth",
+                    items: [
+                        {
+                            label: "Notion, Airtable, Google Drive",
+                            value: "Content management, database integration",
+                            relatedProjects: [
+                                { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" },
+                                { title: "Aviators", url: "/projects#aviators-training-centre" }
+                            ]
+                        },
+                        {
+                            label: "Cal.com, Gmail, Resend",
+                            value: "Scheduling, email automation",
+                            relatedProjects: [
+                                { title: "Aviators Training Centre", url: "/projects#aviators-training-centre" }
+                            ]
+                        },
+                        {
+                            label: "Clerk, OAuth, Stripe",
+                            value: "Auth & payments integration",
+                            relatedProjects: [
+                                { title: "E-commerce", url: "/projects#ecommerce-platform" }
+                            ]
+                        },
+                        {
+                            label: "Swiggy, NewsAPI, Fake Store",
+                            value: "Commerce & content APIs",
+                            relatedProjects: [
+                                { title: "Foodah", url: "/projects#foodah" },
+                                { title: "AV NewsStream", url: "/projects#av-newsstream" }
+                            ]
+                        }
                     ]
                 }
             ]
@@ -564,8 +789,18 @@ const skillsData: SkillsData = {
                 {
                     title: "Strong Foundation",
                     items: [
-                        { label: "Languages", value: "C++, C (Competitive Programming)" },
-                        { label: "DSA", value: "Data Structures & Algorithms (LeetCode)" },
+                        {
+                            label: "Languages",
+                            value: "C++, C (Competitive Programming)",
+                            projectTitle: "LeetCode Solutions",
+                            projectUrl: "/projects"
+                        },
+                        {
+                            label: "DSA",
+                            value: "Data Structures & Algorithms (LeetCode)",
+                            projectTitle: "LeetCode Solutions",
+                            projectUrl: "/projects"
+                        },
                         { label: "Concepts", value: "OOP, Computer Networks, System Design basics" },
                         { label: "Problem Solving", value: "Algorithmic thinking, Optimization techniques" }
                     ]
@@ -581,25 +816,51 @@ const skillsData: SkillsData = {
                 {
                     title: "Technical Writing & Documentation",
                     items: [
-                        { label: "Writing", value: "Technical Writing, Content Writing, Copywriting" },
-                        { label: "Docs", value: "API docs, README files, User guides, Cataloging" },
-                        { label: "Community", value: "Building in Public, Sharing knowledge" }
+                        {
+                            label: "Technical Writing",
+                            value: "API docs, README files, User guides, Cataloging",
+                            projectTitle: "All Projects",
+                            projectUrl: "/projects"
+                        },
+                        {
+                            label: "Content Strategy",
+                            value: "SEO keyword research, slug/meta optimization, structured data",
+                            projectTitle: "Portfolio, Aviators",
+                            projectUrl: "/projects#portfolio-website"
+                        },
+                        {
+                            label: "Build-in-Public",
+                            value: "Authentic storytelling, content repurposing, multi-platform distribution",
+                            projectTitle: "Omni-Post AI",
+                            projectUrl: "/projects#n8n-automation-suite"
+                        }
                     ]
                 }
             ]
         },
         {
             id: "soft",
-            title: "Professional Skills & Qualities",
+            title: "Strategic & Product Skills",
             icon: "Users",
             description: "Personal attributes that drive project success",
             groups: [
                 {
-                    title: "What Makes Me Effective",
+                    title: "Product Thinking",
                     items: [
+                        {
+                            label: "End-to-End Design",
+                            value: "Feature design, automation for lead/content workflows",
+                            projectTitle: "Aviators, Omni-Post",
+                            projectUrl: "/projects#aviators-training-centre"
+                        },
+                        {
+                            label: "Business Mindset",
+                            value: "ROI focus, ₹300K+ revenue, 80% cost reduction",
+                            projectTitle: "Aviators Training Centre",
+                            projectUrl: "/projects#aviators-training-centre"
+                        },
                         { label: "Core", value: "Problem Solving, Time Management, Adaptability" },
-                        { label: "Team", value: "Teamwork, Collaboration, Leadership, Mentoring" },
-                        { label: "Mindset", value: "Creativity, Business Mindset (ROI focus), Building in Public" }
+                        { label: "Team", value: "Teamwork, Collaboration, Leadership, Mentoring" }
                     ]
                 }
             ]
@@ -682,6 +943,120 @@ const skillsData: SkillsData = {
         "Testing strategies (Jest, React Testing Library)",
         "Docker & containerization",
         "CI/CD pipeline optimization"
+    ]
+};
+
+// --- Landing Page Skills (Solution Architect Stack) ---
+
+const landingSkillsData: LandingSkillsData = {
+    categories: [
+        {
+            title: "AI & Automation Orchestration",
+            skills: [
+                {
+                    name: "n8n Workflows",
+                    level: "Production",
+                    projects: "15+ workflows deployed",
+                    relatedProjects: [
+                        { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" },
+                        { title: "Aviators", url: "/projects#aviators-training-centre" }
+                    ]
+                },
+                {
+                    name: "Multi-LLM APIs",
+                    level: "Expert",
+                    projects: "GPT-4, Claude, Gemini, OpenRouter",
+                    relatedProjects: [
+                        { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" }
+                    ]
+                },
+                // TODO: Uncomment when RAG project is ready
+                // {
+                //     name: "LangChain + RAG",
+                //     level: "Advanced",
+                //     projects: "Personal RAG Agent",
+                //     relatedProjects: [
+                //         { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" }
+                //     ]
+                // },
+                {
+                    name: "Agentic Workflows",
+                    level: "Production",
+                    projects: "Multi-step automations",
+                    relatedProjects: [
+                        { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "Frontend Systems",
+            skills: [
+                {
+                    name: "Next.js 15",
+                    level: "Expert",
+                    projects: "Aviators Training Centre",
+                    relatedProjects: [
+                        { title: "Aviators", url: "/projects#aviators-training-centre" },
+                        { title: "Portfolio", url: "/projects#portfolio-website" }
+                    ]
+                },
+                {
+                    name: "React 18 + TypeScript",
+                    level: "Expert",
+                    projects: "8+ production apps",
+                    relatedProjects: [
+                        { title: "Foodah", url: "/projects#foodah" },
+                        { title: "AV NewsStream", url: "/projects#av-newsstream" }
+                    ]
+                },
+                {
+                    name: "ShadcnUI + Tailwind",
+                    level: "Expert",
+                    projects: "95+ Lighthouse scores",
+                    relatedProjects: [
+                        { title: "Portfolio", url: "/projects#portfolio-website" },
+                        { title: "Aviators", url: "/projects#aviators-training-centre" }
+                    ]
+                }
+            ]
+        },
+        {
+            title: "Backend & Integration",
+            skills: [
+                {
+                    name: "Firebase + Firestore",
+                    level: "Production",
+                    projects: "Real-time systems",
+                    relatedProjects: [
+                        { title: "AV NewsStream", url: "/projects#av-newsstream" }
+                    ]
+                },
+                {
+                    name: "Supabase + PostgreSQL",
+                    level: "Advanced",
+                    projects: "Modern backends",
+                    relatedProjects: [
+                        { title: "Aviators", url: "/projects#aviators-training-centre" }
+                    ]
+                },
+                {
+                    name: "API Orchestration",
+                    level: "Expert",
+                    projects: "50+ integrations",
+                    relatedProjects: [
+                        { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" },
+                        { title: "Aviators", url: "/projects#aviators-training-centre" }
+                    ]
+                }
+            ]
+        }
+    ],
+    keywords: [
+        "n8n automation specialist",
+        "AI workflow orchestration",
+        "Next.js solutions architect",
+        "technical product manager skills"
     ]
 };
 
@@ -1192,12 +1567,54 @@ const servicesData: ServiceData[] = [
     }
 ];
 
+// --- Experience Data ---
+
+const experienceData: ExperienceItem[] = [
+    {
+        role: "AI Automation Engineer",
+        type: "Freelance & Indie",
+        period: "Jan 2024 - Present",
+        duration: "1+ years",
+        achievements: [
+            "₹300K+ revenue generated through intelligent n8n automation workflows",
+            "15+ production workflows deployed (self-hosted, Docker, security-hardened)",
+            "8+ production applications built (Next.js, React, Firebase, AI integration)",
+            "50+ active users served across enterprise & startup projects"
+        ],
+        keyProjects: [
+            { title: "Aviators Training Centre", url: "/projects#aviators-training-centre" },
+            { title: "Omni-Post AI Automation", url: "/projects#n8n-automation-suite" },
+            { title: "Barkat Enterprise", url: "/projects#barkat-enterprise" }
+        ]
+    },
+    {
+        role: "React Developer & Frontend Engineer",
+        type: "Intensive Skill Building",
+        period: "2023 - 2024",
+        duration: "1 year",
+        achievements: [
+            "Built production-grade React apps handling 14,000+ JSON records with 60fps performance",
+            "Engineered complex API integrations: intelligent key rotation, caching, rate-limit handling",
+            "Mastered React patterns: Redux Toolkit, Custom Hooks, Context API, Lazy Loading, Suspense",
+            "Developed full-stack MERN applications with authentication, CRUD operations & Express backends"
+        ],
+        keyProjects: [
+            { title: "Foodah - Food Ordering Platform", url: "/projects#foodah" },
+            { title: "AV NewsStream - News Aggregator", url: "/projects#av-newsstream" },
+            { title: "E-Commerce Platform", url: "/projects#ecommerce-platform" }
+        ]
+    }
+
+];
+
 // --- Export ---
 
 export const portfolioData: PortfolioData = {
     hero: heroData,
     about: aboutData,
     skills: skillsData,
+    landingSkills: landingSkillsData,
     projects: projectsData,
-    services: servicesData
+    services: servicesData,
+    experience: experienceData
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { portfolioData } from "@/data/portfolio";
 import ProjectCard from "@/components/projects/ProjectCard";
 import ProjectsFilter from "@/components/projects/ProjectsFilter";
@@ -32,6 +32,29 @@ export default function ProjectsPage() {
             return matchesCategory && matchesTech;
         });
     }, [activeCategory, activeTech]);
+
+    // Scroll to hash target on page load
+    useEffect(() => {
+        const hash = window.location.hash;
+        if (hash) {
+            // Small delay to ensure DOM is rendered
+            const timeoutId = setTimeout(() => {
+                const element = document.querySelector(hash);
+                if (element) {
+                    element.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+                    // Add highlight effect
+                    element.classList.add("ring-2", "ring-lime-500", "ring-offset-4");
+                    setTimeout(() => {
+                        element.classList.remove("ring-2", "ring-lime-500", "ring-offset-4");
+                    }, 2000);
+                }
+            }, 500);
+            return () => clearTimeout(timeoutId);
+        }
+    }, []);
 
     return (
         <ImageGalleryProvider>

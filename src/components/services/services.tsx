@@ -3,10 +3,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { portfolioData, ServiceData } from '@/data/portfolio';
-import { ArrowRight, AlertCircle, Lightbulb, Users, ExternalLink } from 'lucide-react';
+import { AlertCircle, Lightbulb, Users, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 
 const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ service, index }) => {
@@ -87,37 +86,26 @@ const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ servic
             <span><span className="font-medium">Ideal for:</span> {service.idealClient}</span>
           </div>
 
-          <div className="mt-auto pt-2">
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="projects" className="border-sage-100">
-                <AccordionTrigger className="text-sm font-semibold text-forest-900 hover:text-lime-600 hover:no-underline py-2">
-                  <span className="flex items-center gap-2">
-                    <ExternalLink className="w-4 h-4" />
-                    View Related Projects
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent>
-                  {service.relatedProjects && service.relatedProjects.length > 0 ? (
-                    <ul className="space-y-2 pt-2">
-                      {service.relatedProjects.map((project, idx) => (
-                        <li key={idx}>
-                          <Link
-                            href={project.url}
-                            className="flex items-center gap-2 text-sm text-forest-700 hover:text-lime-600 transition-colors group/link"
-                          >
-                            <ArrowRight className="w-4 h-4 text-lime-500 transition-transform group-hover/link:translate-x-1" />
-                            <span>{project.title}</span>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-sm text-forest-600 pt-2">Projects coming soon...</p>
-                  )}
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
+          {/* Related Projects - Inline badges like Experience section */}
+          {service.relatedProjects && service.relatedProjects.length > 0 && (
+            <div className="mt-auto pt-3 border-t border-sage-100">
+              <p className="text-xs font-semibold text-forest-900 mb-2 uppercase tracking-wide">Related Projects</p>
+              <div className="flex flex-wrap gap-2">
+                {service.relatedProjects.map((project, idx) => (
+                  <Link
+                    key={idx}
+                    href={project.url}
+                    className="inline-flex items-center gap-1.5 bg-forest-50 border border-forest-200 text-forest-700 
+                             hover:bg-lime-100 hover:border-lime-400 hover:text-lime-800 
+                             transition-all duration-200 px-3 py-1.5 rounded-md text-sm font-medium cursor-pointer group"
+                  >
+                    {project.title}
+                    <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     </motion.div>
