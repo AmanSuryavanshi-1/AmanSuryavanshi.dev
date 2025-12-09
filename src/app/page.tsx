@@ -13,12 +13,12 @@ const page = () => {
   return (
     // <div className='bg-gradient-to-br from-primaryVariant to-bgVariant'>
     <div>
-      {/* Header */}
+      {/* Hero Section */}
       <Hero />
-      {/* About */}
+      {/* Featured Projects */}
       <FeaturedProjectsSection />
       <WorkBanner />
-      <Services />
+      {/* About Section */}
       <div className='py-16'>
         <AboutMe
           personalInfo={portfolioData.about.personalInfo}
@@ -26,11 +26,17 @@ const page = () => {
         // skillsData={myData.skillsData}
         />
       </div>
+      {/* Skills Section */}
       <MySkills />
+      {/* Experience Section - After Skills */}
       <ExperienceCards />
+      {/* Services Section */}
+      <Services />
+      {/* Contact Section */}
       <Contact />
     </div>
   )
 }
+
 
 export default page

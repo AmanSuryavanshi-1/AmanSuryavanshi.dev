@@ -8,6 +8,7 @@ import ComprehensiveSkills from '@/components/skills/ComprehensiveSkills';
 import AboutContent from '@/components/about-page/Content';
 import CTA from '@/components/about-page/CTA';
 import SectionTitle from '@/components/about/SectionTitle';
+import ScrollToHash from '@/components/ui/ScrollToHash';
 
 // Site Constants
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi-dev.vercel.app/";
@@ -145,6 +146,8 @@ export default function AboutPage() {
                 }}
             />
 
+            <ScrollToHash />
+
             <main className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-sage-100 to-lime-500">
                 {/* Hero Section - Fits in 100vh */}
                 <section className="relative pt-12 pb-0 lg:pt-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[calc(100vh-80px)] flex flex-col justify-center">
@@ -179,7 +182,9 @@ export default function AboutPage() {
                 </section>
 
                 {/* Skills Section */}
-                <ComprehensiveSkills />
+                <section id="skills">
+                    <ComprehensiveSkills />
+                </section>
 
                 {/* CTA Section */}
                 <CTA />

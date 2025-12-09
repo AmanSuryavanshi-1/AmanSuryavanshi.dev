@@ -98,7 +98,8 @@ const ComprehensiveSkills = () => {
                     category: portfolioData.skills.coreSpecialty.title,
                     groupTitle: "Core Expertise",
                     projectTitle: skill.projectTitle,
-                    projectUrl: skill.projectUrl
+                    projectUrl: skill.projectUrl,
+                    relatedProjects: skill.relatedProjects
                 });
             });
         }
@@ -118,7 +119,8 @@ const ComprehensiveSkills = () => {
                                     groupTitle: group.title,
                                     footer: category.footer,
                                     projectTitle: item.projectTitle,
-                                    projectUrl: item.projectUrl
+                                    projectUrl: item.projectUrl,
+                                    relatedProjects: item.relatedProjects
                                 });
                             });
                         }
@@ -319,13 +321,27 @@ const ComprehensiveSkills = () => {
                                                 {skill.value}
                                             </p>
 
-                                            {/* Project Link */}
-                                            {skill.projectUrl && (
+                                            {/* Related Projects Links */}
+                                            {skill.relatedProjects && skill.relatedProjects.length > 0 ? (
+                                                <div className="mt-auto pt-4 border-t border-forest-900/5">
+                                                    <p className="text-[10px] text-forest-500 mb-2 uppercase tracking-wider font-medium">Used In</p>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {skill.relatedProjects.map((project: { title: string; url: string }, idx: number) => (
+                                                            <a
+                                                                key={idx}
+                                                                href={project.url}
+                                                                className="inline-flex items-center gap-1 text-xs font-medium text-forest-700 hover:text-lime-600 transition-colors bg-forest-50 hover:bg-lime-50 px-2 py-1 rounded-lg border border-forest-100 hover:border-lime-200"
+                                                            >
+                                                                <span className="truncate max-w-[100px]">{project.title}</span>
+                                                                <ExternalLink className="w-2.5 h-2.5 flex-shrink-0" />
+                                                            </a>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ) : skill.projectUrl && (
                                                 <div className="mt-auto pt-4 border-t border-forest-900/5">
                                                     <a
                                                         href={skill.projectUrl}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
                                                         className="inline-flex items-center gap-2 text-xs font-bold text-forest-900 hover:text-lime-600 transition-colors group/link bg-white/50 px-3 py-2 rounded-xl w-full justify-center hover:bg-white"
                                                     >
                                                         <span className="truncate">View Project</span>
