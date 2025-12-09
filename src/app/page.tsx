@@ -12,28 +12,37 @@ import MySkills from '@/components/skills/MySkills'
 const page = () => {
   return (
     // <div className='bg-gradient-to-br from-primaryVariant to-bgVariant'>
-    <div>
+    <div className='bg-sage-50 min-h-screen'>
       {/* Hero Section */}
       <Hero />
-      {/* Featured Projects */}
-      <FeaturedProjectsSection />
-      <WorkBanner />
-      {/* About Section */}
-      <div className='py-16'>
-        <AboutMe
-          personalInfo={portfolioData.about.personalInfo}
-          qualificationsData={portfolioData.about.qualificationsData}
-        // skillsData={myData.skillsData}
-        />
+
+      <div className="flex flex-col gap-20">
+        {/* Featured Projects */}
+        <FeaturedProjectsSection />
+
+        <WorkBanner />
+
+        {/* About Section */}
+        <div className='py-4'>
+          <AboutMe
+            personalInfo={portfolioData.about.personalInfo}
+            qualificationsData={portfolioData.about.qualificationsData}
+          // skillsData={myData.skillsData}
+          />
+        </div>
+
+        {/* Skills Section */}
+        <MySkills />
+
+        {/* Experience Section - After Skills */}
+        <ExperienceCards />
+
+        {/* Services Section */}
+        <Services />
+
+        {/* Contact Section */}
+        <Contact />
       </div>
-      {/* Skills Section */}
-      <MySkills />
-      {/* Experience Section - After Skills */}
-      <ExperienceCards />
-      {/* Services Section */}
-      <Services />
-      {/* Contact Section */}
-      <Contact />
     </div>
   )
 }

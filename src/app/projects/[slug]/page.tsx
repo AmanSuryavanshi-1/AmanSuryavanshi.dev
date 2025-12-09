@@ -2,17 +2,15 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import DocPageClient from '@/components/docs/DocPageClient';
 
-// Map slugs to GitHub raw URLs
+// Map slugs to GitHub raw URLs (Executive Summaries only)
 const DOCS_MAP: Record<string, string> = {
     'aviators-training-centre-executive-summary': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/Aviators_Training_Centre/main/docs/aviators-training-centre-executive-summary.md',
-    'aviators-training-centre-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/Aviators_Training_Centre/main/docs/aviators-training-centre-technical-documentation.md',
     'omni-post-ai-executive-summary': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/main/Omni-Post-AI-Automation/OMNI-POST-AI-EXECUTIVE-SUMMARY.md',
 };
 
-// Map slugs to readable titles for metadata or breadcrumbs
+// Map slugs to readable titles for metadata
 const TITLES_MAP: Record<string, string> = {
     'aviators-training-centre-executive-summary': 'Aviators Training Centre - Executive Summary',
-    'aviators-training-centre-technical-documentation': 'Aviators Training Centre - Technical Documentation',
     'omni-post-ai-executive-summary': 'Omni-Post AI - Executive Summary',
 };
 
@@ -38,14 +36,14 @@ async function getDocContent(slug: string) {
 
 export async function generateMetadata({ params }: PageProps) {
     const { slug } = await params;
-    const title = TITLES_MAP[slug] || 'Documentation';
+    const title = TITLES_MAP[slug] || 'Executive Summary';
     return {
         title: `${title} | Aman Suryavanshi`,
-        description: `Technical documentation for ${title}`,
+        description: `Executive summary for ${title}`,
     };
 }
 
-export default async function DocPage({ params }: PageProps) {
+export default async function ProjectDocPage({ params }: PageProps) {
     const { slug } = await params;
     const content = await getDocContent(slug);
 
@@ -53,7 +51,5 @@ export default async function DocPage({ params }: PageProps) {
         notFound();
     }
 
-    // Note: Project lookup is done in DocPageClient to avoid serialization issues
-    // (project.technologies contains React component icons that can't be serialized)
     return <DocPageClient title={TITLES_MAP[slug]} content={content} slug={slug} />;
 }
