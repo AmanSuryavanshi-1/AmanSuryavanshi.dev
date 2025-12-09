@@ -16,7 +16,7 @@ export default function FeaturedProjectsSection() {
     const activeIndex = ((virtualIndex % featuredProjects.length) + featuredProjects.length) % featuredProjects.length;
 
     return (
-        <section id="projects" className="relative z-10 py-12 lg:py-20 bg-forest-50/50">
+        <section id="projects" className="relative z-10 py-12 lg:py-20">
             <div className="container mx-auto px-4">
                 {/* Section Header */}
                 <div className="flex flex-col items-center justify-center mb-8 lg:mb-12 text-center">

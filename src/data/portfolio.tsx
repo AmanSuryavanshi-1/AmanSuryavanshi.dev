@@ -245,6 +245,11 @@ export interface PortfolioData {
     projects: Project[];
     services: ServiceData[];
     experience: ExperienceItem[];
+    workBanner: Array<{
+        id: number;
+        label: string;
+        icon: string;
+    }>;
 }
 
 // --- Data Definitions ---
@@ -355,6 +360,43 @@ const aboutData: AboutData = {
         },
     },
 };
+
+const workBanner: Array<{ id: number; label: string; icon: string }> = [
+    // Existing lists
+    { id: 1, label: "Full Stack Developer", icon: "Briefcase" },
+    { id: 2, label: "UI/UX Designer", icon: "Globe" },
+    { id: 3, label: "Agile Practitioner", icon: "Clock" },
+    { id: 4, label: "JavaScript Enthusiast", icon: "Code" },
+    { id: 5, label: "Next.js Developer", icon: "Layers" },
+    { id: 6, label: "API Integration", icon: "Server" },
+    { id: 7, label: "Frontend Engineer", icon: "Monitor" },
+    { id: 8, label: "Creative Technologist", icon: "Zap" },
+    { id: 9, label: "Content Writer", icon: "Feather" },
+    { id: 10, label: "Performance Optimizer", icon: "Settings" },
+    { id: 11, label: "Figma Designer", icon: "Figma" },
+    { id: 12, label: "Database Handling", icon: "Database" },
+    { id: 13, label: "SEO Enthusiast", icon: "TrendingUp" },
+    { id: 14, label: "AI Video Creator", icon: "Film" },
+    { id: 15, label: "AI Image Generator", icon: "ImageIcon" },
+    { id: 16, label: "Technical Writer", icon: "Edit3" },
+    { id: 17, label: "AI Multimedia Developer", icon: "PenTool" },
+    { id: 18, label: "AI Creative Technologist", icon: "Brain" },
+    { id: 19, label: "Lifelong Learner", icon: "Book" },
+    { id: 20, label: "User-Centered Designer", icon: "PenTool" },
+    { id: 21, label: "Web Performance Optimizer", icon: "Package" },
+    { id: 22, label: "Tech Blogger", icon: "BookOpen" },
+    // New additions based on skills
+    { id: 23, label: "n8n Automation Expert", icon: "Workflow" },
+    { id: 24, label: "AI Agent Builder", icon: "Bot" },
+    { id: 25, label: "RAG Systems", icon: "Database" },
+    { id: 26, label: "Prompt Engineering", icon: "MessageSquare" },
+    { id: 27, label: "Web Scraping", icon: "Search" },
+    { id: 28, label: "React.js Expert", icon: "Code2" },
+    { id: 29, label: "TypeScript Wizard", icon: "FileJson" },
+    { id: 30, label: "Tailwind CSS", icon: "Palette" },
+    { id: 31, label: "Backend Architecture", icon: "Server" },
+    { id: 32, label: "DevOps", icon: "Cloud" },
+];
 
 const skillsData: SkillsData = {
     mainTitle: "Comprehensive Skills & Expertise",
@@ -1185,11 +1227,7 @@ const rawProjects = [
         documentation: [
             {
                 title: "Executive Summary",
-                url: "/docs/aviators-training-centre-executive-summary"
-            },
-            {
-                title: "Technical Documentation",
-                url: "/docs/aviators-training-centre-technical-documentation"
+                url: "/projects/aviators-training-centre-executive-summary"
             }
         ],
         gallery: [
@@ -1370,7 +1408,7 @@ const rawProjects = [
         documentation: [
             {
                 title: "Executive Summary",
-                url: "/docs/omni-post-ai-executive-summary"
+                url: "/projects/omni-post-ai-executive-summary"
             }
         ]
     },
@@ -1545,8 +1583,8 @@ const servicesData: ServiceData[] = [
         icon: <FileText className="w-5 h-5" />,
         image: "/services/writing.jpg",
         relatedProjects: [
-            { title: "Omni-Post AI Docs", url: "/docs/omni-post-ai-executive-summary" },
-            { title: "Aviators Technical Docs", url: "/docs/aviators-training-centre-technical-documentation" }
+            { title: "Omni-Post AI Summary", url: "/projects/omni-post-ai-executive-summary" },
+            { title: "Aviators Technical Docs", url: "/blogs/aviators-training-centre" }
         ]
     },
     {
@@ -1616,5 +1654,6 @@ export const portfolioData: PortfolioData = {
     landingSkills: landingSkillsData,
     projects: projectsData,
     services: servicesData,
-    experience: experienceData
+    experience: experienceData,
+    workBanner: workBanner
 };
