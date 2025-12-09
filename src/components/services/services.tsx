@@ -155,7 +155,7 @@ const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) =
 
   return (
     <div className="relative max-w-6xl mx-auto px-4 lg:px-12">
-      <div className="overflow-hidden py-10">
+      <div className="overflow-hidden py-4">
         <AnimatePresence mode='wait'>
           <motion.div
             key={currentIndex}
@@ -210,7 +210,7 @@ const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) =
 
 const ServicesSection: React.FC = () => {
   return (
-    <section id="services" className="w-full relative py-8 lg:py-16 overflow-hidden">
+    <section id="services" className="w-full relative py-8 lg:py-12 overflow-hidden">
 
       {/* Background Elements - Clean global background now */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-lime-500/5 via-transparent to-transparent pointer-events-none" />
@@ -221,7 +221,7 @@ const ServicesSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-8 lg:mb-12"
+          className="text-center mb-6 lg:mb-8"
         >
           <Badge variant="outline" className="mb-3 border-lime-500 bg-white/50 text-forest-900 px-3 py-1">
             Consulting Services
@@ -243,7 +243,7 @@ const ServicesSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="mt-6 text-center"
         >
           <p className="text-forest-500 mb-4 text-sm">Have a specific challenge? Let's discuss a custom solution.</p>
           <div className="inline-flex justify-center">

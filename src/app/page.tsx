@@ -23,13 +23,11 @@ const page = () => {
         <WorkBanner />
 
         {/* About Section */}
-        <div className='py-4'>
-          <AboutMe
-            personalInfo={portfolioData.about.personalInfo}
-            qualificationsData={portfolioData.about.qualificationsData}
-          // skillsData={myData.skillsData}
-          />
-        </div>
+        <AboutMe
+          personalInfo={portfolioData.about.personalInfo}
+          qualificationsData={portfolioData.about.qualificationsData}
+        // skillsData={myData.skillsData}
+        />
 
         {/* Skills Section */}
         <MySkills />

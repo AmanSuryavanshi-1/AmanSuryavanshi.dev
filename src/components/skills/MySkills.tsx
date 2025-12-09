@@ -33,7 +33,7 @@ const SkillsShowcase = () => {
     const { landingSkills } = portfolioData;
 
     return (
-        <section className="relative overflow-hidden py-12 lg:py-20">
+        <section className="relative overflow-hidden py-8 lg:py-12">
             {/* Background Elements - Subtle/Transparent now */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-[10%] -left-[5%] w-[500px] h-[500px] bg-lime-500/5 rounded-full blur-3xl opacity-50" />
