@@ -13,7 +13,7 @@ const ExperienceSection = () => {
   return (
     <section
       id="experience"
-      className="w-full relative overflow-visible py-12 lg:py-20"
+      className="w-full relative overflow-visible py-8 lg:py-12"
       aria-label="Work Experience"
     >
       {/* Background Elements - completely transparent now to blend with page */}
@@ -28,7 +28,7 @@ const ExperienceSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16 relative inline-block w-full"
+          className="text-center mb-8 relative inline-block w-full"
         >
           <Badge variant="outline" className="mb-4 border-lime-500 text-forest-900 px-4 py-1.5 bg-white/50">
             <Briefcase className="w-3 h-3 mr-2 inline" />
@@ -44,7 +44,7 @@ const ExperienceSection = () => {
         </motion.div>
 
         {/* Experience Timeline */}
-        <div className="space-y-12 md:space-y-24 relative">
+        <div className="space-y-8 md:space-y-12 relative">
 
           {/* Central Timeline Line */}
           <div className="absolute left-[28px] md:left-1/2 top-4 bottom-0 w-0.5 bg-forest-900/10 md:-translate-x-1/2 z-0 hidden md:block" />
@@ -168,7 +168,7 @@ const ExperienceSection = () => {
         </div>
 
         {/* Footer Connector */}
-        <div className="flex justify-center mt-12 mb-20 relative z-20">
+        <div className="flex justify-center mt-6 mb-6 relative z-20">
           <div className="p-2 rounded-full bg-white border border-dashed border-forest-300 text-forest-400">
             <ArrowDown className="w-4 h-4" />
           </div>

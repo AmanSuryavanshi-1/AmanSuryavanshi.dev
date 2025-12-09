@@ -3,15 +3,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, ArrowRight, BookOpen, ExternalLink, Github, Globe, Calendar, BarChart3, Layers, Zap } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, ExternalLink, Github, Globe, BarChart3, Layers, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import MarkdownViewer from '@/components/docs/MarkdownViewer';
+import Breadcrumbs from '@/components/blog/Breadcrumbs';
 import { ImageGalleryProvider } from '@/context/ImageGalleryContext';
 import Lightbox from '@/components/ui/Lightbox';
 import { portfolioData, Project } from '@/data/portfolio';
-import { Badge } from '@/components/ui/badge';
-import { SolidButton } from '@/components/solid-button';
-import { TransparentButton } from '@/components/transparent-button';
 
 interface DocPageClientProps {
     title: string;
@@ -49,94 +47,104 @@ export default function DocPageClient({ title, content, slug, project }: DocPage
                 />
 
                 {/* Hero Section */}
-                {/* Hero Section */}
-                <header className="relative pt-32 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-forest-900 min-h-[60vh] flex items-center justify-center">
-                    {/* Background Image - Lighter Overlay */}
+                <header className="relative min-h-[50vh] flex flex-col justify-end pb-16 lg:pb-24 w-full overflow-hidden bg-forest-900">
+                    {/* Background Image & Overlay */}
                     {currentProject?.image && (
                         <div className="absolute inset-0 z-0">
                             <img
                                 src={currentProject.image}
                                 alt={currentProject.title}
-                                className="w-full h-full object-cover blur-[2px] scale-105"
+                                className="w-full h-full object-cover"
                             />
-                            <div className="absolute inset-0 bg-white/20 backdrop-blur-[1px]" />
+                            {/* Gradient Overlay - Stronger at bottom for readability */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-900/80 to-forest-900/30 z-10" />
                         </div>
                     )}
 
-                    <div className="max-w-5xl mx-auto relative z-10 w-full">
-                        <motion.button
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            onClick={() => router.back()}
-                            className="inline-flex items-center text-sm font-medium text-forest-900/80 hover:text-forest-900 transition-colors mb-8 group cursor-pointer bg-white/40 px-4 py-2 rounded-full border border-forest-900/10 hover:bg-white/60 backdrop-blur-md shadow-sm"
-                        >
-                            <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-                            Go Back
-                        </motion.button>
+                    {/* Fallback pattern if no image */}
+                    {!currentProject?.image && (
+                        <div className="absolute inset-0 z-0 bg-forest-900 opacity-100">
+                            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-forest-950 to-transparent z-10" />
+                        </div>
+                    )}
 
-                        {/* Glass Card Container */}
+                    {/* Content Container */}
+                    <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 relative z-20">
+                        {/* Navigation Row */}
+                        <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <Breadcrumbs
+                                items={[
+                                    { label: 'Projects', href: '/projects' },
+                                    { label: currentProject?.title || 'Project', href: currentProject?.documentation?.[0]?.url || `/projects` },
+                                    { label: 'Executive Summary' }
+                                ]}
+                            />
+
+                            <motion.button
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                onClick={() => router.back()}
+                                className="self-start sm:self-auto inline-flex items-center text-sm font-medium text-white/70 hover:text-lime-400 transition-colors group cursor-pointer"
+                            >
+                                <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+                                Go Back
+                            </motion.button>
+                        </div>
+
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="flex flex-col items-center text-center max-w-4xl mx-auto bg-white/30 backdrop-blur-xl border border-white/40 p-10 md:p-14 rounded-3xl shadow-xl"
+                            transition={{ delay: 0.1 }}
+                            className="flex flex-col items-start gap-6 max-w-5xl"
                         >
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 }}
-                                className="flex flex-wrap justify-center items-center gap-3 mb-6"
-                            >
-                                <Badge variant="outline" className="border-forest-900/20 text-forest-800 px-4 py-1.5 bg-white/50">
+                            {/* Badges - Added top margin for separation */}
+                            <div className="flex flex-wrap gap-3 mt-4 mb-2">
+                                <span className="px-4 py-1.5 text-xs font-bold uppercase tracking-widest rounded-full text-white border border-white/20 bg-white/5 backdrop-blur-md shadow-sm">
                                     Executive Summary
-                                </Badge>
+                                </span>
                                 {currentProject?.featured && (
-                                    <Badge className="bg-lime-500 text-forest-900 border-0 font-bold shadow-md">
+                                    <span className="px-4 py-1.5 text-xs font-bold uppercase tracking-widest rounded-full text-forest-950 bg-gradient-to-r from-lime-400 to-lime-500 shadow-lg shadow-lime-500/20">
                                         Featured Case Study
-                                    </Badge>
+                                    </span>
                                 )}
-                            </motion.div>
+                            </div>
 
-                            <motion.h1
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.2 }}
-                                className="text-4xl md:text-6xl lg:text-7xl font-bold font-serif text-forest-900 tracking-tight mb-6 leading-[1.1] drop-shadow-sm"
-                            >
+                            {/* Title - Reduced size from 7xl to 6xl for better balance */}
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white leading-[1.1] tracking-tight drop-shadow-lg text-shadow-md">
                                 {currentProject?.title || title}
-                            </motion.h1>
+                            </h1>
 
-                            <motion.p
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.3 }}
-                                className="text-xl md:text-2xl text-forest-700 leading-relaxed max-w-3xl font-medium mb-10"
-                            >
+                            {/* Tagline - Increased max-width for better coverage */}
+                            <p className="text-lg md:text-2xl text-gray-100 font-medium leading-relaxed max-w-4xl text-shadow-sm">
                                 {currentProject?.tagLine || "A deep dive into the technical implementation and business impact."}
-                            </motion.p>
+                            </p>
 
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.4 }}
-                                className="flex flex-wrap justify-center gap-4 md:gap-6"
-                            >
+                            {/* CTAs - Enhanced Styling */}
+                            <div className="flex flex-wrap gap-4 mt-4">
                                 {currentProject?.liveUrl && (
-                                    <SolidButton
+                                    <a
                                         href={currentProject.liveUrl}
-                                        label="View Live Site"
-                                        icon={Globe}
-                                        external={true}
-                                    />
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group relative inline-flex items-center px-8 py-3.5 rounded-full bg-gradient-to-r from-lime-500 to-lime-400 text-forest-950 font-bold hover:from-lime-400 hover:to-lime-300 transition-all duration-300 shadow-[0_0_20px_rgba(132,204,22,0.3)] hover:shadow-[0_0_30px_rgba(132,204,22,0.5)] active:scale-95"
+                                    >
+                                        <Globe className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform duration-300" />
+                                        View Live Site
+                                    </a>
                                 )}
                                 {currentProject?.codeUrl && (
-                                    <TransparentButton
+                                    <a
                                         href={currentProject.codeUrl}
-                                        label="View Code"
-                                        icon={Github}
-                                        external={true}
-                                    />
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group inline-flex items-center px-8 py-3.5 rounded-full bg-white/5 backdrop-blur-lg text-white border border-white/20 font-medium hover:bg-white/10 hover:border-white/40 transition-all duration-300 min-w-[160px] justify-center active:scale-95"
+                                    >
+                                        <Github className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
+                                        View Code
+                                    </a>
                                 )}
-                            </motion.div>
+                            </div>
                         </motion.div>
                     </div>
                 </header>

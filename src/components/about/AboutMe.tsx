@@ -54,7 +54,7 @@ const defaultProps: AboutMeProps = {
 const AboutMe = ({ personalInfo = defaultProps.personalInfo,
   qualificationsData = defaultProps.qualificationsData }: AboutMeProps) => {
   return (
-    <main id="about" className="w-full py-8">
+    <main id="about" className="w-full py-8 lg:py-12">
       <article className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full" itemScope itemType="http://schema.org/ProfilePage">
         {/* SEO-optimized H1 (visually hidden but critical for SEO) */}
         <h1 className="sr-only">Aman Suryavanshi - Solutions Architect & AI Automation Consultant | Expert in N8N Workflow Orchestration, Next.js Development, and Business Process Automation</h1>
