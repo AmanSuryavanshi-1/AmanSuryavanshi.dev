@@ -259,7 +259,7 @@ const heroData: HeroData = {
     title: "Aman Suryavanshi",
     subtitle: "AI Automation Engineer + Full-Stack Developer",
     tagline: "Building Next.js apps with intelligent n8n automation backends",
-    description: "I specialize in connecting apps, APIs, and services into seamless workflows. From integrating LangChain with n8n, connecting OpenAI to your database, or orchestrating multi-platform automation—I make different tools work together beautifully. Built production systems delivering ₹300K+ revenue with 80% cost reduction.",
+    description: "I connect apps, APIs, and services into seamless intelligent workflows. By orchestrating LangChain, n8n, and OpenAI, I build autonomous systems that eliminate manual work. My solutions have generated ₹300K+ revenue while cutting operational costs by 80%.",
     descriptionHighlight: "Gluing tools together to create powerful AI-driven solutions.",
     stats: [
         "Integration Specialist",
@@ -286,8 +286,7 @@ const aboutData: AboutData = {
     title: "I Orchestrate AI Systems That Deliver Business Results",
     intro: "From manual chaos to intelligent automation—I build agentic systems that connect tools, eliminate busywork, and scale operations. n8n + Next.js + Claude AI = 80% time savings.",
     journey: [
-        "Started building web apps → Discovered n8n automation → Realized 90% of business problems are integration problems → Now create complete AI-orchestrated systems",
-        "Production experience: Aviators Training Centre (50+ users, enterprise-grade), Barkat Enterprise (₹300K sales), Omni-Post AI (6K+ views)"
+        "Started building web apps → Discovered n8n automation → Realized 90% of business problems are integration problems → Now create complete AI-orchestrated systems"
     ],
     philosophy: "I don't just code—I connect. My strength is making disparate systems work together seamlessly to solve \"glue code\" nightmares.",
     differentiators: [
@@ -296,7 +295,7 @@ const aboutData: AboutData = {
         "✅ Real Revenue Impact (₹300K+ generated, 80% automation)",
         "✅ Complete Systems (frontend → backend → automation → analytics)"
     ],
-    cta: "Ready to automate your operations?",
+    cta: "",
     keywords: [
         "hire AI automation developer",
         "n8n expert business automation",

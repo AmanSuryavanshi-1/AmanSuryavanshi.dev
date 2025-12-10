@@ -31,7 +31,7 @@ export default function Header() {
                 className="container relative flex flex-col items-center justify-center h-full gap-8 mx-auto md:h-5/6"
                 style={{ opacity, scale, y }}
             >
-                <div className="max-h-[750px]:mt-28 py-16 max-h-[650px]:mt-32 overflow-hidden  grid grid-cols-1 md:grid-cols-[10px_2fr_1fr] gap-8 md:gap-28 px-20 max-md:px-2 md:pt-22  items-center">
+                <div className="max-h-[750px]:mt-28 py-16 max-h-[650px]:mt-32 overflow-hidden  grid grid-cols-1 md:grid-cols-[auto_3fr_1.5fr] gap-8 md:gap-12 px-20 max-md:px-2 md:pt-22  items-center">
                     <motion.div
                         className="relative order-1 w-64 h-64 mx-auto md:order-3 md:w-96 md:h-96 md:mx-0"
                         initial={{ scale: 0, rotate: -180 }}
