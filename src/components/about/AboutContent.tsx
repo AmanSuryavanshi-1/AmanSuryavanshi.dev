@@ -75,13 +75,15 @@ const AboutContent = () => {
           </div>
         </div>
 
-        {/* Experience Text at Bottom */}
-        <div className="text-[10px] text-forest-600 bg-sage-50 p-3 rounded-xl border border-sage-100 italic text-center">
-          {experienceText}
-        </div>
+        {/* Experience Text at Bottom - Removed as per request */}
+        {/* {experienceText && (
+          <div className="text-[10px] text-forest-600 bg-sage-50 p-3 rounded-xl border border-sage-100 italic text-center">
+            {experienceText}
+          </div>
+        )} */}
 
-        {/* CTA */}
-        <div className="flex items-center justify-center gap-2 pt-1">
+        {/* CTA - Removed as per request */}
+        {/* <div className="flex items-center justify-center gap-2 pt-1">
           <MousePointerClick className="w-4 h-4 text-lime-600 animate-bounce" aria-hidden="true" />
           <p className="text-forest-900 font-medium text-sm">
             {cta}
@@ -89,7 +91,7 @@ const AboutContent = () => {
               (Check out my projects below)
             </Link>
           </p>
-        </div>
+        </div> */}
 
         {/* Enhanced SEO Schema.org markup */}
         <meta itemProp="name" content="Aman Suryavanshi" />
