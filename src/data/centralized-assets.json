@@ -1,0 +1,438 @@
+{
+  "ProjectsVideo": [
+    {
+      "id": "Foodah",
+      "filename": "Foodah.webm",
+      "type": "video",
+      "localPath": "/Project/ProjectsVideo/Foodah.webm",
+      "cloudinaryUrl": "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Foodah/Foodah",
+      "youtubeUrl": "https://youtu.be/GwJz9MRstuU"
+    },
+    {
+      "id": "Enterprise_FullWalkThrough",
+      "filename": "Enterprise_FullWalkThrough.mp4",
+      "type": "video",
+      "localPath": "/Project/ProjectsVideo/Enterprise_FullWalkThrough.mp4",
+      "youtubeUrl": "https://youtu.be/jBLsJyNLVcA"
+    },
+    {
+      "id": "AVNewsStream",
+      "filename": "AVNewsStream.webm",
+      "type": "video",
+      "localPath": "/Project/ProjectsVideo/AVNewsStream.webm",
+      "youtubeUrl": "https://youtu.be/IkFf7UnI2U4"
+    },
+    {
+      "id": "AviatorsTrainingCenter_WalkThrough_720p",
+      "filename": "AviatorsTrainingCenter_WalkThrough_720p.mp4",
+      "type": "video",
+      "localPath": "/Project/ProjectsVideo/AviatorsTrainingCenter_WalkThrough_720p.mp4",
+      "youtubeUrl": "https://youtu.be/7NSVxMqWUGU"
+    },
+    {
+      "id": "AviatorsTrainingCenter_WalkThrough",
+      "filename": "AviatorsTrainingCenter_WalkThrough.mp4",
+      "type": "video",
+      "localPath": "/Project/ProjectsVideo/AviatorsTrainingCenter_WalkThrough.mp4",
+      "youtubeUrl": "https://youtu.be/7NSVxMqWUGU"
+    }
+  ],
+  "Portfolio": [
+    {
+      "id": "Portfolio-blog",
+      "filename": "Portfolio-blog.webp",
+      "type": "image",
+      "localPath": "/Project/Portfolio/Portfolio-blog.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Portfolio/Portfolio-blog.webp"
+    },
+    {
+      "id": "amansuryavanshi-dev.vercel.app_Projects",
+      "filename": "amansuryavanshi-dev.vercel.app_Projects.webp",
+      "type": "image",
+      "localPath": "/Project/Portfolio/amansuryavanshi-dev.vercel.app_Projects.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Portfolio/amansuryavanshi-dev.vercel.app_Projects.webp"
+    },
+    {
+      "id": "amansuryavanshi-dev.vercel.app_Header",
+      "filename": "amansuryavanshi-dev.vercel.app_Header.webp",
+      "type": "image",
+      "localPath": "/Project/Portfolio/amansuryavanshi-dev.vercel.app_Header.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Portfolio/amansuryavanshi-dev.vercel.app_Header.webp"
+    },
+    {
+      "id": "amansuryavanshi-dev.vercel.app_contact_us",
+      "filename": "amansuryavanshi-dev.vercel.app_contact_us.webp",
+      "type": "image",
+      "localPath": "/Project/Portfolio/amansuryavanshi-dev.vercel.app_contact_us.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Portfolio/amansuryavanshi-dev.vercel.app_contact_us.webp"
+    },
+    {
+      "id": "amansuryavanshi-dev.vercel.app_blogs",
+      "filename": "amansuryavanshi-dev.vercel.app_blogs.webp",
+      "type": "image",
+      "localPath": "/Project/Portfolio/amansuryavanshi-dev.vercel.app_blogs.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Portfolio/amansuryavanshi-dev.vercel.app_blogs.webp"
+    }
+  ],
+  "OMNI-POST-AI-Assets": [
+    {
+      "id": "Part_2_Distribution_Workflow",
+      "filename": "Part_2_Distribution_Workflow.webp",
+      "type": "image",
+      "localPath": "/Project/OMNI-POST-AI-Assets/Part_2_Distribution_Workflow.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2_Distribution_Workflow.webp"
+    },
+    {
+      "id": "Part_2 _Automation_Content_Posting_zoomable",
+      "filename": "Part_2 _Automation_Content_Posting_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/OMNI-POST-AI-Assets/Part_2 _Automation_Content_Posting_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2 _Automation_Content_Posting_zoomable.webp"
+    },
+    {
+      "id": "Part_1_Generation_Workflow",
+      "filename": "Part_1_Generation_Workflow.webp",
+      "type": "image",
+      "localPath": "/Project/OMNI-POST-AI-Assets/Part_1_Generation_Workflow.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Generation_Workflow.webp"
+    },
+    {
+      "id": "Part_1_Automation_COMPLETEFLOW_Content_Repurposing_zoomable",
+      "filename": "Part_1_Automation_COMPLETEFLOW_Content_Repurposing_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/OMNI-POST-AI-Assets/Part_1_Automation_COMPLETEFLOW_Content_Repurposing_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Automation_COMPLETEFLOW_Content_Repurposing_zoomable.webp"
+    },
+    {
+      "id": "Asset_5_LLM_Routing",
+      "filename": "Asset_5_LLM_Routing.webp",
+      "type": "image",
+      "localPath": "/Project/OMNI-POST-AI-Assets/Asset_5_LLM_Routing.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_5_LLM_Routing.webp"
+    },
+    {
+      "id": "Asset_4_Error_Handling_Architecture",
+      "filename": "Asset_4_Error_Handling_Architecture.webp",
+      "type": "image",
+      "localPath": "/Project/OMNI-POST-AI-Assets/Asset_4_Error_Handling_Architecture.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_4_Error_Handling_Architecture.webp"
+    },
+    {
+      "id": "Asset_3_Metrics_Dashboard",
+      "filename": "Asset_3_Metrics_Dashboard.webp",
+      "type": "image",
+      "localPath": "/Project/OMNI-POST-AI-Assets/Asset_3_Metrics_Dashboard.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_3_Metrics_Dashboard.webp"
+    },
+    {
+      "id": "Asset_2_Notion_Database_Schema_FullSize_Screenshot_zoomable",
+      "filename": "Asset_2_Notion_Database_Schema_FullSize_Screenshot_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/OMNI-POST-AI-Assets/Asset_2_Notion_Database_Schema_FullSize_Screenshot_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_2_Notion_Database_Schema_FullSize_Screenshot_zoomable.webp"
+    },
+    {
+      "id": "Asset_2_Notion_Content_Queue_Database_zoomable",
+      "filename": "Asset_2_Notion_Content_Queue_Database_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/OMNI-POST-AI-Assets/Asset_2_Notion_Content_Queue_Database_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_2_Notion_Content_Queue_Database_zoomable.webp"
+    },
+    {
+      "id": "Asset_1_Timeline_Evolution",
+      "filename": "Asset_1_Timeline_Evolution.webp",
+      "type": "image",
+      "localPath": "/Project/OMNI-POST-AI-Assets/Asset_1_Timeline_Evolution.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_1_Timeline_Evolution.webp"
+    },
+    {
+      "id": "Asset 6 Session-Based File Structure",
+      "filename": "Asset 6 Session-Based File Structure.webp",
+      "type": "image",
+      "localPath": "/Project/OMNI-POST-AI-Assets/Asset 6 Session-Based File Structure.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset 6 Session-Based File Structure.webp"
+    }
+  ],
+  "Foodah": [
+    {
+      "id": "Foodah",
+      "filename": "Foodah.webp",
+      "type": "image",
+      "localPath": "/Project/Foodah/Foodah.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Foodah/Foodah.webp",
+      "cloudinaryUrl": "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Foodah/Foodah"
+    },
+    {
+      "id": "Foodah-mobile",
+      "filename": "Foodah-mobile.webp",
+      "type": "image",
+      "localPath": "/Project/Foodah/Foodah-mobile.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Foodah/Foodah-mobile.webp",
+      "cloudinaryUrl": "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Foodah/Foodah-mobile"
+    }
+  ],
+  "Ecommerce": [
+    {
+      "id": "Ecommerce",
+      "filename": "Ecommerce.webp",
+      "type": "image",
+      "localPath": "/Project/Ecommerce/Ecommerce.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Ecommerce/Ecommerce.webp"
+    },
+    {
+      "id": "Ecommerce-Mobile",
+      "filename": "Ecommerce-Mobile.webp",
+      "type": "image",
+      "localPath": "/Project/Ecommerce/Ecommerce-Mobile.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Ecommerce/Ecommerce-Mobile.webp"
+    },
+    {
+      "id": "E-coomerce",
+      "filename": "E-coomerce.webp",
+      "type": "image",
+      "localPath": "/Project/Ecommerce/E-coomerce.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Ecommerce/E-coomerce.webp"
+    }
+  ],
+  "BarkatEnterprise": [
+    {
+      "id": "Enterprise",
+      "filename": "Enterprise.webp",
+      "type": "image",
+      "localPath": "/Project/BarkatEnterprise/Enterprise.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/Enterprise.webp",
+      "cloudinaryUrl": "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/BarkatEnterprise/Enterprise"
+    },
+    {
+      "id": "Enterprise-mobile",
+      "filename": "Enterprise-mobile.webp",
+      "type": "image",
+      "localPath": "/Project/BarkatEnterprise/Enterprise-mobile.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/Enterprise-mobile.webp",
+      "cloudinaryUrl": "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/BarkatEnterprise/Enterprise-mobile"
+    },
+    {
+      "id": "barkat-enterprise-Store Info",
+      "filename": "barkat-enterprise-Store Info.webp",
+      "type": "image",
+      "localPath": "/Project/BarkatEnterprise/barkat-enterprise-Store Info.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-Store Info.webp"
+    },
+    {
+      "id": "barkat-enterprise-Products",
+      "filename": "barkat-enterprise-Products.webp",
+      "type": "image",
+      "localPath": "/Project/BarkatEnterprise/barkat-enterprise-Products.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-Products.webp"
+    },
+    {
+      "id": "barkat-enterprise-Header",
+      "filename": "barkat-enterprise-Header.webp",
+      "type": "image",
+      "localPath": "/Project/BarkatEnterprise/barkat-enterprise-Header.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-Header.webp"
+    },
+    {
+      "id": "barkat-enterprise-Contact Page",
+      "filename": "barkat-enterprise-Contact Page.webp",
+      "type": "image",
+      "localPath": "/Project/BarkatEnterprise/barkat-enterprise-Contact Page.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-Contact Page.webp"
+    },
+    {
+      "id": "barkat-enterprise-Catalogues",
+      "filename": "barkat-enterprise-Catalogues.webp",
+      "type": "image",
+      "localPath": "/Project/BarkatEnterprise/barkat-enterprise-Catalogues.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-Catalogues.webp"
+    },
+    {
+      "id": "barkat-enterprise-AboutUs",
+      "filename": "barkat-enterprise-AboutUs.webp",
+      "type": "image",
+      "localPath": "/Project/BarkatEnterprise/barkat-enterprise-AboutUs.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-AboutUs.webp"
+    }
+  ],
+  "AviatorsTrainingCentre": [
+    {
+      "id": "www.aviatorstrainingcentre.in_Blog",
+      "filename": "www.aviatorstrainingcentre.in_Blog.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/www.aviatorstrainingcentre.in_Blog.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/www.aviatorstrainingcentre.in_Blog.webp"
+    },
+    {
+      "id": "www.aviatorstrainingcentre.in_ LightMode_FullPage_ScreenShot",
+      "filename": "www.aviatorstrainingcentre.in_ LightMode_FullPage_ScreenShot.png",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/www.aviatorstrainingcentre.in_ LightMode_FullPage_ScreenShot.png",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/www.aviatorstrainingcentre.in_ LightMode_FullPage_ScreenShot.png"
+    },
+    {
+      "id": "www.aviatorstrainingcentre.in_ DarktMode_FullPage_ScreenShot",
+      "filename": "www.aviatorstrainingcentre.in_ DarktMode_FullPage_ScreenShot.jpg",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/www.aviatorstrainingcentre.in_ DarktMode_FullPage_ScreenShot.jpg",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/www.aviatorstrainingcentre.in_ DarktMode_FullPage_ScreenShot.jpg"
+    },
+    {
+      "id": "ASSET-9 Airtable CRM Schema & Views_zoomable",
+      "filename": "ASSET-9 Airtable CRM Schema & Views_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-9 Airtable CRM Schema & Views_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-9 Airtable CRM Schema & Views_zoomable.webp"
+    },
+    {
+      "id": "ASSET-8 WhatsApp AI 2-Workflow Architecture_zoomable",
+      "filename": "ASSET-8 WhatsApp AI 2-Workflow Architecture_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-8 WhatsApp AI 2-Workflow Architecture_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-8 WhatsApp AI 2-Workflow Architecture_zoomable.webp"
+    },
+    {
+      "id": "ASSET-7 3-Layer Validation Decision Tree_zoomable",
+      "filename": "ASSET-7 3-Layer Validation Decision Tree_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-7 3-Layer Validation Decision Tree_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-7 3-Layer Validation Decision Tree_zoomable.webp"
+    },
+    {
+      "id": "ASSET-6 Cancellation Recovery Workflow_zoomable",
+      "filename": "ASSET-6 Cancellation Recovery Workflow_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-6 Cancellation Recovery Workflow_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-6 Cancellation Recovery Workflow_zoomable.webp"
+    },
+    {
+      "id": "ASSET-5 Cal.com Booking Workflow with 3-Layer Validation_zoomable",
+      "filename": "ASSET-5 Cal.com Booking Workflow with 3-Layer Validation_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-5 Cal.com Booking Workflow with 3-Layer Validation_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-5 Cal.com Booking Workflow with 3-Layer Validation_zoomable.webp"
+    },
+    {
+      "id": "ASSET-4 Firebase Trigger Workflow Detail",
+      "filename": "ASSET-4 Firebase Trigger Workflow Detail.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-4 Firebase Trigger Workflow Detail.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-4 Firebase Trigger Workflow Detail.webp"
+    },
+    {
+      "id": "ASSET-3 Contact Form to n8n End-to-End Flow_zoomable",
+      "filename": "ASSET-3 Contact Form to n8n End-to-End Flow_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-3 Contact Form to n8n End-to-End Flow_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-3 Contact Form to n8n End-to-End Flow_zoomable.webp"
+    },
+    {
+      "id": "ASSET-20 AvaitorsTrainingCenter_LighthouseScores",
+      "filename": "ASSET-20 AvaitorsTrainingCenter_LighthouseScores.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-20 AvaitorsTrainingCenter_LighthouseScores.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-20 AvaitorsTrainingCenter_LighthouseScores.webp"
+    },
+    {
+      "id": "ASSET-2 n8n 3 Production Workflows Overview",
+      "filename": "ASSET-2 n8n 3 Production Workflows Overview.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-2 n8n 3 Production Workflows Overview.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-2 n8n 3 Production Workflows Overview.webp"
+    },
+    {
+      "id": "ASSET-19 Mobile Homepage",
+      "filename": "ASSET-19 Mobile Homepage.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-19 Mobile Homepage.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-19 Mobile Homepage.webp"
+    },
+    {
+      "id": "ASSET-18 n8n Workflow Canvas - Cal.com Trigger",
+      "filename": "ASSET-18 n8n Workflow Canvas - Cal.com Trigger.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-18 n8n Workflow Canvas - Cal.com Trigger.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-18 n8n Workflow Canvas - Cal.com Trigger.webp"
+    },
+    {
+      "id": "ASSET-17 n8n Workflow Canvas - Firebase Trigger",
+      "filename": "ASSET-17 n8n Workflow Canvas - Firebase Trigger.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-17 n8n Workflow Canvas - Firebase Trigger.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-17 n8n Workflow Canvas - Firebase Trigger.webp"
+    },
+    {
+      "id": "ASSET-16 Google Search Console Performance",
+      "filename": "ASSET-16 Google Search Console Performance.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-16 Google Search Console Performance.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-16 Google Search Console Performance.webp"
+    },
+    {
+      "id": "ASSET-15 Blog Post Example",
+      "filename": "ASSET-15 Blog Post Example.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-15 Blog Post Example.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-15 Blog Post Example.webp"
+    },
+    {
+      "id": "ASSET-14 Contact Form Screenshot",
+      "filename": "ASSET-14 Contact Form Screenshot.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-14 Contact Form Screenshot.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-14 Contact Form Screenshot.webp"
+    },
+    {
+      "id": "ASSET-13 Homepage Screenshot",
+      "filename": "ASSET-13 Homepage Screenshot.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-13 Homepage Screenshot.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-13 Homepage Screenshot.webp"
+    },
+    {
+      "id": "ASSET-12 Email Sequence Timeline_zoomable",
+      "filename": "ASSET-12 Email Sequence Timeline_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-12 Email Sequence Timeline_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-12 Email Sequence Timeline_zoomable.webp"
+    },
+    {
+      "id": "ASSET-11 Lead Generation Funnel_zoomable",
+      "filename": "ASSET-11 Lead Generation Funnel_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-11 Lead Generation Funnel_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-11 Lead Generation Funnel_zoomable.webp"
+    },
+    {
+      "id": "ASSET-10 Lighthouse Optimization BeforeAfter_zoomable",
+      "filename": "ASSET-10 Lighthouse Optimization BeforeAfter_zoomable.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-10 Lighthouse Optimization BeforeAfter_zoomable.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-10 Lighthouse Optimization BeforeAfter_zoomable.webp"
+    },
+    {
+      "id": "ASSET-1 Complete System Architecture Diagram",
+      "filename": "ASSET-1 Complete System Architecture Diagram.webp",
+      "type": "image",
+      "localPath": "/Project/AviatorsTrainingCentre/Docs_Assets/ASSET-1 Complete System Architecture Diagram.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-1 Complete System Architecture Diagram.webp"
+    }
+  ],
+  "AV-NewsStream": [
+    {
+      "id": "AV-NewsStream",
+      "filename": "AV-NewsStream.webp",
+      "type": "image",
+      "localPath": "/Project/AV-NewsStream/AV-NewsStream.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AV-NewsStream/AV-NewsStream.webp",
+      "cloudinaryUrl": "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/AV-NewsStream/AV-NewsStream"
+    },
+    {
+      "id": "AV-NewsStream-mobile",
+      "filename": "AV-NewsStream-mobile.webp",
+      "type": "image",
+      "localPath": "/Project/AV-NewsStream/AV-NewsStream-mobile.webp",
+      "cdnUrl": "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AV-NewsStream/AV-NewsStream-mobile.webp",
+      "cloudinaryUrl": "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/AV-NewsStream/AV-NewsStream-mobile"
+    }
+  ]
+}

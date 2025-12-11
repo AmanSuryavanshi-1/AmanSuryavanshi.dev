@@ -46,8 +46,6 @@ next-env.d.ts
 # VSCode settings (personal IDE preferences)
 .vscode/
 
-# Large video files in public folder (too big for GitHub)
-public/Project/AV-NewsStream/AVNewsStream.webm
-public/Project/AviatorsTrainingCentre/AviatorsTrainingCenter_WalkThrough_720p.mp4
-public/Project/BarkatEnterprise/Enterprise_FullWalkThrough.mp4
-public/Project/Foodah/Foodah.webm
+# Project assets (managed in separate GitHub repo: AmanSuryavanshi-1/portfolio-assets)
+# Assets served via jsDelivr CDN - https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/
+public/Project/
