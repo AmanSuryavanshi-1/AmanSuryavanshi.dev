@@ -9,6 +9,7 @@ import { Project } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 
 interface FeaturedHeroProps {
     projects: Project[];
@@ -209,7 +210,19 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
                                 transition={{ duration: 0.6 }}
                                 className="absolute inset-0"
                             >
-                                {activeProject.video ? (
+                                {activeProject.videoYouTubeId ? (
+                                    <YouTubeEmbed
+                                        videoId={activeProject.videoYouTubeId}
+                                        title={activeProject.title}
+                                        poster={activeProject.image}
+                                        autoplay={true}
+                                        muted={true}
+                                        loop={true}
+                                        controls={false}
+                                        autoplayOnViewport={true}
+                                        className="w-full h-full"
+                                    />
+                                ) : activeProject.video ? (
                                     <video
                                         ref={videoRef}
                                         src={activeProject.video}

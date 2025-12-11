@@ -9,7 +9,7 @@ import { Menu, X, Sun, Moon, Home, FolderGit2, User2, Briefcase, BookOpen, Mail 
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
-import logo from "../../public/Profile/PFP-Cricular.png"
+import logo from "../../public/Profile/PFP-Cricular.webp"
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)

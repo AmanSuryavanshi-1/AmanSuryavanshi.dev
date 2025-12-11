@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Github, BookOpen, ChevronDown, ChevronUp, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useImageGallery } from "@/context/ImageGalleryContext";
+import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 
 interface ProjectCardProps {
   project: Project;
@@ -53,7 +54,19 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       <div className="flex flex-col lg:flex-row">
         {/* Media Section */}
         <div className="w-full lg:w-2/5 relative aspect-video lg:aspect-auto lg:min-h-[400px] overflow-hidden bg-forest-50">
-          {project.video ? (
+          {project.videoYouTubeId ? (
+            <YouTubeEmbed
+              videoId={project.videoYouTubeId}
+              title={project.title}
+              poster={project.image}
+              autoplay={true}
+              muted={true}
+              loop={true}
+              controls={false}
+              autoplayOnViewport={true}
+              className="w-full h-full"
+            />
+          ) : project.video ? (
             <div className="relative w-full h-full group/video cursor-pointer" onClick={toggleVideo}>
               <video
                 ref={videoRef}

@@ -22,7 +22,7 @@ A production-grade automation system that transforms a single Notion idea into p
 ```
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844303/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_1_Generation_Workflow.jpg" alt="Part 1: Content Generation Workflow in n8n" width="100%">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Generation_Workflow.webp" alt="Part 1: Content Generation Workflow in n8n" width="100%">
 </p>
 <p align="center"><em>Part 1: Complete Content Generation Pipeline (28 nodes) in n8n</em></p>
 
@@ -107,7 +107,7 @@ Status Tracking → "Posted" with all URLs
 ```
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844306/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_2_Distribution_Workflow.jpg" alt="Part 2: Content Distribution Workflow in n8n" width="100%">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2_Distribution_Workflow.webp" alt="Part 2: Content Distribution Workflow in n8n" width="100%">
 </p>
 <p align="center"><em>Part 2: Complete Content Distribution Pipeline (46 nodes) in n8n</em></p>
 
@@ -159,7 +159,7 @@ which is like USB-C for AI. It turns N*M into N+M..."
 ### Performance Metrics
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844298/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_3_Metrics_Dashboard.jpg" alt="Metrics Dashboard" width="80%">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_3_Metrics_Dashboard.webp" alt="Metrics Dashboard" width="80%">
 </p>
 
 ---

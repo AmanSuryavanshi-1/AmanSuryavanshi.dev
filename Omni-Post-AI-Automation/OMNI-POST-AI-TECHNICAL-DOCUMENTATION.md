@@ -116,7 +116,7 @@ This is a **production-grade, bi-part n8n automation** consisting of 74 nodes or
 **Evolution Timeline:**
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844294/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_1_Timeline_Evolution.jpg" alt="Content Evolution Comparison" width="85%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_1_Timeline_Evolution.webp" alt="Content Evolution Comparison" width="85%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 0: Evolution of content quality from manual posting (v1) to AI-automated system (v4), showing dramatic improvement in engagement, technical depth, and authenticity</em></p>
 
@@ -149,26 +149,26 @@ This is a **production-grade, bi-part n8n automation** consisting of 74 nodes or
 **Part 1: Content Generation Pipeline (28 Nodes)**
 <p align="center">
   <strong>High-Level Overview</strong><br>
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844303/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_1_Generation_Workflow.jpg" alt="Part 1 High Level Workflow" width="95%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Generation_Workflow.webp" alt="Part 1 High Level Workflow" width="95%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 1a: Conceptual workflow showing the AI generation process</em></p>
 
 <p align="center">
   <strong>Detailed N8N Implementation</strong><br>
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844303/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_1_Automation_COMPLETEFLOW_Content_Repurposing.png" alt="Part 1 Detailed Automation Flow" width="95%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Automation_COMPLETEFLOW_Content_Repurposing_zoomable.webp" alt="Part 1 Detailed Automation Flow" width="95%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 1b: Actual 28-node n8n workflow implementation</em></p>
 
 **Part 2: Content Distribution Pipeline (46 Nodes)**
 <p align="center">
   <strong>High-Level Overview</strong><br>
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844306/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_2_Distribution_Workflow.jpg" alt="Part 2 High Level Workflow" width="95%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2_Distribution_Workflow.webp" alt="Part 2 High Level Workflow" width="95%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 2a: Conceptual workflow showing the multi-platform distribution process</em></p>
 
 <p align="center">
   <strong>Detailed N8N Implementation</strong><br>
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844306/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_2__Automation_Content_Posting.png" alt="Part 2 Detailed Automation Flow" width="95%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2 _Automation_Content_Posting_zoomable.webp" alt="Part 2 Detailed Automation Flow" width="95%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 2b: Actual 46-node n8n workflow implementation</em></p>
 
@@ -203,8 +203,8 @@ Notion serves as the single source of truth for three technical reasons:
 **Technical Advantage**: By using Notion's block API with recursive traversal, I can extract content with full structural context (3-4 levels deep), which significantly improves AI-generated output quality compared to flat text extraction.
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844297/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_2_Notion_Database_Schema_FullSize_Screenshot.png" alt="Notion Database Schema" width="80%" style="max-height: 80vh; object-fit: contain;">
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844295/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_2_Notion_Content_Queue_Database.png" alt="Notion Database Schema" width="80%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_2_Notion_Database_Schema_FullSize_Screenshot_zoomable.webp" alt="Notion Database Schema" width="80%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_2_Notion_Content_Queue_Database_zoomable.webp" alt="Notion Database Schema" width="80%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 3: Social Content Queue database structure showing all tracking properties including SessionID, Status workflow, Draft URLs, SEO metadata, and posting timestamps for complete content lifecycle management</em></p>
 
@@ -307,7 +307,7 @@ LinkedIn Interactions:
 ```
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844298/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_3_Metrics_Dashboard.jpg" alt="Metrics Dashboard" width="80%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_3_Metrics_Dashboard.webp" alt="Metrics Dashboard" width="80%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 4: Production system performance dashboard showing 99.7% reliability, 88-second average processing time, zero operational cost, 85% engagement rate, and 1000+ successful executions</em></p>
 
@@ -326,7 +326,7 @@ LinkedIn Interactions:
 - **Research API**: Perplexity Sonar (free tier, keyword research & hashtags)
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844300/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_5_LLM_Routing.jpg" alt="LLM Routing Decision Tree" width="75%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_5_LLM_Routing.webp" alt="LLM Routing Decision Tree" width="75%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 6: LLM routing strategy showing model selection based on content type - Gemini 2.5 Pro for technical deep dives, Gemini Flash for quick updates, and Perplexity Sonar for research-heavy content</em></p>
 
@@ -1396,7 +1396,7 @@ const imageFileName = `asset-${assetNumber}-${sessionId}.png`;
 ```
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844292/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_6_Session-Based_File_Structure.jpg" alt="Session-Based File Structure" width="80%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset 6 Session-Based File Structure.webp" alt="Session-Based File Structure" width="80%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 7: Google Drive folder structure showing session-based organization with unique session IDs for each content piece, enabling concurrent processing without file conflicts. Each session folder contains all drafts and assets with consistent naming conventions.</em></p>
 
@@ -1817,7 +1817,7 @@ TOTAL END-TO-END: 65-111 seconds (avg: 88 seconds)
 - **Readability**: Hierarchical structure (H2/H3), code examples, images
 
 <p align="center">
-  <img src="https://res.cloudinary.com/dr0lrme36/image/upload/f_auto,q_auto,w_1600,c_limit/v1764844294/Omni_post_Ai_autoamtion/omni_post_ai_assets/Asset_1_Timeline_Evolution.jpg" alt="Content Evolution Comparison" width="85%" style="max-height: 80vh; object-fit: contain;">
+  <img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_1_Timeline_Evolution.webp" alt="Content Evolution Comparison" width="85%" style="max-height: 80vh; object-fit: contain;">
 </p>
 <p align="center"><em>Figure 7: Evolution of content quality from before the original manual system (v1) to after current AI-automated system (v4), showing dramatic improvement in engagement, credibility, and authenticity</em></p>
 ---

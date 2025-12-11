@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import HeaderSocial from './HeroSocial';
 import HeroData from './HeroData';
 import { ChevronDown } from 'lucide-react';
-import pfp from '../../../public/Profile/PFP.png'
+import pfp from '../../../public/Profile/PFP.webp'
 
 export default function Header() {
     const { scrollYProgress } = useScroll();
