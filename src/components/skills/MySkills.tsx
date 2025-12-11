@@ -40,14 +40,14 @@ const SkillsShowcase = () => {
                 <div className="absolute bottom-[20%] -right-[5%] w-[500px] h-[500px] bg-forest-900/5 rounded-full blur-3xl opacity-50" />
             </div>
 
-            <div className="container max-w-7xl mx-auto px-4 relative z-10">
+            <div className="container max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
                 {/* Title Section */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="text-center mb-12 lg:mb-16"
+                    className="text-center mb-8 sm:mb-12 lg:mb-16"
                 >
                     <Badge variant="outline" className="mb-4 border-lime-500 bg-white/50 backdrop-blur-sm text-forest-900 px-4 py-1.5 text-sm font-medium">
                         Solution Architect Stack
@@ -62,7 +62,7 @@ const SkillsShowcase = () => {
                 </motion.div>
 
                 {/* Bento Grid Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {landingSkills.categories.map((category, categoryIndex) => {
                         const CategoryIcon = getCategoryIcon(category.title);
 
@@ -78,22 +78,22 @@ const SkillsShowcase = () => {
                                 transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
                                 className="group relative"
                             >
-                                <div className="h-full p-6 lg:p-8 rounded-3xl bg-white/60 backdrop-blur-md border border-white/60 shadow-lg shadow-forest-900/5 
+                                <div className="h-full p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-white/60 backdrop-blur-md border border-white/60 shadow-lg shadow-forest-900/5 
                                               hover:bg-white/80 hover:shadow-xl hover:shadow-lime-500/10 hover:-translate-y-1
                                               transition-all duration-300 overflow-hidden flex flex-col">
 
                                     {/* Card Header */}
-                                    <div className="flex items-center gap-4 mb-6 relative z-10">
-                                        <div className="p-3.5 rounded-2xl bg-forest-50 text-forest-900 group-hover:bg-lime-500 group-hover:text-white transition-colors duration-300 shadow-sm">
-                                            <CategoryIcon className="w-6 h-6" />
+                                    <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 relative z-10">
+                                        <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-forest-50 text-forest-900 group-hover:bg-lime-500 group-hover:text-white transition-colors duration-300 shadow-sm">
+                                            <CategoryIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                                         </div>
-                                        <h3 className="text-xl font-bold text-forest-900">
+                                        <h3 className="text-lg sm:text-xl font-bold text-forest-900">
                                             {category.title}
                                         </h3>
                                     </div>
 
                                     {/* Skills List */}
-                                    <div className="space-y-4 flex-grow relative z-10 relative">
+                                    <div className="space-y-3 sm:space-y-4 flex-grow relative z-10 relative">
                                         {/* Vertical line connecting items */}
                                         <div className="absolute left-2.5 top-2 bottom-4 w-px bg-forest-900/5 group-hover:bg-lime-500/20 transition-colors duration-300" />
 
@@ -157,7 +157,7 @@ const SkillsShowcase = () => {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.5 }}
-                    className="mt-16 flex flex-wrap justify-center gap-3 px-4"
+                    className="mt-10 sm:mt-16 flex flex-wrap justify-center gap-2 sm:gap-3 px-2 sm:px-4"
                 >
                     {landingSkills.keywords.map((keyword) => (
                         <span

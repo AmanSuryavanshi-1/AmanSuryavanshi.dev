@@ -1,16 +1,12 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Project } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github, BookOpen, ChevronDown, ChevronUp, Play, Pause } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useImageGallery } from "@/context/ImageGalleryContext";
-import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
+import { ExternalLink, Github, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
+import ProjectMediaCarousel from "./ProjectMediaCarousel";
 
 interface ProjectCardProps {
   project: Project;
@@ -19,28 +15,6 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const { registerImage, openGallery, images } = useImageGallery();
-  const imageSrc = project.image || "/placeholder.png";
-
-  useEffect(() => {
-    if (imageSrc) {
-      registerImage({ src: imageSrc, alt: project.title });
-    }
-  }, [imageSrc, project.title, registerImage]);
-
-  const toggleVideo = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
 
   return (
     <motion.div
@@ -52,66 +26,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       className="group relative w-full bg-white/50 backdrop-blur-sm border border-forest-100 rounded-[2rem] overflow-hidden hover:shadow-xl hover:border-lime-500/50 transition-all duration-500"
     >
       <div className="flex flex-col lg:flex-row">
-        {/* Media Section */}
-        <div className="w-full lg:w-2/5 relative aspect-video lg:aspect-auto lg:min-h-[400px] overflow-hidden bg-forest-50">
-          {project.videoYouTubeId ? (
-            <YouTubeEmbed
-              videoId={project.videoYouTubeId}
-              title={project.title}
-              poster={project.image}
-              autoplay={true}
-              muted={true}
-              loop={true}
-              controls={false}
-              autoplayOnViewport={true}
-              className="w-full h-full"
-            />
-          ) : project.video ? (
-            <div className="relative w-full h-full group/video cursor-pointer" onClick={toggleVideo}>
-              <video
-                ref={videoRef}
-                src={project.video}
-                className="w-full h-full object-cover"
-                loop
-                muted
-                playsInline
-                poster={project.image}
-              />
-              <div className={cn(
-                "absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300",
-                isPlaying ? "opacity-0 group-hover/video:opacity-100" : "opacity-100"
-              )}>
-                <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 text-white shadow-lg transition-transform group-hover/video:scale-110">
-                  {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current ml-1" />}
-                </div>
-              </div>
-            </div>
-          ) : (
-            <button
-              type="button"
-              className="relative w-full h-full group/image cursor-zoom-in block border-none p-0 bg-transparent text-left"
-              onClick={(e) => {
-                e.stopPropagation();
-                const idx = images.findIndex(img => img.src === imageSrc);
-                if (idx !== -1) openGallery(idx);
-              }}
-            >
-              <Image
-                src={imageSrc}
-                alt={project.title}
-                fill
-                className="object-cover transition-transform duration-700 group-hover/image:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-forest-900/40 to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-500" />
-            </button>
-          )}
-
-          {/* Category Badge Overlay */}
-          <div className="absolute top-4 left-4 z-10">
-            <Badge className="bg-white/90 text-forest-900 backdrop-blur-md border-white/50 shadow-sm hover:bg-white px-3 py-1.5 text-xs font-semibold uppercase tracking-wider">
-              {project.category}
-            </Badge>
-          </div>
+        {/* Media Section - Carousel */}
+        <div className="w-full lg:w-2/5 relative aspect-[4/3] lg:aspect-auto lg:min-h-[400px] overflow-hidden">
+          <ProjectMediaCarousel project={project} className="w-full h-full" />
         </div>
 
         {/* Content Section */}
