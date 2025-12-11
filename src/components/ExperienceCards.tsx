@@ -13,7 +13,7 @@ const ExperienceSection = () => {
   return (
     <section
       id="experience"
-      className="w-full relative overflow-visible py-8 lg:py-12"
+      className="w-full relative overflow-x-hidden py-8 lg:py-12"
       aria-label="Work Experience"
     >
       {/* Background Elements - completely transparent now to blend with page */}
@@ -21,7 +21,7 @@ const ExperienceSection = () => {
 
       </div>
 
-      <div className="container max-w-5xl mx-auto relative z-10 px-4 md:px-0">
+      <div className="container max-w-5xl mx-auto relative z-10 px-4 sm:px-6 lg:px-0">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -44,14 +44,14 @@ const ExperienceSection = () => {
         </motion.div>
 
         {/* Experience Timeline */}
-        <div className="space-y-8 md:space-y-12 relative">
+        <div className="space-y-6 sm:space-y-8 md:space-y-12 relative overflow-hidden">
 
           {/* Central Timeline Line */}
-          <div className="absolute left-[28px] md:left-1/2 top-4 bottom-0 w-0.5 bg-forest-900/10 md:-translate-x-1/2 z-0 hidden md:block" />
-          <div className="absolute left-[28px] top-4 bottom-0 w-0.5 bg-forest-900/10 z-0 md:hidden" />
+          <div className="absolute left-[24px] sm:left-[28px] md:left-1/2 top-4 bottom-0 w-0.5 bg-forest-900/10 md:-translate-x-1/2 z-0 hidden md:block" />
+          <div className="absolute left-[24px] sm:left-[28px] top-4 bottom-0 w-0.5 bg-forest-900/10 z-0 md:hidden" />
 
           {experienceData.map((experience, index) => (
-            <div key={index} className={`relative flex flex-col md:flex-row gap-8 md:gap-0 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+            <div key={index} className={`relative flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-0 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
 
               {/* Timeline Node */}
               <div className="absolute left-0 md:left-1/2 top-0 md:-translate-x-1/2 flex flex-col items-center h-full z-20">
@@ -60,16 +60,16 @@ const ExperienceSection = () => {
                   whileInView={{ scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                   viewport={{ once: true }}
-                  className="w-14 h-14 rounded-full bg-forest-50 border-4 border-white shadow-lg shadow-lime-500/20 flex items-center justify-center z-10 relative"
+                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-forest-50 border-4 border-white shadow-lg shadow-lime-500/20 flex items-center justify-center z-10 relative"
                 >
-                  <div className="w-10 h-10 rounded-full bg-lime-500 flex items-center justify-center text-white">
-                    <Rocket className="w-5 h-5" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-lime-500 flex items-center justify-center text-white">
+                    <Rocket className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                 </motion.div>
               </div>
 
               {/* Date/Duration Label (Opposite side on desktop) */}
-              <div className={`w-full md:w-1/2 flex md:items-start pt-3 pl-20 md:pl-0 ${index % 2 === 0 ? 'md:justify-end md:pr-16' : 'md:justify-start md:pl-16'}`}>
+              <div className={`w-full md:w-1/2 flex md:items-start pt-3 pl-14 sm:pl-20 md:pl-0 ${index % 2 === 0 ? 'md:justify-end md:pr-12 lg:pr-16' : 'md:justify-start md:pl-12 lg:pl-16'}`}>
                 <div className={`hidden md:flex flex-col gap-1 ${index % 2 === 0 ? 'items-end text-right' : 'items-start text-left'}`}>
                   <Badge variant="outline" className="text-forest-600 border-forest-200 bg-white/50 w-fit">
                     <Calendar className="w-3 h-3 mr-1.5" />
@@ -88,7 +88,7 @@ const ExperienceSection = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                className={`w-full md:w-1/2 pl-16 md:pl-0 ${index % 2 === 0 ? 'md:pr-16' : 'md:pl-16'}`}
+                className={`w-full md:w-1/2 pl-14 sm:pl-16 md:pl-0 ${index % 2 === 0 ? 'md:pr-12 lg:pr-16' : 'md:pl-12 lg:pl-16'}`}
               >
                 {/* Mobile Date Display (visible only on mobile) */}
                 <div className="md:hidden flex items-center gap-2 mb-4">
@@ -104,10 +104,10 @@ const ExperienceSection = () => {
                   {/* Decorative colored top border */}
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-lime-500 to-forest-500" />
 
-                  <CardContent className="p-6 md:p-8">
+                  <CardContent className="p-4 sm:p-6 md:p-8">
                     <div className="mb-4">
                       <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-xl md:text-2xl font-bold text-forest-900 leading-tight">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-forest-900 leading-tight">
                           {experience.role}
                         </h3>
                         <Badge className="bg-forest-100 text-forest-800 hover:bg-forest-200 border-0 ml-2 shrink-0">

@@ -31,13 +31,13 @@ const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ servic
           {/* Top decorative bar */}
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-forest-100 via-lime-500 to-forest-100 opacity-50 group-hover:opacity-100 transition-opacity" />
 
-          <CardHeader className="pb-3 pt-6 px-5 md:px-6">
+          <CardHeader className="pb-3 pt-5 sm:pt-6 px-4 sm:px-5 md:px-6">
             <div className="flex items-start justify-between mb-4">
               <div className="relative">
                 <div className="absolute inset-0 bg-lime-500 blur-lg opacity-0 group-hover:opacity-20 transition-opacity duration-500 rounded-full" />
-                <div className="relative p-2.5 rounded-2xl bg-forest-50 border border-forest-100 text-forest-900 
+                <div className="relative p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-forest-50 border border-forest-100 text-forest-900 
                                 group-hover:bg-lime-500 group-hover:text-white transition-colors duration-500">
-                  <div className="[&>svg]:w-6 [&>svg]:h-6">
+                  <div className="[&>svg]:w-5 [&>svg]:h-5 sm:[&>svg]:w-6 sm:[&>svg]:h-6">
                     {service.icon}
                   </div>
                 </div>
@@ -46,7 +46,7 @@ const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ servic
                 0{index + 1}
               </Badge>
             </div>
-            <CardTitle className="text-xl md:text-2xl font-bold font-serif text-forest-900 group-hover:text-lime-700 transition-colors duration-300">
+            <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold font-serif text-forest-900 group-hover:text-lime-700 transition-colors duration-300">
               {service.title}
             </CardTitle>
             <p className="text-sm font-medium text-forest-500 mt-1.5 group-hover:text-forest-700 transition-colors">
@@ -54,9 +54,9 @@ const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ servic
             </p>
           </CardHeader>
 
-          <CardContent className="flex-grow flex flex-col gap-4 px-5 md:px-6 pb-6">
+          <CardContent className="flex-grow flex flex-col gap-3 sm:gap-4 px-4 sm:px-5 md:px-6 pb-5 sm:pb-6">
             {/* Problem & Solution */}
-            <div className="space-y-3 p-3.5 rounded-xl bg-forest-50/50 border border-forest-100/50 group-hover:bg-forest-50 group-hover:border-forest-100 transition-colors duration-300">
+            <div className="space-y-2.5 sm:space-y-3 p-3 sm:p-3.5 rounded-xl bg-forest-50/50 border border-forest-100/50 group-hover:bg-forest-50 group-hover:border-forest-100 transition-colors duration-300">
               <div className="flex items-start gap-2.5">
                 <div className="mt-0.5 p-1 rounded-full bg-amber-100 text-amber-600 shrink-0">
                   <AlertCircle className="w-3 h-3" />
@@ -154,7 +154,7 @@ const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) =
   const currentChunk = chunks[currentIndex] || chunks[0];
 
   return (
-    <div className="relative max-w-6xl mx-auto px-4 lg:px-12">
+    <div className="relative max-w-6xl mx-auto px-2 sm:px-4 lg:px-12">
       <div className="overflow-hidden py-4">
         <AnimatePresence mode='wait'>
           <motion.div
@@ -177,18 +177,18 @@ const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) =
       <div className="flex justify-between items-center absolute top-1/2 left-0 right-0 -translate-y-1/2 pointer-events-none lg:px-0">
         <button
           onClick={prevSlide}
-          className="pointer-events-auto p-3 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -ml-2 lg:-ml-6"
+          className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -ml-1 sm:-ml-2 lg:-ml-6"
           aria-label="Previous services"
         >
-          <ArrowRight className="w-6 h-6 rotate-180" />
+          <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 rotate-180" />
         </button>
 
         <button
           onClick={nextSlide}
-          className="pointer-events-auto p-3 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -mr-2 lg:-mr-6"
+          className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -mr-1 sm:-mr-2 lg:-mr-6"
           aria-label="Next services"
         >
-          <ArrowRight className="w-6 h-6" />
+          <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
       </div>
 
@@ -215,7 +215,7 @@ const ServicesSection: React.FC = () => {
       {/* Background Elements - Clean global background now */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-lime-500/5 via-transparent to-transparent pointer-events-none" />
 
-      <div className="container max-w-7xl mx-auto px-4 relative z-10">
+      <div className="container max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -226,7 +226,7 @@ const ServicesSection: React.FC = () => {
           <Badge variant="outline" className="mb-3 border-lime-500 bg-white/50 text-forest-900 px-3 py-1">
             Consulting Services
           </Badge>
-          <h2 className="text-2xl md:text-3xl font-bold font-serif mb-3 tracking-tight">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-serif mb-3 tracking-tight">
             <span className="text-forest-900">Solving  </span>
             <span className="text-lime-600">Real Problems</span>
           </h2>

@@ -1233,17 +1233,13 @@ const rawProjects = [
             }
         ],
         gallery: [
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/www.aviatorstrainingcentre.in_ DarktMode_FullPage_ScreenShot.jpg", alt: "Dark Mode Full Page", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/www.aviatorstrainingcentre.in_ LightMode_FullPage_ScreenShot.png", alt: "Light Mode Full Page", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-19 Mobile Homepage.webp", alt: "Mobile Homepage View", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-14 Contact Form Screenshot.webp", alt: "Contact Form", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/www.aviatorstrainingcentre.in_Blog.webp", alt: "Blog Section", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-20 AvaitorsTrainingCenter_LighthouseScores.webp", alt: "Lighthouse Performance Scores", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-1 Complete System Architecture Diagram.webp", alt: "System Architecture Diagram", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-2 n8n 3 Production Workflows Overview.webp", alt: "n8n Workflows Overview", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-4 Firebase Trigger Workflow Detail.webp", alt: "Firebase Trigger Workflow", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-9 Airtable CRM Schema & Views_zoomable.webp", alt: "Airtable CRM Schema", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-11 Lead Generation Funnel_zoomable.webp", alt: "Lead Generation Funnel", type: "image" }
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-14 Contact Form Screenshot.webp", alt: "Contact Form", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-16 Google Search Console Performance.webp", alt: "Google Search Console Performance", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-17 n8n Workflow Canvas - Firebase Trigger.webp", alt: "n8n Workflow - Firebase Trigger", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-18 n8n Workflow Canvas - Cal.com Trigger.webp", alt: "n8n Workflow - Cal.com Trigger", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-19 Mobile Homepage.webp", alt: "Mobile Homepage View", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-20 AvaitorsTrainingCenter_LighthouseScores.webp", alt: "Lighthouse Performance Scores", type: "image" }
         ]
     },
     {
