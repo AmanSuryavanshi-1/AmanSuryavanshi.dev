@@ -455,7 +455,7 @@ const skillsData: SkillsData = {
                 details: "Web Speech API (STT/TTS) for voice-controlled apps",
                 relatedProjects: [
                     { title: "AV NewsStream", url: "/projects#av-newsstream" },
-                    { title: "TextWise", url: "/projects#textwise" }
+                    { title: "AV NewsStream", url: "/projects#av-newsstream" }
                 ]
             }
         ],
@@ -478,7 +478,7 @@ const skillsData: SkillsData = {
                             relatedProjects: [
                                 { title: "Foodah", url: "/projects#foodah" },
                                 { title: "AV NewsStream", url: "/projects#av-newsstream" },
-                                { title: "TextWise", url: "/projects#textwise" },
+
                                 { title: "Barkat Enterprise", url: "/projects#barkat-enterprise" }
                             ]
                         },
@@ -1453,35 +1453,6 @@ const rawProjects = [
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Portfolio/amansuryavanshi-dev.vercel.app_contact_us.webp", alt: "Contact Section", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Portfolio/Portfolio-blog.webp", alt: "Blog Page", type: "image" }
         ]
-    },
-    {
-        id: "textwise",
-        title: "TextWise",
-        tagLine: "Multi-Functional Text Manipulation & Note-Taking Tool",
-        category: "utility",
-        type: "personal",
-        shortDescription: "Comprehensive text utility application offering text transformations, word counting, reading time estimation, text-to-speech, and note-taking with localStorage persistence. Features dark/light theme toggle and mobile-first design.",
-        description: "A feature-rich text utility and note-taking application built with React, offering comprehensive text manipulation capabilities. Includes uppercase/lowercase/title case transformations with real-time preview, word and character counting with statistics, reading time estimation based on average reading speed, text-to-speech functionality using Web Speech API with voice selection and speed control, and note-taking with localStorage persistence for offline access. Implements dark/light theme toggle with system preference detection, fully responsive mobile-first design optimized for touch interactions, and keyboard shortcuts for power users. Additional features include text reversal, copy to clipboard with visual feedback, extra spaces removal, and text clearing with confirmation dialogs.",
-        challenge: "Users need quick, accessible text utilities without installing desktop applications or navigating complex interfaces. Existing tools lack integration, require internet connectivity, or sacrifice user experience for functionality. Students and professionals require reliable text analysis tools for writing efficiency.",
-        solution: "Developed a Progressive Web App using React with offline-first architecture. Implemented Web Speech API for text-to-speech with voice selection, pitch control, and playback speed adjustment. Used localStorage for persistent note saving with automatic draft recovery. Created responsive UI with TailwindCSS supporting touch gestures and keyboard shortcuts. Added real-time character counting, word frequency analysis, and reading time calculation using industry-standard reading speeds.",
-        impact: [
-            "Fast, accessible text utilities without installation requirements",
-            "Offline functionality with localStorage persistence",
-            "Mobile-optimized interface for on-the-go text manipulation",
-            "Accessibility features including text-to-speech and keyboard navigation"
-        ],
-        technicalOverview: "React 18 with functional components and hooks for state management. Web Speech API provides text-to-speech capabilities with voice synthesis. localStorage API enables persistent data storage with JSON serialization. TailwindCSS provides utility-first styling with dark mode support. Deployed on Vercel with PWA capabilities for offline access.",
-        techStack: ["React 18", "JavaScript", "Tailwind CSS", "Web Speech API", "LocalStorage API", "Vercel"],
-        badges: ["React", "JavaScript", "Utility", "PWA", "Personal", "Text Processing"],
-        imageUrl: "/placeholder.png",
-        liveUrl: "https://text-wise.vercel.app",
-        codeUrl: "https://github.com/AmanSuryavanshi-1/TextWise-TextUtilityAPP",
-        blogUrl: null,
-        featured: false,
-        metrics: {
-            features: "10+",
-            offline: "Yes"
-        }
     },
     {
         id: "ecommerce-platform",

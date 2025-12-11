@@ -9,29 +9,57 @@ import { motion } from "framer-motion";
 import { ImageGalleryProvider } from "@/context/ImageGalleryContext";
 import Lightbox from "@/components/ui/Lightbox";
 
+// Custom project order priority
+const PROJECT_ORDER: Record<string, number> = {
+    "aviators-training-centre": 1,
+    "n8n-automation-suite": 2,
+    "barkat-enterprise": 3,
+    "av-newsstream": 4,
+    "foodah": 5,
+    "portfolio-website": 6,
+    "ecommerce-platform": 7,
+};
+
 export default function ProjectsPage() {
     const [activeCategory, setActiveCategory] = useState("All");
     const [activeTech, setActiveTech] = useState("All Tech");
 
-    // Extract unique categories and technologies
-    const categories = useMemo(() => {
-        const cats = new Set(portfolioData.projects.map(p => p.category));
-        return ["All", ...Array.from(cats)];
+    // Sort projects once by custom order
+    const sortedProjects = useMemo(() => {
+        return [...portfolioData.projects].sort((a, b) => {
+            const orderA = PROJECT_ORDER[a.id] ?? 999;
+            const orderB = PROJECT_ORDER[b.id] ?? 999;
+            return orderA - orderB;
+        });
     }, []);
 
+    // Define professional category labels
+    const categoryLabels: Record<string, string> = {
+        "All": "All",
+        "featured": "Featured",
+        "web": "Web Apps",
+        "automation": "AI & Automation",
+    };
+
+    // Extract unique categories dynamically from projects
+    const categories = useMemo(() => {
+        const cats = new Set(sortedProjects.map(p => p.category));
+        return ["All", ...Array.from(cats).filter(cat => categoryLabels[cat])];
+    }, [sortedProjects]);
+
     const technologies = useMemo(() => {
-        const techs = new Set(portfolioData.projects.flatMap(p => p.techStack));
+        const techs = new Set(sortedProjects.flatMap(p => p.techStack));
         return ["All Tech", ...Array.from(techs).sort()];
-    }, []);
+    }, [sortedProjects]);
 
     // Filter projects
     const filteredProjects = useMemo(() => {
-        return portfolioData.projects.filter(project => {
+        return sortedProjects.filter(project => {
             const matchesCategory = activeCategory === "All" || project.category === activeCategory;
             const matchesTech = activeTech === "All Tech" || project.techStack.includes(activeTech);
             return matchesCategory && matchesTech;
         });
-    }, [activeCategory, activeTech]);
+    }, [activeCategory, activeTech, sortedProjects]);
 
     // Scroll to hash target on page load
     useEffect(() => {

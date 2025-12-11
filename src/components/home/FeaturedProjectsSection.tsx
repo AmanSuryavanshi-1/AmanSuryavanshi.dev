@@ -1,15 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import FeaturedHero from "@/components/projects/FeaturedHero";
 import { portfolioData } from "@/data/portfolio";
 import { ArrowRight, MessageSquare } from "lucide-react";
 import { SolidButton } from "@/components/solid-button";
 import { TransparentButton } from "@/components/transparent-button";
 
+// Custom project order priority - same as /projects page
+const PROJECT_ORDER: Record<string, number> = {
+    "aviators-training-centre": 1,
+    "n8n-automation-suite": 2,
+    "barkat-enterprise": 3,
+    "av-newsstream": 4,
+    "foodah": 5,
+    "portfolio-website": 6,
+    "ecommerce-platform": 7,
+};
+
 export default function FeaturedProjectsSection() {
-    // Filter only featured projects
-    const featuredProjects = portfolioData.projects.filter(p => p.featured);
+    // Filter and sort featured projects in custom order
+    const featuredProjects = useMemo(() => {
+        return portfolioData.projects
+            .filter(p => p.featured)
+            .sort((a, b) => {
+                const orderA = PROJECT_ORDER[a.id] ?? 999;
+                const orderB = PROJECT_ORDER[b.id] ?? 999;
+                return orderA - orderB;
+            });
+    }, []);
 
     // State for infinite carousel
     const [virtualIndex, setVirtualIndex] = useState(featuredProjects.length * 100);
