@@ -1,12 +1,12 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import AmanSuryavanshi from '../../../public/Profile/me main.png';
+import AmanSuryavanshi from '../../../public/Profile/me main.webp';
 
 const ProfileImage = () => {
   return (
     <figure className="relative group w-full h-[270px] max-w-sm mx-auto">
-      <div 
+      <div
         className="absolute inset-0 rounded-2xl bg-lime-500 transform rotate-6 group-hover:rotate-[10deg] transition-transform duration-300"
         aria-hidden="true"
       />
