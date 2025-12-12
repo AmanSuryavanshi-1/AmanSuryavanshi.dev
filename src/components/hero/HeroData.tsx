@@ -35,21 +35,20 @@ const Data: React.FC = () => {
             initial="hidden"
             animate="visible"
         >
-            {/* Key Stats - Moved to Top as Eyebrow */}
+            {/* Key Stats */}
             <motion.div
-                className="flex flex-wrap justify-center md:justify-start gap-2 mb-6"
+                className="flex flex-wrap justify-center md:justify-start gap-2 mb-4 text-xs md:text-sm"
                 variants={itemVariants}
             >
                 {stats.map((stat, index) => (
                     <div
                         key={index}
-                        className="px-3 py-1 rounded-full border border-forest-200 bg-white/40 backdrop-blur-sm text-[10px] sm:text-xs font-semibold text-forest-600 uppercase tracking-wider"
+                        className="flex items-center px-3 py-1 rounded-full border-2 border-white bg-lime-500/50 shadow-md backdrop-blur-sm"
                     >
-                        {stat}
+                        <span className="text-forest-900 font-semibold">{stat}</span>
                     </div>
                 ))}
             </motion.div>
-
             {/* Name */}
             <motion.h1
                 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-lime-500 tracking-tight leading-none mb-3"
@@ -72,7 +71,7 @@ const Data: React.FC = () => {
 
             {/* Subtitle */}
             <motion.div
-                className="flex items-center justify-center md:justify-start gap-3 mb-6"
+                className="flex items-center justify-center md:justify-start gap-1 mb-4"
                 variants={itemVariants}
             >
                 <div className="p-1.5 bg-lime-100 rounded-full">
@@ -85,21 +84,20 @@ const Data: React.FC = () => {
 
             {/* Divider */}
             <motion.div
-                className="w-16 h-1 bg-lime-500 rounded-full mb-5 hidden md:block"
+                className="w-16 h-1 bg-lime-500 rounded-full mb-4 hidden md:block"
                 variants={itemVariants}
             />
 
             {/* Content Group */}
-            <div className="space-y-4 max-w-xl mx-auto md:mx-0 mb-8">
+            <div className="space-y-2 max-w-xl mx-auto md:mx-0 mb-8">
                 {/* Tagline */}
                 <motion.h3
-                    className="font-serif text-lg sm:text-xl font-medium text-forest-900 leading-snug"
+                    className="font-serif text-md sm:text-lg font-medium text-forest-500 leading-snug"
                     variants={itemVariants}
                     style={{ textWrap: 'balance' }}
                 >
                     {tagline}
                 </motion.h3>
-
                 {/* Description */}
                 <motion.p
                     className="text-sm sm:text-base text-forest-600 leading-relaxed"
