@@ -64,7 +64,7 @@ export default function FeaturedProjectsSection() {
                     <SolidButton
                         href="/projects"
                         icon={ArrowRight}
-                        label="Explore More"
+                        label="View All Projects"
                     />
 
                     <TransparentButton

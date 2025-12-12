@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const images = [
-  '/Profile/Me1.jpg',
-  '/Profile/Me2.jpg'
+  '/Profile/Me1.webp',
+  '/Profile/Me2.webp'
 ];
 
 const imageAltTexts = [

@@ -246,50 +246,50 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
                         </AnimatePresence>
 
                         {/* Bottom Controls Overlay */}
-                        <div className="absolute bottom-0 left-0 right-0 p-8 flex items-center justify-between z-20">
+                        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 lg:p-8 flex items-center justify-between z-20">
 
                             {/* Action Links */}
-                            <div className="flex gap-4">
+                            <div className="flex gap-2 sm:gap-3 lg:gap-4">
                                 {(activeProject.documentation?.[0]?.url || activeProject.blogUrl) && (
                                     <Link
                                         href={activeProject.documentation?.[0]?.url || activeProject.blogUrl!}
                                         target={activeProject.documentation?.[0]?.url ? undefined : "_blank"}
                                     >
-                                        <Button className="h-12 px-6 rounded-full bg-white/20 hover:bg-white border border-white/30 text-white hover:text-forest-900 font-medium backdrop-blur-md shadow-lg transition-all hover:scale-105 text-sm group">
-                                            <BookOpen className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                                            {activeProject.documentation?.length ? "Documentation" : "Technical Docs"}
+                                        <Button className="h-10 sm:h-12 px-3 sm:px-4 lg:px-6 rounded-full bg-white/20 hover:bg-white border border-white/30 text-white hover:text-forest-900 font-medium backdrop-blur-md shadow-lg transition-all hover:scale-105 text-xs sm:text-sm group">
+                                            <BookOpen className="w-4 h-4 sm:mr-2 group-hover:scale-110 transition-transform" />
+                                            <span className="hidden sm:inline">{activeProject.documentation?.length ? "Documentation" : "Technical Docs"}</span>
                                         </Button>
                                     </Link>
                                 )}
                                 <Link href={activeProject.links.live} target="_blank">
-                                    <Button variant="outline" className="h-12 w-12 rounded-full border-white/30 bg-white/20 hover:bg-white hover:text-forest-900 text-white backdrop-blur-md transition-all p-0">
-                                        <ExternalLink className="w-5 h-5" />
+                                    <Button variant="outline" className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-white/30 bg-white/20 hover:bg-white hover:text-forest-900 text-white backdrop-blur-md transition-all p-0">
+                                        <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
                                     </Button>
                                 </Link>
                                 <Link href={activeProject.links.github} target="_blank">
-                                    <Button variant="outline" className="h-12 w-12 rounded-full border-white/30 bg-white/20 hover:bg-white hover:text-forest-900 text-white backdrop-blur-md transition-all p-0">
-                                        <Github className="w-5 h-5" />
+                                    <Button variant="outline" className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-white/30 bg-white/20 hover:bg-white hover:text-forest-900 text-white backdrop-blur-md transition-all p-0">
+                                        <Github className="w-4 h-4 sm:w-5 sm:h-5" />
                                     </Button>
                                 </Link>
                             </div>
 
                             {/* Navigation Arrows */}
-                            <div className="flex gap-3">
+                            <div className="flex gap-2 sm:gap-3">
                                 <Button
                                     variant="ghost"
                                     size="icon"
                                     onClick={prevProject}
-                                    className="h-12 w-12 rounded-full bg-white/20 hover:bg-white hover:text-forest-900 border border-white/30 text-white backdrop-blur-md transition-all hover:scale-110"
+                                    className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white/20 hover:bg-white hover:text-forest-900 border border-white/30 text-white backdrop-blur-md transition-all hover:scale-110"
                                 >
-                                    <ArrowLeft className="w-6 h-6" />
+                                    <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </Button>
                                 <Button
                                     variant="ghost"
                                     size="icon"
                                     onClick={nextProject}
-                                    className="h-12 w-12 rounded-full bg-white/20 hover:bg-white hover:text-forest-900 border border-white/30 text-white backdrop-blur-md transition-all hover:scale-110"
+                                    className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white/20 hover:bg-white hover:text-forest-900 border border-white/30 text-white backdrop-blur-md transition-all hover:scale-110"
                                 >
-                                    <ArrowRight className="w-6 h-6" />
+                                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </Button>
                             </div>
                         </div>

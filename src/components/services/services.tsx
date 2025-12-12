@@ -126,6 +126,11 @@ const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ servic
 const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [itemsPerPage, setItemsPerPage] = React.useState(1);
+  const [touchStart, setTouchStart] = React.useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = React.useState<number | null>(null);
+
+  // Minimum swipe distance for gesture recognition
+  const minSwipeDistance = 50;
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -136,12 +141,37 @@ const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) =
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const totalChunks = Math.ceil(services.length / itemsPerPage);
+
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % Math.ceil(services.length / itemsPerPage));
+    setCurrentIndex((prev) => (prev + 1) % totalChunks);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + Math.ceil(services.length / itemsPerPage)) % Math.ceil(services.length / itemsPerPage));
+    setCurrentIndex((prev) => (prev - 1 + totalChunks) % totalChunks);
+  };
+
+  // Touch gesture handlers
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextSlide();
+    } else if (isRightSwipe) {
+      prevSlide();
+    }
   };
 
   // Group services into chunks
@@ -154,30 +184,39 @@ const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) =
   const currentChunk = chunks[currentIndex] || chunks[0];
 
   return (
-    <div className="relative max-w-6xl mx-auto px-2 sm:px-4 lg:px-12">
-      <div className="overflow-hidden py-4">
-        <AnimatePresence mode='wait'>
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10"
-          >
-            {currentChunk.map((service, index) => (
-              // Reset index for animation delay to be consistent/short
-              <ServiceCard key={service.id} service={service} index={index} />
-            ))}
-          </motion.div>
-        </AnimatePresence>
-      </div>
+    <div className="max-w-6xl mx-auto px-2 sm:px-4 lg:px-12">
+      {/* Fixed height container with relative positioning for buttons */}
+      <div className="relative h-[550px] sm:h-[580px] lg:h-[480px]">
+        {/* Scrollable content area with touch gestures */}
+        <div
+          className="overflow-hidden py-4 h-full touch-pan-y"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          role="region"
+          aria-label="Services carousel - swipe left or right to navigate"
+          aria-live="polite"
+        >
+          <AnimatePresence mode='wait'>
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10"
+            >
+              {currentChunk.map((service, index) => (
+                <ServiceCard key={service.id} service={service} index={index} />
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
-      {/* Navigation Buttons */}
-      <div className="flex justify-between items-center absolute top-1/2 left-0 right-0 -translate-y-1/2 pointer-events-none lg:px-0">
+        {/* Navigation Buttons - positioned relative to fixed-height container */}
         <button
           onClick={prevSlide}
-          className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -ml-1 sm:-ml-2 lg:-ml-6"
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -ml-1 sm:-ml-2 lg:-ml-6"
           aria-label="Previous services"
         >
           <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 rotate-180" />
@@ -185,22 +224,24 @@ const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) =
 
         <button
           onClick={nextSlide}
-          className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -mr-1 sm:-mr-2 lg:-mr-6"
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -mr-1 sm:-mr-2 lg:-mr-6"
           aria-label="Next services"
         >
           <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
       </div>
 
-      {/* Pagination Dots */}
-      <div className="flex justify-center gap-2 mt-4">
+      {/* Pagination Dots - outside fixed container */}
+      <div className="flex justify-center gap-2 mt-4" role="tablist" aria-label="Carousel navigation">
         {chunks.map((_, idx) => (
           <button
             key={idx}
             onClick={() => setCurrentIndex(idx)}
             className={`h-1.5 rounded-full transition-all duration-300 ${currentIndex === idx ? 'bg-forest-900 w-8' : 'bg-forest-200 w-2 hover:bg-forest-400'
               }`}
-            aria-label={`Go to slide ${idx + 1}`}
+            aria-label={`Go to slide ${idx + 1} of ${chunks.length}`}
+            aria-selected={currentIndex === idx}
+            role="tab"
           />
         ))}
       </div>

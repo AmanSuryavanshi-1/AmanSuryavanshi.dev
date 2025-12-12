@@ -16,7 +16,7 @@ export default function Header() {
     return (
         <motion.section
             id="home"
-            className="relative w-full my-16 overflow-hidden md:mb-4 md:p-0"
+            className="relative w-full my-16 overflow-hidden lg:mb-4 lg:p-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -28,12 +28,12 @@ export default function Header() {
                 transition={{ duration: 1.2, ease: "easeOut" }}
             />
             <motion.div
-                className="container relative flex flex-col items-center justify-center h-full gap-8 mx-auto md:h-5/6"
+                className="container relative flex flex-col items-center justify-center h-full gap-8 mx-auto lg:h-5/6"
                 style={{ opacity, scale, y }}
             >
-                <div className="max-h-[750px]:mt-28 py-16 max-h-[650px]:mt-32 overflow-hidden  grid grid-cols-1 md:grid-cols-[auto_3fr_1.5fr] gap-8 md:gap-12 px-20 max-md:px-2 md:pt-22  items-center">
+                <div className="max-h-[750px]:mt-28 py-16 max-h-[650px]:mt-32 overflow-hidden grid grid-cols-1 lg:grid-cols-[auto_3fr_1.5fr] gap-8 lg:gap-12 px-4 lg:px-20 items-center">
                     <motion.div
-                        className="relative order-1 w-64 h-64 mx-auto md:order-3 md:w-96 md:h-96 md:mx-0"
+                        className="relative order-1 w-64 h-64 mx-auto lg:order-3 lg:w-96 lg:h-96 lg:mx-0"
                         initial={{ scale: 0, rotate: -180 }}
                         animate={{ scale: 1, rotate: 0 }}
                         transition={{ type: "spring", stiffness: 260, damping: 20, duration: 1.2 }}
@@ -42,7 +42,7 @@ export default function Header() {
                             src={pfp}
                             alt="Profile"
                             priority
-                            className="object-cover w-full bg-[#9dcd6f] h-full border-4 shadow-inner md:border-8 border-white rounded-full"
+                            className="object-cover w-full bg-[#9dcd6f] h-full border-4 shadow-inner lg:border-8 border-white rounded-full"
                             style={{
                                 borderRadius: "50%",
                                 animation: "profile__animate 8s ease-in-out infinite 1s",
@@ -52,10 +52,10 @@ export default function Header() {
                             fill
                         />
                     </motion.div>
-                    <div className="order-2 md:order-1">
+                    <div className="order-2 lg:order-1">
                         <HeaderSocial />
                     </div>
-                    <div className="order-3 md:order-2">
+                    <div className="order-3 lg:order-2">
                         <HeroData />
                     </div>
                 </div>
