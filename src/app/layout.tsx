@@ -133,9 +133,9 @@ export const metadata: Metadata = {
         google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
     },
     icons: {
-        icon: '/Profile/PFP-Cricular.png',
+        icon: '/Profile/PFP-Cricular.webp',
         apple: [
-            { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+            { url: '/Profile/PFP-Cricular.webp', sizes: '180x180', type: 'image/webp' },
         ],
     },
     manifest: '/manifest.json',
