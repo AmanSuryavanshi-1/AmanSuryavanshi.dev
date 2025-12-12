@@ -67,8 +67,8 @@ const AboutMe = ({ personalInfo = defaultProps.personalInfo,
               <AboutImage />
             </aside>
 
-            <div className="lg:col-span-8">
-              <Tabs defaultValue="about" className="w-full max-md:mx-auto max-md:h-auto max-[375px]:mt-8">
+            <div className="lg:col-span-8 mt-8 lg:mt-0">
+              <Tabs defaultValue="about" className="w-full">
                 {/* Centered Tab Navigation Container */}
                 <div className="flex justify-center w-full mb-2">
                   <TabsList
