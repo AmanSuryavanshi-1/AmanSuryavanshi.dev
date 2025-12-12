@@ -30,14 +30,29 @@ const Data: React.FC = () => {
 
     return (
         <motion.div
-            className="max-w-full px-4 text-center md:text-left md:px-0 space-y-4"
+            className="max-w-full px-4 text-center md:text-left md:px-0 flex flex-col items-center md:items-start"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
         >
+            {/* Key Stats - Moved to Top as Eyebrow */}
+            <motion.div
+                className="flex flex-wrap justify-center md:justify-start gap-2 mb-6"
+                variants={itemVariants}
+            >
+                {stats.map((stat, index) => (
+                    <div
+                        key={index}
+                        className="px-3 py-1 rounded-full border border-forest-200 bg-white/40 backdrop-blur-sm text-[10px] sm:text-xs font-semibold text-forest-600 uppercase tracking-wider"
+                    >
+                        {stat}
+                    </div>
+                ))}
+            </motion.div>
+
             {/* Name */}
             <motion.h1
-                className="font-serif text-3xl font-bold md:text-5xl text-lime-500 tracking-tight leading-tight"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-lime-500 tracking-tight leading-none mb-3"
                 variants={itemVariants}
             >
                 {nameArray.map((char, index) => (
@@ -55,53 +70,52 @@ const Data: React.FC = () => {
                 ))}
             </motion.h1>
 
+            {/* Subtitle */}
             <motion.div
-                className="flex items-center justify-center md:justify-start gap-2"
+                className="flex items-center justify-center md:justify-start gap-3 mb-6"
                 variants={itemVariants}
             >
-                <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-lime-500" />
-                <h2 className="font-serif text-md md:text-lg font-semibold text-forest-900">
+                <div className="p-1.5 bg-lime-100 rounded-full">
+                    <Sparkles className="w-4 h-4 text-lime-600" />
+                </div>
+                <h2 className="font-sans text-base sm:text-lg md:text-xl font-medium text-forest-800" style={{ textWrap: 'balance' }}>
                     {subtitle}
                 </h2>
             </motion.div>
 
-            {/* Tagline */}
-            <motion.h3
-                className="font-serif text-base md:text-md font-medium text-forest-700 leading-relaxed"
-                variants={itemVariants}
-            >
-                {tagline}
-            </motion.h3>
-
-            {/* Description */}
-            <motion.p
-                className="max-w-xl mx-auto md:mx-0 text-sm md:text-base text-forest-700 leading-relaxed"
-                variants={itemVariants}
-            >
-                <span className="font-serif text-base md:text-md font-medium text-forest-700 leading-relaxed block mb-1">
-                    {descriptionHighlight}
-                </span>
-                {description}
-            </motion.p>
-
-            {/* Key Stats */}
+            {/* Divider */}
             <motion.div
-                className="flex flex-wrap justify-center md:justify-start gap-2 text-xs md:text-sm"
+                className="w-16 h-1 bg-lime-500 rounded-full mb-5 hidden md:block"
                 variants={itemVariants}
-            >
-                {stats.map((stat, index) => (
-                    <div
-                        key={index}
-                        className="flex items-center px-3 py-1 rounded-full border-2 border-white bg-lime-500/50 shadow-md backdrop-blur-sm"
-                    >
-                        <span className="text-forest-900 font-semibold">{stat}</span>
-                    </div>
-                ))}
-            </motion.div>
+            />
+
+            {/* Content Group */}
+            <div className="space-y-4 max-w-xl mx-auto md:mx-0 mb-8">
+                {/* Tagline */}
+                <motion.h3
+                    className="font-serif text-lg sm:text-xl font-medium text-forest-900 leading-snug"
+                    variants={itemVariants}
+                    style={{ textWrap: 'balance' }}
+                >
+                    {tagline}
+                </motion.h3>
+
+                {/* Description */}
+                <motion.p
+                    className="text-sm sm:text-base text-forest-600 leading-relaxed"
+                    variants={itemVariants}
+                    style={{ textWrap: 'pretty' }}
+                >
+                    <span className="font-semibold text-forest-800 block mb-2">
+                        {descriptionHighlight}
+                    </span>
+                    {description}
+                </motion.p>
+            </div>
 
             {/* CTAs */}
             <motion.div
-                className="flex flex-col justify-center gap-4 md:flex-row md:gap-5 md:justify-start pt-2"
+                className="flex flex-col sm:flex-row justify-center gap-4 md:justify-start w-full sm:w-auto"
                 variants={itemVariants}
             >
                 <SolidButton
