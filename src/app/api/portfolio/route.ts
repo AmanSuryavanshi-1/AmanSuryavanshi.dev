@@ -60,7 +60,6 @@ export async function GET(request: NextRequest) {
             tagline: portfolioData.hero.tagline,
             socials: {
                 email: portfolioData.about.personalInfo.email,
-                phone: portfolioData.about.personalInfo.phone,
                 resume: portfolioData.hero.buttons.secondary.href,
                 portfolio: portfolioData.hero.buttons.primary.href,
             },
@@ -140,7 +139,6 @@ export async function GET(request: NextRequest) {
                     title: portfolioData.about.personalInfo.title,
                     description: portfolioData.about.personalInfo.description,
                     email: portfolioData.about.personalInfo.email,
-                    phone: portfolioData.about.personalInfo.phone,
                     education: portfolioData.about.personalInfo.education,
                     address: portfolioData.about.personalInfo.address,
                     languages: portfolioData.about.personalInfo.languages,

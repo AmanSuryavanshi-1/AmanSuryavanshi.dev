@@ -308,7 +308,7 @@ const aboutData: AboutData = {
         title: "AI Automation Engineer + Full-Stack Developer",
         description:
             "Building Next.js apps with intelligent n8n automation backends. I create complete solutions where beautiful UIs meet powerful AI-powered workflows. Specializing in LangChain, OpenAI integration, and workflow orchestration that delivers measurable business impact.",
-        phone: "+91 8745030106",
+        phone: "", // Removed for privacy
         email: "amansurya.work@gmail.com",
         education: "B.Tech in Electronics and Communication",
         address: "Bengaluru & Delhi, India | Remote",

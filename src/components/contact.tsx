@@ -103,7 +103,7 @@ const ContactForm = () => {
                   <ContactCard
                     icon={<MessageSquare className="w-7 h-7" />}
                     title="WhatsApp"
-                    content="+91 8745030106"
+                    content="Message me directly"
                     link="https://api.whatsapp.com/send?phone=+918745030106&text=Hello%20there!"
                     linkText="Chat on WhatsApp"
                   />

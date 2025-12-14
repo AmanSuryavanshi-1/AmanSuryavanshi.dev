@@ -53,7 +53,6 @@ Returns only `core` identity for minimal token usage:
     "tagline": "Building Next.js apps with intelligent n8n automation backends",
     "socials": {
       "email": "amansurya.work@gmail.com",
-      "phone": "+91 8745030106",
       "resume": "/AmanSuryavanshi_Resume_Latest.pdf",
       "portfolio": "/projects"
     }
