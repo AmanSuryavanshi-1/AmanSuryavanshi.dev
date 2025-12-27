@@ -5,10 +5,10 @@
 
 **Author**: Aman Suryavanshi  
 **Status**: Production Ready (1000+ executions)  
-**Last Updated**: November 14, 2025  
+**Last Updated**: December 26, 2025  
 **ROI**: $0/month operational cost, 15-20 hours/month saved  
 **Reliability**: 99.7% success rate across 1000+ production executions  
-**Tech Stack**: n8n, Gemini 2.5 Pro, Notion API, Twitter/LinkedIn APIs, Sanity CMS
+**Tech Stack**: n8n, Gemini 3 Flash, Perplexity Sonar, Notion API, Twitter/LinkedIn APIs, Sanity CMS
 
 ---
 
@@ -105,6 +105,7 @@ This is a **production-grade, bi-part n8n automation** consisting of 74 nodes or
 3. Stores drafts in Google Drive for human review
 4. Distributes approved content to Twitter (threads), LinkedIn (single posts), and Blog (Sanity CMS)
 5. Tracks all operations with session-based architecture for concurrent execution safety
+6. Supports selective platform routing (post to any combination of platforms)
 
 **What Makes This Production-Ready:**
 - **Concurrent Execution**: Session-based architecture prevents cross-contamination when processing multiple content pieces simultaneously
@@ -143,6 +144,13 @@ This is a **production-grade, bi-part n8n automation** consisting of 74 nodes or
 - Added session management, error handling
 - Concurrent execution safety, 99.7% reliability
 - **Learning**: Architecture matters more than features for production systems
+
+**v4.2 (Platform Selection + AI Strategy Engine)** (Current):
+- Added selective platform routing (X, LinkedIn, Blog can each be toggled)
+- Upgraded to Gemini 3 Flash for faster generation
+- Implemented "Career Engineer" AI Strategy framework
+- Added Decision Engine V5.0 for intelligent image distribution
+- **Learning**: AI content must be purpose-driven (job offers, dev respect, portfolio depth)
 
 ### System Architecture Diagrams
 
@@ -426,38 +434,87 @@ Code: Personal Context Builder
 
 **What happens here**: Notion content is hierarchical (headings, toggles, nested lists). I extract all blocks recursively, preserve the structure, and merge it with my personal context (100+ parameters about my voice, expertise, and goals).
 
-**3. Research Integration (1 node)**
+**3. Market Intelligence Research (1 node)**
 ```
-Perplexity API: Automated Research
+Perplexity Sonar API: Market Intelligence Analyst
   ↓
-Returns: Keywords, hashtags, optimal posting times
+Returns: {
+  market_pulse: {
+    urgency_trigger: "Why read this NOW?",
+    the_gap: "What competitors miss"
+  },
+  twitter: { hashtags, optimal_posting_times_ist },
+  linkedin: { business_value_stat, hashtags },
+  blog: { seo_keywords_primary, seo_keywords_longtail }
+}
 ```
 
-**What happens here**: Perplexity analyzes my content and provides authentic hashtags, trending keywords, and optimal posting times for each platform (based on my timezone: Asia/Kolkata).
+**What happens here**: This isn't just hashtag research. The Perplexity prompt acts as a "Senior Technical Market Intelligence Analyst" that:
+- **Newsjack Detection**: Identifies urgency triggers ("With GPT-5 release, this workflow is now essential...")
+- **Gap Analysis**: Finds what Reddit/HackerNews discussions are missing (your differentiation angle)
+- **Technical Vibe Check**: Trending keywords devs actually use
+- **Platform-Specific Intel**: Business stats for LinkedIn, engagement hooks for Twitter
 
 **4. Context Merging (1 node)**
 ```
-Code: Merge All Context
+Code: CONTEXT MERGER
   ↓
-Output: Master context object (personal + content + research)
+Output: Master context object (personal + content + research + market intel)
 ```
 
 **What happens here**: I combine my user profile, processed content, and research data into a single XML-structured context that gets injected into every AI prompt.
 
-**5. Multi-LLM Content Generation (4 nodes - Parallel)**
+**5. AI Strategy Engine + Multi-LLM Content Generation (5 nodes - Two-Phase)**
+
+**Phase 1: AI Content Strategist (The Brain)**
 ```
-Gemini 2.5 Pro: AI Content Strategist
+Gemini 3 Flash: AI CONTENT STRATEGIST
   ↓
-Gemini 2.5 Pro: Twitter Generation (280 char focus)
-  ↓
-Gemini 2.5 Pro: LinkedIn Generation (1500-2800 char)
-  ↓
-Gemini 2.5 Pro: Blog Generation (2500+ words, SEO)
+Returns: {
+  narrative_arc: {
+    the_villain: "The specific problem/bug that was stopping you",
+    the_epiphany: "The exact moment the solution clicked"
+  },
+  platform_strategies: {
+    twitter: { angle: "Alpha" (insider dev knowledge), content_breakdown },
+    linkedin: { angle: "Money" (business value), structure: "Result-First" },
+    blog: { angle: "Authority" (definitive reference), seo_keywords }
+  },
+  image_strategy: { needs_images, specific_prompts, asset_types }
+}
 ```
 
-**What happens here**: Four parallel AI calls generate platform-specific content. Each gets the same master context but different platform requirements (character limits, tone, structure).
+**The "Career Engineer" Philosophy**: This isn't just content generation—it's career engineering:
+- **Twitter = Dev Respect**: Extract the specific technical insight 90% of juniors miss
+- **LinkedIn = Job Offers**: Translate technical work into business value
+- **Blog = Portfolio Depth**: Create reference assets hiring managers screenshot
 
-**6. Content Formatting (6 nodes)**
+**Phase 2: Platform-Specific Writers (Parallel Execution)**
+```
+Gemini 3 Flash: Twitter Generation (265 char limit per tweet, thread structure)
+  ↓
+Gemini 3 Flash: LinkedIn Generation (Result-First framework, Engineer's Humility)
+  ↓
+Gemini 3 Flash: Blog Generation (SEO + AI Engine Discovery optimization)
+```
+
+**What happens here**: The Strategist analyzes content and creates platform-specific angles. Then three parallel writers execute the strategy with strict platform rules:
+- **Twitter**: 265-char hard limit per tweet, 4-5 tweet threads, image markers in Tweet 1
+- **LinkedIn**: 2800-char max, proper line break encoding (`\\n\\n\\n` before lists), single image only
+- **Blog**: Adaptive length (800-2500 words based on source), AI Engine Discovery optimization, quotable insights
+
+**6. Platform Selection Routing (3 nodes - Conditional)**
+```
+IF - Twitter Selected? → Gemini Twitter Writer OR No-Op Skip
+  ↓
+IF - LinkedIn Selected? → Gemini LinkedIn Writer OR No-Op Skip
+  ↓
+IF - Blog Selected? → Gemini Blog Writer OR No-Op Skip
+```
+
+**What happens here**: Not every content piece goes to all platforms. The `property_post_to` multi-select field in Notion controls which platforms receive content. Unselected platforms get No-Op nodes that return "skipped" status.
+
+**7. Content Formatting (6 nodes)**
 ```
 Code: Rebuild Twitter (thread structure, 4 tweets)
 Code: Rebuild LinkedIn (paragraph breaks, 1 image max)
@@ -530,17 +587,33 @@ Download: Image task manifest
 Parse: Image requirements
 ```
 
-**5. Decision Engine (1 node)**
+**5. Decision Engine V5.0 (1 node)**
 ```
 Code: Detect Images Needed vs. Available
   ↓
-Output: Platform-specific image plan
+Output: Platform-specific image assignments with hierarchical decision chain
 ```
 
-**What happens here**: This is the brain of the system. It determines which images go to which platform based on:
-- AI-generated markers in content
-- Platform constraints (LinkedIn 1-image limit)
-- Available images in Drive
+**What happens here**: This is the brain of Part 2. It implements a three-tier hierarchical decision system:
+
+**Tier 1 (Highest Priority): Trust AI Markers**
+- Scan each draft for `<<IMAGE_N>>` patterns
+- Extract exact numbers and positions
+- Build platform-specific image assignments
+
+**Tier 2 (Fallback): Manifest Analysis**
+- Parse Image Tasklist for expected assets
+- Match against available files in Drive folder
+- Apply smart defaults: primary→social, all→blog
+
+**Tier 3 (Safety): No Images**
+- No markers + no manifest = text-only post
+- Gracefully removes unused `<<IMAGE_N>>` placeholders
+
+**Platform Constraints Enforced:**
+- LinkedIn: Maximum 1 image (API limit)
+- Twitter: Images attach to parent tweet only
+- Blog: All images embedded with alt text
 
 **6. Image Download & Processing (2 nodes)**
 ```
@@ -554,47 +627,78 @@ Loop: Batch download images
 Set: All Data Ready (drafts + images + metadata)
 ```
 
-**8. Blog Publishing (6 nodes)**
+**8. Blog Publishing Branch (7 nodes)**
 ```
-Parse: Blog content (markdown → Sanity blocks)
+IF - Post to Blog? → Yes / No-Op Skip
   ↓
-Upload: Images to Sanity
+Code: Parse Blog Content (Blog Parser V12.0)
+  ↓
+Loop: Upload Images to Sanity
+  ↓
+Code: Build Sanity Mutation
   ↓
 POST: Blog to Sanity API
   ↓
 Extract: Blog URL
 ```
 
-**9. LinkedIn Publishing (8 nodes with error handling)**
+**Blog Parser V12.0 Features:**
+- High-performance tokenizer (fixes timeout issues)
+- Robust heading detection (`##Heading` vs `## Heading` both work)
+- Pre-cleaning step for ```markdown wrapper bug
+- Full Sanity Portable Text block generation
+
+**9. LinkedIn Publishing Branch (5 nodes + error handling)**
 ```
-Parse: LinkedIn content (1 image max enforcement)
+IF - Post to LinkedIn? → Yes / No-Op Skip
   ↓
-POST: LinkedIn API (OAuth2)
+Code: Parse & Attach LinkedIn Post (Parser V6.0)
   ↓
-Extract: Post URL
+Code: Prepare LinkedIn Data (binary passthrough)
   ↓
-Error Recovery: Timeout/rate limit handling
+LinkedIn Post (OAuth2)
+  ↓
+Wait: Rate Limit Recovery (10 seconds)
 ```
 
-**10. Twitter Publishing (12 nodes with error handling)**
+**LinkedIn Parser V6.0 Features:**
+- Formatting stripper (prevents ghost posts from markdown)
+- Proper `\n` encoding for line breaks
+- Binary image passthrough for media attachment
+
+**10. Twitter Publishing Branch (12 nodes + error handling)**
 ```
-Parse: Twitter thread (4 tweets)
+IF - Post to Twitter? → Yes / No-Op Skip
   ↓
-Loop: Post each tweet with reply-to logic
+Code: Parse & Attach Tweets (thread structure)
   ↓
-Extract: Tweet IDs
+Loop: SplitInBatches for each tweet
   ↓
-Build: Thread structure
+IF - Is This First Tweet? → Parent tweet (no reply_to) / Reply tweet
   ↓
-Error Recovery: Retry logic
+Twitter Media Upload (API 1.1 for images)
+  ↓
+Create Tweet (with media_ids if images)
+  ↓
+Prepare for Next Loop (store lastTweetId for reply chain)
 ```
 
-**11. Status Tracking (2 nodes)**
+**Twitter Thread Logic:**
+- First tweet: No `in_reply_to_tweet_id`
+- Subsequent tweets: Reply to previous tweet ID
+- Images: Attach to first tweet only (or as specified by AI markers)
+- Parent tweet ID cleaning with validation
+
+**11. Status Tracking & Completion (2 nodes)**
 ```
-Update: Notion with all platform links
+Merge: All platform results (3 inputs)
   ↓
-Set: Status to "Posted"
+Update Notion: PostedAt, Post Status (multi-select), Status (select)
 ```
+
+**Partial Success Tracking:**
+- If 2/3 platforms succeed, work is not lost
+- Status options: "Posted To All Platforms", "Posted to Selected Platforms", "Partially Posted"
 
 ---
 
@@ -729,6 +833,89 @@ Every AI prompt gets this complete context:
 - **Platform-Specific**: Each platform gets tailored requirements
 - **Consistent Output**: Same context = consistent voice across platforms
 - **Easy to Modify**: Add/remove parameters without rewriting prompts
+
+#### Hidden Objectives in Personal Context
+
+Beyond the visible goals, the Personal Context Builder includes **hidden objectives** that guide AI behavior without being explicitly stated in posts:
+
+```javascript
+// From Personal Context Builder (Part 1 - Line 1-100)
+hiddenGoals: [
+  "Inbound job offers from tech companies",
+  "Freelance clients for automation work",
+  "Technical reputation building",
+  "Network expansion with senior engineers"
+],
+voiceAttributes: [
+  "High-agency mindset",
+  "Show, don't tell",
+  "Specific over generic",
+  "Admit what was hard"
+],
+targetRoles: [
+  "Technical Project Manager",
+  "Product Engineer",
+  "Full-Stack Developer",
+  "Automation Specialist"
+],
+servicesOffered: [
+  "n8n workflow development",
+  "AI/LLM integration",
+  "Website development (Next.js)"
+]
+```
+
+This context ensures the AI understands that every post is a **career asset**, not just content.
+
+---
+
+### 10.1 Career Engineer Framework (New in v4.2)
+
+The AI Strategy Engine implements a "Career Engineer" philosophy that treats each platform as serving a distinct career purpose:
+
+**The Framework:**
+```
+┌───────────────┐  ┌───────────────┐  ┌───────────────┐
+│    Twitter    │  │   LinkedIn   │  │     Blog     │
+├───────────────┤  ├───────────────┤  ├───────────────┤
+│ Goal: Dev    │  │ Goal: Job   │  │ Goal:        │
+│ Respect      │  │ Offers      │  │ Portfolio    │
+├───────────────┤  ├───────────────┤  ├───────────────┤
+│ Angle:       │  │ Angle:      │  │ Angle:       │
+│ "Alpha"      │  │ "Money"     │  │ "Authority"  │
+│ (Insider     │  │ (Business   │  │ (Definitive  │
+│ knowledge)   │  │ value)      │  │ reference)   │
+└───────────────┘  └───────────────┘  └───────────────┘
+```
+
+**Narrative Arc Extraction:**
+Every piece of content must identify:
+- **The Villain**: The specific problem, bug, or "old way" that was stopping you
+- **The Epiphany**: The exact moment the solution clicked
+
+**Anti-Slop Guidelines (Strictly Enforced):**
+```javascript
+// Words/phrases banned from all AI output
+const BANNED_WORDS = [
+  "Unlock", "Unleash", "Game-changer", "Revolutionize",
+  "In today's digital landscape", "Dive deep", "Buckle up",
+  "Tapestry", "Beacon", "Elevate", "Delve",
+  "Thrilled to announce", "Humbled to share"
+];
+
+// Voice requirements
+const VOICE_RULES = [
+  "Use 'I' not 'we' unless team is specified",
+  "Active voice only (I optimized... not The database was optimized...)",
+  "Specific over generic (Lighthouse 40->90 not 'improved performance')",
+  "The Bar Test: If you wouldn't say it to a friend at a bar, delete it"
+];
+```
+
+**Platform-Specific Character Limits:**
+- **Twitter**: 265 characters per tweet (hard limit, leaves buffer for automation)
+- **LinkedIn**: 2800 characters max (target 1200-1800 for readability)
+- **Blog**: Adaptive length based on source content word count
 
 ---
 
