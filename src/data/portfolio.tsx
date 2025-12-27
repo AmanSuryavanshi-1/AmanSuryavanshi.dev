@@ -1230,6 +1230,10 @@ const rawProjects = [
             {
                 title: "Executive Summary",
                 url: "/projects/aviators-training-centre-executive-summary"
+            },
+            {
+                title: "Technical Documentation",
+                url: "/projects/aviators-training-centre-technical-documentation"
             }
         ],
         gallery: [
@@ -1410,6 +1414,10 @@ const rawProjects = [
             {
                 title: "Executive Summary",
                 url: "/projects/omni-post-ai-executive-summary"
+            },
+            {
+                title: "Technical Documentation",
+                url: "/projects/omni-post-ai-technical-documentation"
             }
         ]
     },

@@ -391,7 +391,7 @@ npm run test:coverage    # Generate coverage report
 
 - **Portfolio**: [amansuryavanshi-dev.vercel.app](https://amansuryavanshi-dev.vercel.app/)
 - **GitHub**: [github.com/AmanSuryavanshi-1](https://github.com/AmanSuryavanshi-1)
-- **LinkedIn**: [linkedin.com/in/aman-suryavanshi-6b0aba347](https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/)
+- **LinkedIn**: [linkedin.com/in/amansuryavanshi-ai](https://www.linkedin.com/in/amansuryavanshi-ai/)
 - **Twitter**: [@_AmanSurya](https://x.com/_AmanSurya)
 - **N8N Workflows**: [github.com/AmanSuryavanshi-1/N8N](https://github.com/AmanSuryavanshi-1/N8N/tree/main/workflows)
 

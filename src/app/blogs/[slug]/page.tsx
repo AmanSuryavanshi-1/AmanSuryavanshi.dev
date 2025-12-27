@@ -293,7 +293,7 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                             <a href="https://twitter.com/_AmanSurya" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
                               <FaXTwitter size={20} />
                             </a>
-                            <a href="https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
+                            <a href="https://www.linkedin.com/in/amansuryavanshi-ai/" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
                               <BiLogoLinkedin size={20} />
                             </a>
                             <a href="https://github.com/AmanSuryavanshi-1" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
