@@ -79,17 +79,157 @@ Notion (Approved Content)
 </p>
 <p align="center"><em>Evolution from manual, generic content (v1) to AI-automated, platform-optimized content (v4) showing dramatic quality improvement</em></p>
 
-**Key Architectural Decisions**:
+---
 
-1. **Bi-Part Workflow Separation**: Enables human review gate, independent debugging, and prevents accidental posts during testing
+## Key Architectural Decisions
 
-2. **Session-Based Architecture**: Every content piece gets unique session ID (`session_timestamp_notionId`) for concurrent execution safety and zero cross-contamination
+### 1. Bi-Part Workflow Separation
 
-3. **Hierarchical Decision Logic**: Three-tier evidence evaluation for image distribution (AI markers → manifest → defaults)
+**Why:** A single monolithic workflow was too fragile. One API failure meant starting over.
 
-4. **Platform-Specific Parsers**: Dedicated logic for each platform's unique requirements instead of generic converters
+**Decision:** Split into two independent workflows:
+- **Part 1 (Generation):** Creates drafts, stores for review
+- **Part 2 (Distribution):** Posts approved content
 
-5. **Multi-Layer Error Handling**: Retry for transient errors, graceful degradation for optional data, fail-fast for critical data
+**Result:** Human review gate, independent debugging, prevents accidental posts during testing.
+
+---
+
+### 2. Platform Selection Architecture (New in v4.2)
+
+**The Problem:** Not every content piece needs to go to all platforms. Sometimes you want a tweet-only update or a blog-only deep dive.
+
+**The Solution:** Selective platform routing with graceful fallbacks.
+
+```
+Notion "Post To" Field: [X, LinkedIn, Blog] (multi-select)
+                              |
+              ┌───────────────┼───────────────┐
+              ↓               ↓               ↓
+      IF - Twitter?    IF - LinkedIn?   IF - Blog?
+              |               |               |
+     ┌────┴────┐      ┌────┴────┐      ┌────┴────┐
+     ↓         ↓      ↓         ↓      ↓         ↓
+  Generate   No-Op  Generate   No-Op  Generate   No-Op
+  Content    Skip   Content    Skip   Content    Skip
+```
+
+**How It Works:**
+1. Content marked "Ready" includes a `PostTo` multi-select field
+2. IF nodes check `property_post_to.includes('X')` for each platform
+3. Selected platforms → Full AI generation pipeline
+4. Unselected platforms → No-Op nodes return "skipped" status
+5. Merge node collects all outputs for Notion update
+
+**Result:** 40% reduction in processing time for single-platform posts. Zero wasted API calls.
+
+---
+
+### 3. AI Strategy Engine (Career Engineer Framework)
+
+**The Insight:** Most AI content generators produce generic output. They don't understand that LinkedIn content should attract job offers while Twitter content should earn developer respect.
+
+**The Solution:** A two-phase AI pipeline that thinks like a career engineer:
+
+```
+Phase 1: AI Content Strategist
+├─ Extracts "The Villain" (the specific problem/bug/bottleneck)
+├─ Identifies "The Epiphany" (the moment the solution clicked)
+├─ Creates platform-specific angles:
+│   ├─ Twitter: "Alpha" angle (insider dev knowledge)
+│   ├─ LinkedIn: "Money" angle (business value proposition)
+│   └─ Blog: "Authority" angle (definitive reference asset)
+└─ Generates image strategy with real vs. generative asset decisions
+
+Phase 2: Platform Writers (Parallel Execution)
+├─ Twitter: Punchy thread with 265-char hard limits per tweet
+├─ LinkedIn: Result-first framework with Engineer's Humility
+└─ Blog: SEO-optimized with AI Engine Discovery optimization
+```
+
+**The "Career Engineer" Philosophy:**
+- Don't just inform—build authority that attracts opportunities
+- Twitter = Dev respect | LinkedIn = Job offers | Blog = Portfolio depth
+- Every post must answer: "Why would someone hire me after reading this?"
+
+---
+
+### 4. Session-Based Architecture
+
+**Why:** Flat file storage caused file mixing, 15% failures, and manual cleanup.
+
+**Decision:** Every content piece gets unique session ID:
+```
+session_[timestamp]_[notionId]
+├── Twitterdraft-[title].md
+├── LinkedIndraft-[title].md
+├── Blogdraft-[title].md
+├── Image Tasklist-[title].md
+└── asset-1.webp, asset-2.png...
+```
+
+**Result:** Zero cross-contamination in 1000+ executions, concurrent execution safety, easy debugging.
+
+---
+
+### 5. Decision Engine V5.0 (Image Distribution)
+
+**The Challenge:** Part 2 needs to know which images go to which platform—but the AI might have embedded markers like `<<IMAGE_1>>` in the drafts, or images might exist in the folder without explicit references.
+
+**The Solution:** Three-tier hierarchical decision system:
+
+```
+Tier 1 (Highest Priority): Trust AI Markers
+├─ Scan each draft for <<IMAGE_N>> patterns
+├─ Extract exact numbers and positions
+└─ Build platform-specific image assignments
+
+Tier 2 (Fallback): Manifest Analysis
+├─ Parse Image Tasklist for expected assets
+├─ Match against available files in Drive folder
+├─ Apply defaults: primary→social, all→blog
+└─ If no manifest, assume all images are for all platforms (legacy support)
+
+Tier 3 (Safety): No Images
+├─ No markers + no manifest = text-only post
+└─ System gracefully removes unused <<IMAGE_N>> placeholders
+```
+
+**Result:** Handles 0-10 images per content piece automatically. Never fails on missing images—gracefully degrades to text-only.
+
+---
+
+### 6. Multi-Layer Error Handling
+
+**Why:** 46 nodes × 5 APIs = hundreds of failure points. Initial system had 15-20% failure rate with silent failures.
+
+**Decision:** Multi-layer error handling:
+- Layer 1: Node-level retry for transient errors
+- Layer 2: Graceful degradation for optional data
+- Layer 3: Fail-fast for critical data
+- Layer 4: Partial success tracking
+
+**Result:** 99.7% reliability, detailed error context, no silent failures.
+
+---
+
+### 7. Platform-Specific Parsers
+
+**Why:** Unified markdown doesn't work for all platforms. Twitter needs threads, LinkedIn needs single posts, Blog needs Portable Text blocks.
+
+**Decision:** Dedicated logic for each platform's unique requirements instead of generic converters.
+
+**Result:** 100% format compliance, zero API rejections, correct image attachment.
+
+---
+
+### 8. Comprehensive Logging
+
+**Why:** Debugging complex workflows without detailed logs is impossible.
+
+**Decision:** Log every decision point, session ID, and error context.
+
+**Result:** Instant debugging, clear error context (stack trace, input data), reduced MTTR.
 
 ---
 
@@ -376,9 +516,7 @@ Cost Comparison:
 
 ---
 
-## Key Architectural Decisions
-
-### What Makes This Production-Ready
+## What Makes This Production-Ready
 
 1. **Session-Based Architecture**
    - Enables concurrent execution without cross-contamination

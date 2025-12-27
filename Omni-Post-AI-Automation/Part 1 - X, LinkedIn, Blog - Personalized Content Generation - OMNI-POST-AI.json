@@ -5,8 +5,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        3024,
-        1776
+        3600,
+        1568
       ],
       "id": "34b004fa-a214-4f49-b663-d515bdb0439b",
       "name": "When clicking 'Execute workflow'"
@@ -56,8 +56,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2,
       "position": [
-        3248,
-        1776
+        3824,
+        1568
       ],
       "credentials": {
         "notionApi": {
@@ -95,8 +95,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        3472,
-        1776
+        4048,
+        1568
       ]
     },
     {
@@ -108,8 +108,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3696,
-        1776
+        4272,
+        1568
       ]
     },
     {
@@ -166,8 +166,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2,
       "position": [
-        4144,
-        1776
+        4720,
+        1568
       ],
       "credentials": {
         "notionApi": {
@@ -194,8 +194,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        4368,
-        1776
+        4944,
+        1568
       ],
       "credentials": {
         "notionApi": {
@@ -213,8 +213,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4592,
-        1776
+        5168,
+        1568
       ]
     },
     {
@@ -224,8 +224,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        7088,
-        1648
+        7664,
+        1440
       ],
       "id": "28779653-efde-4fc7-a4ee-4a96e75294ff",
       "name": "Merge2"
@@ -237,8 +237,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7312,
-        1680
+        7888,
+        1472
       ],
       "id": "a6944843-4483-4b1a-a744-b7c50c8b49fd",
       "name": "ID Structuring"
@@ -250,8 +250,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4816,
-        1776
+        5392,
+        1568
       ],
       "id": "a636cf45-5f8f-409e-a046-238071c3332d",
       "name": "Code – Personal Context Builder"
@@ -265,32 +265,32 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5264,
-        1776
+        5840,
+        1568
       ]
     },
     {
       "parameters": {
-        "jsCode": "// ════════════════════════════════════════════════════════════════════════════\n// PROCESS & FORMAT TWITTER DRAFT (PRODUCTION-READY v4.0)\n// Handles: Gemini, OpenAI, Claude, Groq, OpenRouter, GitHub Models, etc.\n// ════════════════════════════════════════════════════════════════════════════\n\nconst input = $input.first().json;\nlet rawText = null;\n\nconsole.log('🐦 Twitter Draft Processor - Starting...');\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 1: UNIVERSAL TEXT EXTRACTION\n// ══════════════════════════════════════════════════════════════════════════\nif (input.choices?.[0]?.message?.content) {\n    rawText = input.choices[0].message.content;\n} else if (input.content?.[0]?.text) {\n    rawText = input.content[0].text; // Claude\n} else if (input.content?.parts?.[0]?.text) {\n    rawText = input.content.parts[0].text; // Gemini\n} else if (input.candidates?.[0]?.content?.parts?.[0]?.text) {\n    rawText = input.candidates[0].content.parts[0].text; // Gemini alt\n} else if (input.output?.[0]?.content?.[0]?.text) {\n    rawText = input.output[0].content[0].text; // LangChain\n} else if (input.output && typeof input.output === 'string') {\n    rawText = input.output; // OpenRouter\n} else if (input.response && typeof input.response === 'string') {\n    rawText = input.response;\n} else if (input.message?.content) {\n    rawText = input.message.content;\n} else if (input.text && typeof input.text === 'string') {\n    rawText = input.text;\n} else if (typeof input === 'string') {\n    rawText = input;\n} else {\n    for (const key of Object.keys(input)) {\n        if (typeof input[key] === 'string' && input[key].length > 100) {\n            rawText = input[key];\n            break;\n        }\n    }\n}\n\nif (!rawText || rawText.trim().length === 0) {\n    throw new Error(`Cannot extract text. Keys: [${Object.keys(input).join(', ')}]`);\n}\n\nconsole.log(`📊 Raw text length: ${rawText.length}`);\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 2: YAML FRONT MATTER STRIPPING\n// ══════════════════════════════════════════════════════════════════════════\nlet cleanText = rawText.replace(/^---\\s*[\\s\\S]*?---\\s*/, '');\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 3: JSON EXTRACTION & REPAIR\n// ══════════════════════════════════════════════════════════════════════════\nlet cleaned = cleanText\n    .replace(/^```json\\s*/i, '').replace(/^```\\s*/i, '').replace(/```\\s*$/g, '').trim();\n\ncleaned = cleaned.replace(/,\\s*}/g, '}').replace(/,\\s*]/g, ']');\n\nlet result = {};\nlet parseSuccess = false;\n\nconst firstBrace = cleaned.indexOf('{');\nconst lastBrace = cleaned.lastIndexOf('}');\n\nif (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {\n    const jsonString = cleaned.substring(firstBrace, lastBrace + 1);\n    try {\n        result = JSON.parse(jsonString);\n        parseSuccess = true;\n        console.log('✅ JSON parsed successfully');\n    } catch (e) {\n        console.log(`⚠️ JSON parse failed: ${e.message}. Attempting regex...`);\n        const mdMatch = cleaned.match(/\"formatted_markdown\"\\s*:\\s*\"([\\s\\S]*?)(?=(?<!\\\\)\"\\s*(,|}|]|$))/);\n        if (mdMatch) {\n            result.formatted_markdown = mdMatch[1].replace(/\\\\\"/g, '\"').replace(/\\\\n/g, '\\n').replace(/\\\\\\\\/g, '\\\\');\n            parseSuccess = true;\n        }\n    }\n}\n\nif (!parseSuccess) {\n    result.formatted_markdown = cleanText;\n    console.log('⚠️ Using stripped raw text as markdown');\n}\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 4: DATA EXTRACTION & IMAGE DETECTION\n// ══════════════════════════════════════════════════════════════════════════\nlet markdown = (result.formatted_markdown || result.markdown || '').replace(/^---\\s*[\\s\\S]*?---\\s*/, '').trim();\nconst structured = result.structured_data || result.structured || result;\n\nconst imageRegex = /<<IMAGE_(\\d+)>>/g;\nconst foundMarkers = [...markdown.matchAll(imageRegex)].map(m => m[0]);\nconst distinctMarkers = [...new Set(foundMarkers)];\n\nconst images = {\n    needed: distinctMarkers.length > 0,\n    count: distinctMarkers.length,\n    markers_found: distinctMarkers\n};\n\nconsole.log(`✅ Twitter Processed. Images: ${images.count}`);\n\nreturn {\n    json: {\n        markdown: markdown,\n        structured: structured,\n        images: images,\n        platform: 'twitter'\n    }\n};"
+        "jsCode": "// ════════════════════════════════════════════════════════════════════════════\n// PROCESS & FORMAT TWITTER DRAFT (PRODUCTION-READY v4.0)\n// Handles: Gemini, OpenAI, Claude, Groq, OpenRouter, GitHub Models, etc.\n// ════════════════════════════════════════════════════════════════════════════\n\nconst input = $input.first().json;\nlet rawText = null;\n\nconsole.log('🐦 Twitter Draft Processor - Starting...');\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 1: UNIVERSAL TEXT EXTRACTION\n// ══════════════════════════════════════════════════════════════════════════\nif (input.choices?.[0]?.message?.content) {\n    rawText = input.choices[0].message.content;\n} else if (input.content?.[0]?.text) {\n    rawText = input.content[0].text; // Claude\n} else if (input.content?.parts?.[0]?.text) {\n    rawText = input.content.parts[0].text; // Gemini\n} else if (input.candidates?.[0]?.content?.parts?.[0]?.text) {\n    rawText = input.candidates[0].content.parts[0].text; // Gemini alt\n} else if (input.output?.[0]?.content?.[0]?.text) {\n    rawText = input.output[0].content[0].text; // LangChain\n} else if (input.output && typeof input.output === 'string') {\n    rawText = input.output; // OpenRouter\n} else if (input.response && typeof input.response === 'string') {\n    rawText = input.response;\n} else if (input.message?.content) {\n    rawText = input.message.content;\n} else if (input.text && typeof input.text === 'string') {\n    rawText = input.text;\n} else if (typeof input === 'string') {\n    rawText = input;\n} else {\n    for (const key of Object.keys(input)) {\n        if (typeof input[key] === 'string' && input[key].length > 100) {\n            rawText = input[key];\n            break;\n        }\n    }\n}\n\nif (!rawText || rawText.trim().length === 0) {\n    throw new Error(`Cannot extract text. Keys: [${Object.keys(input).join(', ')}]`);\n}\n\nconsole.log(`📊 Raw text length: ${rawText.length}`);\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 2: YAML FRONT MATTER STRIPPING\n// ══════════════════════════════════════════════════════════════════════════\nlet cleanText = rawText.replace(/^---\\s*[\\s\\S]*?---\\s*/, '');\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 3: JSON EXTRACTION & REPAIR\n// ══════════════════════════════════════════════════════════════════════════\nlet cleaned = cleanText\n    .replace(/^```json\\s*/i, '').replace(/^```\\s*/i, '').replace(/```\\s*$/g, '').trim();\n\ncleaned = cleaned.replace(/,\\s*}/g, '}').replace(/,\\s*]/g, ']');\n\nlet result = {};\nlet parseSuccess = false;\n\nconst firstBrace = cleaned.indexOf('{');\nconst lastBrace = cleaned.lastIndexOf('}');\n\nif (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {\n    const jsonString = cleaned.substring(firstBrace, lastBrace + 1);\n    try {\n        result = JSON.parse(jsonString);\n        parseSuccess = true;\n        console.log('✅ JSON parsed successfully');\n    } catch (e) {\n        console.log(`⚠️ JSON parse failed: ${e.message}. Attempting regex...`);\n        const mdMatch = cleaned.match(/\"formatted_markdown\"\\s*:\\s*\"([\\s\\S]*?)(?=(?<!\\\\)\"\\s*(,|}|]|$))/);\n        if (mdMatch) {\n            result.formatted_markdown = mdMatch[1].replace(/\\\\\"/g, '\"').replace(/\\\\n/g, '\\n').replace(/\\\\\\\\/g, '\\\\');\n            parseSuccess = true;\n        }\n    }\n}\n\nif (!parseSuccess) {\n    result.formatted_markdown = cleanText;\n    console.log('⚠️ Using stripped raw text as markdown');\n}\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 4: DATA EXTRACTION & IMAGE DETECTION\n// ══════════════════════════════════════════════════════════════════════════\n// [EXISTING CODE WHERE 'markdown' IS DEFINED]\nlet markdown = (result.formatted_markdown || result.markdown || '').trim();\n// [PASTE THIS BLOCK BELOW IT]\n// 1. Unescape literal newlines\nmarkdown = markdown.replace(/\\\\n/g, '\\n').replace(/\\\\\"/g, '\"');\n// 2. Aggressively collapse multiple newlines (Max 2 = 1 blank line)\n// This fixes the \"large empty spaces\" issue\nmarkdown = markdown.replace(/\\n{3,}/g, '\\n\\n');\n// 3. Standardize Separators (Force exactly one blank line around ---)\nmarkdown = markdown.replace(/\\s*---\\s*/g, '\\n\\n---\\n\\n');\n\nconst structured = result.structured_data || result.structured || result;\n\nconst imageRegex = /<<IMAGE_(\\d+)>>/g;\nconst foundMarkers = [...markdown.matchAll(imageRegex)].map(m => m[0]);\nconst distinctMarkers = [...new Set(foundMarkers)];\n\nconst images = {\n    needed: distinctMarkers.length > 0,\n    count: distinctMarkers.length,\n    markers_found: distinctMarkers\n};\n\nconsole.log(`✅ Twitter Processed. Images: ${images.count}`);\n\nreturn {\n    json: {\n        markdown: markdown,\n        structured: structured,\n        images: images,\n        platform: 'twitter'\n    }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6640,
-        1104
+        7216,
+        896
       ],
       "id": "7ca9d7b9-2b60-46de-8d46-e4e9231221a2",
       "name": "Process & Format Twitter Draft"
     },
     {
       "parameters": {
-        "jsCode": "// ════════════════════════════════════════════════════════════════════════════\n// PROCESS & FORMAT LINKEDIN DRAFT (PRODUCTION-READY v5.0 - with Truncation Handling)\n// ════════════════════════════════════════════════════════════════════════════\n\nconst input = $input.first().json;\nlet rawText = null;\n\nconsole.log('💼 LinkedIn Draft Processor - Starting...');\n\n// Check for truncation FIRST\nconst finishReason = input.finishReason || input.finish_reason || '';\nif (finishReason === 'MAX_TOKENS' || finishReason === 'length') {\n    console.log('⚠️ WARNING: Response was truncated by MAX_TOKENS limit!');\n}\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 1: UNIVERSAL TEXT EXTRACTION\n// ══════════════════════════════════════════════════════════════════════════\nif (input.choices?.[0]?.message?.content) {\n    rawText = input.choices[0].message.content;\n} else if (input.content?.parts?.[0]?.text) {\n    rawText = input.content.parts[0].text; // Gemini\n} else if (input.candidates?.[0]?.content?.parts?.[0]?.text) {\n    rawText = input.candidates[0].content.parts[0].text; // Gemini alt\n} else if (input.output?.[0]?.content?.[0]?.text) {\n    rawText = input.output[0].content[0].text; // LangChain\n} else if (input.output && typeof input.output === 'string') {\n    rawText = input.output;\n} else if (input.response && typeof input.response === 'string') {\n    rawText = input.response;\n} else if (input.message?.content) {\n    rawText = input.message.content;\n} else if (input.text && typeof input.text === 'string') {\n    rawText = input.text;\n} else if (typeof input === 'string') {\n    rawText = input;\n} else {\n    for (const key of Object.keys(input)) {\n        if (typeof input[key] === 'string' && input[key].length > 100) {\n            rawText = input[key];\n            break;\n        }\n    }\n}\n\nif (!rawText || rawText.trim().length === 0) {\n    throw new Error(`Cannot extract text. Keys: [${Object.keys(input).join(', ')}]`);\n}\n\nconsole.log(`📊 Raw text length: ${rawText.length}`);\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 2: YAML FRONT MATTER STRIPPING\n// ══════════════════════════════════════════════════════════════════════════\nlet cleanText = rawText.replace(/^---\\s*[\\s\\S]*?---\\s*/, '');\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 3: JSON EXTRACTION & REPAIR (with Truncation Handling)\n// ══════════════════════════════════════════════════════════════════════════\nlet cleaned = cleanText\n    .replace(/^```json\\s*/i, '').replace(/^```\\s*/i, '').replace(/```\\s*$/g, '').trim();\n\ncleaned = cleaned.replace(/,\\s*}/g, '}').replace(/,\\s*]/g, ']');\n\nlet result = {};\nlet parseSuccess = false;\nlet markdown = '';\n\nconst firstBrace = cleaned.indexOf('{');\nconst lastBrace = cleaned.lastIndexOf('}');\n\nif (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {\n    const jsonString = cleaned.substring(firstBrace, lastBrace + 1);\n    try {\n        result = JSON.parse(jsonString);\n        parseSuccess = true;\n        console.log('✅ JSON parsed successfully');\n    } catch (e) {\n        console.log(`⚠️ JSON parse failed: ${e.message}. Attempting regex recovery...`);\n        \n        // ENHANCED REGEX: Extract formatted_markdown even if truncated\n        const mdMatch = cleaned.match(/\"formatted_markdown\"\\s*:\\s*\"([\\s\\S]*?)(?:(?<!\\\\)\"(?:\\s*,|\\s*})|$)/);\n        if (mdMatch) {\n            markdown = mdMatch[1]\n                .replace(/\\\\\"/g, '\"')\n                .replace(/\\\\n/g, '\\n')\n                .replace(/\\\\\\\\/g, '\\\\');\n            parseSuccess = true;\n            console.log('✅ Recovered markdown via regex (possibly truncated)');\n        }\n    }\n}\n\n// Get markdown from parsed JSON if not already set\nif (!markdown && result.formatted_markdown) {\n    markdown = result.formatted_markdown;\n}\n\n// Fallback: Use raw text\nif (!parseSuccess && !markdown) {\n    markdown = cleanText;\n    console.log('⚠️ Using stripped raw text as markdown');\n}\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 4: CLEAN MARKDOWN & DETECT IMAGES\n// ══════════════════════════════════════════════════════════════════════════\nmarkdown = markdown.replace(/^---\\s*[\\s\\S]*?---\\s*/, '').trim();\n\n// Remove the \"# LinkedIn Draft\" header if present (it's metadata, not content)\nmarkdown = markdown.replace(/^#\\s*LinkedIn\\s*Draft\\s*\\\\n+---\\\\n+/gi, '').trim();\nmarkdown = markdown.replace(/^# LinkedIn Draft\\n+---\\n+/gi, '').trim();\n\nconst structured = result.structured_data || result.structured || result;\n\nconst imageRegex = /<<IMAGE_(\\d+)>>/g;\nconst foundMarkers = [...markdown.matchAll(imageRegex)].map(m => m[0]);\nconst distinctMarkers = [...new Set(foundMarkers)];\n\nconst images = {\n    needed: distinctMarkers.length > 0,\n    count: distinctMarkers.length,\n    markers_found: distinctMarkers\n};\n\n// Flag if content was truncated\nconst wasTruncated = finishReason === 'MAX_TOKENS' || finishReason === 'length';\n\nconsole.log(`✅ LinkedIn Processed. Images: ${images.count}. Truncated: ${wasTruncated}`);\n\nreturn {\n    json: {\n        markdown: markdown,\n        structured: structured,\n        images: images,\n        platform: 'linkedin',\n        processing_stats: {\n            was_truncated: wasTruncated,\n            method: parseSuccess ? 'json' : 'fallback'\n        }\n    }\n};"
+        "jsCode": "// ════════════════════════════════════════════════════════════════════════════\n// PROCESS & FORMAT LINKEDIN DRAFT (PRODUCTION-READY v5.0 - with Truncation Handling)\n// ════════════════════════════════════════════════════════════════════════════\n\nconst input = $input.first().json;\nlet rawText = null;\n\nconsole.log('💼 LinkedIn Draft Processor - Starting...');\n\n// Check for truncation FIRST\nconst finishReason = input.finishReason || input.finish_reason || '';\nif (finishReason === 'MAX_TOKENS' || finishReason === 'length') {\n    console.log('⚠️ WARNING: Response was truncated by MAX_TOKENS limit!');\n}\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 1: UNIVERSAL TEXT EXTRACTION\n// ══════════════════════════════════════════════════════════════════════════\nif (input.choices?.[0]?.message?.content) {\n    rawText = input.choices[0].message.content;\n} else if (input.content?.parts?.[0]?.text) {\n    rawText = input.content.parts[0].text; // Gemini\n} else if (input.candidates?.[0]?.content?.parts?.[0]?.text) {\n    rawText = input.candidates[0].content.parts[0].text; // Gemini alt\n} else if (input.output?.[0]?.content?.[0]?.text) {\n    rawText = input.output[0].content[0].text; // LangChain\n} else if (input.output && typeof input.output === 'string') {\n    rawText = input.output;\n} else if (input.response && typeof input.response === 'string') {\n    rawText = input.response;\n} else if (input.message?.content) {\n    rawText = input.message.content;\n} else if (input.text && typeof input.text === 'string') {\n    rawText = input.text;\n} else if (typeof input === 'string') {\n    rawText = input;\n} else {\n    for (const key of Object.keys(input)) {\n        if (typeof input[key] === 'string' && input[key].length > 100) {\n            rawText = input[key];\n            break;\n        }\n    }\n}\n\nif (!rawText || rawText.trim().length === 0) {\n    throw new Error(`Cannot extract text. Keys: [${Object.keys(input).join(', ')}]`);\n}\n\nconsole.log(`📊 Raw text length: ${rawText.length}`);\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 2: YAML FRONT MATTER STRIPPING\n// ══════════════════════════════════════════════════════════════════════════\nlet cleanText = rawText.replace(/^---\\s*[\\s\\S]*?---\\s*/, '');\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 3: JSON EXTRACTION & REPAIR (with Truncation Handling)\n// ══════════════════════════════════════════════════════════════════════════\nlet cleaned = cleanText\n    .replace(/^```json\\s*/i, '').replace(/^```\\s*/i, '').replace(/```\\s*$/g, '').trim();\n\ncleaned = cleaned.replace(/,\\s*}/g, '}').replace(/,\\s*]/g, ']');\n\nlet result = {};\nlet parseSuccess = false;\nlet markdown = '';\n\nconst firstBrace = cleaned.indexOf('{');\nconst lastBrace = cleaned.lastIndexOf('}');\n\nif (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {\n    const jsonString = cleaned.substring(firstBrace, lastBrace + 1);\n    try {\n        result = JSON.parse(jsonString);\n        parseSuccess = true;\n        console.log('✅ JSON parsed successfully');\n    } catch (e) {\n        console.log(`⚠️ JSON parse failed: ${e.message}. Attempting regex recovery...`);\n        \n        // ENHANCED REGEX: Extract formatted_markdown even if truncated\n        const mdMatch = cleaned.match(/\"formatted_markdown\"\\s*:\\s*\"([\\s\\S]*?)(?:(?<!\\\\)\"(?:\\s*,|\\s*})|$)/);\n        if (mdMatch) {\n            markdown = mdMatch[1]\n                .replace(/\\\\\"/g, '\"')\n                .replace(/\\\\n/g, '\\n')\n                .replace(/\\\\\\\\/g, '\\\\');\n            parseSuccess = true;\n            console.log('✅ Recovered markdown via regex (possibly truncated)');\n        }\n    }\n}\n\n// Get markdown from parsed JSON if not already set\nif (!markdown && result.formatted_markdown) {\n    markdown = result.formatted_markdown;\n}\n\n// Fallback: Use raw text\nif (!parseSuccess && !markdown) {\n    markdown = cleanText;\n    console.log('⚠️ Using stripped raw text as markdown');\n}\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 4: CLEAN MARKDOWN & DETECT IMAGES\n// ══════════════════════════════════════════════════════════════════════════\nmarkdown = markdown.replace(/^---\\s*[\\s\\S]*?---\\s*/, '').trim();\n// 1. [CRITICAL] Unescape literal newlines (Fixes Drive readability)\nmarkdown = markdown.replace(/\\\\n/g, '\\n').replace(/\\\\\"/g, '\"');\n// 2. Remove Metadata Header (Robustly handles newlines & variations)\nmarkdown = markdown.replace(/^#\\s*LinkedIn\\s*Draft[\\s\\S]*?---/i, '').trim();\nmarkdown = markdown.replace(/^#\\s*LinkedIn\\s*Draft/i, '').trim();\n// 3. Ensure consistent separator spacing (for Part 2 splitting)\nif (markdown.includes('---')) {\n    markdown = markdown.replace(/\\s*---\\s*/g, '\\n\\n---\\n\\n');\n}\n\nconst structured = result.structured_data || result.structured || result;\n\nconst imageRegex = /<<IMAGE_(\\d+)>>/g;\nconst foundMarkers = [...markdown.matchAll(imageRegex)].map(m => m[0]);\nconst distinctMarkers = [...new Set(foundMarkers)];\n\nconst images = {\n    needed: distinctMarkers.length > 0,\n    count: distinctMarkers.length,\n    markers_found: distinctMarkers\n};\n\n// Flag if content was truncated\nconst wasTruncated = finishReason === 'MAX_TOKENS' || finishReason === 'length';\n\nconsole.log(`✅ LinkedIn Processed. Images: ${images.count}. Truncated: ${wasTruncated}`);\n\nreturn {\n    json: {\n        markdown: markdown,\n        structured: structured,\n        images: images,\n        platform: 'linkedin',\n        processing_stats: {\n            was_truncated: wasTruncated,\n            method: parseSuccess ? 'json' : 'fallback'\n        }\n    }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6640,
-        1488
+        7216,
+        1280
       ],
       "id": "6828111d-07ff-4779-802a-48fb187d480d",
       "name": "Process & Format LinkedIn Draft"
@@ -316,8 +316,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        3920,
-        1776
+        4496,
+        1568
       ],
       "id": "3199b02d-d2c2-4c1b-9cea-872272bf8946",
       "name": "Create folder for title",
@@ -336,12 +336,76 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3856,
-        1712
+        4432,
+        1504
       ],
       "typeVersion": 1,
       "id": "9d3de995-099b-4a5e-9c87-9e27b5a0c0a2",
       "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "### 1. **Content Extraction** From Notion Database (4 nodes)\n",
+        "height": 240,
+        "width": 1536,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3552,
+        1488
+      ],
+      "typeVersion": 1,
+      "id": "b0424145-e67f-4970-abeb-19e2d61b23e1",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "### 2. Notion Content Analysis & Processing (2 nodes)\n   - Content Extraction & processing - Code: Process & structure content\n   - Context Processing - Code: Personal context builder (user profile + summary)\n### 3. **Research Integration** (1 node)\n   - Perplexity API: Automated keyword research, hashtags, optimal posting times\n### 4. **Context Merging** (1 node)\n   - Code: Merge personal profile + source content + research into master context\n",
+        "height": 208,
+        "width": 1536,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4784,
+        1520
+      ],
+      "typeVersion": 1,
+      "id": "bac34e09-e326-465e-88be-49c1991e2795",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## MULTI-LLM GENERATION -> Generating Content for LinkedIn, Twitter & Portfolio Blog website using Gemini\n### 5.**Multi-LLM Content Generation** (9 nodes - Parallel Execution)\n   - **Tier 1 (Primary)**: Gemini 2.5 Pro\n     * Twitter generation (280 char focus)\n     * LinkedIn generation (1500-2800 char range)\n     * Blog generation (2500+ words, SEO optimized)\n### 6.**Content Formatting** (6 nodes)\n   - Code: Rebuild Twitter (280 char limit, thread structure)\n   - Code: Rebuild LinkedIn (platform-specific formatting, 1 image max)\n   - Code: Rebuild Blog (Sanity CMS blocks, image embedding)\n   - Markdown validation for each platform\n\n### 7.**Image Task Generation** (2 nodes)\n   - Extract image placeholders from all drafts\n   - Generate image generation prompts for manual image generation\n\n### 8.**Storage & Linking** (2 nodes)\n   - Google Drive: Create session folder\n   - Google Drive: Save all drafts (Twitter, LinkedIn, Blog, Image manifest)\n\n### 9.**Notion Status Update** (1 node)\n   - Update Notion with draft URLs, set status to \"Pending Approval\"",
+        "height": 1408,
+        "width": 1552,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        6024,
+        800
+      ],
+      "typeVersion": 1,
+      "id": "a8046985-f260-415b-9710-c8c56800f017",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## Updating Content to Notion \n",
+        "height": 240,
+        "width": 448,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        7824,
+        1392
+      ],
+      "typeVersion": 1,
+      "id": "a99c9f48-8e09-4bff-a77e-67a75a6b52c1",
+      "name": "Sticky Note6"
     },
     {
       "parameters": {
@@ -368,8 +432,8 @@
       "type": "n8n-nodes-base.perplexity",
       "typeVersion": 1,
       "position": [
-        5040,
-        1776
+        5616,
+        1568
       ],
       "credentials": {
         "perplexityApi": {
@@ -398,8 +462,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        6864,
-        1488
+        7440,
+        1280
       ],
       "id": "134bf35b-54c4-4e28-8a1c-01885ce1a8fd",
       "name": "Create LinkedIn Draft",
@@ -432,8 +496,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        6864,
-        1104
+        7440,
+        896
       ],
       "id": "d69526fe-8309-4e11-95bb-180a729a2fb5",
       "name": "Create Twitter Draft",
@@ -446,13 +510,13 @@
     },
     {
       "parameters": {
-        "jsCode": "// ════════════════════════════════════════════════════════════════════════════\n// PROCESS & FORMAT BLOG DRAFT (PRODUCTION-READY v4.0)\n// Handles: Gemini, OpenAI, Claude, Groq, OpenRouter, GitHub Models, etc.\n// ════════════════════════════════════════════════════════════════════════════\n\nconst input = $input.first().json;\nlet rawText = null;\n\nconsole.log('📝 Blog Draft Processor - Starting...');\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 1: UNIVERSAL TEXT EXTRACTION\n// ══════════════════════════════════════════════════════════════════════════\nif (input.choices?.[0]?.message?.content) {\n    rawText = input.choices[0].message.content;\n} else if (input.content?.[0]?.text) {\n    rawText = input.content[0].text; // Claude\n} else if (input.content?.parts?.[0]?.text) {\n    rawText = input.content.parts[0].text; // Gemini\n} else if (input.candidates?.[0]?.content?.parts?.[0]?.text) {\n    rawText = input.candidates[0].content.parts[0].text; // Gemini alt\n} else if (input.output?.[0]?.content?.[0]?.text) {\n    rawText = input.output[0].content[0].text; // LangChain\n} else if (input.output && typeof input.output === 'string') {\n    rawText = input.output; // OpenRouter\n} else if (input.response && typeof input.response === 'string') {\n    rawText = input.response;\n} else if (input.message?.content) {\n    rawText = input.message.content;\n} else if (input.text && typeof input.text === 'string') {\n    rawText = input.text;\n} else if (typeof input === 'string') {\n    rawText = input;\n} else {\n    for (const key of Object.keys(input)) {\n        if (typeof input[key] === 'string' && input[key].length > 100) {\n            rawText = input[key];\n            break;\n        }\n    }\n}\n\nif (!rawText || rawText.trim().length === 0) {\n    throw new Error(`Cannot extract text. Keys: [${Object.keys(input).join(', ')}]`);\n}\n\nconsole.log(`📊 Raw text length: ${rawText.length}`);\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 2: YAML FRONT MATTER STRIPPING\n// ══════════════════════════════════════════════════════════════════════════\nlet cleanText = rawText.replace(/^---\\s*[\\s\\S]*?---\\s*/, '');\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 3: JSON EXTRACTION & REPAIR\n// ══════════════════════════════════════════════════════════════════════════\nlet cleaned = cleanText\n    .replace(/^```json\\s*/i, '').replace(/^```\\s*/i, '').replace(/```\\s*$/g, '').trim();\n\ncleaned = cleaned.replace(/,\\s*}/g, '}').replace(/,\\s*]/g, ']');\n\nlet result = {};\nlet parseSuccess = false;\n\nconst firstBrace = cleaned.indexOf('{');\nconst lastBrace = cleaned.lastIndexOf('}');\n\nif (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {\n    const jsonString = cleaned.substring(firstBrace, lastBrace + 1);\n    try {\n        result = JSON.parse(jsonString);\n        parseSuccess = true;\n        console.log('✅ JSON parsed successfully');\n    } catch (e) {\n        console.log(`⚠️ JSON parse failed: ${e.message}. Attempting regex...`);\n        const mdMatch = cleaned.match(/\"formatted_markdown\"\\s*:\\s*\"([\\s\\S]*?)(?=(?<!\\\\)\"\\s*(,|}|]|$))/);\n        if (mdMatch) {\n            result.formatted_markdown = mdMatch[1].replace(/\\\\\"/g, '\"').replace(/\\\\n/g, '\\n').replace(/\\\\\\\\/g, '\\\\');\n            parseSuccess = true;\n        }\n    }\n}\n\nif (!parseSuccess) {\n    result.formatted_markdown = cleanText;\n    console.log('⚠️ Using stripped raw text as markdown');\n}\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 4: DATA EXTRACTION & IMAGE DETECTION\n// ══════════════════════════════════════════════════════════════════════════\nlet markdown = (result.formatted_markdown || result.markdown || '').replace(/^---\\s*[\\s\\S]*?---\\s*/, '').trim();\nconst structured = result.structured_data || result.structured || result;\nconst seo = structured.seo || {};\n\nconst imageRegex = /<<IMAGE_(\\d+)>>/g;\nconst foundMarkers = [...markdown.matchAll(imageRegex)].map(m => m[0]);\nconst distinctMarkers = [...new Set(foundMarkers)];\n\nconst images = {\n    needed: distinctMarkers.length > 0,\n    count: distinctMarkers.length,\n    markers_found: distinctMarkers,\n    prompts: structured.image_prompts || []\n};\n\nconst finalSeo = {\n    title: seo.title || (markdown.match(/^#\\s+(.+)$/m) || [])[1] || 'Untitled Draft',\n    slug: seo.slug || '',\n    metaDescription: seo.meta_description || seo.metaDescription || '',\n    keywords: seo.keywords || [],\n    tags: seo.tags || []\n};\n\nconst wordCount = markdown.split(/\\s+/).filter(w => w.length > 0).length;\nconsole.log(`✅ Blog Processed: ${wordCount} words. Images: ${images.count}`);\n\nreturn {\n    json: {\n        markdown: markdown,\n        structured: structured,\n        seo: finalSeo,\n        images: images,\n        platform: 'blog',\n        processing_stats: {\n            method: parseSuccess ? 'json' : 'fallback',\n            images_detected: images.count,\n            yaml_stripped: rawText.length !== cleanText.length\n        }\n    }\n};"
+        "jsCode": "// ════════════════════════════════════════════════════════════════════════════\n// PROCESS & FORMAT BLOG DRAFT (PRODUCTION-READY v4.0)\n// Handles: Gemini, OpenAI, Claude, Groq, OpenRouter, GitHub Models, etc.\n// ════════════════════════════════════════════════════════════════════════════\n\nconst input = $input.first().json;\nlet rawText = null;\n\nconsole.log('📝 Blog Draft Processor - Starting...');\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 1: UNIVERSAL TEXT EXTRACTION\n// ══════════════════════════════════════════════════════════════════════════\nif (input.choices?.[0]?.message?.content) {\n    rawText = input.choices[0].message.content;\n} else if (input.content?.[0]?.text) {\n    rawText = input.content[0].text; // Claude\n} else if (input.content?.parts?.[0]?.text) {\n    rawText = input.content.parts[0].text; // Gemini\n} else if (input.candidates?.[0]?.content?.parts?.[0]?.text) {\n    rawText = input.candidates[0].content.parts[0].text; // Gemini alt\n} else if (input.output?.[0]?.content?.[0]?.text) {\n    rawText = input.output[0].content[0].text; // LangChain\n} else if (input.output && typeof input.output === 'string') {\n    rawText = input.output; // OpenRouter\n} else if (input.response && typeof input.response === 'string') {\n    rawText = input.response;\n} else if (input.message?.content) {\n    rawText = input.message.content;\n} else if (input.text && typeof input.text === 'string') {\n    rawText = input.text;\n} else if (typeof input === 'string') {\n    rawText = input;\n} else {\n    for (const key of Object.keys(input)) {\n        if (typeof input[key] === 'string' && input[key].length > 100) {\n            rawText = input[key];\n            break;\n        }\n    }\n}\n\nif (!rawText || rawText.trim().length === 0) {\n    throw new Error(`Cannot extract text. Keys: [${Object.keys(input).join(', ')}]`);\n}\n\nconsole.log(`📊 Raw text length: ${rawText.length}`);\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 2: YAML FRONT MATTER STRIPPING\n// ══════════════════════════════════════════════════════════════════════════\nlet cleanText = rawText.replace(/^---\\s*[\\s\\S]*?---\\s*/, '');\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 3: JSON EXTRACTION & REPAIR\n// ══════════════════════════════════════════════════════════════════════════\nlet cleaned = cleanText\n    .replace(/^```json\\s*/i, '').replace(/^```\\s*/i, '').replace(/```\\s*$/g, '').trim();\n\ncleaned = cleaned.replace(/,\\s*}/g, '}').replace(/,\\s*]/g, ']');\n\nlet result = {};\nlet parseSuccess = false;\n\nconst firstBrace = cleaned.indexOf('{');\nconst lastBrace = cleaned.lastIndexOf('}');\n\nif (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {\n    const jsonString = cleaned.substring(firstBrace, lastBrace + 1);\n    try {\n        result = JSON.parse(jsonString);\n        parseSuccess = true;\n        console.log('✅ JSON parsed successfully');\n    } catch (e) {\n        console.log(`⚠️ JSON parse failed: ${e.message}. Attempting regex...`);\n        const mdMatch = cleaned.match(/\"formatted_markdown\"\\s*:\\s*\"([\\s\\S]*?)(?=(?<!\\\\)\"\\s*(,|}|]|$))/);\n        if (mdMatch) {\n            result.formatted_markdown = mdMatch[1].replace(/\\\\\"/g, '\"').replace(/\\\\n/g, '\\n').replace(/\\\\\\\\/g, '\\\\');\n            parseSuccess = true;\n        }\n    }\n}\n\nif (!parseSuccess) {\n    result.formatted_markdown = cleanText;\n    console.log('⚠️ Using stripped raw text as markdown');\n}\n\n// ══════════════════════════════════════════════════════════════════════════\n// STEP 4: DATA EXTRACTION & IMAGE DETECTION\n// ══════════════════════════════════════════════════════════════════════════\n// [EXISTING CODE]\nlet markdown = (result.formatted_markdown || result.markdown || cleanText).trim();\n// [PASTE THIS BLOCK BELOW IT]\nmarkdown = markdown.replace(/\\\\n/g, '\\n').replace(/\\\\\"/g, '\"');\n\nconst structured = result.structured_data || result.structured || result;\nconst seo = structured.seo || {};\n\nconst imageRegex = /<<IMAGE_(\\d+)>>/g;\nconst foundMarkers = [...markdown.matchAll(imageRegex)].map(m => m[0]);\nconst distinctMarkers = [...new Set(foundMarkers)];\n\nconst images = {\n    needed: distinctMarkers.length > 0,\n    count: distinctMarkers.length,\n    markers_found: distinctMarkers,\n    prompts: structured.image_prompts || []\n};\n\nconst finalSeo = {\n    title: seo.title || (markdown.match(/^#\\s+(.+)$/m) || [])[1] || 'Untitled Draft',\n    slug: seo.slug || '',\n    metaDescription: seo.meta_description || seo.metaDescription || '',\n    keywords: seo.keywords || [],\n    tags: seo.tags || []\n};\n\nconst wordCount = markdown.split(/\\s+/).filter(w => w.length > 0).length;\nconsole.log(`✅ Blog Processed: ${wordCount} words. Images: ${images.count}`);\n\nreturn {\n    json: {\n        markdown: markdown,\n        structured: structured,\n        seo: finalSeo,\n        images: images,\n        platform: 'blog',\n        processing_stats: {\n            method: parseSuccess ? 'json' : 'fallback',\n            images_detected: images.count,\n            yaml_stripped: rawText.length !== cleanText.length\n        }\n    }\n};"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6640,
-        1872
+        7216,
+        1664
       ],
       "id": "5129f483-7ccc-49fd-890f-63b2c3a76527",
       "name": "Process & Format Blog Draft"
@@ -477,8 +541,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        6864,
-        1872
+        7440,
+        1664
       ],
       "id": "b485c559-0b49-4261-9859-f14241caf0ec",
       "name": "Create Blog Draft",
@@ -496,8 +560,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5840,
-        1776
+        6416,
+        1568
       ],
       "id": "12833281-018c-4116-93cd-990d423ec605",
       "name": "Process AI Strategy & MERGE CONTEXT"
@@ -530,12 +594,27 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        6352,
-        2256
+        6928,
+        2048
       ],
       "id": "04298295-2ebd-47eb-8bf2-49d0f2f0658b",
       "name": "Are Images Needed?",
       "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "### Is Image Required & Processing\n",
+        "height": 192,
+        "width": 656
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        6904,
+        2016
+      ],
+      "typeVersion": 1,
+      "id": "5944f845-70db-431a-9ab6-c81825163826",
+      "name": "Sticky Note"
     },
     {
       "parameters": {
@@ -544,8 +623,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6640,
-        2256
+        7216,
+        2048
       ],
       "id": "74d1cc9e-2137-4e65-8824-61623cd2c61f",
       "name": "Process & Format Image Tasklist"
@@ -570,8 +649,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        6864,
-        2256
+        7440,
+        2048
       ],
       "id": "bb5aa201-eb0f-4239-a045-e920def9fbd6",
       "name": "Create Image Tasklist",
@@ -610,8 +689,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        6064,
-        1200
+        6640,
+        992
       ],
       "id": "53dba41b-b1db-4c6f-855f-c2ad8be2183d",
       "name": "IF - Twitter Selected?"
@@ -644,8 +723,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        6064,
-        1584
+        6640,
+        1376
       ],
       "id": "2aad5498-be7b-4dd1-8afc-822d35452677",
       "name": "IF - LinkedIn Selected?"
@@ -678,8 +757,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        6064,
-        1968
+        6640,
+        1760
       ],
       "id": "c14eb2bf-7e48-4910-9c19-af3de71de31a",
       "name": "IF - Blog Selected?"
@@ -691,8 +770,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6864,
-        1296
+        7440,
+        1088
       ],
       "id": "b3fbfba6-3858-4ce4-8635-897c7f3d79a5",
       "name": "Code - No-Op Twitter Draft"
@@ -704,8 +783,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6864,
-        1680
+        7440,
+        1472
       ],
       "id": "24c79a31-8326-4e83-bb00-736e96e04a77",
       "name": "Code - No-Op LinkedIn Draft"
@@ -717,8 +796,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6864,
-        2064
+        7440,
+        1856
       ],
       "id": "0e60e08d-57c5-4c70-b276-f8c2f242c144",
       "name": "Code - No-Op Blog Draft"
@@ -867,8 +946,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2,
       "position": [
-        7536,
-        1680
+        8112,
+        1472
       ],
       "credentials": {
         "notionApi": {
@@ -906,8 +985,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        5488,
-        1776
+        6064,
+        1568
       ],
       "retryOnFail": true,
       "maxTries": 5,
@@ -948,8 +1027,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        6288,
-        1104
+        6864,
+        896
       ],
       "retryOnFail": true,
       "maxTries": 5,
@@ -989,8 +1068,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        6288,
-        1488
+        6864,
+        1280
       ],
       "retryOnFail": true,
       "maxTries": 5,
@@ -1028,8 +1107,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        6288,
-        1872
+        6864,
+        1664
       ],
       "id": "c47db764-6d0d-4b0b-b3af-bbb1e6d1f7e1",
       "name": "Blog Content Generation",
