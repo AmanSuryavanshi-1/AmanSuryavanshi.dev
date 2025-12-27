@@ -102,7 +102,7 @@ const AboutContent = () => {
         ))}
         <link itemProp="additionalType" href="http://schema.org/EngineeringProfessional" />
         <link itemProp="sameAs" href="https://github.com/amansuryavanshi" />
-        <link itemProp="sameAs" href="https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/" />
+        <link itemProp="sameAs" href="https://www.linkedin.com/in/amansuryavanshi-ai/" />
       </section>
     </div>
   );

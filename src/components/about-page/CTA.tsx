@@ -47,7 +47,7 @@ export default function CTA() {
   const socialLinks = [
     { Icon: FaXTwitter, href: "https://twitter.com/_AmanSurya", label: "Twitter", color: "hover:text-[#1DA1F2]" },
     { Icon: Github, href: "https://github.com/AmanSuryavanshi-1", label: "GitHub", color: "hover:text-lime-500" },
-    { Icon: Linkedin, href: "https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/", label: "LinkedIn", color: "hover:text-[#0077B5]" },
+    { Icon: Linkedin, href: "https://www.linkedin.com/in/amansuryavanshi-ai/", label: "LinkedIn", color: "hover:text-[#0077B5]" },
     { Icon: Instagram, href: "https://www.instagram.com/__aman_suryavanshi__/", label: "Instagram", color: "hover:text-[#E4405F]" },
   ]
 

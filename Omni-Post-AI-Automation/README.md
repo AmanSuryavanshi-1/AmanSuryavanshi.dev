@@ -9,7 +9,7 @@
 ![Speed](https://img.shields.io/badge/Speed-88s%20avg-orange)
 ![Executions](https://img.shields.io/badge/Executions-1000%2B-purple)
 
-**Built by [Aman Suryavanshi](https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/)** | AI Automation Developer
+**Built by [Aman Suryavanshi](https://www.linkedin.com/in/amansuryavanshi-ai/)** | AI Automation Developer
 
 ---
 
@@ -224,7 +224,7 @@ Omni-Post-AI-Automation/
 | Platform | Link |
 |----------|------|
 | **Portfolio** | [amansuryavanshi-dev.vercel.app](https://amansuryavanshi-dev.vercel.app/) |
-| **LinkedIn** | [linkedin.com/in/aman-suryavanshi-6b0aba347](https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/) |
+| **LinkedIn** | [linkedin.com/in/amansuryavanshi-ai](https://www.linkedin.com/in/amansuryavanshi-ai/) |
 | **Twitter** | [@_AmanSurya](https://x.com/_AmanSurya) |
 | **GitHub** | [github.com/AmanSuryavanshi-1](https://github.com/AmanSuryavanshi-1) |
 | **N8N Workflows** | [github.com/AmanSuryavanshi-1/N8N](https://github.com/AmanSuryavanshi-1/N8N/tree/main/workflows) |

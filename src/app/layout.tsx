@@ -191,7 +191,7 @@ const structuredData = {
             ],
             sameAs: [
                 "https://github.com/AmanSuryavanshi-1",
-                "https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/",
+                "https://www.linkedin.com/in/amansuryavanshi-ai/",
                 "https://twitter.com/_AmanSurya"
             ],
         },

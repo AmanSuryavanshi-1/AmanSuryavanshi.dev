@@ -57,7 +57,7 @@ export const UserConfirmationTemplate = (name: string, message: string) => `
       <p style="color: #d1f3e4; font-size: 12px; margin: 0;">&copy; ${new Date().getFullYear()} Aman Suryavanshi. All rights reserved.</p>
       <div style="margin-top: 10px;">
         <a href="https://github.com/AmanSuryavanshi-1" style="color: #84cc16; text-decoration: none; margin: 0 10px; font-size: 12px;">GitHub</a>
-        <a href="https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/" style="color: #84cc16; text-decoration: none; margin: 0 10px; font-size: 12px;">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/amansuryavanshi-ai/" style="color: #84cc16; text-decoration: none; margin: 0 10px; font-size: 12px;">LinkedIn</a>
       </div>
     </div>
   </div>
