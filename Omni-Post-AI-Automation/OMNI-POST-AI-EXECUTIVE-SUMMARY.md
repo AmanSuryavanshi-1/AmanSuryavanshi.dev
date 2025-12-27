@@ -66,7 +66,7 @@ Notion (Source)
   → Notion Status Update (Pending Approval)
 ```
 
-![Part 1 High Level Workflow](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Generation_Workflow.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Generation_Workflow.webp" alt="Part 1 High Level Workflow" width="800" />
 
 #### Part 2: Content Distribution (46 nodes, 17-31 seconds)
 
@@ -78,9 +78,9 @@ Notion (Approved Content)
   → Status Tracking (partial success handling)
 ```
 
-![Part 2 High Level Workflow](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2_Distribution_Workflow.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2_Distribution_Workflow.webp" alt="Part 2 High Level Workflow" width="800" />
 
-![Content Evolution Timeline](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_1_Timeline_Evolution.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_1_Timeline_Evolution.webp" alt="Content Evolution Timeline" width="800" />
 
 *Evolution from manual, generic content (v1) to AI-automated, platform-optimized content (v4) showing dramatic quality improvement*
 
