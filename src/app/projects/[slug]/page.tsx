@@ -1,6 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import DocPageClient from '@/components/docs/DocPageClient';
+import { portfolioData } from '@/data/portfolio';
 
 // Map slugs to GitHub raw URLs
 const DOCS_MAP: Record<string, string> = {
@@ -10,6 +11,14 @@ const DOCS_MAP: Record<string, string> = {
     // Technical Documentation
     'aviators-training-centre-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/Aviators_Training_Centre/main/docs/aviators-training-centre-technical-documentation.md',
     'omni-post-ai-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/main/Omni-Post-AI-Automation/OMNI-POST-AI-TECHNICAL-DOCUMENTATION.md',
+};
+
+// Map documentation slugs to Project IDs
+const DOC_TO_PROJECT_ID: Record<string, string> = {
+    'aviators-training-centre-executive-summary': 'aviators-training-centre',
+    'aviators-training-centre-technical-documentation': 'aviators-training-centre',
+    'omni-post-ai-executive-summary': 'n8n-automation-suite',
+    'omni-post-ai-technical-documentation': 'n8n-automation-suite',
 };
 
 // Map slugs to readable titles for metadata
@@ -67,10 +76,14 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function ProjectDocPage({ params }: PageProps) {
     const { slug } = await params;
     const content = await getDocContent(slug);
+    const projectId = DOC_TO_PROJECT_ID[slug];
+    const project = portfolioData.projects.find(p => p.id === projectId);
 
-    if (!content) {
+    if (!content || !project) {
         notFound();
     }
 
-    return <DocPageClient title={TITLES_MAP[slug]} content={content} slug={slug} />;
+    const { technologies, ...serializableProject } = project;
+
+    return <DocPageClient project={serializableProject as any} content={content} slug={slug} />;
 }

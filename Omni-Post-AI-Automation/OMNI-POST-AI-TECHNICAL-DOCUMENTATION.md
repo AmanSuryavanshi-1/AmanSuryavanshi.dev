@@ -1,6 +1,5 @@
 # Omni-Post AI
-## Intelligent Multi-Platform Content Distribution Engine
-
+## Intelligent Multi-Platform Content Repurposing & AI-Powered Social Distribution
 > **One idea, three platforms, zero manual work**
 
 **Author**: Aman Suryavanshi  
@@ -116,7 +115,7 @@ This is a **production-grade, bi-part n8n automation** consisting of 74 nodes or
 
 **Evolution Timeline:**
 
-![Content Evolution Comparison](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_1_Timeline_Evolution.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_1_Timeline_Evolution.webp" alt="Content Evolution Comparison" width="800" />
 
 *Figure 0: Evolution of content quality from manual posting (v1) to AI-automated system (v4), showing dramatic improvement in engagement, technical depth, and authenticity*
 
@@ -156,26 +155,26 @@ This is a **production-grade, bi-part n8n automation** consisting of 74 nodes or
 **Part 1: Content Generation Pipeline (28 Nodes)**
 **High-Level Overview**
 
-![Part 1 High Level Workflow](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Generation_Workflow.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Generation_Workflow.webp" alt="Part 1 High Level Workflow" width="800" />
 
 *Figure 1a: Conceptual workflow showing the AI generation process*
 
 **Detailed N8N Implementation**
 
-![Part 1 Detailed Automation Flow](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Automation_COMPLETEFLOW_Content_Repurposing_zoomable.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Automation_COMPLETEFLOW_Content_Repurposing_zoomable.webp" alt="Part 1 Detailed Automation Flow" width="800" />
 
 *Figure 1b: Actual 28-node n8n workflow implementation*
 
 **Part 2: Content Distribution Pipeline (46 Nodes)**
 **High-Level Overview**
 
-![Part 2 High Level Workflow](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2_Distribution_Workflow.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2_Distribution_Workflow.webp" alt="Part 2 High Level Workflow" width="800" />
 
 *Figure 2a: Conceptual workflow showing the multi-platform distribution process*
 
 **Detailed N8N Implementation**
 
-![Part 2 Detailed Automation Flow](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2%20_Automation_Content_Posting_zoomable.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2%20_Automation_Content_Posting_zoomable.webp" alt="Part 2 Detailed Automation Flow" width="800" />
 
 *Figure 2b: Actual 46-node n8n workflow implementation*
 
@@ -209,9 +208,9 @@ Notion serves as the single source of truth for three technical reasons:
 
 **Technical Advantage**: By using Notion's block API with recursive traversal, I can extract content with full structural context (3-4 levels deep), which significantly improves AI-generated output quality compared to flat text extraction.
 
-![Notion Database Schema](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_2_Notion_Database_Schema_FullSize_Screenshot_zoomable.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_2_Notion_Database_Schema_FullSize_Screenshot_zoomable.webp" alt="Notion Database Schema" width="800" />
 
-![Notion Content Queue Database](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_2_Notion_Content_Queue_Database_zoomable.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_2_Notion_Content_Queue_Database_zoomable.webp" alt="Notion Content Queue Database" width="800" />
 
 *Figure 3: Social Content Queue database structure showing all tracking properties including SessionID, Status workflow, Draft URLs, SEO metadata, and posting timestamps for complete content lifecycle management*
 
@@ -313,7 +312,7 @@ LinkedIn Interactions:
 └─ Target Metrics: Comments, shares, connection requests
 ```
 
-![Metrics Dashboard](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_3_Metrics_Dashboard.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_3_Metrics_Dashboard.webp" alt="Production Metrics Dashboard" width="800" />
 
 *Figure 4: Production system performance dashboard showing 99.7% reliability, 88-second average processing time, zero operational cost, 85% engagement rate, and 1000+ successful executions*
 
@@ -331,7 +330,7 @@ LinkedIn Interactions:
 - **Secondary LLM**: Google Gemini 2.5 Flash (fallback for speed)
 - **Research API**: Perplexity Sonar (free tier, keyword research & hashtags)
 
-![LLM Routing Decision Tree](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_5_LLM_Routing.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_5_LLM_Routing.webp" alt="LLM Routing Decision Tree" width="800" />
 
 *Figure 6: LLM routing strategy showing model selection based on content type - Gemini 2.5 Pro for technical deep dives, Gemini Flash for quick updates, and Perplexity Sonar for research-heavy content*
 
@@ -1579,7 +1578,7 @@ const fileName = `twitter_draft_${sessionId}.md`;
 const imageFileName = `asset-${assetNumber}-${sessionId}.png`;
 ```
 
-![Session-Based File Structure](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset%206%20Session-Based%20File%20Structure.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset%206%20Session-Based%20File%20Structure.webp" alt="Session-Based File Structure" width="800" />
 
 *Figure 7: Google Drive folder structure showing session-based organization with unique session IDs for each content piece, enabling concurrent processing without file conflicts. Each session folder contains all drafts and assets with consistent naming conventions.*
 
@@ -1999,7 +1998,7 @@ TOTAL END-TO-END: 65-111 seconds (avg: 88 seconds)
 - **SEO Optimization**: Applied (titles, meta descriptions, keywords)
 - **Readability**: Hierarchical structure (H2/H3), code examples, images
 
-![Content Evolution Comparison](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_1_Timeline_Evolution.webp)
+<img src="https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_1_Timeline_Evolution.webp" alt="Content Evolution Comparison" width="800" />
 
 *Figure 7: Evolution of content quality from before the original manual system (v1) to after current AI-automated system (v4), showing dramatic improvement in engagement, credibility, and authenticity*
 

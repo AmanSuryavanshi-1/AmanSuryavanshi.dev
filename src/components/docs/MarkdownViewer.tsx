@@ -7,13 +7,21 @@ import rehypeRaw from 'rehype-raw';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useImageGallery } from '@/context/ImageGalleryContext';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Copy, Check } from 'lucide-react';
 
 interface MarkdownViewerProps {
     content: string;
 }
 
-// Image component that handles both regular and Cloudinary images
+/**
+ * Spacing System (Professional & Consistent):
+ * - Section gap (between major sections): mt-10 md:mt-12
+ * - Block gap (p, lists, blockquotes): mb-4 md:mb-5
+ * - Heading spacing: mt-8 md:mt-10 mb-3 md:mb-4
+ * - Inline elements: tight spacing
+ */
+
+// Modern, clean image component
 const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key: string]: any }) => {
     const { registerImage, openGallery, images } = useImageGallery();
     const [imageError, setImageError] = React.useState(false);
@@ -26,16 +34,17 @@ const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key
 
     if (!src || imageError) return null;
 
-    // Determine if it's a mobile/portrait screenshot based on alt text or aspect ratio will be handled by CSS
     const isMobileScreenshot = alt?.toLowerCase().includes('mobile') || alt?.toLowerCase().includes('phone');
 
     return (
-        <figure className="my-10 flex flex-col items-center">
+        <figure className="my-6 md:my-8 flex flex-col items-center group">
             <div
                 className={`
-                    relative overflow-hidden rounded-2xl shadow-lg border border-forest-100/50 bg-white 
-                    cursor-zoom-in transition-all duration-500 hover:shadow-2xl hover:border-lime-200 hover:-translate-y-1
-                    ${isMobileScreenshot ? 'max-w-[280px] sm:max-w-[320px]' : 'w-full max-w-4xl'}
+                    relative overflow-hidden rounded-xl 
+                    shadow-md hover:shadow-xl transition-all duration-500
+                    border border-forest-200/50 bg-white
+                    cursor-zoom-in
+                    ${isMobileScreenshot ? 'max-w-[260px]' : 'w-full max-w-4xl'}
                 `}
             >
                 <img
@@ -43,11 +52,8 @@ const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key
                     alt={alt || 'Documentation image'}
                     className={`
                         w-full h-auto object-contain 
-                        transition-transform duration-500 group-hover:scale-[1.02]
-                        ${isMobileScreenshot
-                            ? 'max-h-[500px] sm:max-h-[600px]'
-                            : 'max-h-[400px] sm:max-h-[500px] lg:max-h-[600px]'
-                        }
+                        transition-transform duration-700 group-hover:scale-[1.01]
+                        ${isMobileScreenshot ? 'max-h-[500px]' : 'max-h-[600px]'}
                     `}
                     loading="lazy"
                     onClick={() => {
@@ -61,7 +67,7 @@ const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key
                 />
             </div>
             {alt && (
-                <figcaption className="mt-4 text-sm text-forest-500 text-center font-medium opacity-80 max-w-2xl px-4">
+                <figcaption className="mt-3 text-sm text-forest-500 text-center font-medium max-w-lg px-4">
                     {alt}
                 </figcaption>
             )}
@@ -69,97 +75,208 @@ const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key
     );
 };
 
+// Sleek code block
+const CodeBlock = ({ language, children, ...props }: any) => {
+    const [copied, setCopied] = React.useState(false);
+    const codeString = String(children).replace(/\n$/, '');
+
+    const handleCopy = async () => {
+        await navigator.clipboard.writeText(codeString);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+        <div className="relative group my-6 md:my-8 rounded-xl overflow-hidden shadow-sm border border-forest-200/50">
+            {/* Header */}
+            <div className="flex items-center justify-between px-4 py-2.5 bg-[#1e1e1e] border-b border-white/10">
+                <span className="text-xs font-mono text-gray-400 lowercase">
+                    {language || 'text'}
+                </span>
+                <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors"
+                >
+                    {copied ? <Check className="w-3.5 h-3.5 text-lime-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span className="sr-only">Copy</span>
+                </button>
+            </div>
+
+            <div className="overflow-x-auto bg-[#1e1e1e]">
+                <SyntaxHighlighter
+                    style={vscDarkPlus}
+                    language={language}
+                    PreTag="div"
+                    customStyle={{
+                        margin: 0,
+                        borderRadius: 0,
+                        background: 'transparent',
+                        padding: '1rem 1.25rem',
+                        fontSize: '0.875rem',
+                        lineHeight: '1.7',
+                    }}
+                    {...props}
+                >
+                    {codeString}
+                </SyntaxHighlighter>
+            </div>
+        </div>
+    );
+};
+
+// Helper function to generate URL-friendly IDs from heading text
+const generateHeadingId = (text: React.ReactNode): string => {
+    const extractText = (node: React.ReactNode): string => {
+        if (typeof node === 'string') return node;
+        if (Array.isArray(node)) return node.map(extractText).join('');
+        if (node && typeof node === 'object' && 'props' in node) {
+            return extractText((node as any).props.children);
+        }
+        return '';
+    };
+    const plainText = extractText(text);
+    return plainText
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '')
+        .substring(0, 50) || 'heading';
+};
+
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
     return (
-        <div className="prose prose-lg md:prose-xl max-w-none text-forest-900
-            prose-headings:font-serif prose-headings:font-bold prose-headings:text-forest-900 prose-headings:tracking-tight
-            prose-h1:text-3xl prose-h1:md:text-4xl prose-h1:mb-8 prose-h1:mt-16
-            prose-h2:text-2xl prose-h2:md:text-3xl prose-h2:mb-6 prose-h2:mt-16 prose-h2:border-b prose-h2:border-lime-100/50 prose-h2:pb-4
-            prose-h3:text-xl prose-h3:md:text-2xl prose-h3:mb-4 prose-h3:mt-12
-            prose-h4:text-lg prose-h4:md:text-xl prose-h4:mb-3 prose-h4:mt-8
-            prose-p:text-forest-700 prose-p:leading-relaxed prose-p:mb-6
-            prose-strong:text-forest-900 prose-strong:font-bold
-            prose-em:text-forest-600 prose-em:italic
-            prose-ul:text-forest-700 prose-ul:my-6 prose-ul:pl-0
-            prose-ol:text-forest-700 prose-ol:my-6 prose-ol:pl-0
-            prose-li:my-2 prose-li:leading-relaxed prose-li:pl-2
-            prose-li:marker:text-lime-500 prose-li:marker:font-bold
-            prose-a:text-lime-600 prose-a:font-medium prose-a:no-underline prose-a:border-b prose-a:border-lime-200 hover:prose-a:text-lime-700 hover:prose-a:border-lime-500 prose-a:transition-all
-            prose-blockquote:border-l-4 prose-blockquote:border-lime-500 prose-blockquote:bg-white prose-blockquote:py-6 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl prose-blockquote:text-forest-700 prose-blockquote:not-italic prose-blockquote:my-10 prose-blockquote:shadow-sm prose-blockquote:border-y prose-blockquote:border-r prose-blockquote:border-forest-50
-            prose-code:text-lime-700 prose-code:bg-white prose-code:px-2 prose-code:py-1 prose-code:rounded-lg prose-code:text-sm prose-code:font-semibold prose-code:before:content-none prose-code:after:content-none prose-code:border prose-code:border-forest-100/50 prose-code:shadow-sm
-            prose-pre:bg-[#1e1e1e] prose-pre:text-forest-50 prose-pre:shadow-2xl prose-pre:shadow-forest-900/10 prose-pre:rounded-2xl prose-pre:p-0 prose-pre:my-12 prose-pre:border prose-pre:border-forest-800
-            prose-hr:border-forest-200/50 prose-hr:my-20
-            prose-table:w-full prose-table:my-12 prose-table:border-collapse prose-table:text-base
-            prose-th:bg-forest-900 prose-th:text-white prose-th:p-4 prose-th:text-left prose-th:font-bold prose-th:text-sm prose-th:uppercase prose-th:tracking-wider prose-th:first:rounded-tl-xl prose-th:last:rounded-tr-xl
-            prose-td:p-4 prose-td:border-b prose-td:border-forest-100 prose-td:text-forest-700 prose-td:bg-white
-            prose-figure:my-0"
-        >
+        <div className="markdown-content w-full max-w-full overflow-x-hidden prose-spacing">
             <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeRaw]}
                 remarkRehypeOptions={{ allowDangerousHtml: true }}
                 components={{
-                    // Enhanced code block with language label
-                    code({ node, inline, className, children, ...props }: any) {
-                        const match = /language-(\w+)/.exec(className || '');
-                        return !inline && match ? (
-                            <div className="relative group my-10">
-                                <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 py-2 bg-forest-900 rounded-t-2xl border-b border-forest-800">
-                                    <span className="text-xs font-mono text-forest-400 uppercase tracking-wider pl-2">
-                                        {match[1]}
-                                    </span>
-                                    <div className="flex gap-1.5 pr-2">
-                                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                                        <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-                                    </div>
-                                </div>
-                                <div className="pt-0">
-                                    <SyntaxHighlighter
-                                        style={vscDarkPlus}
-                                        language={match[1]}
-                                        PreTag="div"
-                                        customStyle={{
-                                            margin: 0,
-                                            borderRadius: '1rem',
-                                            background: '#1e1e1e',
-                                            padding: '1.5rem',
-                                            paddingTop: '3.5rem', // Space for the header
-                                        }}
-                                        {...props}
-                                    >
-                                        {String(children).replace(/\n$/, '')}
-                                    </SyntaxHighlighter>
-                                </div>
-                            </div>
-                        ) : (
-                            <code className={className} {...props}>
+                    // === HEADINGS: Professional spacing with responsive design ===
+                    h1: ({ children }) => {
+                        const id = generateHeadingId(children);
+                        return (
+                            <h1 id={id} className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-forest-900 mt-0 mb-4 md:mb-6 scroll-mt-28 first:mt-0">
                                 {children}
-                            </code>
+                            </h1>
                         );
                     },
-                    // Enhanced image handling with responsive sizing
-                    img: MarkdownImage,
-                    // Enhanced table with better styling
-                    table: ({ children }) => (
-                        <div className="w-fit max-w-full overflow-x-auto my-10 rounded-2xl border border-forest-100 shadow-lg bg-white">
-                            <table className="divide-y divide-forest-100 border-collapse w-full">
+                    h2: ({ children }) => {
+                        const id = generateHeadingId(children);
+                        return (
+                            <h2 id={id} className="text-xl sm:text-2xl font-semibold tracking-tight text-forest-900 mt-8 md:mt-10 mb-3 md:mb-4 scroll-mt-28 flex items-center gap-2 sm:gap-3 border-t border-forest-100 pt-8 md:pt-10 first:border-0 first:pt-0 first:mt-0">
+                                <span className="w-1 sm:w-1.5 h-5 sm:h-6 rounded-full bg-lime-500 flex-shrink-0" />
+                                <span>{children}</span>
+                            </h2>
+                        );
+                    },
+                    h3: ({ children }) => {
+                        const id = generateHeadingId(children);
+                        return (
+                            <h3 id={id} className="text-lg sm:text-xl font-semibold text-forest-800 mt-6 md:mt-8 mb-2 md:mb-3 scroll-mt-28">
                                 {children}
-                            </table>
+                            </h3>
+                        );
+                    },
+                    h4: ({ children }) => {
+                        const id = generateHeadingId(children);
+                        return (
+                            <h4 id={id} className="text-base sm:text-lg font-semibold text-forest-700 mt-5 md:mt-6 mb-2 scroll-mt-28">
+                                {children}
+                            </h4>
+                        );
+                    },
+                    h5: ({ children }) => {
+                        const id = generateHeadingId(children);
+                        return (
+                            <h5 id={id} className="text-base font-semibold text-forest-600 mt-4 md:mt-5 mb-2 scroll-mt-28">
+                                {children}
+                            </h5>
+                        );
+                    },
+                    h6: ({ children }) => {
+                        const id = generateHeadingId(children);
+                        return (
+                            <h6 id={id} className="text-sm font-semibold text-forest-500 uppercase tracking-wide mt-4 mb-2 scroll-mt-28">
+                                {children}
+                            </h6>
+                        );
+                    },
+
+                    // === TEXT: Consistent paragraph spacing ===
+                    p: ({ children }) => (
+                        <p className="text-base md:text-lg text-forest-700 leading-relaxed md:leading-relaxed mb-4 md:mb-5">
+                            {children}
+                        </p>
+                    ),
+
+                    // === LISTS: Uniform spacing ===
+                    ul: ({ children }) => (
+                        <ul className="my-4 md:my-5 space-y-2 md:space-y-2.5 list-none pl-0">
+                            {children}
+                        </ul>
+                    ),
+                    ol: ({ children }) => (
+                        <ol className="my-4 md:my-5 space-y-2 md:space-y-2.5 list-decimal list-outside pl-5 text-forest-700">
+                            {children}
+                        </ol>
+                    ),
+                    li: ({ children, ordered, ...props }: any) => (
+                        <li className={`
+                            text-base md:text-lg text-forest-700 leading-relaxed 
+                            ${!ordered ? 'flex items-start gap-2.5 sm:gap-3' : ''}
+                        `} {...props}>
+                            {!ordered && (
+                                <span className="w-1.5 h-1.5 mt-2.5 md:mt-3 rounded-full bg-lime-500 flex-shrink-0" />
+                            )}
+                            <span className="flex-1">{children}</span>
+                        </li>
+                    ),
+
+                    // === LINKS ===
+                    a: ({ href, children, ...props }) => {
+                        const isExternal = href?.startsWith('http');
+                        return (
+                            <a
+                                href={href}
+                                target={isExternal ? '_blank' : undefined}
+                                rel={isExternal ? 'noopener noreferrer' : undefined}
+                                className="font-medium text-forest-700 hover:text-lime-600 underline decoration-lime-300/50 underline-offset-4 hover:decoration-lime-500 transition-colors"
+                                {...props}
+                            >
+                                {children}
+                                {isExternal && <ExternalLink className="inline-block w-3 h-3 ml-1 opacity-50" />}
+                            </a>
+                        );
+                    },
+
+                    // === BLOCKQUOTES: Clean callout style ===
+                    blockquote: ({ children }) => (
+                        <blockquote className="my-5 md:my-6 pl-4 sm:pl-5 border-l-4 border-lime-500 italic text-forest-600 leading-relaxed bg-lime-50/50 py-3 sm:py-4 pr-4 rounded-r-lg">
+                            {children}
+                        </blockquote>
+                    ),
+
+                    // === TABLES: Professional data display ===
+                    table: ({ children }) => (
+                        <div className="my-5 md:my-6 overflow-hidden rounded-xl border border-forest-200 shadow-sm">
+                            <div className="overflow-x-auto">
+                                <table className="min-w-full divide-y divide-forest-200">
+                                    {children}
+                                </table>
+                            </div>
                         </div>
                     ),
                     thead: ({ children }) => (
-                        <thead className="bg-forest-900">
+                        <thead className="bg-forest-50">
                             {children}
                         </thead>
                     ),
                     th: ({ children }) => (
-                        <th className="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                        <th className="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-forest-600 uppercase tracking-wider whitespace-nowrap">
                             {children}
                         </th>
                     ),
                     tbody: ({ children }) => (
-                        <tbody className="bg-white divide-y divide-forest-50">
+                        <tbody className="bg-white divide-y divide-forest-100">
                             {children}
                         </tbody>
                     ),
@@ -169,54 +286,37 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
                         </tr>
                     ),
                     td: ({ children }) => (
-                        <td className="px-6 py-4 text-sm text-forest-700 whitespace-normal leading-relaxed">
+                        <td className="px-4 sm:px-6 py-3 sm:py-4 text-sm md:text-base text-forest-700 leading-relaxed">
                             {children}
                         </td>
                     ),
-                    // Enhanced links with external indicator
-                    a: ({ href, children, ...props }) => {
-                        const isExternal = href?.startsWith('http');
-                        return (
-                            <a
-                                href={href}
-                                target={isExternal ? '_blank' : undefined}
-                                rel={isExternal ? 'noopener noreferrer' : undefined}
-                                className="inline-flex items-center gap-1 text-lime-600 font-medium border-b border-lime-200 hover:text-lime-700 hover:border-lime-500 transition-all hover:-translate-y-0.5"
-                                {...props}
-                            >
+
+                    // === CODE ===
+                    code({ node, inline, className, children, ...props }: any) {
+                        const match = /language-(\w+)/.exec(className || '');
+                        return !inline && match ? (
+                            <CodeBlock language={match[1]} {...props}>
                                 {children}
-                                {isExternal && <ExternalLink className="w-3.5 h-3.5 inline-block opacity-60" />}
-                            </a>
+                            </CodeBlock>
+                        ) : (
+                            <code className="px-1.5 py-0.5 rounded-md bg-forest-50 text-forest-800 text-sm font-mono border border-forest-200/80" {...props}>
+                                {children}
+                            </code>
                         );
                     },
-                    // Enhanced blockquote styling
-                    blockquote: ({ children }) => (
-                        <blockquote className="border-l-4 border-lime-500 bg-white py-6 px-8 rounded-r-2xl my-10 shadow-sm not-italic border-y border-r border-forest-50/50">
-                            <div className="text-forest-700 relative z-10 font-medium">
-                                {children}
-                            </div>
-                        </blockquote>
-                    ),
-                    // Enhanced horizontal rule
-                    hr: () => (
-                        <div className="my-12 flex items-center justify-center gap-4 opacity-60">
-                            <div className="h-px w-24 bg-gradient-to-r from-transparent to-forest-200" />
-                            <div className="w-1.5 h-1.5 rounded-full bg-lime-500" />
-                            <div className="h-px w-24 bg-gradient-to-l from-transparent to-forest-200" />
-                        </div>
-                    ),
-                    // Enhanced list items
-                    li: ({ children, ordered, ...props }: any) => (
-                        <li className="my-2.5 leading-[1.8] text-forest-700 pl-2" {...props}>
-                            {children}
-                        </li>
-                    ),
-                    // Enhanced strong text
+
+                    // === HR: Section divider ===
+                    hr: () => <hr className="my-8 md:my-10 border-forest-100" />,
+
+                    // === STRONG & EM ===
                     strong: ({ children }) => (
-                        <strong className="font-bold text-forest-900">
-                            {children}
-                        </strong>
+                        <strong className="font-semibold text-forest-900">{children}</strong>
                     ),
+                    em: ({ children }) => (
+                        <em className="italic text-forest-700">{children}</em>
+                    ),
+
+                    img: MarkdownImage,
                 }}
             >
                 {content}
