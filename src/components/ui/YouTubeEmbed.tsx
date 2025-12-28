@@ -14,6 +14,8 @@ interface YouTubeEmbedProps {
     controls?: boolean;
     autoplayOnViewport?: boolean;
     poster?: string;
+    /** When true, enables user interaction (timeline, play/pause, volume, fullscreen). Default: false (background video mode) */
+    interactive?: boolean;
 }
 
 /**
@@ -35,6 +37,7 @@ export default function YouTubeEmbed({
     controls = false,
     autoplayOnViewport = true,
     poster,
+    interactive = false,
 }: YouTubeEmbedProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [isInView, setIsInView] = useState(false);
@@ -60,13 +63,13 @@ export default function YouTubeEmbed({
         return () => observer.disconnect();
     }, [autoplayOnViewport]);
 
-    // Build YouTube embed URL with parameters for seamless experience
+    // Build YouTube embed URL with parameters
     const buildEmbedUrl = useCallback(() => {
         const params = new URLSearchParams({
-            autoplay: "1",
+            autoplay: autoplay ? "1" : "0",
             mute: muted ? "1" : "0",
             loop: loop ? "1" : "0",
-            controls: controls ? "1" : "0",
+            controls: (controls || interactive) ? "1" : "0",
             modestbranding: "1",
             rel: "0",
             showinfo: "0",
@@ -74,8 +77,9 @@ export default function YouTubeEmbed({
             playsinline: "1",
             enablejsapi: "1",
             origin: typeof window !== 'undefined' ? window.location.origin : '',
-            // Start playing immediately
             start: "0",
+            // Enable keyboard controls for interactive mode
+            ...(interactive && { keyboard: "1" }),
         });
 
         if (loop) {
@@ -83,7 +87,7 @@ export default function YouTubeEmbed({
         }
 
         return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
-    }, [videoId, muted, loop, controls]);
+    }, [videoId, autoplay, muted, loop, controls, interactive]);
 
     // Handle iframe load - wait a bit for video to start playing before hiding poster
     const handleIframeLoad = () => {
@@ -111,23 +115,24 @@ export default function YouTubeEmbed({
              * This crops the letterbox (black bars) and fills the container
              */}
             {shouldRenderIframe && (
-                <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+                <div className={cn(
+                    "absolute inset-0 flex items-center justify-center overflow-hidden",
+                    interactive && "pointer-events-auto"
+                )}>
                     <iframe
                         src={buildEmbedUrl()}
                         title={title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                         allowFullScreen
                         className={cn(
-                            "border-0 pointer-events-none",
-                            // Scale up to fill container (object-cover effect)
-                            // 56.25% aspect ratio iframe needs ~178% scale to cover any container
-                            "w-[180%] h-[180%]",
+                            "border-0",
+                            // Interactive mode: normal sizing with pointer events
+                            interactive ? "w-full h-full pointer-events-auto" : "w-[180%] h-[180%] pointer-events-none",
                             // Transition for smooth reveal
                             "transition-opacity duration-500",
                             !iframeReady && "opacity-0"
                         )}
                         style={{
-                            // Ensure iframe maintains aspect ratio while scaled
                             aspectRatio: "16/9",
                         }}
                         onLoad={handleIframeLoad}

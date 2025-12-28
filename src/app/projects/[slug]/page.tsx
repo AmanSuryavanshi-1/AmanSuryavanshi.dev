@@ -11,6 +11,8 @@ const DOCS_MAP: Record<string, string> = {
     // Technical Documentation
     'aviators-training-centre-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/Aviators_Training_Centre/main/docs/aviators-training-centre-technical-documentation.md',
     'omni-post-ai-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/main/Omni-Post-AI-Automation/OMNI-POST-AI-TECHNICAL-DOCUMENTATION.md',
+    // Barkat Enterprise
+    'barkat-enterprise-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/BarkatEnterprise/main/docs/BARKAT-ENTERPRISE-TECHNICAL-DOCUMENTATION.md',
 };
 
 // Map documentation slugs to Project IDs
@@ -19,6 +21,7 @@ const DOC_TO_PROJECT_ID: Record<string, string> = {
     'aviators-training-centre-technical-documentation': 'aviators-training-centre',
     'omni-post-ai-executive-summary': 'n8n-automation-suite',
     'omni-post-ai-technical-documentation': 'n8n-automation-suite',
+    'barkat-enterprise-technical-documentation': 'barkat-enterprise',
 };
 
 // Map slugs to readable titles for metadata
@@ -29,6 +32,7 @@ const TITLES_MAP: Record<string, string> = {
     // Technical Documentation
     'aviators-training-centre-technical-documentation': 'Aviators Training Centre - Technical Documentation',
     'omni-post-ai-technical-documentation': 'Omni-Post AI - Technical Documentation',
+    'barkat-enterprise-technical-documentation': 'Barkat Enterprise - Technical Documentation',
 };
 
 interface PageProps {

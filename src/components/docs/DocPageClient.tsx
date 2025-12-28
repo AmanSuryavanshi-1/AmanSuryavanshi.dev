@@ -24,6 +24,8 @@ import MarkdownViewer from './MarkdownViewer';
 import { Project } from '@/data/portfolio';
 import { ImageGalleryProvider } from '@/context/ImageGalleryContext';
 import Lightbox from '@/components/ui/Lightbox';
+import { FallbackImageManager } from '@/lib/fallback-image-manager';
+import CustomVideoPlayer from '@/components/ui/CustomVideoPlayer';
 
 interface DocPageClientProps {
     project: Project;
@@ -36,11 +38,60 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
     const [readingTime, setReadingTime] = useState(0);
     const [tocItems, setTocItems] = useState<{ id: string; text: string; level: number }[]>([]);
     const [isMobileTocOpen, setIsMobileTocOpen] = useState(false);
+    const [headerImage, setHeaderImage] = useState<string | null>(null);
 
     // Determine doc type
     const isTechnicalDoc = slug.includes('technical');
     const docType = isTechnicalDoc ? 'Technical Documentation' : 'Executive Summary';
     const DocIcon = isTechnicalDoc ? Activity : FileText;
+
+    // Extract first image from markdown content for header background
+    // Priority: 1. project.imageUrl (from portfolio.tsx) 
+    //           2. project.image
+    //           3. First image from markdown (GitHub CDN)
+    //           4. Fallback image from public folder
+    useEffect(() => {
+        let imageFound = false;
+
+        // Priority 1: Try project.imageUrl (explicit URL from portfolio.tsx)
+        if (project.imageUrl && project.imageUrl.trim() !== '') {
+            setHeaderImage(project.imageUrl);
+            imageFound = true;
+        }
+
+        // Priority 2: Try project.image (mapped field)
+        if (!imageFound && project.image && project.image.trim() !== '') {
+            setHeaderImage(project.image);
+            imageFound = true;
+        }
+
+        // Priority 3: Extract first image from markdown content
+        if (!imageFound) {
+            // Try HTML img tag first (most common in these docs): <img src="url" ...>
+            const htmlImgMatch = content.match(/<img[^>]+src=["']([^"']+)["']/i);
+            if (htmlImgMatch && htmlImgMatch[1]) {
+                setHeaderImage(htmlImgMatch[1]);
+                imageFound = true;
+            } else {
+                // Try standard markdown image syntax: ![alt](url)
+                const markdownMatch = content.match(/!\[.*?\]\((.*?)\)/);
+                if (markdownMatch && markdownMatch[1]) {
+                    setHeaderImage(markdownMatch[1]);
+                    imageFound = true;
+                }
+            }
+        }
+
+        // Priority 4: Fallback to centralized fallback system based on project context
+        if (!imageFound) {
+            const fallback = FallbackImageManager.getContextualFallback({
+                title: project.title,
+                projectId: project.id,
+                techStack: project.techStack
+            });
+            setHeaderImage(fallback.path);
+        }
+    }, [content, project.image, project.imageUrl, project.id, project.title, project.techStack]);
 
     // Calculate reading time
     useEffect(() => {
@@ -144,30 +195,49 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                         </div>
                     </div>
 
-                    {/* Header Section */}
-                    <div className="mb-10">
+                    {/* Header Section with Blurred Background Image */}
+                    <div className="mb-10 relative overflow-hidden rounded-2xl">
+                        {/* Blurred Background Image */}
+                        {headerImage && (
+                            <div className="absolute inset-0 z-0">
+                                <img
+                                    src={headerImage}
+                                    alt=""
+                                    className="w-full h-full object-cover scale-110 blur-[2px] opacity-80"
+                                    aria-hidden="true"
+                                />
+                                {/* Very light gradient overlay - allows image to show through clearly */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-sage-50/20 to-forest-50/10" />
+                            </div>
+                        )}
+
+                        {/* Fallback gradient if no image */}
+                        {!headerImage && (
+                            <div className="absolute inset-0 z-0 bg-gradient-to-br from-sage-100 via-lime-50/30 to-forest-50" />
+                        )}
+
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="space-y-4"
+                            className="relative z-10 space-y-4 p-6 sm:p-8 lg:p-10"
                         >
                             {/* Badges - Match homepage style */}
                             <div className="flex flex-wrap gap-2 mb-4">
-                                <span className="px-3 py-1.5 bg-white border border-forest-200/50 text-forest-700 text-sm font-medium rounded-full">
+                                <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm border border-forest-200/50 text-forest-700 text-sm font-medium rounded-full shadow-sm">
                                     {docType}
                                 </span>
-                                <span className="px-3 py-1.5 bg-forest-900 text-white text-sm font-medium rounded-full flex items-center gap-1.5">
+                                <span className="px-3 py-1.5 bg-forest-900/95 backdrop-blur-sm text-white text-sm font-medium rounded-full flex items-center gap-1.5 shadow-sm">
                                     <Clock className="w-3.5 h-3.5" /> {readingTime} min read
                                 </span>
                             </div>
 
                             {/* Title */}
-                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-forest-900 tracking-tight leading-tight">
+                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-forest-900 tracking-tight leading-tight drop-shadow-sm">
                                 {project.title}
                             </h1>
 
                             {/* Subtitle */}
-                            <p className="text-lg sm:text-xl text-forest-600 max-w-3xl">
+                            <p className="text-lg sm:text-xl text-forest-700 max-w-3xl">
                                 {project.tagLine}
                             </p>
 
@@ -178,14 +248,14 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                                         href={project.liveUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-lime-500 text-forest-900 font-medium rounded-full hover:bg-lime-400 transition-all shadow-sm"
+                                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-lime-500 text-forest-900 font-medium rounded-full hover:bg-lime-400 transition-all shadow-md hover:shadow-lg"
                                     >
                                         <ArrowRight className="w-4 h-4" /> Live Demo
                                     </a>
                                 )}
                                 <Link
                                     href="/#projects"
-                                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-forest-200 text-forest-700 font-medium rounded-full hover:bg-forest-50 transition-all"
+                                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/90 backdrop-blur-sm border border-forest-200 text-forest-700 font-medium rounded-full hover:bg-white transition-all shadow-sm"
                                 >
                                     <ArrowLeft className="w-4 h-4" /> Back to Projects
                                 </Link>
@@ -248,6 +318,24 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
 
                         {/* MAIN CONTENT */}
                         <article className="lg:col-span-6 min-w-0">
+                            {/* Video Walkthrough - Show at top of technical docs if available */}
+                            {isTechnicalDoc && project.videoYouTubeId && (
+                                <div className="mb-8">
+                                    <div className="bg-white rounded-2xl overflow-hidden border border-forest-200/50 shadow-sm">
+                                        <div className="p-4 border-b border-forest-100 flex items-center gap-2">
+                                            <Activity className="w-5 h-5 text-lime-600" />
+                                            <h3 className="font-semibold text-forest-900">Project Walkthrough</h3>
+                                        </div>
+                                        <CustomVideoPlayer
+                                            videoId={project.videoYouTubeId}
+                                            title={`${project.title} - Full Walkthrough`}
+                                            poster={project.imageUrl || project.image}
+                                            accentColor="#84cc16"
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
                             {/* Content Card - Clean white background */}
                             <div className="bg-white rounded-2xl p-6 sm:p-8 border border-forest-200/50 shadow-sm markdown-content overflow-x-hidden">
                                 <MarkdownViewer content={content} />

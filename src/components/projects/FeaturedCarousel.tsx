@@ -4,11 +4,12 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ExternalLink, Github, ChevronLeft, ChevronRight, BookOpen, FileText } from "lucide-react";
 import { portfolioData, Project } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { FallbackImageManager } from "@/lib/fallback-image-manager";
 
 export default function FeaturedCarousel() {
     const featuredProjects = portfolioData.projects.filter((p) => p.featured);
@@ -110,7 +111,7 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
                         />
                     ) : (
                         <Image
-                            src={project.image || "/placeholder.png"}
+                            src={project.image || FallbackImageManager.getRandomFallback().path}
                             alt={project.title}
                             fill
                             className="object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500"
@@ -157,32 +158,35 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
                             )}
                         </div>
 
-                        <div className="flex flex-wrap gap-3">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                             {/* Executive Summary - only if project has documentation */}
                             {project.documentation?.[0]?.url && (
                                 <Link href={project.documentation[0].url}>
-                                    <Button className="bg-lime-500 hover:bg-lime-400 text-forest-950 font-bold rounded-full px-4 sm:px-6 text-sm sm:text-base">
-                                        Executive Summary <ArrowRight className="ml-2 w-4 h-4" />
+                                    <Button className="bg-lime-500 hover:bg-lime-400 text-forest-950 font-bold rounded-full px-2.5 sm:px-5 text-xs sm:text-sm whitespace-nowrap" title="Executive Summary">
+                                        <FileText className="w-4 h-4 sm:mr-1.5" />
+                                        <span className="hidden sm:inline">Summary</span>
                                     </Button>
                                 </Link>
                             )}
-                            {/* Technical Docs - only if project has blogUrl */}
-                            {project.blogUrl && (
-                                <Link href={project.blogUrl}>
-                                    <Button variant="outline" className="border-sage-100/50 text-sage-100 hover:bg-sage-100/10 rounded-full px-4 sm:px-6 text-sm sm:text-base">
-                                        Technical Docs <ExternalLink className="ml-2 w-4 h-4" />
+                            {/* Technical Docs - only if project has documentation with technical doc entry */}
+                            {project.documentation?.[1]?.url && (
+                                <Link href={project.documentation[1].url}>
+                                    <Button variant="outline" className="border-sage-100/50 text-sage-100 hover:bg-sage-100/10 rounded-full px-2.5 sm:px-5 text-xs sm:text-sm whitespace-nowrap" title="Technical Documentation">
+                                        <BookOpen className="w-4 h-4 sm:mr-1.5" />
+                                        <span className="hidden xl:inline">Technical Docs</span>
+                                        <span className="hidden sm:inline xl:hidden">Docs</span>
                                     </Button>
                                 </Link>
                             )}
-                            <div className="flex gap-2">
+                            <div className="flex gap-1.5 sm:gap-2">
                                 <Link href={project.links.live} target="_blank">
-                                    <Button size="icon" variant="outline" className="rounded-full border-forest-600 bg-forest-950/30 hover:bg-lime-500 hover:text-forest-950 hover:border-lime-500 transition-colors">
-                                        <ExternalLink className="w-5 h-5" />
+                                    <Button size="icon" variant="outline" className="rounded-full border-forest-600 bg-forest-950/30 hover:bg-lime-500 hover:text-forest-950 hover:border-lime-500 transition-colors w-8 h-8 sm:w-10 sm:h-10">
+                                        <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
                                     </Button>
                                 </Link>
                                 <Link href={project.links.github} target="_blank">
-                                    <Button size="icon" variant="outline" className="rounded-full border-forest-600 bg-forest-950/30 hover:bg-lime-500 hover:text-forest-950 hover:border-lime-500 transition-colors">
-                                        <Github className="w-5 h-5" />
+                                    <Button size="icon" variant="outline" className="rounded-full border-forest-600 bg-forest-950/30 hover:bg-lime-500 hover:text-forest-950 hover:border-lime-500 transition-colors w-8 h-8 sm:w-10 sm:h-10">
+                                        <Github className="w-4 h-4 sm:w-5 sm:h-5" />
                                     </Button>
                                 </Link>
                             </div>
