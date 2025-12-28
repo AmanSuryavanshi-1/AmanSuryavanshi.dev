@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Pause, X, ZoomIn, Maximize2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Project } from "@/data/portfolio";
+import { FallbackImageManager } from "@/lib/fallback-image-manager";
 
 interface ProjectMediaCarouselProps {
     project: Project;
@@ -33,6 +34,23 @@ export default function ProjectMediaCarousel({ project, className }: ProjectMedi
     const containerRef = useRef<HTMLDivElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
 
+    // Track image errors for fallback handling
+    const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
+
+    // Get contextual fallback for this project
+    const getProjectFallback = useCallback(() => {
+        return FallbackImageManager.getContextualFallback({
+            title: project.title,
+            projectId: project.id,
+            techStack: project.technologies.map(t => t.name)
+        }).path;
+    }, [project]);
+
+    // Handle image error
+    const handleImageError = useCallback((src: string) => {
+        setImageErrors(prev => ({ ...prev, [src]: true }));
+    }, []);
+
     // Build media slides array - video first, then gallery images
     const buildMediaSlides = useCallback((): MediaSlide[] => {
         const slides: MediaSlide[] = [];
@@ -41,7 +59,7 @@ export default function ProjectMediaCarousel({ project, className }: ProjectMedi
         if (project.videoYouTubeId) {
             slides.push({
                 type: "youtube",
-                src: project.image || "/placeholder.png",
+                src: project.image || getProjectFallback(),
                 alt: project.title,
                 youtubeId: project.videoYouTubeId,
             });

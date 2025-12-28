@@ -113,19 +113,20 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               {/* Executive Summary - only if project has documentation */}
               {project.documentation?.[0]?.url && (
                 <Link href={project.documentation[0].url}>
-                  <Button className="rounded-full bg-forest-900 text-white hover:bg-forest-800 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
-                    <BookOpen className="w-4 h-4 mr-2" />
-                    Executive Summary
+                  <Button className="rounded-full bg-forest-900 text-white hover:bg-forest-800 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all" title="Executive Summary">
+                    <BookOpen className="w-4 h-4 sm:mr-2" />
+                    <span className="hidden sm:inline">Summary</span>
                   </Button>
                 </Link>
               )}
 
-              {/* Technical Docs - only if project has blogUrl */}
-              {project.blogUrl && (
-                <Link href={project.blogUrl}>
-                  <Button variant="outline" className="rounded-full border-forest-300 text-forest-700 hover:bg-forest-50 hover:border-forest-400 transition-all">
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    Technical Docs
+              {/* Technical Docs - only if project has documentation with technical doc entry */}
+              {project.documentation?.[1]?.url && (
+                <Link href={project.documentation[1].url}>
+                  <Button variant="outline" className="rounded-full border-forest-300 text-forest-700 hover:bg-forest-50 hover:border-forest-400 transition-all" title="Technical Documentation">
+                    <BookOpen className="w-4 h-4 sm:mr-2" />
+                    <span className="hidden xl:inline">Technical Docs</span>
+                    <span className="hidden sm:inline xl:hidden">Docs</span>
                   </Button>
                 </Link>
               )}

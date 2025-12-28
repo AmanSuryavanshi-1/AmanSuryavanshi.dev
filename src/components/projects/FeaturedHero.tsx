@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ExternalLink, Github, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, Github, ChevronLeft, ChevronRight, BookOpen, FileText } from "lucide-react";
 import { Project } from "@/data/portfolio";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -200,7 +200,10 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
 
                 {/* RIGHT COLUMN (Media) - Order 1 on Mobile, Order 2 on Desktop */}
                 <div className="w-full lg:w-[50%] h-auto aspect-[4/3] lg:h-full order-1 lg:order-2 relative z-10 ml-0 lg:-ml-4 mt-0 lg:mt-0">
-                    <div className="w-full h-full rounded-[1.5rem] overflow-hidden border border-forest-100 bg-forest-50 shadow-2xl relative group">
+                    {/* Enhanced Animated Glow Effect - Multiple Layers for Depth */}
+                    <div className="absolute -inset-2 bg-gradient-to-r from-forest-600/40 via-forest-400/50 to-forest-600/40 rounded-[2rem] blur-2xl animate-pulse" />
+                    <div className="absolute -inset-1.5 bg-gradient-to-br from-white/30 via-forest-200/40 to-white/30 rounded-[1.85rem] blur-md" />
+                    <div className="w-full h-full rounded-[1.5rem] overflow-hidden border-2 border-forest-200/60 bg-forest-50 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] relative group ring-1 ring-forest-300/50 hover:ring-forest-400/70 transition-all duration-500">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={activeProject.id}
@@ -241,61 +244,104 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
                                     />
                                 )}
                                 {/* Gradient for controls readability */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-forest-900/60 via-transparent to-transparent opacity-40" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-forest-900/90 via-forest-900/20 to-transparent" />
+
+                                {/* Premium Featured Badge with Animated Indicator - Only for featured projects */}
+                                {activeProject.featured && (
+                                    <div className="absolute top-4 right-4 z-20">
+                                        <div className="relative group/badge">
+                                            {/* Glow behind badge */}
+                                            <div className="absolute -inset-1 bg-gradient-to-r from-forest-500 via-forest-400 to-forest-600 rounded-full blur-sm opacity-60 group-hover/badge:opacity-80 transition-opacity" />
+                                            {/* Badge itself */}
+                                            <div className="relative flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-forest-800 via-forest-700 to-forest-800 border border-forest-500/50 shadow-xl">
+                                                <span className="relative flex h-2 w-2">
+                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"></span>
+                                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-lime-400"></span>
+                                                </span>
+                                                <span className="text-xs font-bold uppercase tracking-widest text-white">Featured</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </motion.div>
                         </AnimatePresence>
 
-                        {/* Bottom Controls Overlay */}
-                        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 lg:p-8 flex items-center justify-between z-20">
-
-                            {/* Action Links */}
-                            <div className="flex gap-2 sm:gap-3 lg:gap-4">
-                                {(activeProject.documentation?.[0]?.url || activeProject.blogUrl) && (
-                                    <Link
-                                        href={activeProject.documentation?.[0]?.url || activeProject.blogUrl!}
-                                        target={activeProject.documentation?.[0]?.url ? undefined : "_blank"}
-                                    >
-                                        <Button className="h-10 sm:h-12 px-3 sm:px-4 lg:px-6 rounded-full bg-white/20 hover:bg-white border border-white/30 text-white hover:text-forest-900 font-medium backdrop-blur-md shadow-lg transition-all hover:scale-105 text-xs sm:text-sm group">
-                                            <BookOpen className="w-4 h-4 sm:mr-2 group-hover:scale-110 transition-transform" />
-                                            <span className="hidden sm:inline">{activeProject.documentation?.length ? "Documentation" : "Technical Docs"}</span>
+                        {/* Bottom Controls Overlay - Clean Minimal Design */}
+                        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 lg:p-6 z-20">
+                            {/* Single row container - wraps on mobile only */}
+                            <div className="flex flex-wrap items-center justify-center sm:justify-between gap-2 sm:gap-3">
+                                {/* Action Links - Primary */}
+                                <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+                                    {/* Executive Summary - find by title containing 'summary' or 'executive' */}
+                                    {(() => {
+                                        const summaryDoc = activeProject.documentation?.find(d =>
+                                            d.title.toLowerCase().includes('summary') ||
+                                            d.title.toLowerCase().includes('executive')
+                                        );
+                                        return summaryDoc?.url ? (
+                                            <Link href={summaryDoc.url}>
+                                                <Button className="h-8 sm:h-9 lg:h-10 px-2 sm:px-3 lg:px-4 rounded-full bg-white text-forest-900 font-semibold shadow-lg transition-all hover:bg-forest-100 hover:text-forest-950 hover:scale-105 hover:shadow-xl text-[10px] sm:text-xs lg:text-sm" title="Executive Summary">
+                                                    <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1 lg:mr-1.5" />
+                                                    <span className="hidden sm:inline">Summary</span>
+                                                </Button>
+                                            </Link>
+                                        ) : null;
+                                    })()}
+                                    {/* Technical Docs - find by title containing 'technical' or 'documentation' */}
+                                    {(() => {
+                                        const techDoc = activeProject.documentation?.find(d =>
+                                            d.title.toLowerCase().includes('technical') ||
+                                            (d.title.toLowerCase().includes('documentation') && !d.title.toLowerCase().includes('summary'))
+                                        );
+                                        return techDoc?.url ? (
+                                            <Link href={techDoc.url}>
+                                                <Button variant="outline" className="h-8 sm:h-9 lg:h-10 px-2 sm:px-3 lg:px-4 rounded-full border-white/50 bg-white/10 text-white hover:bg-white hover:text-forest-900 font-medium backdrop-blur-md shadow-lg transition-all hover:scale-105 text-[10px] sm:text-xs lg:text-sm" title="Technical Documentation">
+                                                    <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1 lg:mr-1.5" />
+                                                    <span className="hidden xl:inline">Technical Docs</span>
+                                                    <span className="hidden sm:inline xl:hidden">Docs</span>
+                                                </Button>
+                                            </Link>
+                                        ) : null;
+                                    })()}
+                                    {/* Icon buttons - Live & GitHub */}
+                                    <Link href={activeProject.links.live} target="_blank">
+                                        <Button variant="outline" className="h-8 w-8 sm:h-9 sm:w-9 lg:h-10 lg:w-10 rounded-full border-white/40 bg-white/10 hover:bg-white hover:text-forest-900 text-white backdrop-blur-md transition-all hover:scale-110 p-0">
+                                            <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                         </Button>
                                     </Link>
-                                )}
-                                <Link href={activeProject.links.live} target="_blank">
-                                    <Button variant="outline" className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-white/30 bg-white/20 hover:bg-white hover:text-forest-900 text-white backdrop-blur-md transition-all p-0">
-                                        <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
-                                    </Button>
-                                </Link>
-                                <Link href={activeProject.links.github} target="_blank">
-                                    <Button variant="outline" className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-white/30 bg-white/20 hover:bg-white hover:text-forest-900 text-white backdrop-blur-md transition-all p-0">
-                                        <Github className="w-4 h-4 sm:w-5 sm:h-5" />
-                                    </Button>
-                                </Link>
-                            </div>
+                                    <Link href={activeProject.links.github} target="_blank">
+                                        <Button variant="outline" className="h-8 w-8 sm:h-9 sm:w-9 lg:h-10 lg:w-10 rounded-full border-white/40 bg-white/10 hover:bg-white hover:text-forest-900 text-white backdrop-blur-md transition-all hover:scale-110 p-0">
+                                            <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                        </Button>
+                                    </Link>
+                                </div>
 
-                            {/* Navigation Arrows */}
-                            <div className="flex gap-2 sm:gap-3">
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={prevProject}
-                                    className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white/20 hover:bg-white hover:text-forest-900 border border-white/30 text-white backdrop-blur-md transition-all hover:scale-110"
-                                >
-                                    <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-                                </Button>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={nextProject}
-                                    className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-white/20 hover:bg-white hover:text-forest-900 border border-white/30 text-white backdrop-blur-md transition-all hover:scale-110"
-                                >
-                                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
-                                </Button>
+                                {/* Navigation - Compact pill */}
+                                <div className="flex items-center gap-0.5 sm:gap-1 bg-white/10 backdrop-blur-md rounded-full p-0.5 sm:p-1 border border-white/20">
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={prevProject}
+                                        className="h-7 w-7 sm:h-8 sm:w-8 lg:h-9 lg:w-9 rounded-full hover:bg-white hover:text-forest-900 text-white transition-all"
+                                    >
+                                        <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                    </Button>
+                                    <span className="text-white/60 text-[10px] sm:text-xs font-medium px-0.5 sm:px-1">
+                                        {activeIndex + 1}/{projects.length}
+                                    </span>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={nextProject}
+                                        className="h-7 w-7 sm:h-8 sm:w-8 lg:h-9 lg:w-9 rounded-full hover:bg-white hover:text-forest-900 text-white transition-all"
+                                    >
+                                        <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
     );

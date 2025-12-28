@@ -5,12 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from 'lucide-react';
 import { useImageGallery } from '@/context/ImageGalleryContext';
 import Image from 'next/image';
+import { FallbackImageManager } from '@/lib/fallback-image-manager';
 
 export default function Lightbox() {
     const { isOpen, images, currentIndex, closeGallery, nextImage, prevImage } = useImageGallery();
     const [scale, setScale] = React.useState(1);
+    const [imageErrors, setImageErrors] = React.useState<Record<number, boolean>>({});
 
-    // Reset scale when image changes
+    // Reset scale and errors when image changes
     useEffect(() => {
         setScale(1);
     }, [currentIndex]);
@@ -126,10 +128,17 @@ export default function Lightbox() {
                                 Using standard img for simplicity in lightbox context often avoids layout shifts issues with unknown dimensions.
                             */}
                             <img
-                                src={currentImage.src}
+                                src={imageErrors[currentIndex]
+                                    ? FallbackImageManager.getRandomFallback().path
+                                    : currentImage.src}
                                 alt={currentImage.alt}
                                 className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl select-none"
                                 draggable={false}
+                                onError={() => {
+                                    if (!imageErrors[currentIndex]) {
+                                        setImageErrors(prev => ({ ...prev, [currentIndex]: true }));
+                                    }
+                                }}
                             />
                             {currentImage.alt && (
                                 <div className="absolute -bottom-16 left-0 right-0 text-center pointer-events-none">

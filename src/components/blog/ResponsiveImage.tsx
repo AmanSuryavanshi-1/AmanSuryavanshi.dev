@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 import type { SanityImage } from '@/sanity/sanity';
+import { FallbackImageManager } from '@/lib/fallback-image-manager';
 
 export interface ResponsiveImageProps {
   value: SanityImage;
@@ -44,21 +45,31 @@ export default function ResponsiveImage({
   };
 
   if (imageError) {
+    const fallback = FallbackImageManager.getRandomFallback();
     return (
       <figure className="my-8 flex items-center justify-center">
-        <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center max-w-md">
-          <div className="text-gray-400 mb-2">
-            <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <p className="text-sm text-gray-500">Image could not be loaded</p>
-          {caption && (
-            <figcaption className="mt-2 text-xs text-gray-400">
-              {caption}
-            </figcaption>
-          )}
+        <div
+          className="relative overflow-hidden rounded-3xl border-4 border-white shadow-xl shadow-sage-300 bg-gray-50"
+          style={{
+            width: '100%',
+            maxWidth: `min(${maxWidth}px, 85vw)`,
+            minWidth: '280px',
+            aspectRatio: '16 / 9'
+          }}
+        >
+          <Image
+            src={fallback.path}
+            alt={fallback.alt}
+            fill
+            className="object-contain"
+            style={{ padding: '2rem' }}
+          />
         </div>
+        {caption && (
+          <figcaption className="mt-3 text-center text-sm text-gray-400 max-w-3xl mx-auto px-4">
+            {caption} <span className="italic">(Image unavailable)</span>
+          </figcaption>
+        )}
       </figure>
     );
   }

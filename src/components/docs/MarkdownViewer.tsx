@@ -8,6 +8,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useImageGallery } from '@/context/ImageGalleryContext';
 import { ExternalLink, Copy, Check } from 'lucide-react';
+import { FallbackImageManager } from '@/lib/fallback-image-manager';
 
 interface MarkdownViewerProps {
     content: string;
@@ -21,10 +22,11 @@ interface MarkdownViewerProps {
  * - Inline elements: tight spacing
  */
 
-// Modern, clean image component
+// Modern, clean image component with fallback support
 const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key: string]: any }) => {
     const { registerImage, openGallery, images } = useImageGallery();
     const [imageError, setImageError] = React.useState(false);
+    const [fallbackSrc, setFallbackSrc] = React.useState<string | null>(null);
 
     React.useEffect(() => {
         if (src) {
@@ -32,7 +34,17 @@ const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key
         }
     }, [src, alt, registerImage]);
 
-    if (!src || imageError) return null;
+    // Reset error state when src changes
+    React.useEffect(() => {
+        setImageError(false);
+        setFallbackSrc(null);
+    }, [src]);
+
+    if (!src) return null;
+
+    // Determine which source to display
+    const displaySrc = imageError && fallbackSrc ? fallbackSrc : src;
+    const displayAlt = imageError ? 'Fallback image' : (alt || 'Documentation image');
 
     const isMobileScreenshot = alt?.toLowerCase().includes('mobile') || alt?.toLowerCase().includes('phone');
 
@@ -43,13 +55,13 @@ const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key
                     relative overflow-hidden rounded-xl 
                     shadow-md hover:shadow-xl transition-all duration-500
                     border border-forest-200/50 bg-white
-                    cursor-zoom-in
+                    ${!imageError ? 'cursor-zoom-in' : 'cursor-default'}
                     ${isMobileScreenshot ? 'max-w-[260px]' : 'w-full max-w-4xl'}
                 `}
             >
                 <img
-                    src={src}
-                    alt={alt || 'Documentation image'}
+                    src={displaySrc}
+                    alt={displayAlt}
                     className={`
                         w-full h-auto object-contain 
                         transition-transform duration-700 group-hover:scale-[1.01]
@@ -57,18 +69,29 @@ const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key
                     `}
                     loading="lazy"
                     onClick={() => {
-                        const index = images.findIndex(img => img.src === src);
-                        if (index !== -1) openGallery(index);
+                        if (!imageError) {
+                            const index = images.findIndex(img => img.src === src);
+                            if (index !== -1) openGallery(index);
+                        }
                     }}
                     onError={() => {
-                        console.error('Image failed to load:', src);
-                        setImageError(true);
+                        if (!imageError) {
+                            console.warn('Image failed to load, showing fallback:', src);
+                            const fallback = FallbackImageManager.getRandomFallback();
+                            setFallbackSrc(fallback.path);
+                            setImageError(true);
+                        }
                     }}
                 />
             </div>
-            {alt && (
+            {alt && !imageError && (
                 <figcaption className="mt-3 text-sm text-forest-500 text-center font-medium max-w-lg px-4">
                     {alt}
+                </figcaption>
+            )}
+            {imageError && (
+                <figcaption className="mt-3 text-sm text-forest-400 text-center italic max-w-lg px-4">
+                    Image unavailable
                 </figcaption>
             )}
         </figure>

@@ -3,6 +3,7 @@
 import React from 'react';
 import { useImageGallery } from '@/context/ImageGalleryContext';
 import { urlFor } from '@/sanity/lib/image';
+import { FallbackImageManager } from '@/lib/fallback-image-manager';
 
 interface ZoomableBlogImageProps {
     value: {
@@ -90,10 +91,20 @@ export default function ZoomableBlogImage({ value, className }: ZoomableBlogImag
     }
 
     if (error || !imageUrl) {
+        const fallback = FallbackImageManager.getRandomFallback();
         return (
-            <div className="my-4 p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
-                ⚠️ Image could not be loaded
-            </div>
+            <figure className={`my-4 flex flex-col items-center ${className || ''}`}>
+                <div className="relative w-full max-w-md aspect-video overflow-hidden rounded-xl border border-forest-200/50 bg-forest-50">
+                    <img
+                        src={fallback.path}
+                        alt={fallback.alt}
+                        className="w-full h-full object-contain p-4"
+                    />
+                </div>
+                <figcaption className="mt-3 text-center text-sm text-forest-400 italic">
+                    Image unavailable
+                </figcaption>
+            </figure>
         );
     }
 

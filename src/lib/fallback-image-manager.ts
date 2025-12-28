@@ -9,6 +9,21 @@ export interface FallbackImage {
   path: string;
 }
 
+/**
+ * Category types for intelligent fallback selection
+ */
+export type FallbackCategory = 'code' | 'dashboard' | 'mobile' | 'server' | 'workflow' | 'default';
+
+/**
+ * Context for inferring the appropriate fallback category
+ */
+export interface FallbackContext {
+  title?: string;
+  techStack?: string[];
+  type?: string;
+  projectId?: string;
+}
+
 export class FallbackImageManager {
   private static readonly fallbackImages: FallbackImage[] = [
     {
@@ -39,6 +54,30 @@ export class FallbackImageManager {
   ];
 
   /**
+   * Category to filename mapping for intelligent selection
+   */
+  private static readonly categoryMap: Record<FallbackCategory, string> = {
+    code: 'fallback-code.svg',
+    dashboard: 'fallback-dashboard.svg',
+    mobile: 'fallback-mobile.svg',
+    server: 'fallback-server.svg',
+    workflow: 'fallback-workflow.svg',
+    default: 'fallback-code.svg'
+  };
+
+  /**
+   * Keywords for category inference
+   */
+  private static readonly categoryKeywords: Record<FallbackCategory, string[]> = {
+    code: ['code', 'developer', 'programming', 'typescript', 'javascript', 'python', 'react', 'next', 'vue', 'angular'],
+    dashboard: ['dashboard', 'analytics', 'charts', 'metrics', 'saas', 'admin', 'panel', 'cms'],
+    mobile: ['mobile', 'app', 'ios', 'android', 'pwa', 'responsive', 'phone', 'tablet'],
+    server: ['server', 'backend', 'api', 'database', 'infrastructure', 'cloud', 'docker', 'kubernetes', 'node'],
+    workflow: ['workflow', 'automation', 'n8n', 'zapier', 'integration', 'pipeline', 'process', 'ai', 'agent'],
+    default: []
+  };
+
+  /**
    * Get a random fallback image from the available set
    * @returns {FallbackImage} A randomly selected fallback image
    */
@@ -51,6 +90,52 @@ export class FallbackImageManager {
       // Return first fallback as ultimate fallback
       return this.fallbackImages[0];
     }
+  }
+
+  /**
+   * Get a fallback image by category
+   * @param category - The category to get a fallback for
+   * @returns {FallbackImage} The category-appropriate fallback image
+   */
+  static getFallbackByCategory(category: FallbackCategory): FallbackImage {
+    const filename = this.categoryMap[category] || this.categoryMap.default;
+    return this.getFallbackByFilename(filename) || this.fallbackImages[0];
+  }
+
+  /**
+   * Infer the appropriate fallback category from context
+   * @param context - Context information (title, tech stack, type, etc.)
+   * @returns {FallbackCategory} The inferred category
+   */
+  static inferCategory(context: FallbackContext): FallbackCategory {
+    const searchText = [
+      context.title || '',
+      context.type || '',
+      context.projectId || '',
+      ...(context.techStack || [])
+    ].join(' ').toLowerCase();
+
+    // Check each category for keyword matches (excluding 'default')
+    const categories: FallbackCategory[] = ['workflow', 'mobile', 'server', 'dashboard', 'code'];
+
+    for (const category of categories) {
+      const keywords = this.categoryKeywords[category];
+      if (keywords.some(keyword => searchText.includes(keyword))) {
+        return category;
+      }
+    }
+
+    return 'default';
+  }
+
+  /**
+   * Get the best fallback for a given context (combines inference and selection)
+   * @param context - Context information for inference
+   * @returns {FallbackImage} The best matching fallback image
+   */
+  static getContextualFallback(context: FallbackContext): FallbackImage {
+    const category = this.inferCategory(context);
+    return this.getFallbackByCategory(category);
   }
 
   /**

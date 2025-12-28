@@ -19,10 +19,10 @@ const PROJECT_ORDER: Record<string, number> = {
 };
 
 export default function FeaturedProjectsSection() {
-    // Filter and sort featured projects in custom order
+    // Filter and sort projects in custom order (showing ALL projects now)
     const featuredProjects = useMemo(() => {
         return portfolioData.projects
-            .filter(p => p.featured)
+            // .filter(p => p.featured) // Removed filter to show all projects
             .sort((a, b) => {
                 const orderA = PROJECT_ORDER[a.id] ?? 999;
                 const orderB = PROJECT_ORDER[b.id] ?? 999;

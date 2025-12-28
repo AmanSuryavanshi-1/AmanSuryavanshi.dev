@@ -1270,11 +1270,11 @@ const rawProjects = [
         imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/Enterprise.webp",
         imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/BarkatEnterprise/Enterprise",
         videoYouTubeId: "jBLsJyNLVcA",
-        video: "",
+        video: "https://youtu.be/jBLsJyNLVcA?si=lJD-UdtayphOBRlH",
         liveUrl: "https://barkat-enterprise-copy.vercel.app/",
         codeUrl: "https://github.com/AmanSuryavanshi-1/BarkatEnterprise",
         blogUrl: "https://www.amansuryavanshi.me/blogs/a-freelance-project-for-an-enterprise",
-        featured: true,
+        featured: false,
         metrics: {
             viewers: "3,000+",
             leads: "50+",
@@ -1289,6 +1289,12 @@ const rawProjects = [
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-Catalogues.webp", alt: "Catalogues Section", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-Products.webp", alt: "Products Section", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-Contact Page.webp", alt: "Contact Section", type: "image" }
+        ],
+        documentation: [
+            {
+                title: "Technical Documentation",
+                url: "/projects/barkat-enterprise-technical-documentation"
+            }
         ]
     },
     {
@@ -1315,11 +1321,11 @@ const rawProjects = [
         imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AV-NewsStream/AV-NewsStream.webp",
         imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/AV-NewsStream/AV-NewsStream",
         videoYouTubeId: "IkFf7UnI2U4",
-        video: "",
+        video: "https://youtu.be/IkFf7UnI2U4?si=q6VRi0EjbrmBhnZM",
         liveUrl: "https://avnews.vercel.app",
         codeUrl: "https://github.com/AmanSuryavanshi-1/AV-News-Stream",
         blogUrl: "https://www.amansuryavanshi.me/blogs/av-news-stream",
-        featured: true,
+        featured: false,
         metrics: {
             apiReduction: "90%",
             capacity: "300/day",
@@ -1355,11 +1361,11 @@ const rawProjects = [
         imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Foodah/Foodah.webp",
         imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Foodah/Foodah",
         videoYouTubeId: "GwJz9MRstuU",
-        video: "",
+        video: "https://youtu.be/GwJz9MRstuU?si=zzajq4uzGzrCnssT",
         liveUrl: "https://foodah.vercel.app",
         codeUrl: "https://github.com/AmanSuryavanshi-1/Foodah",
         blogUrl: "https://www.amansuryavanshi.me/blogs/foodah",
-        featured: true,
+        featured: false,
         metrics: {
             loadReduction: "40%",
             performance: "60fps",
@@ -1447,7 +1453,7 @@ const rawProjects = [
         liveUrl: "https://www.amansuryavanshi.me",
         codeUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev",
         blogUrl: "https://www.amansuryavanshi.me/blogs",
-        featured: true,
+        featured: false,
         metrics: {
             views: "6,000+",
             lighthouse: "95+",
@@ -1567,7 +1573,7 @@ const servicesData: ServiceData[] = [
         image: "/services/writing.jpg",
         relatedProjects: [
             { title: "Omni-Post AI Summary", url: "/projects/omni-post-ai-executive-summary" },
-            { title: "Aviators Technical Docs", url: "/blogs/aviators-training-centre" }
+            { title: "Aviators Technical Docs", url: "/projects/aviators-training-centre-technical-documentation" }
         ]
     },
     {
