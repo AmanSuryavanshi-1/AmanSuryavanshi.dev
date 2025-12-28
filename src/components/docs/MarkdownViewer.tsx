@@ -28,11 +28,14 @@ const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key
     const [imageError, setImageError] = React.useState(false);
     const [fallbackSrc, setFallbackSrc] = React.useState<string | null>(null);
 
+    const isBadge = alt?.toLowerCase().includes('badge') || src?.toLowerCase().includes('badge') || src?.toLowerCase().includes('shield.io');
+    const isMobileScreenshot = alt?.toLowerCase().includes('mobile') || alt?.toLowerCase().includes('phone');
+
     React.useEffect(() => {
-        if (src) {
+        if (src && !isBadge) {
             registerImage({ src, alt: alt || '' });
         }
-    }, [src, alt, registerImage]);
+    }, [src, alt, registerImage, isBadge]);
 
     // Reset error state when src changes
     React.useEffect(() => {
@@ -46,7 +49,38 @@ const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key
     const displaySrc = imageError && fallbackSrc ? fallbackSrc : src;
     const displayAlt = imageError ? 'Fallback image' : (alt || 'Documentation image');
 
-    const isMobileScreenshot = alt?.toLowerCase().includes('mobile') || alt?.toLowerCase().includes('phone');
+
+
+    if (isBadge) {
+        return (
+            <span className="inline-flex flex-col items-center justify-start mx-2 my-2 align-top group">
+                <span
+                    className={`
+                        relative overflow-hidden rounded-[4px] 
+                        transition-transform duration-300 hover:scale-110
+                        max-w-[300px]
+                    `}
+                >
+                    <img
+                        src={displaySrc}
+                        alt={displayAlt}
+                        className="h-[28px] w-auto object-contain"
+                        loading="lazy"
+                        onError={() => {
+                            if (!imageError) {
+                                setImageError(true);
+                            }
+                        }}
+                    />
+                </span>
+                {alt && !imageError && (
+                    <span className="mt-1.5 text-[10px] uppercase tracking-wider font-semibold text-forest-400 text-center px-1 opacity-70 group-hover:opacity-100 transition-opacity">
+                        {alt}
+                    </span>
+                )}
+            </span>
+        );
+    }
 
     return (
         <figure className="my-6 md:my-8 flex flex-col items-center group">

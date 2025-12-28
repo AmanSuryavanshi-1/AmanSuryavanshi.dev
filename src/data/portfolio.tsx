@@ -1335,6 +1335,12 @@ const rawProjects = [
         gallery: [
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AV-NewsStream/AV-NewsStream.webp", alt: "Desktop Homepage", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AV-NewsStream/AV-NewsStream-mobile.webp", alt: "Mobile View", type: "image" }
+        ],
+        documentation: [
+            {
+                title: "Technical Documentation",
+                url: "/projects/av-newsstream-technical-documentation"
+            }
         ]
     },
     {

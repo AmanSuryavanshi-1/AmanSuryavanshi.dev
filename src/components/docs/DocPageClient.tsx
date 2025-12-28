@@ -26,6 +26,7 @@ import { ImageGalleryProvider } from '@/context/ImageGalleryContext';
 import Lightbox from '@/components/ui/Lightbox';
 import { FallbackImageManager } from '@/lib/fallback-image-manager';
 import CustomVideoPlayer from '@/components/ui/CustomVideoPlayer';
+import { cn } from '@/lib/utils';
 
 interface DocPageClientProps {
     project: Project;
@@ -174,88 +175,94 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
             <section className="py-12 sm:py-16 bg-sage-50 min-h-screen">
                 <div className="container mx-auto px-2 sm:px-4 lg:px-6">
 
-                    {/* Breadcrumb - Enhanced with icons */}
+                    {/* Breadcrumb - Enhanced with icons and glass effect */}
                     <div className="mb-8">
-                        <div className="flex items-center gap-2 text-sm text-forest-600">
-                            <Link href="/" className="hover:text-lime-600 transition-colors flex items-center gap-1">
-                                <Home className="w-4 h-4" />
+                        <div className="inline-flex items-center gap-2 text-sm text-forest-700 bg-white/50 backdrop-blur-md px-4 py-2 rounded-full border border-forest-100/50 shadow-sm">
+                            <Link href="/" className="hover:text-lime-600 transition-colors flex items-center gap-1 group">
+                                <Home className="w-4 h-4 group-hover:scale-110 transition-transform" />
                             </Link>
-                            <ChevronRight className="w-4 h-4 text-forest-400" />
-                            <Link href="/#projects" className="hover:text-lime-600 transition-colors flex items-center gap-1">
+                            <ChevronRight className="w-3.5 h-3.5 text-forest-300" />
+                            <Link href="/#projects" className="hover:text-lime-600 transition-colors flex items-center gap-1 font-medium">
                                 <FolderOpen className="w-4 h-4" />
                                 <span>Projects</span>
                             </Link>
-                            <ChevronRight className="w-4 h-4 text-forest-400" />
-                            <span className="text-forest-700 truncate max-w-[200px]">{project.title}</span>
-                            <ChevronRight className="w-4 h-4 text-forest-400" />
-                            <span className="text-forest-900 font-medium flex items-center gap-1.5">
+                            <ChevronRight className="w-3.5 h-3.5 text-forest-300" />
+                            <span className="text-forest-900 font-semibold truncate max-w-[200px]">{project.title}</span>
+                            <ChevronRight className="w-3.5 h-3.5 text-forest-300" />
+                            <span className="text-forest-600 flex items-center gap-1.5">
                                 <DocIcon className="w-4 h-4 text-lime-600" />
                                 {docType}
                             </span>
                         </div>
                     </div>
 
-                    {/* Header Section with Blurred Background Image */}
-                    <div className="mb-10 relative overflow-hidden rounded-2xl">
-                        {/* Blurred Background Image */}
-                        {headerImage && (
+                    {/* Header Section - Premium Hero Design */}
+                    <div className="mb-8 relative overflow-hidden rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(34,58,34,0.15)] group">
+                        {/* Complex Background Layering */}
+                        {headerImage ? (
                             <div className="absolute inset-0 z-0">
                                 <img
                                     src={headerImage}
                                     alt=""
-                                    className="w-full h-full object-cover scale-110 blur-[2px] opacity-80"
+                                    className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out"
                                     aria-hidden="true"
                                 />
-                                {/* Very light gradient overlay - allows image to show through clearly */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-sage-50/20 to-forest-50/10" />
+                                {/* Deep Gradient Overlay - Matches FeaturedHero vibe */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-forest-950/95 via-forest-900/85 to-forest-800/70" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-transparent to-transparent" />
+                                {/* Detail Accents */}
+                                <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay" />
                             </div>
-                        )}
-
-                        {/* Fallback gradient if no image */}
-                        {!headerImage && (
-                            <div className="absolute inset-0 z-0 bg-gradient-to-br from-sage-100 via-lime-50/30 to-forest-50" />
+                        ) : (
+                            <div className="absolute inset-0 z-0 bg-gradient-to-br from-forest-900 via-forest-800 to-forest-900">
+                                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+                            </div>
                         )}
 
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="relative z-10 space-y-4 p-6 sm:p-8 lg:p-10"
+                            className="relative z-10 p-6 sm:p-10 lg:p-12 flex flex-col h-full justify-center min-h-[350px]"
                         >
-                            {/* Badges - Match homepage style */}
-                            <div className="flex flex-wrap gap-2 mb-4">
-                                <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm border border-forest-200/50 text-forest-700 text-sm font-medium rounded-full shadow-sm">
+                            {/* Top Meta Badges */}
+                            <div className="flex flex-wrap items-center gap-3 mb-6">
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-lime-500/10 border border-lime-500/20 text-lime-300 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
+                                    <DocIcon className="w-3.5 h-3.5" />
                                     {docType}
                                 </span>
-                                <span className="px-3 py-1.5 bg-forest-900/95 backdrop-blur-sm text-white text-sm font-medium rounded-full flex items-center gap-1.5 shadow-sm">
-                                    <Clock className="w-3.5 h-3.5" /> {readingTime} min read
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white/80 text-xs font-medium backdrop-blur-md">
+                                    <Clock className="w-3.5 h-3.5" />
+                                    {readingTime} min read
                                 </span>
                             </div>
 
-                            {/* Title */}
-                            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-forest-900 tracking-tight leading-tight drop-shadow-sm">
-                                {project.title}
-                            </h1>
+                            {/* Main Title & Tagline */}
+                            <div className="max-w-4xl space-y-4">
+                                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-white leading-[1.1] tracking-tight drop-shadow-sm">
+                                    <span className="bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
+                                        {project.title}
+                                    </span>
+                                </h1>
+                                <p className="text-base sm:text-lg lg:text-xl text-forest-100/90 font-light leading-relaxed max-w-2xl border-l-2 border-lime-500/50 pl-4">
+                                    {project.tagLine}
+                                </p>
+                            </div>
 
-                            {/* Subtitle */}
-                            <p className="text-lg sm:text-xl text-forest-700 max-w-3xl">
-                                {project.tagLine}
-                            </p>
-
-                            {/* Action Buttons - Match homepage */}
-                            <div className="flex flex-wrap gap-3 pt-4">
+                            {/* Action Buttons */}
+                            <div className="flex flex-wrap gap-4 pt-8 mt-auto">
                                 {project.liveUrl && (
                                     <a
                                         href={project.liveUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-lime-500 text-forest-900 font-medium rounded-full hover:bg-lime-400 transition-all shadow-md hover:shadow-lg"
+                                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-lime-500 hover:bg-lime-400 text-forest-950 font-bold text-sm sm:text-base rounded-full transition-all shadow-lg hover:shadow-lime-500/25 hover:-translate-y-0.5"
                                     >
-                                        <ArrowRight className="w-4 h-4" /> Live Demo
+                                        <ExternalLink className="w-4 h-4" /> Live Demo
                                     </a>
                                 )}
                                 <Link
                                     href="/#projects"
-                                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/90 backdrop-blur-sm border border-forest-200 text-forest-700 font-medium rounded-full hover:bg-white transition-all shadow-sm"
+                                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-medium text-sm sm:text-base rounded-full transition-all backdrop-blur-md border border-white/10 hover:border-white/20"
                                 >
                                     <ArrowLeft className="w-4 h-4" /> Back to Projects
                                 </Link>
@@ -263,49 +270,50 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                         </motion.div>
                     </div>
 
-                    {/* Main Grid Layout */}
-                    <div className="lg:grid lg:grid-cols-12 lg:gap-4">
+                    {/* Main Grid Layout - Refined percentages for wider content using FR units */}
+                    <div className="lg:grid lg:grid-cols-[20fr_60fr_20fr] lg:gap-6">
 
                         {/* LEFT SIDEBAR - Document Meta */}
-                        <aside className="hidden lg:block lg:col-span-3">
+                        <aside className="hidden lg:block">
                             <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto space-y-6">
 
-                                {/* Document Info Card - WHITE like blog cards */}
-                                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-forest-200/50 shadow-sm">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className="w-10 h-10 rounded-xl bg-forest-900 flex items-center justify-center">
-                                            <DocIcon className="w-5 h-5 text-white" />
+                                {/* Document Info Card */}
+                                <div className="bg-white rounded-2xl p-5 border border-forest-100 shadow-sm sticky-card">
+                                    <div className="flex items-center gap-3 mb-5">
+                                        <div className="w-10 h-10 rounded-xl bg-forest-50 flex items-center justify-center text-forest-900 shrink-0">
+                                            <DocIcon className="w-5 h-5 text-lime-600" />
                                         </div>
                                         <div>
-                                            <p className="text-xs font-medium text-forest-500 uppercase tracking-wider">Document Type</p>
-                                            <p className="text-sm font-semibold text-forest-900">{docType}</p>
+                                            <p className="text-[10px] font-bold text-forest-500 uppercase tracking-wider mb-0.5">Document Type</p>
+                                            <p className="text-sm font-bold text-forest-900 leading-tight">{docType}</p>
                                         </div>
                                     </div>
 
                                     <div className="space-y-3 pt-4 border-t border-forest-100">
-                                        <div className="flex items-center gap-2 text-sm text-forest-600">
-                                            <Clock className="w-4 h-4 text-forest-400" />
-                                            <span>{readingTime} min read</span>
+                                        <div className="flex items-center gap-3 text-sm text-forest-600 bg-forest-50/50 p-2.5 rounded-lg">
+                                            <Clock className="w-4 h-4 text-lime-600" />
+                                            <span><strong>{readingTime} min</strong> read time</span>
                                         </div>
-                                        <div className="flex items-center gap-2 text-sm text-forest-600">
-                                            <Calendar className="w-4 h-4 text-forest-400" />
-                                            <span>Updated Dec 2025</span>
+                                        <div className="flex items-center gap-3 text-sm text-forest-600 bg-forest-50/50 p-2.5 rounded-lg">
+                                            <Calendar className="w-4 h-4 text-lime-600" />
+                                            <span>Updated <strong>Dec 2025</strong></span>
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Tech Stack - Match homepage badges */}
+                                {/* Tech Stack */}
                                 {project.techStack && project.techStack.length > 0 && (
-                                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-forest-200/50 shadow-sm">
+                                    <div className="bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
                                         <h4 className="text-xs font-bold text-forest-500 uppercase tracking-wider mb-3 flex items-center gap-2">
                                             <Code2 className="w-4 h-4 text-lime-600" />
-                                            Technologies
+                                            Core Technologies
                                         </h4>
-                                        <div className="flex flex-wrap gap-2">
-                                            {project.techStack.slice(0, 8).map((tech: string) => (
+                                        <div className="flex flex-wrap gap-1.5">
+                                            {project.techStack.slice(0, 10).map((tech: string) => (
                                                 <span
                                                     key={tech}
-                                                    className="px-2.5 py-1 bg-forest-50 border border-forest-200/50 text-xs text-forest-700 rounded-lg"
+                                                    className="px-2.5 py-1 bg-white border border-forest-100 text-xs font-medium text-forest-700 rounded-lg shadow-sm hover:border-lime-200 transition-colors"
                                                 >
                                                     {tech}
                                                 </span>
@@ -316,28 +324,34 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                             </div>
                         </aside>
 
-                        {/* MAIN CONTENT */}
-                        <article className="lg:col-span-6 min-w-0">
+                        {/* MAIN CONTENT CENTER */}
+                        <article className="min-w-0">
                             {/* Video Walkthrough - Show at top of technical docs if available */}
                             {isTechnicalDoc && project.videoYouTubeId && (
-                                <div className="mb-8">
-                                    <div className="bg-white rounded-2xl overflow-hidden border border-forest-200/50 shadow-sm">
-                                        <div className="p-4 border-b border-forest-100 flex items-center gap-2">
-                                            <Activity className="w-5 h-5 text-lime-600" />
-                                            <h3 className="font-semibold text-forest-900">Project Walkthrough</h3>
+                                <div className="mb-10">
+                                    <div className="bg-white rounded-3xl overflow-hidden border border-forest-100 shadow-xl ring-1 ring-forest-100/50">
+                                        <div className="p-4 px-6 border-b border-forest-100 bg-forest-50/50 flex items-center gap-3">
+                                            <div className="p-1.5 bg-lime-100 rounded-lg">
+                                                <Activity className="w-4 h-4 text-lime-700" />
+                                            </div>
+                                            <h3 className="font-bold text-forest-900 text-sm uppercase tracking-wide">Project Walkthrough</h3>
                                         </div>
-                                        <CustomVideoPlayer
-                                            videoId={project.videoYouTubeId}
-                                            title={`${project.title} - Full Walkthrough`}
-                                            poster={project.imageUrl || project.image}
-                                            accentColor="#84cc16"
-                                        />
+                                        <div className="p-2 bg-forest-50/30">
+                                            <div className="rounded-2xl overflow-hidden shadow-sm">
+                                                <CustomVideoPlayer
+                                                    videoId={project.videoYouTubeId}
+                                                    title={`${project.title} - Full Walkthrough`}
+                                                    poster={project.imageUrl || project.image}
+                                                    accentColor="#84cc16"
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             )}
 
                             {/* Content Card - Clean white background */}
-                            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-forest-200/50 shadow-sm markdown-content overflow-x-hidden">
+                            <div className="bg-white rounded-3xl p-8 sm:p-12 border border-forest-100 shadow-[0_5px_30px_-10px_rgba(0,0,0,0.05)] markdown-content overflow-x-hidden min-h-[500px]">
                                 <MarkdownViewer content={content} />
                             </div>
 
@@ -353,48 +367,64 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                                     </div>
                                 </Link>
 
-                                <Link
-                                    href={`/projects/${isTechnicalDoc
+                                {(() => {
+                                    // Calculate target slug for the alternate documentation
+                                    const targetSlug = isTechnicalDoc
                                         ? slug.replace('technical-documentation', 'executive-summary')
-                                        : slug.replace('executive-summary', 'technical-documentation')}`}
-                                    className="group block p-5 rounded-xl bg-white border border-forest-200/50 hover:border-lime-400 hover:shadow-md transition-all text-right"
-                                >
-                                    <div className="text-xs font-semibold text-forest-500 uppercase tracking-wider mb-1">Related</div>
-                                    <div className="font-semibold text-forest-900 flex items-center justify-end gap-2 group-hover:text-lime-600">
-                                        {isTechnicalDoc ? 'Executive Summary' : 'Technical Docs'} <ArrowRight className="w-4 h-4" />
-                                    </div>
-                                </Link>
+                                        : slug.replace('executive-summary', 'technical-documentation');
+
+                                    // Check if the alternate documentation exists in the project data
+                                    const hasAlternateDoc = project.documentation?.some(doc => doc.url.includes(targetSlug));
+
+                                    return (
+                                        <Link
+                                            href={hasAlternateDoc ? `/projects/${targetSlug}` : "/#projects"}
+                                            className="group block p-5 rounded-xl bg-white border border-forest-200/50 hover:border-lime-400 hover:shadow-md transition-all text-right"
+                                        >
+                                            <div className="text-xs font-semibold text-forest-500 uppercase tracking-wider mb-1">
+                                                {hasAlternateDoc ? "Related" : "Explore"}
+                                            </div>
+                                            <div className="font-semibold text-forest-900 flex items-center justify-end gap-2 group-hover:text-lime-600">
+                                                {hasAlternateDoc
+                                                    ? (isTechnicalDoc ? 'Executive Summary' : 'Technical Docs')
+                                                    : 'View More Projects'
+                                                }
+                                                <ArrowRight className="w-4 h-4" />
+                                            </div>
+                                        </Link>
+                                    );
+                                })()}
                             </div>
                         </article>
 
                         {/* RIGHT SIDEBAR - Table of Contents */}
-                        <aside className="hidden lg:block lg:col-span-3">
+                        <aside className="hidden lg:block">
                             <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto">
-                                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-forest-200/50 shadow-sm">
-                                    <h5 className="text-xs font-bold text-forest-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                                <div className="bg-white rounded-2xl p-6 border border-forest-100 shadow-sm">
+                                    <h5 className="text-xs font-bold text-forest-900 uppercase tracking-wider mb-4 flex items-center gap-2 px-2">
                                         <List className="w-4 h-4 text-lime-600" /> On this page
                                     </h5>
 
                                     {/* Scrollable TOC */}
-                                    <nav className="max-h-[60vh] overflow-y-auto pr-1 space-y-1">
+                                    <nav className="max-h-[60vh] overflow-y-auto pr-1 space-y-1 custom-scrollbar">
                                         {tocItems.length > 0 ? (
                                             tocItems.map((item) => (
                                                 <button
                                                     key={item.id}
                                                     onClick={() => scrollToHeading(item.id)}
-                                                    className={`
-                                                        block w-full text-left text-sm py-2 px-3 rounded-lg transition-all duration-200
-                                                        ${item.level === 2 ? 'pl-5' : item.level === 3 ? 'pl-7' : ''}
-                                                        ${activeHeading === item.id
-                                                            ? 'bg-forest-900 text-white font-medium shadow-sm'
-                                                            : 'text-forest-600 hover:text-forest-900 hover:bg-forest-50'}
-                                                    `}
+                                                    className={cn(
+                                                        "block w-full text-left text-sm py-2 px-3 rounded-lg transition-all duration-200 border-l-2",
+                                                        item.level === 2 ? "pl-4" : item.level === 3 ? "pl-6" : "",
+                                                        activeHeading === item.id
+                                                            ? "border-lime-500 bg-lime-50 text-forest-900 font-medium"
+                                                            : "border-transparent text-forest-500 hover:text-forest-700 hover:bg-forest-50"
+                                                    )}
                                                 >
                                                     <span className="line-clamp-2">{item.text}</span>
                                                 </button>
                                             ))
                                         ) : (
-                                            <p className="text-sm text-forest-500 italic">Loading contents...</p>
+                                            <p className="text-sm text-forest-400 italic px-2">Loading contents...</p>
                                         )}
                                     </nav>
                                 </div>
