@@ -385,6 +385,12 @@ npm run test:coverage    # Generate coverage report
 - [Omni-Post AI Documentation](./Omni-Post-AI-Automation/README.md)
 - [Blog Automation Guide](./N8N_BLOG_AUTOMATION_GUIDE.md)
 
+### Developer Documentation
+- **[Portfolio Technical Documentation](./docs/PORTFOLIO-DOCUMENTATION.md)** - Complete architecture, data flow, and design decisions
+- **[Data Flow Reference](./docs/DATA-FLOW-REFERENCE.md)** - Visual diagrams of data movement
+- **[Component Reference](./docs/COMPONENT-REFERENCE.md)** - React component API reference
+- **[Quick Start Guide](./docs/QUICK-START-GUIDE.md)** - Common tasks and operations
+
 ---
 
 ## 🔗 Links
@@ -414,7 +420,7 @@ This project is for portfolio and educational purposes. The code is available fo
 ---
 
 **Built with ❤️ by Aman Suryavanshi**  
-**Last Updated**: November 14, 2025  
+**Last Updated**: December 29, 2025  
 **Status**: Production Ready
 
 ---

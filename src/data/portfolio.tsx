@@ -1380,6 +1380,12 @@ const rawProjects = [
         gallery: [
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Foodah/Foodah.webp", alt: "Desktop Homepage", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Foodah/Foodah-mobile.webp", alt: "Mobile View", type: "image" }
+        ],
+        documentation: [
+            {
+                title: "Technical Documentation",
+                url: "/projects/foodah-technical-documentation"
+            }
         ]
     },
     {
