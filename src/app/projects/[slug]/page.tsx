@@ -15,6 +15,7 @@ const DOCS_MAP: Record<string, string> = {
     'barkat-enterprise-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/BarkatEnterprise/main/docs/BARKAT-ENTERPRISE-TECHNICAL-DOCUMENTATION.md',
     // AV News Stream
     'av-newsstream-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/AV-News-Stream/main/docs/AV-NEWSSTREAM-TECHNICAL-DOCUMENTATION.md',
+    'foodah-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/Foodah/main/docs/FOODAH-TECHNICAL-DOCUMENTATION.md',
 };
 
 // Map documentation slugs to Project IDs
@@ -25,6 +26,7 @@ const DOC_TO_PROJECT_ID: Record<string, string> = {
     'omni-post-ai-technical-documentation': 'n8n-automation-suite',
     'barkat-enterprise-technical-documentation': 'barkat-enterprise',
     'av-newsstream-technical-documentation': 'av-newsstream',
+    'foodah-technical-documentation': 'foodah',
 };
 
 // Map slugs to readable titles for metadata
@@ -37,6 +39,7 @@ const TITLES_MAP: Record<string, string> = {
     'omni-post-ai-technical-documentation': 'Omni-Post AI - Technical Documentation',
     'barkat-enterprise-technical-documentation': 'Barkat Enterprise - Technical Documentation',
     'av-newsstream-technical-documentation': 'AV News Stream - Technical Documentation',
+    'foodah-technical-documentation': 'Foodah - Technical Documentation',
 };
 
 interface PageProps {
