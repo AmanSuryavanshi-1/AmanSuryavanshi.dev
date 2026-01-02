@@ -88,12 +88,12 @@ export default function TagCloud({ posts, selectedTags, onTagSelect, allTags = [
                         onClick={() => selectedTags.length > 0 && onTagSelect('ALL')}
                         className={`group relative px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 ease-out whitespace-nowrap snap-start
                     ${selectedTags.length === 0
-                                ? 'bg-forest-900 text-white border-2 border-forest-900 shadow-lg shadow-forest-900/30 ring-2 ring-forest-900 ring-offset-2'
-                                : 'bg-white text-forest-900 border-2 border-forest-500 hover:border-forest-700 hover:bg-sage-100 hover:shadow-md'
+                                ? 'bg-forest-900 dark:bg-lime-500 text-white dark:text-forest-950 border-2 border-forest-900 dark:border-lime-500 shadow-lg shadow-forest-900/30 dark:shadow-lime-500/30 ring-2 ring-forest-900 dark:ring-lime-500 ring-offset-2 dark:ring-offset-[#0a1f15]'
+                                : 'bg-white dark:bg-forest-800 text-forest-900 dark:text-sage-100 border-2 border-forest-500 dark:border-forest-600 hover:border-forest-700 hover:bg-sage-100 dark:hover:bg-forest-700 hover:shadow-md'
                             }`}
                     >
                         <span className="relative z-10 flex items-center gap-2">
-                            <Hash size={14} className={selectedTags.length === 0 ? "text-lime-500" : "text-forest-500"} />
+                            <Hash size={14} className={selectedTags.length === 0 ? "text-lime-500 dark:text-forest-950" : "text-forest-500 dark:text-sage-400"} />
                             All
                         </span>
                     </button>
@@ -121,11 +121,11 @@ export default function TagCloud({ posts, selectedTags, onTagSelect, allTags = [
                                 style={style}
                                 className={`group relative px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 ease-out flex items-center gap-2 border-2 whitespace-nowrap snap-start
                             ${isSelected
-                                        ? 'text-white ring-2 ring-offset-2 ring-offset-white transform scale-105 shadow-lg'
-                                        : 'bg-white text-forest-900 border-forest-500 hover:border-forest-700 hover:shadow-md hover:-translate-y-0.5 hover:bg-sage-100'
+                                        ? 'text-white ring-2 ring-offset-2 ring-offset-white dark:ring-offset-[#0a1f15] transform scale-105 shadow-lg'
+                                        : 'bg-white dark:bg-forest-800 text-forest-900 dark:text-sage-100 border-forest-500 dark:border-forest-600 hover:border-forest-700 hover:shadow-md hover:-translate-y-0.5 hover:bg-sage-100 dark:hover:bg-forest-700'
                                     }
                             ${isProjectsTag && !isSelected
-                                        ? 'border-lime-500 bg-lime-500/5 ring-2 ring-lime-500/40 shadow-lg shadow-lime-500/30 hover:ring-lime-500/60 hover:shadow-lime-500/40 hover:bg-lime-500/10'
+                                        ? 'border-lime-500 bg-lime-500/5 dark:bg-lime-500/10 ring-2 ring-lime-500/40 shadow-lg shadow-lime-500/30 hover:ring-lime-500/60 hover:shadow-lime-500/40 hover:bg-lime-500/10 dark:hover:bg-lime-500/20'
                                         : ''
                                     }`}
                             >
@@ -134,8 +134,8 @@ export default function TagCloud({ posts, selectedTags, onTagSelect, allTags = [
                                     <X size={14} className="text-white/90" />
                                 ) : (
                                     <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${isProjectsTag
-                                        ? 'bg-lime-500/20 text-lime-700'
-                                        : 'bg-forest-900/10 text-forest-900'
+                                        ? 'bg-lime-500/20 text-lime-700 dark:text-lime-400'
+                                        : 'bg-forest-900/10 dark:bg-sage-300/10 text-forest-900 dark:text-sage-300'
                                         }`}>
                                         {stat.count}
                                     </span>

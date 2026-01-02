@@ -33,7 +33,7 @@ export default function SearchBar({ onSearch, placeholder = 'Search posts...', v
         <div className="relative w-full max-w-md group">
             {/* Background glow effect */}
             <div
-                className={`absolute -inset-0.5 bg-gradient-to-r from-lime-500 via-sage-300 to-forest-500 rounded-full opacity-0 blur transition-opacity duration-500 ${isFocused ? 'opacity-30' : 'group-hover:opacity-20'
+                className={`absolute -inset-0.5 bg-gradient-to-r from-lime-500 via-sage-300 to-forest-500 rounded-full opacity-0 blur transition-opacity duration-500 ${isFocused ? 'opacity-30 dark:opacity-20' : 'group-hover:opacity-20 dark:group-hover:opacity-10'
                     }`}
             />
 
@@ -43,8 +43,8 @@ export default function SearchBar({ onSearch, placeholder = 'Search posts...', v
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
                     <Search
                         className={`h-5 w-5 transition-all duration-300 ${isFocused
-                            ? 'text-lime-600 scale-110'
-                            : 'text-forest-700'
+                            ? 'text-lime-600 dark:text-lime-400 scale-110'
+                            : 'text-forest-700 dark:text-sage-400'
                             }`}
                     />
                     {isFocused && (
@@ -56,16 +56,16 @@ export default function SearchBar({ onSearch, placeholder = 'Search posts...', v
                 <input
                     type="text"
                     className={`block w-full pl-12 pr-12 py-3.5 rounded-full leading-5 
-                        bg-white
+                        bg-white dark:bg-[#0f291e]
                         border-2 transition-all duration-300
-                        placeholder-forest-500
-                        text-forest-900 font-medium
-                        shadow-lg shadow-forest-900/5
-                        focus:outline-none 
+                        placeholder-forest-500 dark:placeholder-sage-500
+                        text-forest-900 dark:text-sage-100 font-medium
+                        shadow-lg shadow-forest-900/5 dark:shadow-black/20
+                        focus:outline-none focus:ring-1 focus:ring-lime-500/50
                         sm:text-sm
                         ${isFocused
-                            ? 'border-lime-500 shadow-xl shadow-lime-500/10 scale-[1.02]'
-                            : 'border-forest-200 hover:border-sage-300 hover:shadow-xl hover:shadow-forest-900/10'
+                            ? 'border-lime-500 shadow-xl shadow-lime-500/10'
+                            : 'border-forest-200 dark:border-forest-600 hover:border-sage-300 dark:hover:border-sage-500 hover:shadow-xl hover:shadow-forest-900/10 dark:hover:shadow-black/30'
                         }`}
                     placeholder={placeholder}
                     value={query}
@@ -78,15 +78,15 @@ export default function SearchBar({ onSearch, placeholder = 'Search posts...', v
                 {query && (
                     <button
                         onClick={() => setQuery('')}
-                        className="absolute inset-y-0 right-0 pr-4 flex items-center text-forest-400 
-                            hover:text-forest-700 transition-all duration-300 
+                        className="absolute inset-y-0 right-0 pr-4 flex items-center text-forest-400 dark:text-sage-500
+                            hover:text-forest-700 dark:hover:text-sage-200 transition-all duration-300 
                             hover:scale-110 active:scale-95
                             group/clear"
                         aria-label="Clear search"
                     >
                         <div className="relative">
                             <X className="h-5 w-5 transition-transform duration-300 group-hover/clear:rotate-90" />
-                            <div className="absolute inset-0 bg-forest-400/20 rounded-full scale-0 
+                            <div className="absolute inset-0 bg-forest-400/20 dark:bg-sage-400/20 rounded-full scale-0 
                                 group-hover/clear:scale-150 transition-transform duration-300" />
                         </div>
                     </button>

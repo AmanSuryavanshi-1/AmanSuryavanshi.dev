@@ -87,7 +87,7 @@ export default function ProjectsPage() {
     return (
         <ImageGalleryProvider>
             <Lightbox />
-            <main className="min-h-screen bg-forest-50/30 text-forest-900 pt-24 pb-20">
+            <main className="min-h-screen bg-[#D3E6BB] dark:bg-[#0a1f15] text-forest-900 dark:text-sage-100 pt-24 pb-20 transition-colors duration-300">
                 <div className="container mx-auto px-4">
 
                     {/* Page Header */}
@@ -97,14 +97,14 @@ export default function ProjectsPage() {
                             animate={{ opacity: 1, y: 0 }}
                             className="text-4xl md:text-5xl lg:text-6xl font-bold font-serif tracking-tight"
                         >
-                            <span className="text-forest-900">All </span>
-                            <span className="text-lime-500">Projects</span>
+                            <span className="text-forest-900 dark:text-sage-100">All </span>
+                            <span className="text-lime-500 dark:text-lime-400">Projects</span>
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="text-forest-600 max-w-2xl mx-auto text-lg"
+                            className="text-forest-600 dark:text-sage-300 max-w-2xl mx-auto text-lg"
                         >
                             A comprehensive archive of my work in web development, automation, and design.
                         </motion.p>
@@ -128,10 +128,10 @@ export default function ProjectsPage() {
                             ))
                         ) : (
                             <div className="text-center py-20">
-                                <p className="text-xl text-forest-500">No projects found matching your criteria.</p>
+                                <p className="text-xl text-forest-500 dark:text-sage-400">No projects found matching your criteria.</p>
                                 <button
                                     onClick={() => { setActiveCategory("All"); setActiveTech("All Tech"); }}
-                                    className="mt-4 text-lime-600 hover:underline font-medium"
+                                    className="mt-4 text-lime-600 dark:text-lime-400 hover:underline font-medium"
                                 >
                                     Clear Filters
                                 </button>

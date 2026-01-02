@@ -32,10 +32,10 @@ function PersonalInfo({ data }: PersonalInfoProps) {
       className="space-y-6"
     >
       <div className="prose prose-forest max-w-none" itemScope itemType="http://schema.org/Person">
-        <h2 className="text-lg font-semibold text-forest-900 mb-4">
+        <h2 className="text-lg font-semibold text-forest-900 dark:text-lime-400 mb-4">
           Delivering Business Impact Through Intelligent Automation
         </h2>
-        <p className="text-forest-700">
+        <p className="text-forest-700 dark:text-sage-300">
           I specialize in architecting automation-first solutions that eliminate manual work and drive measurable ROI.
           My expertise lies in orchestrating AI tools, workflow platforms (N8N, Make), and modern tech stacks to create systems that work smarter, not harder.
           Every project I deliver comes with concrete metrics: time saved, revenue generated, processes automated.
@@ -77,10 +77,10 @@ function InfoItem({ icon, text, label }: InfoItemProps) {
       animate={{ opacity: 1, x: 0 }}
       className="flex items-start gap-3"
     >
-      <span className="text-forest-500 flex-shrink-0 mt-1">{icon}</span>
+      <span className="text-forest-500 dark:text-sage-400 flex-shrink-0 mt-1">{icon}</span>
       <div>
-        <h3 className="text-sm font-medium text-forest-900 mb-1">{label}</h3>
-        <p className="text-forest-700">{text}</p>
+        <h3 className="text-sm font-medium text-forest-900 dark:text-sage-300 mb-1">{label}</h3>
+        <p className="text-forest-700 dark:text-sage-200">{text}</p>
       </div>
     </motion.div>
   );

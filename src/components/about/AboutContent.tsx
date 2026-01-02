@@ -14,21 +14,21 @@ const AboutContent = () => {
       <section itemScope itemType="http://schema.org/Person" className="flex flex-col gap-4">
 
         {/* Header Card with Philosophy */}
-        <div className="bg-white/50 border border-sage-100 rounded-2xl p-5 shadow-sm">
-          <h2 className="text-lg font-bold text-forest-900 mb-3 leading-tight" itemProp="jobTitle">
+        <div className="bg-white/50 dark:bg-[#162c22]/80 backdrop-blur-md border border-sage-100 dark:border-white/10 rounded-2xl p-5 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+          <h2 className="text-lg font-bold text-forest-900 dark:text-sage-100 mb-3 leading-tight" itemProp="jobTitle">
             {title}
           </h2>
           <div className="flex flex-col gap-3">
             <div className="flex items-start gap-3">
-              <Sparkles className="w-5 h-5 mt-0.5 flex-shrink-0 text-lime-500" aria-hidden="true" />
-              <p className="text-forest-700 text-sm leading-relaxed">
+              <Sparkles className="w-5 h-5 mt-0.5 flex-shrink-0 text-lime-500 dark:text-lime-400" aria-hidden="true" />
+              <p className="text-forest-700 dark:text-sage-300 text-sm leading-relaxed">
                 {intro}
               </p>
             </div>
 
-            <div className="flex items-start gap-3 pt-2 border-t border-sage-100/50">
-              <Quote className="w-5 h-5 mt-0.5 flex-shrink-0 text-lime-500" aria-hidden="true" />
-              <p className="text-forest-700 text-sm leading-relaxed italic">
+            <div className="flex items-start gap-3 pt-2 border-t border-sage-100/50 dark:border-sage-300/10">
+              <Quote className="w-5 h-5 mt-0.5 flex-shrink-0 text-lime-500 dark:text-lime-400" aria-hidden="true" />
+              <p className="text-forest-700 dark:text-sage-300 text-sm leading-relaxed italic">
                 "{philosophy}"
               </p>
             </div>
@@ -37,19 +37,19 @@ const AboutContent = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Journey Card */}
-          <div className="bg-white/50 border border-sage-100 rounded-2xl p-5 shadow-sm flex flex-col gap-3 h-full">
+          <div className="bg-white/50 dark:bg-[#162c22]/80 backdrop-blur-md border border-sage-100 dark:border-white/10 rounded-2xl p-5 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] flex flex-col gap-3 h-full">
             <div className="flex items-center gap-2 mb-1">
-              <Workflow className="w-4 h-4 text-lime-600" aria-hidden="true" />
-              <h3 className="font-semibold text-forest-900 text-xs uppercase tracking-wide">My Journey</h3>
+              <Workflow className="w-4 h-4 text-lime-600 dark:text-lime-400" aria-hidden="true" />
+              <h3 className="font-semibold text-forest-900 dark:text-sage-100 text-xs uppercase tracking-wide">My Journey</h3>
             </div>
 
-            <div className="flex flex-col gap-2 text-xs text-forest-700 flex-grow">
+            <div className="flex flex-col gap-2 text-xs text-forest-700 dark:text-sage-300 flex-grow">
               {journeySteps.map((step, index) => (
                 <div key={index} className="flex items-start gap-2 relative">
                   <div className="flex flex-col items-center mt-1">
-                    <div className="w-1.5 h-1.5 rounded-full bg-lime-500 flex-shrink-0" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-lime-500 dark:bg-lime-400 flex-shrink-0" />
                     {index < journeySteps.length - 1 && (
-                      <div className="w-0.5 h-full bg-sage-200 absolute top-2 left-[2.5px] -z-10 min-h-[16px]" />
+                      <div className="w-0.5 h-full bg-sage-200 dark:bg-sage-600 absolute top-2 left-[2.5px] -z-10 min-h-[16px]" />
                     )}
                   </div>
                   <span className="leading-tight pb-1">{step}</span>
@@ -59,15 +59,15 @@ const AboutContent = () => {
           </div>
 
           {/* Why Me Card */}
-          <div className="bg-white/50 border border-sage-100 rounded-2xl p-5 shadow-sm flex flex-col gap-3 h-full">
+          <div className="bg-white/50 dark:bg-[#162c22]/80 backdrop-blur-md border border-sage-100 dark:border-white/10 rounded-2xl p-5 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] flex flex-col gap-3 h-full">
             <div className="flex items-center gap-2 mb-1">
-              <CheckCircle2 className="w-4 h-4 text-lime-600" aria-hidden="true" />
-              <h3 className="font-semibold text-forest-900 text-xs uppercase tracking-wide">Why Work With Me?</h3>
+              <CheckCircle2 className="w-4 h-4 text-lime-600 dark:text-lime-400" aria-hidden="true" />
+              <h3 className="font-semibold text-forest-900 dark:text-sage-100 text-xs uppercase tracking-wide">Why Work With Me?</h3>
             </div>
             <div className="grid grid-cols-1 gap-2 flex-grow">
               {differentiators.map((item, index) => (
-                <div key={index} className="text-forest-700 text-xs flex items-start gap-2">
-                  <span className="text-lime-600 mt-0.5">✓</span>
+                <div key={index} className="text-forest-700 dark:text-sage-300 text-xs flex items-start gap-2">
+                  <span className="text-lime-600 dark:text-lime-400 mt-0.5">✓</span>
                   <span className="leading-tight">{item.replace('✅ ', '')}</span>
                 </div>
               ))}

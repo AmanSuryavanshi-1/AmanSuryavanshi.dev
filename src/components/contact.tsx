@@ -74,9 +74,9 @@ const ContactForm = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         id="Contact-us-heading"
-        className="text-2xl md:text-4xl font-bold font-serif text-forest-900 text-center"
+        className="text-2xl md:text-4xl font-bold font-serif text-forest-900 dark:text-sage-100 text-center tracking-tight"
       >
-        Contact<span className="text-lime-500">Us</span>
+        Contact<span className="text-lime-500 dark:text-lime-400">Us</span>
       </motion.h1>
 
       <div className="md:hidden w-full max-w-[58rem] mt-8">
@@ -91,7 +91,7 @@ const ContactForm = () => {
         <Card className="w-full overflow-hidden bg-transparent border-0 shadow-none">
           <CardContent className="p-0 bg-transparent">
             <div className="grid grid-cols-1 md:grid-cols-2">
-              <div className="flex flex-col p-6 sm:p-8 lg:px-12 lg:py-10 text-lime-500">
+              <div className="flex flex-col p-6 sm:p-8 lg:px-12 lg:py-10 text-lime-500 dark:text-lime-400">
                 <div className="flex flex-col space-y-5">
                   <ContactCard
                     icon={<Mail className="w-6 h-6" />}
@@ -126,7 +126,7 @@ const ContactForm = () => {
                     rows={4}
                     placeholder="Your Message"
                     required
-                    className="w-full h-52 px-4 py-4 text-sm rounded-2xl shadow-md shadow-forest-500 bg-transparent border-4 border-sage-100 text-forest-900 placeholder:text-forest-700 focus:from-forest-900 focus:to-forest-500 focus:text-forest-700 focus:placeholder:text-sage-300 transition-all duration-300 focus:outline-none resize-none"
+                    className="w-full h-52 px-4 py-4 text-sm rounded-2xl shadow-md shadow-forest-500 dark:shadow-forest-950/50 bg-transparent border-4 border-sage-100 dark:border-sage-300/30 text-forest-900 dark:text-sage-100 placeholder:text-forest-700 dark:placeholder:text-sage-400 focus:from-forest-900 focus:to-forest-500 focus:text-forest-700 focus:placeholder:text-sage-300 transition-all duration-300 focus:outline-none resize-none"
                   />
 
                   <motion.button
@@ -134,7 +134,7 @@ const ContactForm = () => {
                     whileTap={{ scale: 0.98 }}
                     disabled={isSubmitting}
                     type="submit"
-                    className="flex rounded-3xl border-2 border-sage-100 items-center justify-center px-4 py-3 text-sm font-bold tracking-wide text-sage-100 bg-forest-900 hover:bg-forest-700 transition-colors duration-300 disabled:opacity-50"
+                    className="flex rounded-3xl border-2 border-sage-100 dark:border-lime-500 items-center justify-center px-4 py-3 text-sm font-bold tracking-wide text-sage-100 bg-forest-900 hover:bg-forest-700 dark:bg-lime-500 dark:text-forest-950 dark:hover:bg-lime-400 transition-colors duration-300 disabled:opacity-50"
                   >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                     <Send className="ml-2 w-4 h-4" />
@@ -170,15 +170,22 @@ const ContactForm = () => {
 const ContactCard = ({ icon, title, content, link, linkText }: { icon: React.ReactNode; title: string; content: string; link: string; linkText: string }) => (
   <motion.div
     whileHover={{ scale: 1.02 }}
-    className="group flex items-center space-x-4 p-6 rounded-2xl bg-gradient-to-br from-lime-500 to-lime-300/10 border-4 border-sage-100 hover:from-forest-900 hover:to-forest-500 hover:text-sage-100 transition-colors duration-300 shadow-lg shadow-forest-500"
+    className="group flex items-center space-x-4 p-6 rounded-2xl 
+               bg-gradient-to-br from-lime-500 to-lime-300/10 dark:from-[#162c22] dark:to-forest-800
+               border-4 border-sage-100 dark:border-white/10 
+               hover:from-forest-900 hover:to-forest-500 hover:text-sage-100 
+               dark:hover:from-lime-500 dark:hover:to-lime-400
+               transition-colors duration-300 
+               shadow-lg shadow-forest-500/20 dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]
+               backdrop-blur-sm"
   >
-    <div className="p-4 rounded-full bg-forest-900 text-lime-500 group-hover:bg-lime-500 group-hover:text-forest-900">
+    <div className="p-4 rounded-full bg-forest-900 dark:bg-lime-500/20 text-lime-500 dark:text-lime-400 group-hover:bg-lime-500 group-hover:text-forest-900 dark:group-hover:bg-forest-900 dark:group-hover:text-lime-400">
       {icon}
     </div>
     <div>
-      <h4 className="text-base font-semibold text-forest-900 group-hover:text-lime-500">{title}</h4>
-      <p className="text-sm text-forest-500 mb-1 group-hover:text-lime-100">{content}</p>
-      <Link href={link} className="text-sm font-medium text-forest-500 group-hover:text-forest-700 transition-colors duration-200">
+      <h4 className="text-base font-semibold text-forest-900 dark:text-sage-100 group-hover:text-lime-500 dark:group-hover:text-forest-900">{title}</h4>
+      <p className="text-sm text-forest-500 dark:text-sage-200 mb-1 group-hover:text-lime-100 dark:group-hover:text-forest-800">{content}</p>
+      <Link href={link} className="text-sm font-medium text-forest-500 dark:text-lime-400 group-hover:text-forest-700 dark:group-hover:text-forest-900 transition-colors duration-200">
         {linkText}
       </Link>
     </div>
@@ -191,7 +198,14 @@ const Input = ({ name, type = 'text', placeholder }: { name: string; type?: stri
     type={type}
     placeholder={placeholder}
     required
-    className="w-full px-4 py-3 text-sm rounded-2xl shadow-md shadow-forest-500 bg-transparent border-4 border-sage-100 text-forest-900 placeholder:text-forest-700 focus:from-forest-900 focus:to-forest-500 focus:text-forest-700 focus:placeholder:text-sage-300 transition-all duration-300 focus:outline-none"
+    className="w-full px-4 py-3 text-sm rounded-2xl 
+               shadow-md shadow-forest-500/30 dark:shadow-[0_0_15px_rgba(157,207,111,0.1)]
+               bg-white dark:bg-[#162c22]
+               border-4 border-sage-100 dark:border-sage-300/20
+               text-forest-900 dark:text-sage-100 
+               placeholder:text-forest-700 dark:placeholder:text-sage-500
+               focus:border-lime-500 dark:focus:border-lime-400
+               transition-all duration-300 focus:outline-none"
   />
 );
 

@@ -33,7 +33,6 @@ const Header = () => {
 
   return (
     <motion.header
-      // style={{ background: headerBackground }}
       className="fixed w-full z-50 top-0 h-[9vh] flex items-center"
     >
       <div className="container mx-auto px-4">
@@ -58,7 +57,7 @@ const Header = () => {
           {/* Desktop Navigation - Centered with glass effect */}
           <div className="hidden md:flex flex-1 items-center justify-center">
             <motion.div
-              className="flex items-center bg-forest-900/30 backdrop-blur-lg border border-forest-900/20 rounded-full px-1 py-1"
+              className="flex items-center nav-surface rounded-full px-1 py-1"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -69,10 +68,10 @@ const Header = () => {
                     href={item.href}
                     onClick={() => setActiveItem(item.name)}
                     className={cn(
-                      "relative px-4 py-2 text-sm font-medium flex items-center gap-2 transition-all duration-300 rounded-full",
+                      "relative px-4 py-2 text-sm font-medium flex items-center gap-2 rounded-full transition-colors",
                       activeItem === item.name
-                        ? "text-forest-900 bg-lime-500"
-                        : "text-sage-100 hover:bg-white/10 hover:text-white"
+                        ? "text-forest-900 bg-lime-500 dark:text-forest-950 dark:bg-lime-400"
+                        : "text-sage-100 hover:bg-white/10 hover:text-white dark:text-sage-300 dark:hover:text-lime-400 dark:hover:bg-white/5"
                     )}
                   >
                     <motion.span

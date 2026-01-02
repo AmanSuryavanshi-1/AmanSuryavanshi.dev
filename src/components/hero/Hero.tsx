@@ -16,7 +16,7 @@ export default function Header() {
     return (
         <motion.section
             id="home"
-            className="relative w-full my-16 overflow-hidden lg:mb-4 lg:p-0"
+            className="relative w-full section-padding overflow-hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -42,12 +42,12 @@ export default function Header() {
                             src={pfp}
                             alt="Profile"
                             priority
-                            className="object-cover w-full bg-[#9dcd6f] h-full border-4 shadow-inner lg:border-8 border-white rounded-full"
+                            className="object-cover w-full h-full border-4 shadow-inner lg:border-8 border-white dark:border-lime-500/60 rounded-full"
                             style={{
                                 borderRadius: "50%",
                                 animation: "profile__animate 8s ease-in-out infinite 1s",
-                                // background: "linear-gradient(145deg, #9dcd6f, #749a48)",
-                                boxShadow: "10px 10px 15px #12372A, -10px -10px 15px #FBFADA"
+                                backgroundColor: "var(--profile-bg)",
+                                boxShadow: "var(--shadow-card)"
                             }}
                             fill
                         />
@@ -70,7 +70,7 @@ export default function Header() {
                     animate={{ y: [0, 10, 0] }}
                     transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
                 >
-                    <ChevronDown className="w-8 h-8 text-sage-100" />
+                    <ChevronDown className="w-8 h-8 text-forest-900 dark:text-sage-100" />
                 </motion.div>
             </motion.div>
         </motion.section>

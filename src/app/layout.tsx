@@ -227,8 +227,9 @@ export default function RootLayout({
             <body
                 className={cn(
                     `${geistSans.variable} ${geistMono.variable}`,
-                    "antialiased min-h-screen flex flex-col",
-                    "bg-surface-base"
+                    "antialiased min-h-screen flex flex-col transition-colors duration-300",
+                    "bg-[#D3E6BB] dark:bg-[#0a1f15]",
+                    "text-[#12372A] dark:text-[#D3E6BB]"
                 )}
             >
                 <ThemeProvider

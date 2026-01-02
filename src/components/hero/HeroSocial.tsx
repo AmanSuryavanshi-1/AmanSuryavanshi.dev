@@ -47,14 +47,14 @@ const HeaderSocial: FC<HeaderSocialProps> = ({ className = '' }) => {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="relative text-2xl text-forest-900 transition-colors hover:text-lime-500"
+          className="relative text-2xl text-forest-800 dark:text-sage-100 transition-colors hover:text-lime-500 dark:hover:text-lime-400"
           aria-label={`Visit Aman Suryavanshi's profile`}
           variants={itemVariants}
           whileHover={{ scale: 1.3, rotate: 5 }}
           whileTap={{ scale: 0.9 }}
         >
           <motion.div
-            className="absolute inset-0 bg-forest-700 rounded-full"
+            className="absolute inset-0 bg-forest-700/20 dark:bg-lime-500/20 rounded-full"
             initial={{ scale: 0 }}
             whileHover={{ scale: 1.5 }}
             transition={{ type: "spring", stiffness: 300, damping: 10 }}
