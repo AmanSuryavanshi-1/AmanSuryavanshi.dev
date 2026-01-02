@@ -11,12 +11,11 @@ import MySkills from '@/components/skills/MySkills'
 
 const page = () => {
   return (
-    // <div className='bg-gradient-to-br from-primaryVariant to-bgVariant'>
-    <div className='bg-sage-50 min-h-screen'>
+    <div className='min-h-screen'>
       {/* Hero Section */}
       <Hero />
 
-      <div className="flex flex-col gap-20">
+      <div className="flex flex-col">
         {/* Featured Projects */}
         <FeaturedProjectsSection />
 

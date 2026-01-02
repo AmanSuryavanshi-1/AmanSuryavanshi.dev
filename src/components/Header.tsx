@@ -92,8 +92,8 @@ const Header = () => {
 
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center space-x-2 w-40 justify-end">
-            {/* Mode changer commented out - using default mode only */}
-            {/* <motion.div
+            {/* Theme Toggle */}
+            <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -101,13 +101,13 @@ const Header = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="text-sage-100 hover:text-lime-500"
+                className="text-text-primary hover:text-lime-500 dark:text-text-dark-primary dark:hover:text-lime-400 transition-interaction"
               >
-                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 text-forest-900 transition-all dark:-rotate-90 dark:scale-0" />
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
               </Button>
-            </motion.div> */}
+            </motion.div>
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -115,7 +115,7 @@ const Header = () => {
               <Link href="/#contact">
                 <Button
                   variant="default"
-                  className="bg-lime-500 hover:bg-lime-700 text-forest-900 flex items-center gap-2 rounded-full"
+                  className="bg-btn-primary-bg hover:bg-btn-primary-bg-hover text-btn-primary-text dark:bg-btn-dark-primary-bg dark:hover:bg-btn-dark-primary-hover-bg dark:text-btn-dark-primary-text flex items-center gap-2 rounded-full transition-interaction"
                 >
                   <Mail className="w-4 h-4" />
                   Contact
@@ -192,21 +192,21 @@ const Header = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              {/* Mode changer commented out - using default mode only */}
-              {/* <Button
+              {/* Theme Toggle - Mobile */}
+              <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="text-sage-100 hover:text-lime-500"
+                className="text-sage-100 hover:text-lime-500 dark:text-text-dark-primary dark:hover:text-lime-400"
               >
                 <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
-              </Button> */}
+              </Button>
               <Link href="/#contact">
                 <Button
                   variant="default"
-                  className="bg-lime-500 hover:bg-lime-700 text-forest-900 flex items-center gap-2 rounded-full"
+                  className="bg-btn-primary-bg hover:bg-btn-primary-bg-hover text-btn-primary-text dark:bg-btn-dark-primary-bg dark:hover:bg-btn-dark-primary-hover-bg dark:text-btn-dark-primary-text flex items-center gap-2 rounded-full transition-interaction"
                   onClick={() => setIsOpen(false)}
                 >
                   <Mail className="w-4 h-4" />

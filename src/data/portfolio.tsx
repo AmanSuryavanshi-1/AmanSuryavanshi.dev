@@ -1203,6 +1203,7 @@ const rawProjects = [
             "Generated ₹300,000+ in direct sales from automated lead pipeline",
             "50+ organic leads captured through #1 Google rankings for niche aviation queries",
             "80% reduction in manual CRM and administrative tasks through n8n automation",
+            "40K+ Google Search impressions with 235+ organic clicks demonstrating SEO dominance",
             "95+ Lighthouse performance score across all pages with sub-2 second load times",
             "96/100 average SEO optimization score with AI-powered recommendations",
             "6,000+ total project views demonstrating strong market validation"

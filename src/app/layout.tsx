@@ -6,6 +6,7 @@ import GoogleAnalyticsWrapper from "../components/GoogleAnalyticsWrapper";
 import { Analytics } from "@vercel/analytics/react"
 import Footer from "@/components/Footer"
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/ui/ThemeProvider";
 
 // Font configurations with performance optimizations
 const geistSans = localFont({
@@ -214,7 +215,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className="scroll-smooth">
+        <html lang="en" className="scroll-smooth" suppressHydrationWarning>
             <head>
                 <script
                     type="application/ld+json"
@@ -227,16 +228,23 @@ export default function RootLayout({
                 className={cn(
                     `${geistSans.variable} ${geistMono.variable}`,
                     "antialiased min-h-screen flex flex-col",
-                    "bg-gradient-to-br from-sage-100 to-lime-500",
+                    "bg-surface-base"
                 )}
             >
-                <Header />
-                <main className="flex-grow bg-gradient-to-br from-sage-100 to-lime-500">
-                    {children}
-                    <footer className="mt-auto">
-                        <Footer />
-                    </footer>
-                </main>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="light"
+                    enableSystem
+                    disableTransitionOnChange={false}
+                >
+                    <Header />
+                    <main className="flex-grow">
+                        {children}
+                        <footer className="mt-auto">
+                            <Footer />
+                        </footer>
+                    </main>
+                </ThemeProvider>
 
                 <Analytics />
                 <GoogleAnalyticsWrapper />
