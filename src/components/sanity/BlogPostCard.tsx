@@ -89,7 +89,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
     if (viewMode === 'list') {
         return (
             <Link href={`/blogs/${post.slug.current}`} className="group block w-full">
-                <article className="flex flex-col md:flex-row overflow-hidden rounded-3xl border-2 border-white backdrop-blur-sm shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-white h-full md:h-52">
+                <article className="flex flex-col md:flex-row overflow-hidden rounded-3xl border-2 border-white dark:border-white/5 backdrop-blur-sm shadow-lg dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all duration-300 hover:shadow-xl dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:-translate-y-1 bg-white dark:bg-[#162c22] h-full md:h-52">
                     <div className="relative h-48 md:h-full w-full md:w-1/3 shrink-0 overflow-hidden">
                         <Image
                             src={cardImage.url}
@@ -112,7 +112,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                                     </span>
                                 ))}
                                 {prioritizedTags.length > 3 && (
-                                    <span className="px-2 py-1 text-[10px] font-medium rounded-full bg-white/90 text-forest-600 border border-forest-200 backdrop-blur-md">
+                                    <span className="px-2 py-1 text-[10px] font-medium rounded-full bg-white/90 dark:bg-forest-800/90 text-forest-600 dark:text-sage-300 border border-forest-200 dark:border-forest-600 backdrop-blur-md">
                                         +{prioritizedTags.length - 3}
                                     </span>
                                 )}
@@ -121,7 +121,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                     </div>
                     <div className="p-5 flex flex-col justify-between w-full">
                         <div>
-                            <div className="flex items-center gap-2 mb-2 text-xs text-forest-500">
+                            <div className="flex items-center gap-2 mb-2 text-xs text-forest-500 dark:text-sage-400">
                                 <span className="flex items-center gap-1">
                                     <BiTime className="w-3 h-3" />
                                     {readTime} min read
@@ -129,15 +129,15 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                                 <span>•</span>
                                 <span>{format(new Date(post._createdAt), 'MMM dd, yyyy')}</span>
                             </div>
-                            <h3 className="text-base md:text-lg font-serif font-semibold text-forest-900 group-hover:text-lime-500 transition-colors duration-300 mb-2 line-clamp-1">
+                            <h3 className="text-base md:text-lg font-serif font-semibold text-forest-900 dark:text-sage-100 group-hover:text-lime-500 dark:group-hover:text-lime-400 transition-colors duration-300 mb-2 line-clamp-1">
                                 {post.title}
                             </h3>
-                            <p className="text-forest-700 text-sm line-clamp-2 mb-4">
+                            <p className="text-forest-700 dark:text-sage-300 text-sm line-clamp-2 mb-4">
                                 {extractTextFromBody(post.body)}
                             </p>
                         </div>
 
-                        <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-forest-600">
                             <div className="flex items-center space-x-2">
                                 {post.author?.image && (
                                     <Image
@@ -149,9 +149,9 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                                         className="rounded-full ring-2 ring-lime-500 bg-lime-500"
                                     />
                                 )}
-                                <span className="text-xs font-medium text-forest-900">{post.author?.name}</span>
+                                <span className="text-xs font-medium text-forest-900 dark:text-sage-100">{post.author?.name}</span>
                             </div>
-                            <div className="flex items-center gap-1 text-forest-500 text-xs">
+                            <div className="flex items-center gap-1 text-forest-500 dark:text-sage-400 text-xs">
                                 <BsEye className="w-3 h-3" />
                                 <ViewCounter postId={post._id} />
                             </div>
@@ -164,7 +164,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
 
     return (
         <Link href={`/blogs/${post.slug.current}`} className="group h-full">
-            <article className="flex flex-col h-full overflow-hidden rounded-3xl border-4 border-white backdrop-blur-sm shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 bg-white">
+            <article className="flex flex-col h-full overflow-hidden rounded-3xl border-4 border-white dark:border-white/5 backdrop-blur-sm shadow-xl dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all duration-300 hover:shadow-2xl dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)] hover:-translate-y-2 bg-white dark:bg-[#162c22]">
                 <div className="relative h-52 w-full overflow-hidden shrink-0">
                     <Image
                         src={cardImage.url}
@@ -187,7 +187,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                                 </span>
                             ))}
                             {prioritizedTags.length > 3 && (
-                                <span className="px-2 py-1 text-[10px] font-medium rounded-full bg-white/90 text-forest-600 border border-forest-200 backdrop-blur-md">
+                                <span className="px-2 py-1 text-[10px] font-medium rounded-full bg-white/90 dark:bg-forest-800/90 text-forest-600 dark:text-sage-300 border border-forest-200 dark:border-forest-600 backdrop-blur-md">
                                     +{prioritizedTags.length - 3}
                                 </span>
                             )}
@@ -195,14 +195,14 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                     )}
                 </div>
                 <div className="p-4 sm:p-5 py-6 sm:py-7 flex flex-col flex-grow">
-                    <h3 className="text-base md:text-lg font-serif font-semibold text-forest-900 group-hover:text-lime-500 transition-colors duration-300 mb-2 line-clamp-1">
+                    <h3 className="text-base md:text-lg font-serif font-semibold text-forest-900 dark:text-sage-100 group-hover:text-lime-500 dark:group-hover:text-lime-400 transition-colors duration-300 mb-2 line-clamp-1">
                         {post.title}
                     </h3>
-                    <p className="text-forest-700 text-xs sm:text-sm line-clamp-4 mb-4 flex-grow">
+                    <p className="text-forest-700 dark:text-sage-300 text-xs sm:text-sm line-clamp-4 mb-4 flex-grow">
                         {extractTextFromBody(post.body)}
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 border-t-2 border-gray-100 pt-4 mt-auto">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 border-t-2 border-gray-100 dark:border-forest-600 pt-4 mt-auto">
                         <div className="flex items-center space-x-3">
                             {post.author?.image && (
                                 <Image
@@ -215,13 +215,13 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                                 />
                             )}
                             <div>
-                                <p className="text-[11px] sm:text-xs font-medium text-forest-900">{post.author?.name}</p>
-                                <p className="text-[10px] sm:text-xs text-forest-600">
+                                <p className="text-[11px] sm:text-xs font-medium text-forest-900 dark:text-sage-100">{post.author?.name}</p>
+                                <p className="text-[10px] sm:text-xs text-forest-600 dark:text-sage-400">
                                     {format(new Date(post._createdAt), 'MMM dd, yyyy')}
                                 </p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-3 text-forest-600 text-[11px] sm:text-sm">
+                        <div className="flex items-center gap-3 text-forest-600 dark:text-sage-400 text-[11px] sm:text-sm">
                             <span className="flex items-center gap-1">
                                 <BiTime className="w-3 h-3" />
                                 {readTime} min

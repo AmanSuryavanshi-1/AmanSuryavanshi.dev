@@ -3,43 +3,77 @@
 @tailwind utilities;
 
 /* ══════════════════════════════════════════════════════════════════════════
-   DESIGN SYSTEM CSS FOUNDATION - Senior Design Engineer Standard
+   DESIGN SYSTEM CSS FOUNDATION - Pro-Grade Dark Mode
    ══════════════════════════════════════════════════════════════════════════ */
 
 @layer base {
+
     /* ─────────────────────────────────────────────────────────────────────
-       ROOT VARIABLES - Light Mode (Default)
+       GLOBAL TRANSITION - Smooth 300ms theme switch
+       ───────────────────────────────────────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+        transition: background-color 300ms ease,
+            border-color 300ms ease,
+            color 300ms ease,
+            box-shadow 300ms ease,
+            fill 300ms ease;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       ROOT VARIABLES - Light Mode (Sage Forest Palette)
        ───────────────────────────────────────────────────────────────────── */
     :root {
-        /* Surface Colors */
-        --surface-base: #D3E6BB;
-        --surface-elevated: #E4F0D4;
-        --surface-overlay: rgba(255, 255, 255, 0.6);
-        --surface-glass: rgba(255, 255, 255, 0.2);
+        /* Primary Surfaces */
+        --bg-primary: #D3E6BB;
+        --bg-secondary: #E4F0D4;
+        --bg-elevated: #FBFADA;
+
+        /* Card Surfaces */
+        --card-bg: rgba(255, 255, 255, 0.7);
+        --card-bg-hover: rgba(255, 255, 255, 0.85);
+        --card-border: rgba(255, 255, 255, 0.6);
+
+        /* Glass Surfaces */
+        --glass-bg: rgba(255, 255, 255, 0.2);
+        --glass-bg-heavy: rgba(255, 255, 255, 0.6);
+        --glass-border: rgba(255, 255, 255, 0.3);
+
+        /* Nav/Header Glass */
+        --nav-bg: rgba(18, 55, 42, 0.3);
+        --nav-border: rgba(18, 55, 42, 0.2);
 
         /* Text Colors */
         --text-primary: #12372A;
         --text-secondary: #436850;
         --text-muted: #5C8B6C;
-        --text-accent: #749A48;
+        --text-on-dark: #FBFADA;
 
         /* Accent Colors */
         --accent-primary: #9DCF6F;
         --accent-secondary: #749A48;
-        --accent-highlight: #FBFADA;
+        --accent-highlight: #B1DB8A;
 
-        /* Button DNA */
-        --btn-primary-bg: #12372A;
-        --btn-primary-bg-hover: #2A5741;
-        --btn-primary-text: #FBFADA;
-        --btn-secondary-border: #749A48;
-        --btn-secondary-text: #12372A;
-        --btn-secondary-hover-bg: #9DCF6F;
+        /* Button Colors */
+        --btn-solid-bg: #12372A;
+        --btn-solid-bg-hover: #2A5741;
+        --btn-solid-text: #FBFADA;
+        --btn-outline-border: #749A48;
+        --btn-outline-text: #12372A;
+        --btn-outline-hover-bg: #9DCF6F;
 
         /* Borders */
         --border-subtle: rgba(18, 55, 42, 0.1);
         --border-default: rgba(18, 55, 42, 0.2);
         --border-strong: #12372A;
+
+        /* Profile Image BG */
+        --profile-bg: #9DCF6F;
+
+        /* Shadows */
+        --shadow-card: 0 4px 20px rgba(18, 55, 42, 0.08);
+        --shadow-card-hover: 0 8px 30px rgba(18, 55, 42, 0.12);
 
         /* ShadCN Variables */
         --background: 75 40% 81%;
@@ -70,38 +104,58 @@
     }
 
     /* ─────────────────────────────────────────────────────────────────────
-       DARK MODE VARIABLES
+       DARK MODE VARIABLES - Deep Forest Aesthetic
        ───────────────────────────────────────────────────────────────────── */
     .dark {
-        /* Surface Colors - Inverted */
-        --surface-base: #0a1f15;
-        --surface-elevated: #122a1e;
-        --surface-overlay: rgba(18, 55, 42, 0.8);
-        --surface-glass: rgba(18, 55, 42, 0.4);
+        /* Primary Surfaces - Deep Forest */
+        --bg-primary: #0a1f15;
+        --bg-secondary: #0f2a1c;
+        --bg-elevated: #162c22;
+
+        /* Card Surfaces - Slightly lighter forest, NOT pure black */
+        --card-bg: rgba(22, 44, 34, 0.8);
+        --card-bg-hover: rgba(30, 55, 45, 0.9);
+        --card-border: rgba(255, 255, 255, 0.1);
+
+        /* Glass Surfaces - Dark glass */
+        --glass-bg: rgba(18, 55, 42, 0.4);
+        --glass-bg-heavy: rgba(18, 55, 42, 0.7);
+        --glass-border: rgba(255, 255, 255, 0.1);
+
+        /* Nav/Header Glass - Dark */
+        --nav-bg: rgba(10, 31, 21, 0.4);
+        --nav-border: rgba(211, 230, 187, 0.08);
 
         /* Text Colors - Brand Loop Inversion */
         --text-primary: #D3E6BB;
         --text-secondary: #ADBC9F;
         --text-muted: #78A689;
-        --text-accent: #9DCF6F;
+        --text-on-dark: #0a1f15;
 
-        /* Accent Colors */
+        /* Accent Colors - Vibrant against dark */
         --accent-primary: #9DCF6F;
         --accent-secondary: #B1DB8A;
         --accent-highlight: #D3E6BB;
 
-        /* Button DNA - Dark Mode */
-        --btn-primary-bg: #9DCF6F;
-        --btn-primary-bg-hover: #B1DB8A;
-        --btn-primary-text: #0a1f15;
-        --btn-secondary-border: #9DCF6F;
-        --btn-secondary-text: #D3E6BB;
-        --btn-secondary-hover-bg: #749A48;
+        /* Button Colors - Inverted */
+        --btn-solid-bg: #9DCF6F;
+        --btn-solid-bg-hover: #B1DB8A;
+        --btn-solid-text: #0a1f15;
+        --btn-outline-border: #9DCF6F;
+        --btn-outline-text: #D3E6BB;
+        --btn-outline-hover-bg: #749A48;
 
-        /* Borders */
+        /* Borders - Light on dark */
         --border-subtle: rgba(211, 230, 187, 0.1);
         --border-default: rgba(211, 230, 187, 0.2);
         --border-strong: #D3E6BB;
+
+        /* Profile Image BG - Vibrant for dark theme */
+        --profile-bg: #5a8c50;
+
+        /* Shadows - Darker */
+        --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+        --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.4);
 
         /* ShadCN Variables */
         --background: 155 50% 8%;
@@ -138,22 +192,7 @@
 
     body {
         color: var(--text-primary);
-        background-color: var(--surface-base);
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    /* Section Title Typography (Consistent across site) */
-    .section-title {
-        @apply font-serif font-bold tracking-tight leading-tight;
-        font-size: clamp(1.5rem, 4vw, 2.25rem);
-    }
-
-    .section-title-accent {
-        @apply text-lime-500;
-    }
-
-    .dark .section-title-accent {
-        @apply text-lime-400;
+        background-color: var(--bg-primary);
     }
 
     /* ─────────────────────────────────────────────────────────────────────
@@ -161,7 +200,8 @@
        ───────────────────────────────────────────────────────────────────── */
     .bg-forest-900 h1,
     .bg-forest-800 h1,
-    .bg-forest-950 h1 {
+    .bg-forest-950 h1,
+    .dark .bg-forest-900 h1 {
         @apply text-sage-100;
     }
 
@@ -183,18 +223,19 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 @layer components {
+
     /* ─────────────────────────────────────────────────────────────────────
        GLASS SURFACE SYSTEM
        ───────────────────────────────────────────────────────────────────── */
     .glass-surface {
-        background: var(--surface-glass);
+        background: var(--glass-bg);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border: 1px solid var(--border-subtle);
+        border: 1px solid var(--glass-border);
     }
 
     .glass-surface-heavy {
-        background: var(--surface-overlay);
+        background: var(--glass-bg-heavy);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border: 1px solid var(--border-default);
@@ -202,66 +243,63 @@
 
     /* Card Surface - Elevated with subtle shadow */
     .card-surface {
-        background: var(--surface-overlay);
+        background: var(--card-bg);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border: 1px solid var(--border-subtle);
-        box-shadow: 0 4px 20px rgba(18, 55, 42, 0.08);
-        transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--card-border);
+        box-shadow: var(--shadow-card);
     }
 
     .card-surface:hover {
-        box-shadow: 0 8px 30px rgba(18, 55, 42, 0.12);
+        background: var(--card-bg-hover);
+        box-shadow: var(--shadow-card-hover);
         transform: translateY(-2px);
     }
 
-    .dark .card-surface {
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .dark .card-surface:hover {
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    /* Nav Surface - Header glass effect */
+    .nav-surface {
+        background: var(--nav-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--nav-border);
     }
 
     /* ─────────────────────────────────────────────────────────────────────
        BUTTON DNA SYSTEM
        ───────────────────────────────────────────────────────────────────── */
-    .btn-primary {
-        @apply px-6 py-3 rounded-button font-semibold;
-        background-color: var(--btn-primary-bg);
-        color: var(--btn-primary-text);
+    .btn-solid {
+        @apply px-6 py-3 rounded-3xl font-semibold;
+        background-color: var(--btn-solid-bg);
+        color: var(--btn-solid-text);
         border: 2px solid transparent;
-        transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .btn-primary:hover {
-        background-color: var(--btn-primary-bg-hover);
+    .btn-solid:hover {
+        background-color: var(--btn-solid-bg-hover);
         transform: scale(1.02);
     }
 
-    .btn-secondary {
-        @apply px-6 py-3 rounded-button font-semibold bg-transparent;
-        color: var(--btn-secondary-text);
-        border: 2px solid var(--btn-secondary-border);
-        transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    .btn-outline {
+        @apply px-6 py-3 rounded-3xl font-semibold bg-transparent;
+        color: var(--btn-outline-text);
+        border: 2px solid var(--btn-outline-border);
     }
 
-    .btn-secondary:hover {
-        background-color: var(--btn-secondary-hover-bg);
-        color: var(--btn-primary-text);
+    .btn-outline:hover {
+        background-color: var(--btn-outline-hover-bg);
+        color: var(--btn-solid-text);
         transform: scale(1.02);
     }
 
     .btn-ghost {
-        @apply px-4 py-2 rounded-button font-medium bg-transparent;
+        @apply px-4 py-2 rounded-3xl font-medium bg-transparent;
         color: var(--text-secondary);
         border: none;
-        transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .btn-ghost:hover {
         background-color: rgba(157, 207, 111, 0.15);
-        color: var(--text-accent);
+        color: var(--accent-primary);
     }
 
     /* ─────────────────────────────────────────────────────────────────────
@@ -276,6 +314,44 @@
         padding-top: clamp(4rem, 8vw, 6rem);
         padding-bottom: clamp(4rem, 8vw, 6rem);
     }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       TEXT UTILITIES WITH CSS VARIABLES
+       ───────────────────────────────────────────────────────────────────── */
+    .text-theme-primary {
+        color: var(--text-primary);
+    }
+
+    .text-theme-secondary {
+        color: var(--text-secondary);
+    }
+
+    .text-theme-muted {
+        color: var(--text-muted);
+    }
+
+    .text-theme-accent {
+        color: var(--accent-primary);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       BACKGROUND UTILITIES WITH CSS VARIABLES
+       ───────────────────────────────────────────────────────────────────── */
+    .bg-theme-primary {
+        background-color: var(--bg-primary);
+    }
+
+    .bg-theme-secondary {
+        background-color: var(--bg-secondary);
+    }
+
+    .bg-theme-elevated {
+        background-color: var(--bg-elevated);
+    }
+
+    .bg-theme-card {
+        background-color: var(--card-bg);
+    }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -283,6 +359,7 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 @layer utilities {
+
     /* ─────────────────────────────────────────────────────────────────────
        SCROLLBAR STYLES
        ───────────────────────────────────────────────────────────────────── */
@@ -395,4 +472,41 @@
 
 .animate-pulse-slow {
     animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CUSTOM SCROLLBAR - Light & Dark Mode Support
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Light Mode Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(18, 55, 42, 0.05);
+    border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(18, 55, 42, 0.2);
+    border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(18, 55, 42, 0.35);
+}
+
+/* Dark Mode Scrollbar */
+.dark .dark-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.dark .dark-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(132, 204, 22, 0.3);
+}
+
+.dark .dark-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(132, 204, 22, 0.5);
 }

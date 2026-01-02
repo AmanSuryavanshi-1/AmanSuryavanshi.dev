@@ -81,7 +81,7 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
                         <div className="absolute left-0 z-30 flex gap-2 top-1/2 -translate-y-1/2">
                             <button
                                 onClick={prevProject}
-                                className="w-8 h-8 rounded-full bg-white border border-forest-100 text-forest-900 flex items-center justify-center hover:bg-forest-900 hover:text-white transition-all shadow-lg backdrop-blur-sm"
+                                className="w-8 h-8 rounded-full bg-white dark:bg-forest-800 border border-forest-100 dark:border-forest-600 text-forest-900 dark:text-sage-100 flex items-center justify-center hover:bg-forest-900 hover:text-white dark:hover:bg-lime-500 dark:hover:text-forest-950 transition-all shadow-lg backdrop-blur-sm"
                             >
                                 <ChevronLeft className="w-5 h-5" />
                             </button>
@@ -167,28 +167,28 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
                                 transition={{ duration: 0.4 }}
                             >
                                 <div className="flex flex-wrap gap-3 mb-4">
-                                    <Badge className="bg-forest-900 text-white px-3 py-1 text-xs rounded-full border-none capitalize">
+                                    <Badge className="bg-forest-900 dark:bg-lime-500 text-white dark:text-forest-950 px-3 py-1 text-xs rounded-full border-none capitalize">
                                         {activeProject.category}
                                     </Badge>
-                                    <div className="flex items-center gap-2 text-forest-600 text-xs font-medium bg-white px-3 py-1 rounded-full border border-forest-100 shadow-sm">
+                                    <div className="flex items-center gap-2 text-forest-600 dark:text-sage-300 text-xs font-medium bg-white dark:bg-forest-800 px-3 py-1 rounded-full border border-forest-100 dark:border-forest-600 shadow-sm">
                                         <span>0{activeIndex + 1}</span>
-                                        <span className="w-[1.5px] h-3 bg-forest-950/80" />
+                                        <span className="w-[1.5px] h-3 bg-forest-950/80 dark:bg-sage-400" />
                                         <span>0{projects.length}</span>
                                     </div>
                                 </div>
 
-                                <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-forest-900 mb-4 leading-[1.1] lg:leading-[0.9] tracking-tight">
+                                <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-forest-900 dark:text-sage-100 mb-4 leading-[1.1] lg:leading-[0.9] tracking-tight">
                                     {activeProject.title}
                                 </h1>
 
-                                <p className="text-forest-600 text-base leading-relaxed mb-4 max-w-lg font-medium">
+                                <p className="text-forest-600 dark:text-sage-300 text-base leading-relaxed mb-4 max-w-lg font-medium">
                                     {activeProject.description}
                                 </p>
 
                                 <div className="flex flex-wrap gap-2">
                                     {activeProject.technologies.slice(0, 5).map((tech) => (
-                                        <div key={tech.name} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-forest-100 text-xs text-forest-700 shadow-sm font-medium">
-                                            <tech.icon className="w-3.5 h-3.5 text-forest-500" />
+                                        <div key={tech.name} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-forest-800 border border-forest-100 dark:border-forest-600 text-xs text-forest-700 dark:text-sage-300 shadow-sm font-medium">
+                                            <tech.icon className="w-3.5 h-3.5 text-forest-500 dark:text-lime-400" />
                                             <span>{tech.name}</span>
                                         </div>
                                     ))}

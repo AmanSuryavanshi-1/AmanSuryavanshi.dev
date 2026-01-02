@@ -204,15 +204,15 @@ export default function BlogList() {
   }
 
   return (
-    <section className="py-12 sm:py-20 bg-sage-50 min-h-screen">
+    <section className="py-12 sm:py-20 min-h-screen bg-[#D3E6BB] dark:bg-[#0a1f15] transition-colors duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Featured Section - Only show on first page */}
         {!isLoading && currentPage === 1 && featuredPosts.length > 0 && (
           <div className="mb-4 sm:mb-8 flex flex-col">
             <h2 className="text-xl md:text-2xl font-serif font-bold tracking-tight mb-6 text-center">
-              <span className="text-forest-900">Featured </span>
-              <span className="text-lime-500">Articles</span>
+              <span className="text-forest-900 dark:text-sage-100">Featured </span>
+              <span className="text-lime-500 dark:text-lime-400">Articles</span>
             </h2>
             <FeaturedCarousel posts={featuredPosts} />
           </div>
@@ -223,16 +223,16 @@ export default function BlogList() {
 
 
         {/* Unified Control Panel */}
-        <div className="relative px-4 sm:px-6 lg:px-8 bg-sage-50 border-b border-forest-900/5 shadow-sm transition-all duration-300 mb-8 py-4">
+        <div className="relative px-4 sm:px-6 lg:px-8 bg-white/60 dark:bg-[#162c22]/80 border-b border-forest-900/5 dark:border-white/5 shadow-sm dark:shadow-black/20 backdrop-blur-md transition-all duration-300 mb-8 py-4 rounded-2xl">
 
           <div className="max-w-7xl mx-auto space-y-4">
             {/* Row 1: Title & View Toggle */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <h2 id="all-articles" className="text-2xl md:text-4xl font-serif font-bold tracking-tight whitespace-nowrap flex items-center gap-3">
-                  <span className="text-forest-900">All </span>
-                  <span className="text-lime-500">Articles</span>
-                  <span className="px-3 py-1 rounded-full bg-forest-900/5 text-forest-500 text-sm font-medium">
+                  <span className="text-forest-900 dark:text-sage-100">All </span>
+                  <span className="text-lime-500 dark:text-lime-400">Articles</span>
+                  <span className="px-3 py-1 rounded-full bg-forest-900/5 dark:bg-lime-500 text-forest-500 dark:text-forest-900 text-sm font-medium">
                     {filteredPosts.length}
                   </span>
                 </h2>
@@ -240,12 +240,12 @@ export default function BlogList() {
 
               {/* View Toggle - Hidden on mobile */}
               <div className="hidden md:flex justify-end">
-                <div className="bg-white/60 p-1.5 rounded-xl border border-forest-200/50 flex items-center gap-1 shadow-sm backdrop-blur-sm">
+                <div className="bg-white/60 dark:bg-forest-800/60 p-1.5 rounded-xl border border-forest-200/50 dark:border-white/10 flex items-center gap-1 shadow-sm backdrop-blur-sm">
                   <button
                     onClick={() => setViewMode('grid')}
                     className={`p-2.5 rounded-lg transition-all duration-300 ${viewMode === 'grid'
-                      ? 'bg-forest-900 text-white shadow-md scale-105'
-                      : 'text-forest-500 hover:bg-forest-50 hover:text-forest-700'
+                      ? 'bg-forest-900 dark:bg-lime-500 text-white dark:text-forest-950 shadow-md scale-105'
+                      : 'text-forest-500 dark:text-sage-400 hover:bg-forest-50 dark:hover:bg-forest-700 hover:text-forest-700 dark:hover:text-sage-200'
                       }`}
                     aria-label="Grid view"
                   >
@@ -254,8 +254,8 @@ export default function BlogList() {
                   <button
                     onClick={() => setViewMode('list')}
                     className={`p-2.5 rounded-lg transition-all duration-300 ${viewMode === 'list'
-                      ? 'bg-forest-900 text-white shadow-md scale-105'
-                      : 'text-forest-500 hover:bg-forest-50 hover:text-forest-700'
+                      ? 'bg-forest-900 dark:bg-lime-500 text-white dark:text-forest-950 shadow-md scale-105'
+                      : 'text-forest-500 dark:text-sage-400 hover:bg-forest-50 dark:hover:bg-forest-700 hover:text-forest-700 dark:hover:text-sage-200'
                       }`}
                     aria-label="List view"
                   >
@@ -338,17 +338,17 @@ export default function BlogList() {
                   <button
                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
-                    className="p-2 rounded-full border border-forest-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-50 transition-colors"
+                    className="p-2 rounded-full border border-forest-200 dark:border-forest-600 text-forest-700 dark:text-sage-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-50 dark:hover:bg-forest-800 transition-colors"
                   >
                     <ChevronLeft size={20} />
                   </button>
-                  <span className="text-forest-700 font-medium">
+                  <span className="text-forest-700 dark:text-sage-300 font-medium">
                     Page {currentPage} of {totalPages}
                   </span>
                   <button
                     onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
-                    className="p-2 rounded-full border border-forest-200 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-50 transition-colors"
+                    className="p-2 rounded-full border border-forest-200 dark:border-forest-600 text-forest-700 dark:text-sage-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-forest-50 dark:hover:bg-forest-800 transition-colors"
                   >
                     <ChevronRight size={20} />
                   </button>

@@ -23,56 +23,58 @@ const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ servic
         {/* Shadow element that appears on hover */}
         <div className="absolute inset-x-4 -bottom-4 h-12 bg-lime-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-        <Card className="h-full flex flex-col overflow-hidden border border-white/60 bg-white/70 backdrop-blur-md 
-                        shadow-lg shadow-forest-900/5
+        <Card className="h-full flex flex-col overflow-hidden 
+                        border border-white/60 dark:border-white/10 
+                        bg-white/70 dark:bg-[#162c22]/80 backdrop-blur-md 
+                        shadow-lg shadow-forest-900/5 dark:shadow-black/20
                         group-hover:shadow-2xl group-hover:shadow-lime-500/10 group-hover:border-lime-500/30 
                         transition-all duration-500 relative rounded-3xl">
 
           {/* Top decorative bar */}
-          <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-forest-100 via-lime-500 to-forest-100 opacity-50 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-forest-100 dark:from-forest-700 via-lime-500 to-forest-100 dark:to-forest-700 opacity-50 group-hover:opacity-100 transition-opacity" />
 
           <CardHeader className="pb-3 pt-5 sm:pt-6 px-4 sm:px-5 md:px-6">
             <div className="flex items-start justify-between mb-4">
               <div className="relative">
                 <div className="absolute inset-0 bg-lime-500 blur-lg opacity-0 group-hover:opacity-20 transition-opacity duration-500 rounded-full" />
-                <div className="relative p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-forest-50 border border-forest-100 text-forest-900 
+                <div className="relative p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-forest-50 dark:bg-forest-800 border border-forest-100 dark:border-forest-600 text-forest-900 dark:text-sage-100 
                                 group-hover:bg-lime-500 group-hover:text-white transition-colors duration-500">
                   <div className="[&>svg]:w-5 [&>svg]:h-5 sm:[&>svg]:w-6 sm:[&>svg]:h-6">
                     {service.icon}
                   </div>
                 </div>
               </div>
-              <Badge variant="secondary" className="bg-forest-50 text-forest-700 font-mono text-[10px] tracking-wider border border-forest-100">
+              <Badge variant="secondary" className="bg-forest-50 dark:bg-forest-800 text-forest-700 dark:text-sage-300 font-mono text-[10px] tracking-wider border border-forest-100 dark:border-forest-600">
                 0{index + 1}
               </Badge>
             </div>
-            <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold font-serif text-forest-900 group-hover:text-lime-700 transition-colors duration-300">
+            <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold font-serif text-forest-900 dark:text-sage-100 group-hover:text-lime-700 dark:group-hover:text-lime-400 transition-colors duration-300">
               {service.title}
             </CardTitle>
-            <p className="text-sm font-medium text-forest-500 mt-1.5 group-hover:text-forest-700 transition-colors">
+            <p className="text-sm font-medium text-forest-500 dark:text-sage-400 mt-1.5 group-hover:text-forest-700 dark:group-hover:text-sage-300 transition-colors">
               {service.subtitle}
             </p>
           </CardHeader>
 
           <CardContent className="flex-grow flex flex-col gap-3 sm:gap-4 px-4 sm:px-5 md:px-6 pb-5 sm:pb-6">
             {/* Problem & Solution */}
-            <div className="space-y-2.5 sm:space-y-3 p-3 sm:p-3.5 rounded-xl bg-forest-50/50 border border-forest-100/50 group-hover:bg-forest-50 group-hover:border-forest-100 transition-colors duration-300">
+            <div className="space-y-2.5 sm:space-y-3 p-3 sm:p-3.5 rounded-xl bg-forest-50/50 dark:bg-forest-800/50 border border-forest-100/50 dark:border-forest-600/50 group-hover:bg-forest-50 dark:group-hover:bg-forest-800 group-hover:border-forest-100 dark:group-hover:border-forest-600 transition-colors duration-300">
               <div className="flex items-start gap-2.5">
-                <div className="mt-0.5 p-1 rounded-full bg-amber-100 text-amber-600 shrink-0">
+                <div className="mt-0.5 p-1 rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 shrink-0">
                   <AlertCircle className="w-3 h-3" />
                 </div>
-                <p className="text-xs md:text-sm text-forest-600 leading-relaxed">
-                  <span className="font-semibold text-forest-900 block mb-0.5">Problem</span>
+                <p className="text-xs md:text-sm text-forest-600 dark:text-sage-300 leading-relaxed">
+                  <span className="font-semibold text-forest-900 dark:text-sage-100 block mb-0.5">Problem</span>
                   {service.problem}
                 </p>
               </div>
-              <div className="w-full h-px bg-forest-200/30" />
+              <div className="w-full h-px bg-forest-200/30 dark:bg-sage-300/10" />
               <div className="flex items-start gap-2.5">
-                <div className="mt-0.5 p-1 rounded-full bg-lime-100 text-lime-600 shrink-0">
+                <div className="mt-0.5 p-1 rounded-full bg-lime-100 dark:bg-lime-500/20 text-lime-600 dark:text-lime-400 shrink-0">
                   <Lightbulb className="w-3 h-3" />
                 </div>
-                <p className="text-xs md:text-sm text-forest-600 leading-relaxed">
-                  <span className="font-semibold text-forest-900 block mb-0.5">Solution</span>
+                <p className="text-xs md:text-sm text-forest-600 dark:text-sage-300 leading-relaxed">
+                  <span className="font-semibold text-forest-900 dark:text-sage-100 block mb-0.5">Solution</span>
                   {service.solution}
                 </p>
               </div>
@@ -80,10 +82,10 @@ const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ servic
 
             {/* Outcomes */}
             <div>
-              <p className="text-[10px] font-bold text-forest-400 uppercase tracking-widest mb-2">Outcomes</p>
+              <p className="text-[10px] font-bold text-forest-400 dark:text-sage-400 uppercase tracking-widest mb-2">Outcomes</p>
               <div className="flex flex-wrap gap-1.5">
                 {service.outcomes.map((outcome, idx) => (
-                  <Badge key={idx} variant="secondary" className="bg-white border text-forest-600 border-forest-100 text-[10px] py-0.5 px-2 hover:border-lime-300 hover:text-lime-700 transition-colors">
+                  <Badge key={idx} variant="secondary" className="bg-white dark:bg-forest-800 border text-forest-600 dark:text-sage-300 border-forest-100 dark:border-forest-600 text-[10px] py-0.5 px-2 hover:border-lime-300 hover:text-lime-700 dark:hover:text-lime-400 transition-colors">
                     {outcome}
                   </Badge>
                 ))}
@@ -93,7 +95,7 @@ const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ servic
             {/* Tech Stack */}
             <div className="flex flex-wrap gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
               {service.tech.map((tech, idx) => (
-                <span key={idx} className="text-[9px] px-1.5 py-0.5 rounded-full border border-forest-200 text-forest-500 bg-transparent">
+                <span key={idx} className="text-[9px] px-1.5 py-0.5 rounded-full border border-forest-200 dark:border-forest-600 text-forest-600 dark:text-sage-200 bg-transparent dark:bg-forest-900/40">
                   {tech}
                 </span>
               ))}
@@ -101,14 +103,14 @@ const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ servic
 
             {/* Related Projects Link */}
             {service.relatedProjects && service.relatedProjects.length > 0 && (
-              <div className="mt-auto pt-3 border-t border-forest-100 flex items-center justify-between group/link">
-                <span className="text-[10px] font-semibold text-forest-900 uppercase tracking-wide">
+              <div className="mt-auto pt-3 border-t border-forest-100 dark:border-forest-600 flex items-center justify-between group/link">
+                <span className="text-[10px] font-semibold text-forest-900 dark:text-sage-100 uppercase tracking-wide">
                   See in Action
                 </span>
                 <div className="flex -space-x-1.5">
                   {service.relatedProjects.map((project, idx) => (
                     <Link key={idx} href={project.url} title={project.title}>
-                      <div className="w-7 h-7 rounded-full bg-forest-100 border-2 border-white flex items-center justify-center text-forest-600 hover:bg-lime-500 hover:text-white hover:z-10 transition-colors relative">
+                      <div className="w-7 h-7 rounded-full bg-forest-100 dark:bg-forest-800 border-2 border-white dark:border-forest-700 flex items-center justify-center text-forest-600 dark:text-sage-300 hover:bg-lime-500 hover:text-white hover:z-10 transition-colors relative">
                         <ExternalLink className="w-3 h-3" />
                       </div>
                     </Link>
@@ -186,7 +188,8 @@ const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) =
   return (
     <div className="max-w-6xl mx-auto px-2 sm:px-4 lg:px-12">
       {/* Fixed height container with relative positioning for buttons */}
-      <div className="relative h-[550px] sm:h-[580px] lg:h-[480px]">
+      {/* Fixed height container with relative positioning for buttons - Increased height to prevent cutting off */}
+      <div className="relative h-[600px] sm:h-[640px] lg:h-[520px]">
         {/* Scrollable content area with touch gestures */}
         <div
           className="overflow-hidden py-4 h-full touch-pan-y"
@@ -204,7 +207,7 @@ const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) =
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10"
+              className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 h-full"
             >
               {currentChunk.map((service, index) => (
                 <ServiceCard key={service.id} service={service} index={index} />
@@ -213,21 +216,21 @@ const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) =
           </AnimatePresence>
         </div>
 
-        {/* Navigation Buttons - positioned relative to fixed-height container */}
+        {/* Navigation Buttons - positioned relative to fixed-height container - Reduced size */}
         <button
           onClick={prevSlide}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -ml-1 sm:-ml-2 lg:-ml-6"
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -ml-1 sm:-ml-2 lg:-ml-6"
           aria-label="Previous services"
         >
-          <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 rotate-180" />
+          <ArrowRight className="w-5 h-5 rotate-180" />
         </button>
 
         <button
           onClick={nextSlide}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -mr-1 sm:-mr-2 lg:-mr-6"
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -mr-1 sm:-mr-2 lg:-mr-6"
           aria-label="Next services"
         >
-          <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          <ArrowRight className="w-5 h-5" />
         </button>
       </div>
 
@@ -237,7 +240,7 @@ const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) =
           <button
             key={idx}
             onClick={() => setCurrentIndex(idx)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${currentIndex === idx ? 'bg-forest-900 w-8' : 'bg-forest-200 w-2 hover:bg-forest-400'
+            className={`h-1.5 rounded-full transition-all duration-300 ${currentIndex === idx ? 'bg-forest-900 dark:bg-lime-400 w-8' : 'bg-forest-200 dark:bg-forest-600 w-2 hover:bg-forest-400 dark:hover:bg-forest-500'
               }`}
             aria-label={`Go to slide ${idx + 1} of ${chunks.length}`}
             aria-selected={currentIndex === idx}
@@ -264,14 +267,14 @@ const ServicesSection: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-6 lg:mb-8"
         >
-          <Badge variant="outline" className="mb-3 border-lime-500 bg-white/50 text-forest-900 px-3 py-1">
+          <Badge variant="outline" className="mb-3 border-lime-500 bg-white/50 dark:bg-forest-800/50 text-forest-900 dark:text-sage-100 px-3 py-1">
             Consulting Services
           </Badge>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-serif mb-3 tracking-tight">
-            <span className="text-forest-900">Solving  </span>
-            <span className="text-lime-600">Real Problems</span>
+            <span className="text-forest-900 dark:text-sage-100">Solving  </span>
+            <span className="text-lime-600 dark:text-lime-400">Real Problems</span>
           </h2>
-          <p className="text-forest-600 max-w-2xl mx-auto text-base">
+          <p className="text-forest-600 dark:text-sage-300 max-w-2xl mx-auto text-base">
             I specialize in turning disconnected tools into seamless automated systems that deliver measurable business outcomes.
           </p>
         </motion.div>
@@ -286,7 +289,7 @@ const ServicesSection: React.FC = () => {
           viewport={{ once: true }}
           className="mt-6 text-center"
         >
-          <p className="text-forest-500 mb-4 text-sm">Have a specific challenge? Let's discuss a custom solution.</p>
+          <p className="text-forest-500 dark:text-sage-400 mb-4 text-sm">Have a specific challenge? Let's discuss a custom solution.</p>
           <div className="inline-flex justify-center">
             <SolidButton
               href="#contact"

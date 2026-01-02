@@ -88,7 +88,7 @@ const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key
                 className={`
                     relative overflow-hidden rounded-xl 
                     shadow-md hover:shadow-xl transition-all duration-500
-                    border border-forest-200/50 bg-white
+                    border border-forest-200/50 dark:border-forest-600 bg-white dark:bg-forest-800
                     ${!imageError ? 'cursor-zoom-in' : 'cursor-default'}
                     ${isMobileScreenshot ? 'max-w-[260px]' : 'w-full max-w-4xl'}
                 `}
@@ -119,12 +119,12 @@ const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key
                 />
             </div>
             {alt && !imageError && (
-                <figcaption className="mt-3 text-sm text-forest-500 text-center font-medium max-w-lg px-4">
+                <figcaption className="mt-3 text-sm text-forest-500 dark:text-sage-400 text-center font-medium max-w-lg px-4">
                     {alt}
                 </figcaption>
             )}
             {imageError && (
-                <figcaption className="mt-3 text-sm text-forest-400 text-center italic max-w-lg px-4">
+                <figcaption className="mt-3 text-sm text-forest-400 dark:text-sage-500 text-center italic max-w-lg px-4">
                     Image unavailable
                 </figcaption>
             )}
@@ -200,6 +200,24 @@ const generateHeadingId = (text: React.ReactNode): string => {
 };
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
+    // Registry to track generated IDs during this render pass
+    // This ensures that if we have two headers with text "Overview", we get "overview" and "overview-1"
+    const slugRegistry: Record<string, number> = {};
+
+    const getUniqueId = (children: React.ReactNode): string => {
+        const baseId = generateHeadingId(children);
+
+        // If this ID hasn't been seen yet, initialize it
+        if (slugRegistry[baseId] === undefined) {
+            slugRegistry[baseId] = 0;
+            return baseId;
+        }
+
+        // If it has been seen, increment counter and append it
+        slugRegistry[baseId]++;
+        return `${baseId}-${slugRegistry[baseId]}`;
+    };
+
     return (
         <div className="markdown-content w-full max-w-full overflow-x-hidden prose-spacing">
             <ReactMarkdown
@@ -209,32 +227,32 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
                 components={{
                     // === HEADINGS: Professional spacing with responsive design ===
                     h1: ({ children }) => {
-                        const id = generateHeadingId(children);
+                        const id = getUniqueId(children);
                         return (
-                            <h1 id={id} className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-forest-900 mt-0 mb-4 md:mb-6 scroll-mt-28 first:mt-0">
+                            <h1 id={id} className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-forest-900 dark:text-sage-100 mt-0 mb-4 md:mb-6 scroll-mt-28 first:mt-0">
                                 {children}
                             </h1>
                         );
                     },
                     h2: ({ children }) => {
-                        const id = generateHeadingId(children);
+                        const id = getUniqueId(children);
                         return (
-                            <h2 id={id} className="text-xl sm:text-2xl font-semibold tracking-tight text-forest-900 mt-8 md:mt-10 mb-3 md:mb-4 scroll-mt-28 flex items-center gap-2 sm:gap-3 border-t border-forest-100 pt-8 md:pt-10 first:border-0 first:pt-0 first:mt-0">
-                                <span className="w-1 sm:w-1.5 h-5 sm:h-6 rounded-full bg-lime-500 flex-shrink-0" />
+                            <h2 id={id} className="text-xl sm:text-2xl font-semibold tracking-tight text-forest-900 dark:text-sage-100 mt-8 md:mt-10 mb-3 md:mb-4 scroll-mt-28 flex items-center gap-2 sm:gap-3 border-t border-forest-100 dark:border-forest-600 pt-8 md:pt-10 first:border-0 first:pt-0 first:mt-0">
+                                <span className="w-1 sm:w-1.5 h-5 sm:h-6 rounded-full bg-lime-500 dark:bg-lime-400 flex-shrink-0" />
                                 <span>{children}</span>
                             </h2>
                         );
                     },
                     h3: ({ children }) => {
-                        const id = generateHeadingId(children);
+                        const id = getUniqueId(children);
                         return (
-                            <h3 id={id} className="text-lg sm:text-xl font-semibold text-forest-800 mt-6 md:mt-8 mb-2 md:mb-3 scroll-mt-28">
+                            <h3 id={id} className="text-lg sm:text-xl font-semibold text-forest-800 dark:text-sage-200 mt-6 md:mt-8 mb-2 md:mb-3 scroll-mt-28">
                                 {children}
                             </h3>
                         );
                     },
                     h4: ({ children }) => {
-                        const id = generateHeadingId(children);
+                        const id = getUniqueId(children);
                         return (
                             <h4 id={id} className="text-base sm:text-lg font-semibold text-forest-700 mt-5 md:mt-6 mb-2 scroll-mt-28">
                                 {children}
@@ -242,7 +260,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
                         );
                     },
                     h5: ({ children }) => {
-                        const id = generateHeadingId(children);
+                        const id = getUniqueId(children);
                         return (
                             <h5 id={id} className="text-base font-semibold text-forest-600 mt-4 md:mt-5 mb-2 scroll-mt-28">
                                 {children}
@@ -250,7 +268,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
                         );
                     },
                     h6: ({ children }) => {
-                        const id = generateHeadingId(children);
+                        const id = getUniqueId(children);
                         return (
                             <h6 id={id} className="text-sm font-semibold text-forest-500 uppercase tracking-wide mt-4 mb-2 scroll-mt-28">
                                 {children}
@@ -260,7 +278,7 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
 
                     // === TEXT: Consistent paragraph spacing ===
                     p: ({ children }) => (
-                        <p className="text-base md:text-lg text-forest-700 leading-relaxed md:leading-relaxed mb-4 md:mb-5">
+                        <p className="text-base md:text-lg text-forest-700 dark:text-sage-300 leading-relaxed md:leading-relaxed mb-4 md:mb-5">
                             {children}
                         </p>
                     ),
@@ -272,17 +290,17 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
                         </ul>
                     ),
                     ol: ({ children }) => (
-                        <ol className="my-4 md:my-5 space-y-2 md:space-y-2.5 list-decimal list-outside pl-5 text-forest-700">
+                        <ol className="my-4 md:my-5 space-y-2 md:space-y-2.5 list-decimal list-outside pl-5 text-forest-700 dark:text-sage-300">
                             {children}
                         </ol>
                     ),
                     li: ({ children, ordered, ...props }: any) => (
                         <li className={`
-                            text-base md:text-lg text-forest-700 leading-relaxed 
+                            text-base md:text-lg text-forest-700 dark:text-sage-300 leading-relaxed 
                             ${!ordered ? 'flex items-start gap-2.5 sm:gap-3' : ''}
                         `} {...props}>
                             {!ordered && (
-                                <span className="w-1.5 h-1.5 mt-2.5 md:mt-3 rounded-full bg-lime-500 flex-shrink-0" />
+                                <span className="w-1.5 h-1.5 mt-2.5 md:mt-3 rounded-full bg-lime-500 dark:bg-lime-400 flex-shrink-0" />
                             )}
                             <span className="flex-1">{children}</span>
                         </li>
@@ -296,54 +314,54 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
                                 href={href}
                                 target={isExternal ? '_blank' : undefined}
                                 rel={isExternal ? 'noopener noreferrer' : undefined}
-                                className="font-medium text-forest-700 hover:text-lime-600 underline decoration-lime-300/50 underline-offset-4 hover:decoration-lime-500 transition-colors"
+                                className="font-medium text-forest-700 dark:text-lime-400 hover:text-lime-600 dark:hover:text-lime-300 underline decoration-lime-300/50 dark:decoration-lime-500/50 underline-offset-4 hover:decoration-lime-500 dark:hover:decoration-lime-400 transition-colors"
                                 {...props}
                             >
                                 {children}
-                                {isExternal && <ExternalLink className="inline-block w-3 h-3 ml-1 opacity-50" />}
+                                {isExternal && <ExternalLink className="inline-block w-3 h-3 ml-1 opacity-50 dark:opacity-70" />}
                             </a>
                         );
                     },
 
                     // === BLOCKQUOTES: Clean callout style ===
                     blockquote: ({ children }) => (
-                        <blockquote className="my-5 md:my-6 pl-4 sm:pl-5 border-l-4 border-lime-500 italic text-forest-600 leading-relaxed bg-lime-50/50 py-3 sm:py-4 pr-4 rounded-r-lg">
+                        <blockquote className="my-5 md:my-6 pl-4 sm:pl-5 border-l-4 border-lime-500 dark:border-lime-400 italic text-forest-600 dark:text-sage-400 leading-relaxed bg-lime-50/50 dark:bg-lime-500/10 py-3 sm:py-4 pr-4 rounded-r-lg">
                             {children}
                         </blockquote>
                     ),
 
                     // === TABLES: Professional data display ===
                     table: ({ children }) => (
-                        <div className="my-5 md:my-6 overflow-hidden rounded-xl border border-forest-200 shadow-sm">
+                        <div className="my-5 md:my-6 overflow-hidden rounded-xl border border-forest-200 dark:border-forest-600 shadow-sm">
                             <div className="overflow-x-auto">
-                                <table className="min-w-full divide-y divide-forest-200">
+                                <table className="min-w-full divide-y divide-forest-200 dark:divide-forest-600">
                                     {children}
                                 </table>
                             </div>
                         </div>
                     ),
                     thead: ({ children }) => (
-                        <thead className="bg-forest-50">
+                        <thead className="bg-forest-50 dark:bg-forest-800">
                             {children}
                         </thead>
                     ),
                     th: ({ children }) => (
-                        <th className="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-forest-600 uppercase tracking-wider whitespace-nowrap">
+                        <th className="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-forest-600 dark:text-sage-300 uppercase tracking-wider whitespace-nowrap">
                             {children}
                         </th>
                     ),
                     tbody: ({ children }) => (
-                        <tbody className="bg-white divide-y divide-forest-100">
+                        <tbody className="bg-white dark:bg-[#162c22] divide-y divide-forest-100 dark:divide-forest-600">
                             {children}
                         </tbody>
                     ),
                     tr: ({ children }) => (
-                        <tr className="hover:bg-forest-50/50 transition-colors">
+                        <tr className="hover:bg-forest-50/50 dark:hover:bg-forest-700/50 transition-colors">
                             {children}
                         </tr>
                     ),
                     td: ({ children }) => (
-                        <td className="px-4 sm:px-6 py-3 sm:py-4 text-sm md:text-base text-forest-700 leading-relaxed">
+                        <td className="px-4 sm:px-6 py-3 sm:py-4 text-sm md:text-base text-forest-700 dark:text-sage-300 leading-relaxed">
                             {children}
                         </td>
                     ),
@@ -363,14 +381,14 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
                     },
 
                     // === HR: Section divider ===
-                    hr: () => <hr className="my-8 md:my-10 border-forest-100" />,
+                    hr: () => <hr className="my-8 md:my-10 border-forest-100 dark:border-forest-600" />,
 
                     // === STRONG & EM ===
                     strong: ({ children }) => (
-                        <strong className="font-semibold text-forest-900">{children}</strong>
+                        <strong className="font-semibold text-forest-900 dark:text-sage-100">{children}</strong>
                     ),
                     em: ({ children }) => (
-                        <em className="italic text-forest-700">{children}</em>
+                        <em className="italic text-forest-700 dark:text-sage-300">{children}</em>
                     ),
 
                     img: MarkdownImage,

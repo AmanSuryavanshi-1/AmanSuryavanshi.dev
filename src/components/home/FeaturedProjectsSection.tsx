@@ -35,15 +35,15 @@ export default function FeaturedProjectsSection() {
     const activeIndex = ((virtualIndex % featuredProjects.length) + featuredProjects.length) % featuredProjects.length;
 
     return (
-        <section id="projects" className="relative z-10 py-8 lg:py-12">
+        <section id="projects" className="relative z-10 section-padding">
             <div className="container mx-auto px-4">
                 {/* Section Header */}
                 <div className="flex flex-col items-center justify-center mb-12 lg:mb-16 text-center">
                     <h2 className="text-2xl md:text-4xl font-bold font-serif mb-4 tracking-tight">
-                        <span className="text-forest-900">Featured </span>
-                        <span className="text-lime-500">Projects</span>
+                        <span className="text-forest-900 dark:text-sage-100">Featured </span>
+                        <span className="text-lime-500 dark:text-lime-400">Projects</span>
                     </h2>
-                    <p className="text-forest-600 max-w-2xl text-lg">
+                    <p className="text-forest-600 dark:text-sage-300 max-w-2xl text-lg">
                         A selection of my recent work in web development, automation, and design.
                     </p>
                 </div>

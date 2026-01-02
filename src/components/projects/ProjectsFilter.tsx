@@ -54,14 +54,14 @@ export default function ProjectsFilter({
                         className={cn(
                             "relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300",
                             activeCategory === category
-                                ? "text-white"
-                                : "text-forest-600 hover:text-forest-900 hover:bg-forest-50"
+                                ? "text-white dark:text-forest-950"
+                                : "text-forest-600 dark:text-sage-300 hover:text-forest-900 dark:hover:text-sage-100 hover:bg-forest-50 dark:hover:bg-forest-800"
                         )}
                     >
                         {activeCategory === category && (
                             <motion.div
                                 layoutId="activeCategory"
-                                className="absolute inset-0 bg-forest-900 rounded-full"
+                                className="absolute inset-0 bg-forest-900 dark:bg-lime-500 rounded-full"
                                 transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                 // Prevent layout shift affecting parent elements
                                 style={{ position: "absolute" }}
@@ -79,10 +79,10 @@ export default function ProjectsFilter({
                         <Button
                             variant="outline"
                             className={cn(
-                                "rounded-full border-forest-200 px-6 h-10 transition-all",
+                                "rounded-full border-forest-200 dark:border-forest-600 px-6 h-10 transition-all",
                                 activeTech !== "All Tech"
-                                    ? "bg-lime-50 border-lime-200 text-lime-700 hover:bg-lime-100"
-                                    : "bg-white text-forest-600 hover:bg-forest-50"
+                                    ? "bg-lime-50 dark:bg-lime-500/20 border-lime-200 dark:border-lime-500/50 text-lime-700 dark:text-lime-400 hover:bg-lime-100 dark:hover:bg-lime-500/30"
+                                    : "bg-white dark:bg-forest-800 text-forest-600 dark:text-sage-300 hover:bg-forest-50 dark:hover:bg-forest-700"
                             )}
                         >
                             <span className="mr-2">Tech: {activeTech}</span>
@@ -91,7 +91,7 @@ export default function ProjectsFilter({
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                         align="center"
-                        className="w-56 max-h-[300px] overflow-y-auto bg-white/90 backdrop-blur-md border-forest-100 p-2 rounded-xl shadow-xl"
+                        className="w-56 max-h-[300px] overflow-y-auto bg-white/90 dark:bg-[#162c22]/95 backdrop-blur-md border-forest-100 dark:border-forest-600 p-2 rounded-xl shadow-xl dark:shadow-black/40"
                         sideOffset={8}
                     >
                         {technologies.map((tech) => (
@@ -99,8 +99,8 @@ export default function ProjectsFilter({
                                 key={tech}
                                 onClick={() => onTechChange(tech)}
                                 className={cn(
-                                    "rounded-lg cursor-pointer focus:bg-forest-50 focus:text-forest-900",
-                                    activeTech === tech && "bg-lime-50 text-lime-700 font-medium"
+                                    "rounded-lg cursor-pointer focus:bg-forest-50 dark:focus:bg-forest-700 focus:text-forest-900 dark:focus:text-sage-100 dark:text-sage-300",
+                                    activeTech === tech && "bg-lime-50 dark:bg-lime-500/20 text-lime-700 dark:text-lime-400 font-medium"
                                 )}
                             >
                                 {tech}

@@ -43,15 +43,15 @@ const Data: React.FC = () => {
                 {stats.map((stat, index) => (
                     <div
                         key={index}
-                        className="flex items-center px-3 py-1 rounded-full border-2 border-white bg-lime-500/50 shadow-md backdrop-blur-sm"
+                        className="flex items-center px-3 py-1 rounded-full border-2 border-white dark:border-sage-300/30 bg-lime-500/50 dark:bg-lime-500/20 shadow-md backdrop-blur-sm"
                     >
-                        <span className="text-forest-900 font-semibold">{stat}</span>
+                        <span className="text-forest-900 dark:text-sage-100 font-semibold">{stat}</span>
                     </div>
                 ))}
             </motion.div>
             {/* Name */}
             <motion.h1
-                className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-lime-500 tracking-tight leading-none mb-3"
+                className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-lime-500 dark:text-lime-400 tracking-tight leading-none mb-3"
                 variants={itemVariants}
             >
                 {nameArray.map((char, index) => (
@@ -74,17 +74,17 @@ const Data: React.FC = () => {
                 className="flex items-center justify-center md:justify-start gap-1 mb-4"
                 variants={itemVariants}
             >
-                <div className="p-1.5 bg-lime-100 rounded-full">
-                    <Sparkles className="w-4 h-4 text-lime-600" />
+                <div className="p-1.5 bg-lime-100 dark:bg-lime-500/20 rounded-full">
+                    <Sparkles className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                 </div>
-                <h2 className="font-sans text-base sm:text-lg md:text-xl font-medium text-forest-800" style={{ textWrap: 'balance' }}>
+                <h2 className="font-sans text-base sm:text-lg md:text-xl font-medium text-forest-800 dark:text-sage-200" style={{ textWrap: 'balance' }}>
                     {subtitle}
                 </h2>
             </motion.div>
 
             {/* Divider */}
             <motion.div
-                className="w-16 h-1 bg-lime-500 rounded-full mb-4 hidden md:block"
+                className="w-16 h-1 bg-lime-500 dark:bg-lime-400 rounded-full mb-4 hidden md:block"
                 variants={itemVariants}
             />
 
@@ -92,7 +92,7 @@ const Data: React.FC = () => {
             <div className="space-y-2 max-w-xl mx-auto md:mx-0 mb-8">
                 {/* Tagline */}
                 <motion.h3
-                    className="font-serif text-md sm:text-lg font-medium text-forest-500 leading-snug"
+                    className="font-serif text-md sm:text-lg font-medium text-forest-500 dark:text-sage-300 leading-snug"
                     variants={itemVariants}
                     style={{ textWrap: 'balance' }}
                 >
@@ -100,11 +100,11 @@ const Data: React.FC = () => {
                 </motion.h3>
                 {/* Description */}
                 <motion.p
-                    className="text-sm sm:text-base text-forest-600 leading-relaxed"
+                    className="text-sm sm:text-base text-forest-600 dark:text-sage-300/80 leading-relaxed"
                     variants={itemVariants}
                     style={{ textWrap: 'pretty' }}
                 >
-                    <span className="font-semibold text-forest-800 block mb-2">
+                    <span className="font-semibold text-forest-800 dark:text-sage-100 block mb-2">
                         {descriptionHighlight}
                     </span>
                     {description}

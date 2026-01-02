@@ -71,14 +71,14 @@ export default function FilterSort({ value, onChange }: FilterSortProps) {
           group relative w-full sm:w-auto min-w-[140px] sm:min-w-[200px]
           flex items-center justify-between gap-2 sm:gap-3
           px-3 sm:px-5 py-3.5 rounded-xl
-          bg-white/90 backdrop-blur-sm
+          bg-white/90 dark:bg-[#162c22] backdrop-blur-sm
           border-2 transition-all duration-300
-          text-forest-900 font-medium text-xs sm:text-sm
-          shadow-lg shadow-forest-900/5
-          hover:shadow-xl hover:shadow-forest-900/10
+          text-forest-900 dark:text-sage-100 font-medium text-xs sm:text-sm
+          shadow-lg shadow-forest-900/5 dark:shadow-black/20
+          hover:shadow-xl hover:shadow-forest-900/10 dark:hover:shadow-black/30
           ${isOpen
-                        ? 'border-lime-500 shadow-xl shadow-lime-500/10 scale-[1.02]'
-                        : 'border-forest-200 hover:border-sage-300'
+                        ? 'border-lime-500 shadow-xl shadow-lime-500/10'
+                        : 'border-forest-200 dark:border-forest-600 hover:border-sage-300 dark:hover:border-sage-500'
                     }
         `}
             >
@@ -86,20 +86,20 @@ export default function FilterSort({ value, onChange }: FilterSortProps) {
                 <div
                     className={`absolute -inset-0.5 bg-gradient-to-r from-lime-500 via-sage-300 to-forest-500 
             rounded-xl opacity-0 blur transition-opacity duration-500
-            ${isOpen ? 'opacity-30' : 'group-hover:opacity-20'}
+            ${isOpen ? 'opacity-30 dark:opacity-20' : 'group-hover:opacity-20 dark:group-hover:opacity-10'}
           `}
                 />
 
                 {/* Button content */}
                 <div className="relative flex items-center gap-2.5">
-                    <div className={`transition-all duration-300 ${isOpen ? 'text-lime-500 scale-110' : 'text-forest-500'}`}>
+                    <div className={`transition-all duration-300 ${isOpen ? 'text-lime-500 dark:text-lime-400 scale-110' : 'text-forest-500 dark:text-sage-400'}`}>
                         {selectedOption.icon}
                     </div>
                     <span className="font-semibold">{selectedOption.label}</span>
                 </div>
 
                 <ChevronDown
-                    className={`h-4 w-4 transition-all duration-300 ${isOpen ? 'rotate-180 text-lime-500' : 'text-forest-500'
+                    className={`h-4 w-4 transition-all duration-300 ${isOpen ? 'rotate-180 text-lime-500 dark:text-lime-400' : 'text-forest-500 dark:text-sage-400'
                         }`}
                 />
             </button>
@@ -123,7 +123,7 @@ export default function FilterSort({ value, onChange }: FilterSortProps) {
                                 <div className="absolute -inset-0.5 bg-gradient-to-br from-lime-500 via-sage-300 to-forest-500 rounded-xl opacity-20 blur-sm -z-10" />
 
                                 {/* Menu container - Fully opaque background */}
-                                <div className="relative bg-white rounded-xl border-2 border-forest-200 shadow-2xl overflow-hidden">
+                                <div className="relative bg-white dark:bg-[#162c22] rounded-xl border-2 border-forest-200 dark:border-forest-600 shadow-2xl dark:shadow-black/40 overflow-hidden">
                                     <div className="p-1.5">
                                         {sortOptions.map((option, index) => {
                                             const isSelected = option.value === value;
@@ -141,8 +141,8 @@ export default function FilterSort({ value, onChange }: FilterSortProps) {
                           px-4 py-3 rounded-lg
                           transition-all duration-200
                           ${isSelected
-                                                            ? 'bg-gradient-to-r from-lime-500/20 to-sage-300/20 text-forest-900'
-                                                            : 'hover:bg-sage-100/50 text-forest-700'
+                                                            ? 'bg-gradient-to-r from-lime-500/20 to-sage-300/20 dark:from-lime-500/10 dark:to-sage-300/10 text-forest-900 dark:text-sage-100'
+                                                            : 'hover:bg-sage-100/50 dark:hover:bg-forest-700/50 text-forest-700 dark:text-sage-300'
                                                         }
                         `}
                                                 >
@@ -158,17 +158,17 @@ export default function FilterSort({ value, onChange }: FilterSortProps) {
                                                     <div className="relative flex items-center gap-3">
                                                         <div
                                                             className={`transition-all duration-200 ${isSelected
-                                                                ? 'text-lime-500 scale-110'
-                                                                : 'text-forest-500 group-hover/item:text-forest-700 group-hover/item:scale-105'
+                                                                ? 'text-lime-500 dark:text-lime-400 scale-110'
+                                                                : 'text-forest-500 dark:text-sage-400 group-hover/item:text-forest-700 dark:group-hover/item:text-sage-200 group-hover/item:scale-105'
                                                                 }`}
                                                         >
                                                             {option.icon}
                                                         </div>
                                                         <div className="text-left">
-                                                            <div className={`font-semibold text-sm ${isSelected ? 'text-forest-900' : ''}`}>
+                                                            <div className={`font-semibold text-sm ${isSelected ? 'text-forest-900 dark:text-sage-100' : ''}`}>
                                                                 {option.label}
                                                             </div>
-                                                            <div className="text-xs text-forest-400 mt-0.5">
+                                                            <div className="text-xs text-forest-400 dark:text-sage-500 mt-0.5">
                                                                 {option.description}
                                                             </div>
                                                         </div>

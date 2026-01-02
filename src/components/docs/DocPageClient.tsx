@@ -172,25 +172,25 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
             {/* Lightbox for image zoom */}
             <Lightbox />
             {/* Main Section - Matches BlogList: bg-sage-50 */}
-            <section className="py-12 sm:py-16 bg-sage-50 min-h-screen">
+            <section className="py-12 sm:py-16 bg-[#D3E6BB] dark:bg-[#0a1f15] min-h-screen transition-colors duration-300">
                 <div className="container mx-auto px-2 sm:px-4 lg:px-6">
 
                     {/* Breadcrumb - Enhanced with icons and glass effect */}
                     <div className="mb-8">
-                        <div className="inline-flex items-center gap-2 text-sm text-forest-700 bg-white/50 backdrop-blur-md px-4 py-2 rounded-full border border-forest-100/50 shadow-sm">
-                            <Link href="/" className="hover:text-lime-600 transition-colors flex items-center gap-1 group">
+                        <div className="inline-flex items-center gap-2 text-sm text-forest-700 dark:text-sage-300 bg-white/50 dark:bg-[#162c22]/80 backdrop-blur-md px-4 py-2 rounded-full border border-forest-100/50 dark:border-white/10 shadow-sm dark:shadow-black/20">
+                            <Link href="/" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors flex items-center gap-1 group">
                                 <Home className="w-4 h-4 group-hover:scale-110 transition-transform" />
                             </Link>
-                            <ChevronRight className="w-3.5 h-3.5 text-forest-300" />
-                            <Link href="/#projects" className="hover:text-lime-600 transition-colors flex items-center gap-1 font-medium">
+                            <ChevronRight className="w-3.5 h-3.5 text-forest-300 dark:text-sage-500" />
+                            <Link href="/#projects" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors flex items-center gap-1 font-medium">
                                 <FolderOpen className="w-4 h-4" />
                                 <span>Projects</span>
                             </Link>
-                            <ChevronRight className="w-3.5 h-3.5 text-forest-300" />
-                            <span className="text-forest-900 font-semibold truncate max-w-[200px]">{project.title}</span>
-                            <ChevronRight className="w-3.5 h-3.5 text-forest-300" />
-                            <span className="text-forest-600 flex items-center gap-1.5">
-                                <DocIcon className="w-4 h-4 text-lime-600" />
+                            <ChevronRight className="w-3.5 h-3.5 text-forest-300 dark:text-sage-500" />
+                            <span className="text-forest-900 dark:text-sage-100 font-semibold truncate max-w-[200px]">{project.title}</span>
+                            <ChevronRight className="w-3.5 h-3.5 text-forest-300 dark:text-sage-500" />
+                            <span className="text-forest-600 dark:text-sage-400 flex items-center gap-1.5">
+                                <DocIcon className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                                 {docType}
                             </span>
                         </div>
@@ -278,24 +278,24 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                             <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto space-y-6">
 
                                 {/* Document Info Card */}
-                                <div className="bg-white rounded-2xl p-5 border border-forest-100 shadow-sm sticky-card">
+                                <div className="bg-white dark:bg-[#162c22] rounded-2xl p-5 border border-forest-100 dark:border-white/10 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] sticky-card">
                                     <div className="flex items-center gap-3 mb-5">
-                                        <div className="w-10 h-10 rounded-xl bg-forest-50 flex items-center justify-center text-forest-900 shrink-0">
-                                            <DocIcon className="w-5 h-5 text-lime-600" />
+                                        <div className="w-10 h-10 rounded-xl bg-forest-50 dark:bg-lime-500/10 flex items-center justify-center text-forest-900 dark:text-lime-400 shrink-0">
+                                            <DocIcon className="w-5 h-5 text-lime-600 dark:text-lime-400" />
                                         </div>
                                         <div>
-                                            <p className="text-[10px] font-bold text-forest-500 uppercase tracking-wider mb-0.5">Document Type</p>
-                                            <p className="text-sm font-bold text-forest-900 leading-tight">{docType}</p>
+                                            <p className="text-[10px] font-bold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-0.5">Document Type</p>
+                                            <p className="text-sm font-bold text-forest-900 dark:text-sage-100 leading-tight">{docType}</p>
                                         </div>
                                     </div>
 
-                                    <div className="space-y-3 pt-4 border-t border-forest-100">
-                                        <div className="flex items-center gap-3 text-sm text-forest-600 bg-forest-50/50 p-2.5 rounded-lg">
-                                            <Clock className="w-4 h-4 text-lime-600" />
+                                    <div className="space-y-3 pt-4 border-t border-forest-100 dark:border-forest-600">
+                                        <div className="flex items-center gap-3 text-sm text-forest-600 dark:text-sage-300 bg-forest-50/50 dark:bg-forest-800/50 p-2.5 rounded-lg">
+                                            <Clock className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                                             <span><strong>{readingTime} min</strong> read time</span>
                                         </div>
-                                        <div className="flex items-center gap-3 text-sm text-forest-600 bg-forest-50/50 p-2.5 rounded-lg">
-                                            <Calendar className="w-4 h-4 text-lime-600" />
+                                        <div className="flex items-center gap-3 text-sm text-forest-600 dark:text-sage-300 bg-forest-50/50 dark:bg-forest-800/50 p-2.5 rounded-lg">
+                                            <Calendar className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                                             <span>Updated <strong>Dec 2025</strong></span>
                                         </div>
                                     </div>
@@ -304,16 +304,16 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                                 {/* Tech Stack - Match homepage badges */}
                                 {/* Tech Stack */}
                                 {project.techStack && project.techStack.length > 0 && (
-                                    <div className="bg-white rounded-2xl p-5 border border-forest-100 shadow-sm">
-                                        <h4 className="text-xs font-bold text-forest-500 uppercase tracking-wider mb-3 flex items-center gap-2">
-                                            <Code2 className="w-4 h-4 text-lime-600" />
+                                    <div className="bg-white dark:bg-[#162c22] rounded-2xl p-5 border border-forest-100 dark:border-white/10 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+                                        <h4 className="text-xs font-bold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                            <Code2 className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                                             Core Technologies
                                         </h4>
                                         <div className="flex flex-wrap gap-1.5">
                                             {project.techStack.slice(0, 10).map((tech: string) => (
                                                 <span
                                                     key={tech}
-                                                    className="px-2.5 py-1 bg-white border border-forest-100 text-xs font-medium text-forest-700 rounded-lg shadow-sm hover:border-lime-200 transition-colors"
+                                                    className="px-2.5 py-1 bg-white dark:bg-forest-800 border border-forest-100 dark:border-forest-600 text-xs font-medium text-forest-700 dark:text-sage-300 rounded-lg shadow-sm hover:border-lime-200 dark:hover:border-lime-500/50 transition-colors"
                                                 >
                                                     {tech}
                                                 </span>
@@ -351,7 +351,7 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                             )}
 
                             {/* Content Card - Clean white background */}
-                            <div className="bg-white rounded-3xl p-8 sm:p-12 border border-forest-100 shadow-[0_5px_30px_-10px_rgba(0,0,0,0.05)] markdown-content overflow-x-hidden min-h-[500px]">
+                            <div className="bg-white dark:bg-[#162c22] rounded-3xl p-8 sm:p-12 border border-forest-100 dark:border-white/10 shadow-[0_5px_30px_-10px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] markdown-content overflow-x-hidden min-h-[500px]">
                                 <MarkdownViewer content={content} />
                             </div>
 
@@ -359,10 +359,10 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                             <div className="mt-8 grid sm:grid-cols-2 gap-4">
                                 <Link
                                     href="/#projects"
-                                    className="group block p-5 rounded-xl bg-white border border-forest-200/50 hover:border-lime-400 hover:shadow-md transition-all"
+                                    className="group block p-5 rounded-xl bg-white dark:bg-[#162c22] border border-forest-200/50 dark:border-white/10 hover:border-lime-400 dark:hover:border-lime-500/50 hover:shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all"
                                 >
-                                    <div className="text-xs font-semibold text-forest-500 uppercase tracking-wider mb-1">Previous</div>
-                                    <div className="font-semibold text-forest-900 flex items-center gap-2 group-hover:text-lime-600">
+                                    <div className="text-xs font-semibold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-1">Previous</div>
+                                    <div className="font-semibold text-forest-900 dark:text-sage-100 flex items-center gap-2 group-hover:text-lime-600 dark:group-hover:text-lime-400">
                                         <ArrowLeft className="w-4 h-4" /> All Projects
                                     </div>
                                 </Link>
@@ -379,12 +379,12 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                                     return (
                                         <Link
                                             href={hasAlternateDoc ? `/projects/${targetSlug}` : "/#projects"}
-                                            className="group block p-5 rounded-xl bg-white border border-forest-200/50 hover:border-lime-400 hover:shadow-md transition-all text-right"
+                                            className="group block p-5 rounded-xl bg-white dark:bg-[#162c22] border border-forest-200/50 dark:border-white/10 hover:border-lime-400 dark:hover:border-lime-500/50 hover:shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all text-right"
                                         >
-                                            <div className="text-xs font-semibold text-forest-500 uppercase tracking-wider mb-1">
+                                            <div className="text-xs font-semibold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-1">
                                                 {hasAlternateDoc ? "Related" : "Explore"}
                                             </div>
-                                            <div className="font-semibold text-forest-900 flex items-center justify-end gap-2 group-hover:text-lime-600">
+                                            <div className="font-semibold text-forest-900 dark:text-sage-100 flex items-center justify-end gap-2 group-hover:text-lime-600 dark:group-hover:text-lime-400">
                                                 {hasAlternateDoc
                                                     ? (isTechnicalDoc ? 'Executive Summary' : 'Technical Docs')
                                                     : 'View More Projects'
@@ -400,13 +400,13 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                         {/* RIGHT SIDEBAR - Table of Contents */}
                         <aside className="hidden lg:block">
                             <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto">
-                                <div className="bg-white rounded-2xl p-6 border border-forest-100 shadow-sm">
-                                    <h5 className="text-xs font-bold text-forest-900 uppercase tracking-wider mb-4 flex items-center gap-2 px-2">
-                                        <List className="w-4 h-4 text-lime-600" /> On this page
+                                <div className="bg-white dark:bg-[#162c22] rounded-2xl p-6 border border-forest-100 dark:border-white/10 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+                                    <h5 className="text-xs font-bold text-forest-900 dark:text-sage-100 uppercase tracking-wider mb-4 flex items-center gap-2 px-2">
+                                        <List className="w-4 h-4 text-lime-600 dark:text-lime-400" /> On this page
                                     </h5>
 
                                     {/* Scrollable TOC */}
-                                    <nav className="max-h-[60vh] overflow-y-auto pr-1 space-y-1 custom-scrollbar">
+                                    <nav className="max-h-[60vh] overflow-y-auto pr-1 space-y-1 custom-scrollbar dark-scrollbar">
                                         {tocItems.length > 0 ? (
                                             tocItems.map((item) => (
                                                 <button
@@ -416,15 +416,15 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                                                         "block w-full text-left text-sm py-2 px-3 rounded-lg transition-all duration-200 border-l-2",
                                                         item.level === 2 ? "pl-4" : item.level === 3 ? "pl-6" : "",
                                                         activeHeading === item.id
-                                                            ? "border-lime-500 bg-lime-50 text-forest-900 font-medium"
-                                                            : "border-transparent text-forest-500 hover:text-forest-700 hover:bg-forest-50"
+                                                            ? "border-lime-500 bg-lime-50 dark:bg-lime-500/20 text-forest-900 dark:text-lime-300 font-medium"
+                                                            : "border-transparent text-forest-500 dark:text-sage-200 hover:text-forest-700 dark:hover:text-white hover:bg-forest-50 dark:hover:bg-forest-700"
                                                     )}
                                                 >
                                                     <span className="line-clamp-2">{item.text}</span>
                                                 </button>
                                             ))
                                         ) : (
-                                            <p className="text-sm text-forest-400 italic px-2">Loading contents...</p>
+                                            <p className="text-sm text-forest-400 dark:text-sage-400 italic px-2">Loading contents...</p>
                                         )}
                                     </nav>
                                 </div>

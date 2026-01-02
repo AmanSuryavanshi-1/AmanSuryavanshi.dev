@@ -210,7 +210,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ posts }) => {
 
                                     <Link
                                         href={`/blogs/${currentPost.slug.current}`}
-                                        className="group/btn relative inline-flex items-center gap-2 px-6 py-3 border-2 border-lime-500 shadow-[4px_4px_0px_0px_rgba(132,204,22,1)] rounded-xl bg-transparent text-forest-900 overflow-hidden transition-all duration-300 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
+                                        className="group/btn relative inline-flex items-center gap-2 px-6 py-3 border-2 border-lime-500 shadow-[4px_4px_0px_0px_rgba(132,204,22,1)] rounded-xl bg-transparent text-forest-900 dark:text-lime-400 overflow-hidden transition-all duration-300 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none"
                                     >
                                         <span className="relative z-10 flex items-center gap-2 font-bold tracking-wide">
                                             <span className="lg:hidden">Read</span>
