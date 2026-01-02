@@ -77,39 +77,50 @@ export default function PreviewCard({ type, onEnter }: PreviewCardProps) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 10 }}
-      className="absolute top-full left-0 w-full mt-2 bg-forest-900 rounded-lg shadow-xl border-2 border-sage-300 p-4 z-10"
+      className="absolute top-full left-0 w-full mt-2 bg-white dark:bg-[#0f291e] rounded-xl shadow-xl border border-sage-200 dark:border-forest-700/50 p-4 z-50 overflow-hidden"
     >
       <div className="flex flex-col gap-4">
-        <div className="space-y-2">
-          <h3 className="text-sage-100 font-semibold">
+        <div className="space-y-3">
+          <h3 className="text-forest-900 dark:text-sage-100 font-bold text-sm uppercase tracking-wide">
             {type === 'projects' ? 'Featured Projects' : 'Latest Blogs'}
           </h3>
           {type === 'projects' ? (
-            <div className="grid grid-cols-2 gap-2">
-              {videoProjects.map((project, index) => (
+            <div className="grid grid-cols-2 gap-3">
+              {portfolioData.projects.slice(0, 2).map((project, index) => (
                 <div
                   key={project.id}
-                  className="bg-forest-700 p-2 rounded group hover:bg-forest-500 transition-colors duration-300"
+                  className="bg-forest-50 dark:bg-forest-900 p-2 rounded-lg group hover:bg-forest-100 dark:hover:bg-forest-800 transition-colors duration-300"
                 >
-                  <video
-                    ref={index === 0 ? videoRef1 : videoRef2}
-                    src={project.video}
-                    className="w-full h-20 object-cover rounded"
-                    muted
-                    loop
-                    playsInline
-                  />
-                  <p className="text-sage-100 text-sm mt-2 line-clamp-1">{project.title}</p>
+                  <div className="relative w-full h-20 rounded shadow-sm border border-black/5 dark:border-white/5 overflow-hidden">
+                    {project.video ? (
+                      <video
+                        ref={index === 0 ? videoRef1 : videoRef2}
+                        src={project.video}
+                        className="w-full h-full object-cover"
+                        muted
+                        loop
+                        playsInline
+                      />
+                    ) : (
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover"
+                      />
+                    )}
+                  </div>
+                  <p className="text-forest-900 dark:text-sage-100 text-xs font-semibold mt-2 line-clamp-1">{project.title}</p>
                 </div>
               ))}
             </div>
           ) : (
             <div className="space-y-2">
               {posts.map((post) => (
-                <div key={post._id} className="bg-forest-700 p-2 rounded hover:bg-forest-500 transition-colors duration-300">
-                  <div className="flex items-center gap-2">
+                <div key={post._id} className="bg-forest-50 dark:bg-forest-900 p-2 rounded-lg hover:bg-forest-100 dark:hover:bg-forest-800 transition-colors duration-300">
+                  <div className="flex items-center gap-3">
                     {post.mainImage && (
-                      <div className="relative w-12 h-12 rounded overflow-hidden flex-shrink-0">
+                      <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 shadow-sm border border-black/5 dark:border-white/5">
                         <Image
                           src={urlFor(post.mainImage).width(48).height(48).url()}
                           alt={post.title}
@@ -119,8 +130,8 @@ export default function PreviewCard({ type, onEnter }: PreviewCardProps) {
                       </div>
                     )}
                     <div>
-                      <p className="text-sage-100 text-sm font-medium line-clamp-1">{post.title}</p>
-                      <p className="text-sage-300 text-xs">
+                      <p className="text-forest-900 dark:text-sage-100 text-xs font-bold line-clamp-1 leading-tight mb-0.5">{post.title}</p>
+                      <p className="text-forest-600 dark:text-sage-400 text-[10px] font-medium uppercase tracking-wide">
                         {format(new Date(post._createdAt), 'MMM dd, yyyy')}
                       </p>
                     </div>
@@ -132,10 +143,10 @@ export default function PreviewCard({ type, onEnter }: PreviewCardProps) {
         </div>
         <Button
           onClick={onEnter}
-          className="w-full bg-lime-500 hover:bg-lime-700 text-forest-900 font-semibold group"
+          className="w-full bg-forest-900 dark:bg-lime-500 hover:bg-forest-800 dark:hover:bg-lime-400 text-white dark:text-forest-950 font-bold py-2 h-auto text-xs group transition-all duration-300"
         >
           View All {type === 'projects' ? 'Projects' : 'Blogs'}
-          <ArrowUpRight className="ml-2 h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+          <ArrowUpRight className="ml-2 h-3 w-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
         </Button>
       </div>
     </motion.div>
