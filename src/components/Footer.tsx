@@ -73,14 +73,14 @@ const Footer: React.FC = () => {
                 <div className="flex justify-center md:justify-start items-center space-x-4">
                   <div className='rounded-full p-2 border-4 border-sage-100 bg-lime-500'>
                     <Image
-                      src="/Profile/Logo.png"
+                      src="/Profile/Logo.webp"
                       alt="AS Logo"
                       width={37}
                       height={37}
                     />
                   </div>
                   <Image
-                    src="/Profile/PFP-Cricular.png"
+                    src="/Profile/PFP-Cricular.webp"
                     alt="Aman Suryavanshi"
                     width={60}
                     height={60}

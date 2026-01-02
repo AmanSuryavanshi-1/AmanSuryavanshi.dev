@@ -96,8 +96,8 @@ const ContactForm = () => {
                   <ContactCard
                     icon={<Mail className="w-6 h-6" />}
                     title="Email"
-                    content="adude890@gmail.com"
-                    link="mailto:adude890@gmail.com"
+                    content="amansurya.work@gmail.com"
+                    link="mailto:amansurya.work@gmail.com"
                     linkText="Send an email"
                   />
                   <ContactCard
