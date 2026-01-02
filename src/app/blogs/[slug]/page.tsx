@@ -113,7 +113,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${title} | Aman Suryavanshi`,
     description: description,
-    keywords: post.tags?.map(t => t.name).join(', '),
+    keywords: post.tags?.filter(t => t && t.name).map(t => t.name).join(', '),
     authors: post.author ? [{ name: post.author.name }] : undefined,
     openGraph: {
       title: title,
@@ -121,7 +121,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: 'article',
       publishedTime: post.publishedAt || post._createdAt,
       authors: post.author ? [post.author.name] : undefined,
-      tags: post.tags?.map(t => t.name),
+      tags: post.tags?.filter(t => t && t.name).map(t => t.name),
       images: [openGraphImage],
     },
     twitter: {
@@ -156,7 +156,7 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
     "readTime": round(length(pt::text(body)) / 5 / 180 )
   }`;
 
-  const tags = post.tags?.map(t => t.slug.current) || [];
+  const tags = post.tags?.filter(t => t && t.slug)?.map(t => t.slug.current) || [];
   const relatedPosts = await client.fetch(relatedPostsQuery, { slug, tags });
 
   return (
