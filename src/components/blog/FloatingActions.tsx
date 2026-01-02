@@ -99,7 +99,9 @@ export default function FloatingActions({ title, slug }: FloatingActionsProps) {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={toggleLike}
-                className={`p-3 rounded-full shadow-md transition-colors ${isLiked ? 'bg-lime-50 text-lime-500' : 'bg-white text-forest-700 hover:text-lime-500'
+                className={`p-3 rounded-full shadow-lg transition-all duration-200 ${isLiked
+                    ? 'bg-lime-500 text-white shadow-lime-500/30'
+                    : 'bg-white dark:bg-forest-800 text-forest-700 dark:text-sage-300 hover:text-lime-500 dark:hover:text-lime-400 border border-transparent dark:border-forest-700'
                     }`}
                 aria-label="Like post"
             >
@@ -112,7 +114,9 @@ export default function FloatingActions({ title, slug }: FloatingActionsProps) {
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setShowShareMenu(!showShareMenu)}
-                    className="p-3 rounded-full shadow-md bg-white text-gray-600 hover:text-blue-500 transition-colors"
+                    className={`p-3 rounded-full shadow-lg transition-colors border border-transparent dark:border-forest-700 ${showShareMenu
+                        ? 'bg-forest-900 text-white dark:bg-lime-500 dark:text-forest-900'
+                        : 'bg-white dark:bg-forest-800 text-forest-600 dark:text-sage-300 hover:text-lime-600 dark:hover:text-lime-400'}`}
                     aria-label="Share post"
                 >
                     <BiShareAlt size={24} />
@@ -124,16 +128,16 @@ export default function FloatingActions({ title, slug }: FloatingActionsProps) {
                             initial={{ opacity: 0, x: 20, scale: 0.9 }}
                             animate={{ opacity: 1, x: 0, scale: 1 }}
                             exit={{ opacity: 0, x: 20, scale: 0.9 }}
-                            className="absolute left-full top-0 ml-4 flex flex-col gap-2 bg-white p-2 rounded-xl shadow-xl border border-gray-100 z-50"
+                            className="absolute left-full top-0 ml-4 flex flex-col gap-2 bg-white dark:bg-forest-800 p-2 rounded-xl shadow-xl border border-gray-100 dark:border-forest-700 z-50 min-w-[50px] items-center"
                         >
-                            <button onClick={shareToTwitter} className="p-2 hover:bg-gray-50 rounded-lg text-blue-400 transition-colors" title="Share on X">
+                            <button onClick={shareToTwitter} className="p-2.5 hover:bg-sage-50 dark:hover:bg-forest-700 rounded-lg text-forest-600 dark:text-sage-300 hover:text-forest-900 dark:hover:text-white transition-colors" title="Share on X">
                                 <FaXTwitter size={20} />
                             </button>
-                            <button onClick={shareToLinkedin} className="p-2 hover:bg-gray-50 rounded-lg text-blue-700 transition-colors" title="Share on LinkedIn">
-                                <BiLogoLinkedin size={20} />
+                            <button onClick={shareToLinkedin} className="p-2.5 hover:bg-sage-50 dark:hover:bg-forest-700 rounded-lg text-forest-600 dark:text-sage-300 hover:text-forest-900 dark:hover:text-white transition-colors" title="Share on LinkedIn">
+                                <BiLogoLinkedin size={22} />
                             </button>
-                            <button onClick={copyToClipboard} className="p-2 hover:bg-gray-50 rounded-lg text-gray-600 transition-colors" title="Copy Link">
-                                <BiCopy size={20} />
+                            <button onClick={copyToClipboard} className="p-2.5 hover:bg-sage-50 dark:hover:bg-forest-700 rounded-lg text-forest-600 dark:text-sage-300 hover:text-forest-900 dark:hover:text-white transition-colors" title="Copy Link">
+                                <BiCopy size={22} />
                             </button>
                         </motion.div>
                     )}
@@ -150,7 +154,7 @@ export default function FloatingActions({ title, slug }: FloatingActionsProps) {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={scrollToTop}
-                        className="mt-8 p-3 rounded-full shadow-md bg-forest-900 text-white hover:bg-forest-700 transition-colors"
+                        className="mt-6 p-3 rounded-full shadow-lg bg-forest-900 dark:bg-lime-500 text-white dark:text-forest-900 hover:bg-forest-800 dark:hover:bg-lime-400 transition-colors"
                         aria-label="Scroll to top"
                     >
                         <BiUpArrowAlt size={24} />

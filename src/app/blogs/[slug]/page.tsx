@@ -26,6 +26,7 @@ import RelatedPosts from '@/components/blog/RelatedPosts';
 import ShareBar from '@/components/blog/ShareBar';
 import AllTags from '@/components/blog/AllTags';
 import BlogImageGalleryWrapper from '@/components/blog/BlogImageGalleryWrapper';
+import ScrollIndicator from '@/components/blog/ScrollIndicator';
 
 type NextPageProps = {
   params: Promise<{ slug: string }>;
@@ -151,9 +152,11 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
     title,
     slug,
     excerpt,
+    metaDescription,
     mainImage,
     _createdAt,
-    "readTime": round(length(pt::text(body)) / 5 / 180 )
+    "readTime": round(length(pt::text(body)) / 5 / 180 ),
+    "fallbackExcerpt": pt::text(body)[0...160]
   }`;
 
   const tags = post.tags?.filter(t => t && t.slug)?.map(t => t.slug.current) || [];
@@ -165,21 +168,27 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
         <ReadingProgress />
 
         <article className="min-h-screen pb-20 lg:pb-0">
-          {/* Hero Section */}
-          <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
-            <BlogHeaderImage
-              post={post}
-              priority={true}
-            />
+          {/* Hero Section - Optimized for Immersive Reading */}
+          <div className="relative h-[65vh] min-h-[500px] w-full bg-[#0a1f15] overflow-hidden">
+            {/* The Image with CSS Mask for Seamless Blend */}
+            <div className="absolute inset-0 z-0
+                [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]
+                [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]">
+              <BlogHeaderImage
+                post={post}
+                priority={true}
+                className="scale-105" // Slight scale for parallax feel
+              />
+            </div>
 
-            {/* Gradient Overlay - Stronger and darker */}
-            <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-900/70 to-transparent z-10" />
+            {/* Subtle Gradient Overlay for extra text pop */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a1f15] via-transparent to-black/30 z-10 opacity-80" />
 
             {/* Hero Content */}
-            <div className="absolute inset-0 flex flex-col justify-end pb-16 sm:pb-24 z-20">
+            <div className="absolute inset-0 flex flex-col justify-end pb-20 sm:pb-24 z-20">
               <div className="container mx-auto max-w-5xl px-4 sm:px-6">
                 {/* Breadcrumbs */}
-                <div className="mb-8 text-white/80">
+                <div className="mb-8 text-sage-200/80 font-medium">
                   <Breadcrumbs
                     items={[
                       { label: 'Blog', href: '/blogs' },
@@ -194,7 +203,7 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                     {post.tags.filter(tag => tag && tag.name).slice(0, 4).map((tag) => (
                       <span
                         key={tag._id}
-                        className="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-lg text-white border border-white/20 backdrop-blur-md bg-white/10"
+                        className="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-lg text-sage-100 border border-sage-200/20 backdrop-blur-md bg-white/5 shadow-sm"
                         style={{
                           borderColor: tag.color ? `${tag.color}60` : 'rgba(255,255,255,0.2)'
                         }}
@@ -205,41 +214,43 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                   </div>
                 )}
 
-                <h1 className="mb-6 text-2xl md:text-4xl font-serif font-bold text-white leading-tight text-shadow-sm">
+                <h1 className="mb-6 text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-white leading-tight tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)]">
                   {post.title}
                 </h1>
 
-                <div className="flex flex-wrap items-center gap-6 text-sm sm:text-base text-gray-200 font-medium">
+                <div className="flex flex-wrap items-center gap-6 text-sm sm:text-base text-sage-100/90 font-medium tracking-wide">
                   {post.author && (
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 bg-white/5 pr-4 pl-1 py-1 rounded-full border border-white/10 backdrop-blur-sm">
                       {post.author.image && (
                         <Image
                           src={urlFor(post.author.image).url()}
                           alt={post.author.name}
-                          width={40}
-                          height={40}
-                          className="rounded-full ring-2 ring-white/30"
+                          width={32}
+                          height={32}
+                          className="rounded-full ring-2 ring-lime-500/50"
                         />
                       )}
-                      <span>{post.author.name}</span>
+                      <span className="text-white font-semibold">{post.author.name}</span>
                     </div>
                   )}
-                  <span className="hidden sm:block w-1.5 h-1.5 rounded-full bg-white/30" />
                   <div className="flex items-center gap-2">
-                    <BiTime className="h-5 w-5 text-lime-400" />
-                    <span>{readTime} min read</span>
+                    <BiTime className="h-5 w-5 text-lime-400 drop-shadow-md" />
+                    <span className="drop-shadow-sm">{readTime} min read</span>
                   </div>
-                  <span className="hidden sm:block w-1.5 h-1.5 rounded-full bg-white/30" />
-                  <time className="flex items-center gap-2">
+                  <span className="hidden sm:block w-1 h-1 rounded-full bg-lime-500" />
+                  <time className="flex items-center gap-2 drop-shadow-sm">
                     {format(new Date(post._createdAt), 'MMM dd, yyyy')}
                   </time>
                 </div>
               </div>
             </div>
+
+            {/* Scroll Indicator */}
+            <ScrollIndicator />
           </div>
 
           {/* Main Content Area */}
-          <div className="container mx-auto max-w-[90rem] px-4 sm:px-6 py-16 lg:py-24">
+          <div className="container mx-auto max-w-[90rem] px-4 sm:px-6 py-12 lg:py-16">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
 
               {/* Left Sidebar: Floating Actions (Desktop > 1024px) */}
@@ -274,39 +285,39 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
 
                 {/* Author Bio Card */}
                 {post.author && (
-                  <div className="mt-12 mb-12 p-8 bg-gradient-to-br from-sage-100/30 to-white rounded-2xl border border-sage-200 flex flex-col sm:flex-row gap-6 items-start">
+                  <div className="mt-12 mb-12 p-8 bg-gradient-to-br from-sage-50 to-white dark:from-[#0f291e] dark:to-[#0a1f15] rounded-2xl border border-sage-200 dark:border-forest-800 shadow-sm flex flex-col sm:flex-row gap-6 items-start">
                     {post.author.image && (
                       <Image
                         src={urlFor(post.author.image).url()}
                         alt={post.author.name}
                         width={80}
                         height={80}
-                        className="rounded-full ring-4 ring-white shadow-md shrink-0"
+                        className="rounded-full ring-4 ring-white dark:ring-forest-700 shadow-md shrink-0"
                       />
                     )}
-                    <div className="flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                        <h3 className="text-xl font-bold text-forest-900">{post.author.name}</h3>
+                    <div className="flex-1 w-full">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                        <h3 className="text-xl font-bold text-forest-900 dark:text-sage-100">{post.author.name}</h3>
                         {/* Hardcoded Socials for Aman */}
                         {post.author.name.includes('Aman') && (
-                          <div className="flex gap-3 text-forest-900">
-                            <a href="https://twitter.com/_AmanSurya" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
-                              <FaXTwitter size={20} />
+                          <div className="flex gap-3 text-forest-700 dark:text-sage-400">
+                            <a href="https://twitter.com/_AmanSurya" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors p-1.5 hover:bg-sage-100 dark:hover:bg-forest-800 rounded-lg">
+                              <FaXTwitter size={18} />
                             </a>
-                            <a href="https://www.linkedin.com/in/amansuryavanshi-ai/" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
+                            <a href="https://www.linkedin.com/in/amansuryavanshi-ai/" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors p-1.5 hover:bg-sage-100 dark:hover:bg-forest-800 rounded-lg">
                               <BiLogoLinkedin size={20} />
                             </a>
-                            <a href="https://github.com/AmanSuryavanshi-1" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
+                            <a href="https://github.com/AmanSuryavanshi-1" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors p-1.5 hover:bg-sage-100 dark:hover:bg-forest-800 rounded-lg">
                               <BiLogoGithub size={20} />
                             </a>
-                            <a href="https://amansuryavanshi.dev" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 transition-colors">
+                            <a href="https://amansuryavanshi.me" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors p-1.5 hover:bg-sage-100 dark:hover:bg-forest-800 rounded-lg">
                               <BiGlobe size={20} />
                             </a>
                           </div>
                         )}
                       </div>
                       {post.author.bio && (
-                        <div className="text-forest-700 prose-sm">
+                        <div className="text-forest-700 dark:text-sage-300 prose-sm dark:prose-invert leading-relaxed">
                           <PortableText value={post.author.bio} />
                         </div>
                       )}
@@ -318,7 +329,7 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                 <ShareBar title={post.title} slug={post.slug.current} />
 
                 {/* Related Posts */}
-                <RelatedPosts posts={relatedPosts} />
+
               </div>
 
               {/* Right Sidebar: Table of Contents (Desktop > 1280px) */}
@@ -330,6 +341,9 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
 
           {/* Mobile Action Bar */}
           <MobileActionBar title={post.title} slug={post.slug.current} />
+
+          {/* Related Posts Section - Full Width */}
+          <RelatedPosts posts={relatedPosts} />
 
           {/* CTA Section */}
           <CTA />

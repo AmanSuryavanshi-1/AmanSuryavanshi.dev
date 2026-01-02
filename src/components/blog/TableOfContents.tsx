@@ -100,58 +100,51 @@ export default function TableOfContents({ mobile, onClose, readTime = 5 }: Table
     if (headings.length === 0) return null;
 
     return (
-        <nav className={`${mobile ? '' : 'hidden lg:block sticky top-32 max-h-[calc(100vh-8rem)] overflow-y-auto pl-4'}`}>
-            {!mobile && (
-                <div className="mb-6 p-4 bg-sage-50 rounded-xl border border-sage-100">
-                    <div className="flex items-center gap-2 text-forest-700 font-medium text-sm mb-1">
-                        <BiTime className="text-lime-600" />
-                        <span>{timeRemaining} min remaining</span>
-                    </div>
-                    <div className="w-full bg-sage-200 rounded-full h-1.5 mt-2">
-                        <div
-                            className="bg-lime-500 h-1.5 rounded-full transition-all duration-300"
-                            style={{ width: `${Math.max(0, Math.min(100, 100 - (timeRemaining / readTime) * 100))}%` }}
-                        />
-                    </div>
-                </div>
-            )}
+        <nav className={`${mobile ? '' : 'hidden xl:block sticky top-32 max-h-[calc(100vh-8rem)] overflow-y-auto'}`}>
+            <div className="bg-white dark:bg-[#162c22] rounded-2xl p-6 border border-forest-100 dark:border-white/10 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+                <h5 className="text-xs font-bold text-forest-900 dark:text-sage-100 uppercase tracking-wider mb-4 flex items-center gap-2 px-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-lime-500" />
+                    On this page
+                </h5>
 
-            <h4 className="text-sm font-bold text-forest-900 uppercase tracking-wider mb-4">
-                On this page
-            </h4>
-            <ul className={`space-y-3 text-sm ${mobile ? '' : 'border-l border-forest-100'}`}>
-                {headings.map((heading) => (
-                    <li
-                        key={heading.id}
-                        style={{ paddingLeft: heading.level === 3 ? '1rem' : '0' }}
-                    >
-                        <a
-                            href={`#${heading.id}`}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                const element = document.getElementById(heading.id);
-                                if (element) {
-                                    const headerOffset = 100; // Adjust for fixed header
-                                    const elementPosition = element.getBoundingClientRect().top;
-                                    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+                <ul className="space-y-1 max-h-[60vh] overflow-y-auto pr-1 custom-scrollbar dark-scrollbar">
+                    {headings.map((heading) => (
+                        <li key={heading.id}>
+                            <a
+                                href={`#${heading.id}`}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    const element = document.getElementById(heading.id);
+                                    if (element) {
+                                        const headerOffset = 100;
+                                        const elementPosition = element.getBoundingClientRect().top;
+                                        const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
-                                    window.scrollTo({
-                                        top: offsetPosition,
-                                        behavior: 'smooth'
-                                    });
-                                }
-                                if (onClose) onClose();
-                            }}
-                            className={`block ${mobile ? 'py-2' : 'pl-4 border-l-2 -ml-[1px]'} transition-all duration-200 ${activeId === heading.id
-                                ? 'border-lime-500 text-lime-600 font-medium'
-                                : 'border-transparent text-forest-500 hover:text-forest-800 hover:border-forest-300'
-                                }`}
-                        >
-                            {heading.text}
-                        </a>
-                    </li>
-                ))}
-            </ul>
+                                        window.scrollTo({
+                                            top: offsetPosition,
+                                            behavior: 'smooth'
+                                        });
+                                    }
+                                    if (onClose) onClose();
+                                }}
+                                className={`
+                                    block w-full text-left text-sm py-2 px-3 rounded-lg transition-all duration-200 border-l-2
+                                    ${activeId === heading.id
+                                        ? 'border-lime-500 bg-lime-50 dark:bg-lime-500/20 text-forest-900 dark:text-lime-300 font-medium'
+                                        : 'border-transparent text-forest-500 dark:text-sage-200 hover:text-forest-700 dark:hover:text-white hover:bg-forest-50 dark:hover:bg-forest-700'
+                                    }
+                                `}
+                                style={{
+                                    paddingLeft: heading.level === 3 ? '1.5rem' : '0.75rem',
+                                    fontSize: heading.level === 3 ? '0.85rem' : '0.9rem'
+                                }}
+                            >
+                                <span className="line-clamp-2">{heading.text}</span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </nav>
     );
 }
