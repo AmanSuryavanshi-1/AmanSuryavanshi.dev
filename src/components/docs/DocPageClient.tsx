@@ -326,8 +326,8 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
 
                         {/* MAIN CONTENT CENTER */}
                         <article className="min-w-0">
-                            {/* Video Walkthrough - Show at top of technical docs if available */}
-                            {isTechnicalDoc && project.videoYouTubeId && (
+                            {/* Video Walkthrough - Show on all documentation pages if available */}
+                            {project.videoYouTubeId && (
                                 <div className="mb-10">
                                     <div className="bg-white rounded-3xl overflow-hidden border border-forest-100 shadow-xl ring-1 ring-forest-100/50">
                                         <div className="p-4 px-6 border-b border-forest-100 bg-forest-50/50 flex items-center gap-3">
