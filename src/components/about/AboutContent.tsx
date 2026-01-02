@@ -101,7 +101,7 @@ const AboutContent = () => {
           <meta key={index} itemProp="knowsAbout" content={keyword} />
         ))}
         <link itemProp="additionalType" href="http://schema.org/EngineeringProfessional" />
-        <link itemProp="sameAs" href="https://github.com/amansuryavanshi" />
+        <link itemProp="sameAs" href="https://github.com/AmanSuryavanshi-1" />
         <link itemProp="sameAs" href="https://www.linkedin.com/in/amansuryavanshi-ai/" />
       </section>
     </div>
