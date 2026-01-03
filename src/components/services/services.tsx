@@ -8,6 +8,7 @@ import { portfolioData, ServiceData } from '@/data/portfolio';
 import { SolidButton } from '@/components/solid-button';
 import { AlertCircle, Lightbulb, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import { getIcon } from '@/data/icons/icon-map';
 
 // Premium ServiceCard with Image Banner - Compact for 100vh fit
 const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ service, index }) => {
@@ -75,9 +76,10 @@ const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ servic
                               text-forest-900 dark:text-sage-100
                               group-hover/card:bg-lime-500 group-hover/card:text-white group-hover/card:border-lime-500
                               transition-all duration-300 shrink-0">
-                <div className="[&>svg]:w-5 [&>svg]:h-5">
-                  {service.icon}
-                </div>
+                {(() => {
+                  const Icon = getIcon(service.icon);
+                  return <Icon className="w-5 h-5" />;
+                })()}
               </div>
               <div className="min-w-0">
                 <h3 className="text-base sm:text-lg font-bold text-forest-900 dark:text-sage-100 

@@ -128,6 +128,43 @@ const HOWTO_SCHEMAS: Record<string, object> = {
             { "@type": "HowToStep", "name": "Implement Error Recovery", "text": "Add retry logic, dead-letter queues, and notification systems for failure handling." }
         ],
         "totalTime": "PT6H"
+    },
+    'barkat-enterprise-technical-documentation': {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Build a B2B E-Commerce Catalogue with React",
+        "description": "Technical guide on building a high-performance React application for browsing 3000+ tile products with PDF integration.",
+        "step": [
+            { "@type": "HowToStep", "name": "Setup Product Schema", "text": "Define structured JSON data for tile categories, dimensions, and finish types." },
+            { "@type": "HowToStep", "name": "Implement PDF Viewer", "text": "Integrate a lightweight PDF viewer for rendering digital product catalogues directly in the browser." },
+            { "@type": "HowToStep", "name": "Optimize Image Loading", "text": "Implement lazy loading and blur-up placeholders for grid views containing hundreds of product images." },
+            { "@type": "HowToStep", "name": "Deploy to Vercel", "text": "Configure build pipelines and CDN caching for optimal delivery in the Indian market." }
+        ],
+        "totalTime": "PT12H"
+    },
+    'av-newsstream-technical-documentation': {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Implement API Key Rotation for High-Volume Scraping",
+        "description": "Strategies for handling rate limits and ensuring 100% uptime when aggregating news from multiple restricted APIs.",
+        "step": [
+            { "@type": "HowToStep", "name": "Design Rotation Logic", "text": "Create a round-robin algorithm to cycle through a pool of available API keys." },
+            { "@type": "HowToStep", "name": "Handle Rate Limit Headers", "text": "Parse 'X-RateLimit-Remaining' headers to preemptively switch keys before exhaustion." },
+            { "@type": "HowToStep", "name": "Implement Caching Layer", "text": "Use Redis or in-memory caching to serve repeated requests without hitting the upstream API." }
+        ],
+        "totalTime": "PT5H"
+    },
+    'foodah-technical-documentation': {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Reduce React App Load Time by 40%",
+        "description": "Performance optimization guide using custom hooks, code splitting, and memoization strategies.",
+        "step": [
+            { "@type": "HowToStep", "name": "Audit Bundle Size", "text": "Use webpack-bundle-analyzer to identify large dependencies and unnecessary code." },
+            { "@type": "HowToStep", "name": "Refactor with Custom Hooks", "text": "Extract complex logic into reusable hooks to prevent unnecessary re-renders." },
+            { "@type": "HowToStep", "name": "Implement Code Splitting", "text": "Use React.lazy and Suspense to load route components only when needed." }
+        ],
+        "totalTime": "PT8H"
     }
 };
 
