@@ -39,11 +39,14 @@ const Data: React.FC = () => {
             <motion.div
                 className="flex flex-wrap justify-center md:justify-start gap-2 mb-4 text-xs md:text-sm"
                 variants={itemVariants}
+                itemScope
+                itemType="https://schema.org/Achievement"
             >
                 {stats.map((stat, index) => (
                     <div
                         key={index}
                         className="flex items-center px-3 py-1 rounded-full border-2 border-white dark:border-sage-300/30 bg-lime-500/50 dark:bg-lime-500/20 shadow-md backdrop-blur-sm"
+                        itemProp="description"
                     >
                         <span className="text-forest-900 dark:text-sage-100 font-semibold">{stat}</span>
                     </div>

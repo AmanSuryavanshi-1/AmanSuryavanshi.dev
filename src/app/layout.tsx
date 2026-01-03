@@ -25,7 +25,7 @@ const geistMono = localFont({
 
 // Site Constants
 const SITE_NAME = "Aman Suryavanshi";
-const SITE_TITLE = "Aman Suryavanshi | AI Workflow Architect | ₹300K+ Revenue Impact";
+const SITE_TITLE = "Aman Suryavanshi | AI Workflow Architect & Systems Builder";
 const SITE_DESCRIPTION = "I build self-healing AI systems that drive revenue. ₹300K+ generated, 80% manual work eliminated. n8n automation, LangGraph agents, Next.js dashboards. Book a discovery call for your system audit.";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi-dev.vercel.app/";
 
@@ -37,63 +37,30 @@ export const metadata: Metadata = {
     },
     description: SITE_DESCRIPTION,
     keywords: [
-        // PRIMARY: Client Pain Keywords (High-Intent)
-        "reduce operational costs with AI",
-        "automate manual data entry",
-        "n8n vs Zapier for business",
-        "AI agents for lead generation",
-        "self-healing workflow automation",
-        "hire n8n automation expert",
-        // SECONDARY: Technical Authority
-        "AI workflow architect",
-        "n8n automation expert India",
-        "LangGraph production architecture",
-        "Next.js AI dashboard developer",
-        "full-stack systems builder",
-        "AI automation engineer",
-        "Next.js automation",
-        "React automation solutions",
-        "TypeScript developer",
-        "Firebase integration",
-        "Sanity CMS developer",
-        "headless CMS automation",
-        // AI & Automation stack
-        "Groq AI",
-        "Anthropic Claude",
-        "GPT-4 integration",
-        "Perplexity AI",
-        "SerpAPI integration",
-        "RAG systems",
-        "vector databases",
-        "AI agents",
-        "multi-LLM integration",
-        // Automation specialties
-        "workflow automation specialist",
-        "business process automation",
-        "API integration expert",
-        "integration specialist",
-        "systems integration",
-        "app integration expert",
-        "tool connector",
-        "service orchestration",
-        "no-code automation",
-        "low-code development",
-        "automation consultant",
-        // Development
-        "full-stack automation",
-        "UI/UX developer",
-        "modern web apps",
-        "progressive web apps",
-        "responsive design",
-        // Location-based
-        "automation developer India",
-        "n8n expert India",
-        "remote automation engineer",
-        "freelance automation developer",
-        // Personal brand
-        "Aman Suryavanshi",
-        "Aman Suryavanshi developer",
-        "Aman Suryavanshi AI automation"
+        // ELITE AUTHORITY: High-Ticket Intent
+        "AI Agent Developer for SaaS",
+        "n8n Automation Expert for Agencies",
+        "Next.js AI Dashboard Architect",
+        "Freelance AI Engineer",
+        "Hire n8n Expert",
+        // TECHNICAL SPECIALTIES (KnowsAbout)
+        "Agentic Workflows",
+        "Deterministic Automation",
+        "Multi-LLM Orchestration",
+        "Self-Healing Workflows",
+        "RAG Pipeline Architecture",
+        "LangGraph Developer",
+        "Vector Database Integration",
+        // OUTCOMES
+        "Reduce Operational Costs with AI",
+        "Automate Revenue Operations",
+        "Enterprise Process Automation",
+        // STACK
+        "Next.js App Router",
+        "TypeScript",
+        "OpenAI GPT-4 Integration",
+        "Anthropic Claude API",
+        "Google Gemini API"
     ],
     authors: [{ name: SITE_NAME, url: SITE_URL }],
     creator: SITE_NAME,
@@ -148,7 +115,7 @@ const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
         {
-            "@type": "Person",
+            "@type": ["Person", "SoftwareEngineer"],
             "@id": `${SITE_URL}#person`,
             name: SITE_NAME,
             url: SITE_URL,
@@ -160,36 +127,37 @@ const structuredData = {
                 height: 630,
             },
             description: SITE_DESCRIPTION,
-            jobTitle: "AI Workflow Architect & Full-Stack Systems Builder",
-            hasOccupation: {
-                "@type": "Occupation",
-                "name": "AI Workflow Architect",
-                "description": "Building self-healing AI automation systems that generate revenue. Specializing in n8n production workflows with deterministic state management, LangGraph agent pipelines, and Next.js control dashboards.",
-                "skills": [
-                    "Self-Healing n8n Automation",
-                    "LangGraph Agent Orchestration",
-                    "Next.js AI Dashboards",
-                    "Deterministic State Management",
-                    "Dead-Letter Queue Architecture",
-                    "Multi-LLM Integration",
-                    "TypeScript",
-                    "React",
-                    "Firebase"
-                ]
+            jobTitle: "AI Workflow Architect & Systems Builder",
+            worksFor: {
+                "@type": "Organization",
+                "name": "Freelance"
             },
             knowsAbout: [
-                "Self-Healing Workflow Automation",
-                "n8n Production Deployment",
-                "LangGraph Multi-Agent Systems",
-                "Next.js Dashboard Development",
-                "AI Agent Orchestration",
-                "Revenue Operations Automation",
-                "Dead-Letter Queues",
+                {
+                    "@type": "Thing",
+                    "name": "Agentic Workflows",
+                    "description": "Designing autonomous AI agent systems using LangGraph"
+                },
+                {
+                    "@type": "Thing",
+                    "name": "Deterministic Automation",
+                    "description": "Building reliable, state-managed workflows in n8n"
+                },
+                {
+                    "@type": "Thing",
+                    "name": "Multi-LLM Orchestration",
+                    "description": "Routing tasks to optimal models (GPT-4o, Claude 3.5 Sonnet, Gemini)"
+                },
+                {
+                    "@type": "Thing",
+                    "name": "n8n Production Architecture",
+                    "description": "Self-hosted, high-scale n8n deployments with self-healing capabilities"
+                },
+                "RAG Systems",
+                "Next.js AI Dashboards",
+                "Dead-Letter Queue Architecture",
                 "TypeScript",
-                "React",
-                "Firebase",
-                "Sanity CMS",
-                "API Integration"
+                "Revenue Operations Automation"
             ],
             sameAs: [
                 "https://github.com/AmanSuryavanshi-1",
@@ -208,60 +176,17 @@ const structuredData = {
             },
         },
         {
-            "@type": "FAQPage",
-            "mainEntity": [
-                {
-                    "@type": "Question",
-                    "name": "How can AI agents reduce my operational costs?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "AI agents built with n8n and LangGraph can automate research, data entry, and customer outreach—reducing manual work by 80%. My systems have saved clients 40+ hours/week and generated ₹300K+ in revenue through autonomous lead operations."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "Can n8n replace my manual data entry team?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Yes. I build self-healing n8n workflows with Dead-Letter Queues and automatic retry logic that process forms, enrich CRM data, and sync across tools automatically. One client reduced their admin workload by 80% with a 74-node automation system."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "How much does custom AI automation cost in India?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "Production n8n + LangGraph automation projects range from ₹50K-₹2L ($900-$2,500) depending on complexity. I offer free discovery calls to scope requirements and provide fixed-price quotes with guaranteed deliverables."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "What's the difference between Zapier and n8n?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "n8n is self-hosted, infinitely customizable, and supports AI agents via LangChain integration. Unlike Zapier, n8n has no task limits, supports complex logic like loops and conditionals, and allows deterministic state management with Dead-Letter Queues. I specialize in production n8n deployments."
-                    }
-                },
-                {
-                    "@type": "Question",
-                    "name": "How do I get my business to show up in ChatGPT and Perplexity?",
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": "AI search engines prioritize structured data (JSON-LD schemas), FAQ markup, and authoritative content with specific metrics. I implement AEO (Answer Engine Optimization) strategies including client-pain FAQ schemas and achievement entities that have helped clients get cited in AI search results."
-                    }
-                }
-            ]
-        },
-        {
             "@type": "ProfessionalService",
             "@id": `${SITE_URL}#service`,
             name: "Aman Suryavanshi — AI Workflow Architecture",
             description: "Production-grade AI automation systems: self-healing n8n workflows, LangGraph agent pipelines, and Next.js control dashboards. Specializing in systems that generate revenue and reduce manual work.",
+            url: SITE_URL,
             provider: {
                 "@id": `${SITE_URL}#person`
             },
-            areaServed: ["Global", "India", "USA", "Remote"],
-            priceRange: "₹75,000 - ₹5,00,000",
+            areaServed: ["Global", "USA", "UK", "India"],
+            priceRange: "₹50,000 - ₹5,00,000",
+            image: "/Images/profile-pic.png",
             serviceType: [
                 "AI Workflow Automation",
                 "n8n Production Deployment",
@@ -286,11 +211,48 @@ const structuredData = {
                         itemOffered: {
                             "@type": "Service",
                             name: "Self-Healing Business Automation",
-                            description: "74-node n8n workflows with DLQ, retry logic, and health monitoring"
+                            description: "Complex n8n workflows with DLQ, retry logic, and health monitoring"
+                        }
+                    },
+                    {
+                        "@type": "Offer",
+                        itemOffered: {
+                            "@type": "Service",
+                            name: "AI-Powered SaaS Architecture",
+                            description: "Next.js + AI Agent backends for scalable SaaS applications"
                         }
                     }
                 ]
             }
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "How to hire an n8n automation expert?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Look for engineers who specialize in 'deterministic automation' and 'self-healing workflows' rather than just connecting APIs. My service includes a full architecture audit, custom n8n node development, and guaranteed error handling protocols to ensure 99.9% uptime."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is an AI Workflow Architect?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "An AI Workflow Architect doesn't just write prompts; they build the infrastructure (RAG, Vector DBs, n8n orchestrators) that makes AI agents reliable in production. I combine Next.js full-stack skills with advanced agent frameworks like LangGraph to build complete business systems."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Cost of building custom AI agents?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Professional AI agent development typically ranges from ₹75,000 to ₹5,00,000 depending on complexity (e.g., single-task bot vs. multi-agent orchestration). My pricing is value-based, focusing on the revenue generated or hours saved by the system."
+                    }
+                }
+            ]
         }
     ]
 };
