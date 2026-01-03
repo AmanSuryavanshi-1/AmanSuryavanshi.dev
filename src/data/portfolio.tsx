@@ -258,43 +258,43 @@ export interface PortfolioData {
 const heroData: HeroData = {
     name: "Aman Suryavanshi",
     title: "Aman Suryavanshi",
-    subtitle: "AI Automation Engineer + Full-Stack Developer",
-    tagline: "Building Next.js apps with intelligent n8n automation backends",
-    description: "I connect apps, APIs, and services into seamless intelligent workflows. By orchestrating LangChain, n8n, and OpenAI, I build autonomous systems that eliminate manual work. My solutions have generated ₹300K+ revenue while cutting operational costs by 80%.",
-    descriptionHighlight: "Gluing tools together to create powerful AI-driven solutions.",
+    subtitle: "AI Workflow Architect & Full-Stack Systems Builder",
+    tagline: "I Build Self-Healing AI Systems That Drive Revenue",
+    description: "My systems have generated ₹300K+ ($3.5K+) in client revenue and reduced manual operations by 80%. I architect end-to-end solutions: autonomous n8n workflows with deterministic state management, LangGraph agent pipelines, and the Next.js dashboards that control them.",
+    descriptionHighlight: "₹300K+ Revenue Impact | 80% Task Automation | Production-Grade Systems",
     stats: [
-        "Integration Specialist",
-        "n8n + AI Expert",
-        "Next.js Full-Stack"
+        "₹300K+ Revenue Generated",
+        "80% Manual Work Eliminated",
+        "15+ Production Workflows"
     ],
     buttons: {
         primary: {
-            label: "View Automation Work",
+            label: "See My Business Transformations",
             href: "/projects"
         },
         secondary: {
-            label: "Download Resume",
-            href: "/AmanSuryavanshi_Resume_Latest.pdf"
+            label: "Book a Discovery Call",
+            href: "#contact"
         }
     },
     meta: {
         name: "Aman Suryavanshi",
-        description: "AI automation developer specializing in n8n workflow orchestration, Next.js development, and AI integration. Built systems generating ₹300K revenue with 80% automation. Remote opportunities."
+        description: "AI Workflow Architect building production systems that generate ₹300K+ revenue. Self-healing n8n automation, LangGraph agents, Next.js dashboards. Book a discovery call for your system audit."
     }
 };
 
 const aboutData: AboutData = {
-    title: "I Orchestrate AI Systems That Deliver Business Results",
-    intro: "From manual chaos to intelligent automation—I build agentic systems that connect tools, eliminate busywork, and scale operations. n8n + Next.js + Claude AI = 80% time savings.",
+    title: "I Architect Systems That Generate Revenue & Scale Operations",
+    intro: "From manual chaos to intelligent automation—I build production-grade agentic systems with deterministic state management, closed-loop feedback mechanisms, and self-healing error recovery. My solutions have generated ₹300K+ while eliminating 80% of manual work.",
     journey: [
-        "Started building web apps → Discovered n8n automation → Realized 90% of business problems are integration problems → Now create complete AI-orchestrated systems"
+        "Started building web apps → Discovered n8n automation → Realized 90% of business problems are integration problems → Now architect complete AI-orchestrated systems with production-grade reliability"
     ],
-    philosophy: "I don't just code—I connect. My strength is making disparate systems work together seamlessly to solve \"glue code\" nightmares.",
+    philosophy: "I don't just code—I architect systems. My strength is building end-to-end solutions that combine intelligent AI agents with robust infrastructure that enterprises can trust.",
     differentiators: [
-        "✅ n8n Production Expertise (self-hosted, Docker, security-hardened)",
-        "✅ Next.js 15 + AI Integration (Claude, LangChain, RAG)",
-        "✅ Real Revenue Impact (₹300K+ generated, 80% automation)",
-        "✅ Complete Systems (frontend → backend → automation → analytics)"
+        "✅ Self-Healing Automation (Dead-Letter Queues, Automatic Retries, Fallback Paths)",
+        "✅ Production n8n Expertise (74-node workflows, Docker, Security-Hardened)",
+        "✅ Real Revenue Impact (₹300K+ generated, 80% cost reduction)",
+        "✅ Complete Systems (Frontend → Automation → AI Agents → Monitoring)"
     ],
     cta: "",
     keywords: [
@@ -1259,7 +1259,7 @@ const rawProjects = [
         solution: "Developed a React 18 + Vite powered single-page application with TailwindCSS utility-first styling and custom design system. Implemented dynamic product filtering system with category/subcategory hierarchies, real-time keyword search with debouncing, and lazy-loaded image galleries using intersection observer API. Integrated PDFJS for in-browser catalogue viewing and download capabilities, EmailJS for serverless contact form submissions with validation, and React Router for seamless client-side navigation. Applied mobile-first design principles with responsive breakpoints specifically optimized for Indian mobile devices. Converted all images to WebP format achieving 30-50% size reduction while maintaining visual quality.",
         impact: [
             "3,000+ viewers with strong engagement metrics and low bounce rate",
-            "50+ organic leads generated through contact forms and direct inquiries",
+            "60+ organic leads generated through contact forms and direct inquiries",
             "Sub-2 second initial load time via WebP compression and lazy loading",
             "Mobile conversion rate improvement through responsive design optimization",
             "Reduced catalogue distribution costs via digital PDF system",
@@ -1542,67 +1542,62 @@ const projectsData: Project[] = rawProjects.map(p => ({
 const servicesData: ServiceData[] = [
     {
         id: 1,
-        title: "AI Workflow Automation Systems",
-        subtitle: "Eliminate 80% manual tasks with intelligent orchestration",
-        problem: "Disconnected tools wasting employee hours on repetitive tasks",
-        solution: "n8n + LangChain + business APIs → seamless automation pipelines",
-        outcomes: ["80% time reduction", "₹300K+ revenue generation", "Zero maintenance overhead"],
-        tech: ["n8n", "LangChain", "Claude AI", "Custom APIs", "Webhooks"],
-        idealClient: "Startups & SMBs needing rapid automation ROI",
-        icon: <Bot className="w-5 h-5" />,
-        image: "/services/automation.jpg",
+        title: "Autonomous Revenue Operations",
+        subtitle: "AI agents that find, qualify, and nurture leads 24/7",
+        problem: "Your sales team spends 70% of time on research and data entry instead of closing deals.",
+        solution: "I build LangGraph-powered SDR agents with multi-agent orchestration, memory systems, and human-in-the-loop approval gates. Autonomous lead research, CRM enrichment, and personalized outreach—all running in production.",
+        outcomes: ["Lead research on autopilot", "CRM enrichment at scale", "Personalized outreach drafts", "24/7 autonomous operation"],
+        tech: ["LangGraph", "n8n", "OpenAI GPT-4", "Supabase Vector", "Airtable"],
+        idealClient: "B2B SaaS founders, agencies, sales teams processing 10+ leads/day",
+        icon: <GitBranch className="w-5 h-5" />,
+        image: "/services/revenue-ops.png",
         relatedProjects: [
-            { title: "Aviators Training Centre", url: "/projects#aviators-training-centre" },
-            { title: "Omni-Post AI Automation", url: "/projects#n8n-automation-suite" }
+            { title: "Case Study: ₹300K Revenue via Automation", url: "/projects/aviators-training-centre-executive-summary" }
         ]
     },
     {
         id: 2,
-        title: "Next.js + AI Frontend Systems",
-        subtitle: "Production-grade UIs with intelligent backends",
-        problem: "Beautiful UIs disconnected from automation & AI capabilities",
-        solution: "Next.js 15 + Firebase + n8n → complete agentic systems",
-        outcomes: ["95+ Lighthouse scores", "50+ concurrent users", "Real-time sync"],
-        tech: ["Next.js 15", "React 18", "Firebase", "TypeScript", "Sanity CMS"],
-        idealClient: "Businesses wanting modern web apps with AI superpowers",
-        icon: <Code className="w-5 h-5" />,
-        image: "/services/frontend.jpg",
+        title: "Self-Healing Business Automation",
+        subtitle: "Production workflows with deterministic state management",
+        problem: "Your Zapier workflows crash silently. You find out days later when a customer complains.",
+        solution: "I architect 74-node n8n production systems with Dead-Letter Queues (DLQ), automatic retry logic with exponential backoff, closed-loop feedback mechanisms, and real-time Telegram/Slack health alerts. Self-healing means zero silent failures.",
+        outcomes: ["99.7% uptime guarantee", "Automatic error recovery", "Real-time health monitoring", "Dead-letter queue processing"],
+        tech: ["n8n (Self-Hosted)", "Docker", "PostgreSQL", "Telegram API", "Webhooks", "Redis"],
+        idealClient: "Operations teams, content creators, e-commerce businesses needing reliability",
+        icon: <Zap className="w-5 h-5" />,
+        image: "/services/self-healing.png",
         relatedProjects: [
-            { title: "AmanSuryavanshi.dev", url: "/projects#portfolio-website" },
-            { title: "Aviators Training Centre", url: "/projects#aviators-training-centre" },
-            { title: "Barkat Enterprise", url: "/projects#barkat-enterprise" }
+            { title: "Case Study: 74-Node Content Automation", url: "/projects/omni-post-ai-executive-summary" }
         ]
     },
     {
         id: 3,
-        title: "Technical Writing & Content Creation",
-        subtitle: "Clear documentation that drives adoption & trust",
-        problem: "Complex products with poor documentation losing customers",
-        solution: "Developer-focused docs + SEO blogs + API references",
-        outcomes: ["Improved user onboarding", "Higher product adoption", "SEO traffic boost"],
-        tech: ["Markdown", "MDX", "Sanity CMS", "Technical Docs", "API Documentation"],
-        idealClient: "SaaS & developer tools needing clear technical communication",
-        icon: <FileText className="w-5 h-5" />,
-        image: "/services/writing.jpg",
+        title: "AI Control Center Dashboards",
+        subtitle: "Frontend interfaces that let non-technical teams command AI",
+        problem: "Your AI agent is powerful but only developers can use it. Your operations team is locked out.",
+        solution: "I build Next.js 15 dashboards with real-time state monitoring, approval workflows, and one-click override controls. Non-technical users can pause, approve, and audit AI decisions without touching code. Full observability into agent behavior.",
+        outcomes: ["Non-tech user access", "Real-time monitoring", "One-click AI control", "Complete audit trails"],
+        tech: ["Next.js 15", "TypeScript", "Tailwind CSS", "Firebase Realtime", "Supabase"],
+        idealClient: "AI-first startups, internal tools teams, agencies managing AI agents",
+        icon: <Layout className="w-5 h-5" />,
+        image: "/services/dashboard.png",
         relatedProjects: [
-            { title: "Omni-Post AI Summary", url: "/projects/omni-post-ai-executive-summary" },
-            { title: "Aviators Technical Docs", url: "/projects/aviators-training-centre-technical-documentation" }
+            { title: "Case Study: 95+ Lighthouse Dashboard", url: "/projects/aviators-training-centre-technical-documentation" }
         ]
     },
     {
         id: 4,
-        title: "SEO & Web Performance Optimization",
-        subtitle: "#1 Google rankings with blazing-fast load times",
-        problem: "Slow websites buried in search results losing valuable traffic",
-        solution: "Core Web Vitals optimization + Technical SEO + Schema markup",
-        outcomes: ["#1 Google rankings", "95+ Lighthouse scores", "Sub-2s load times"],
-        tech: ["Core Web Vitals", "Schema Markup", "Image Optimization", "Code Splitting", "Lazy Loading"],
-        idealClient: "Businesses wanting organic traffic & faster user experiences",
+        title: "AI Search Dominance Systems",
+        subtitle: "Get cited by ChatGPT & Perplexity, not just indexed by Google",
+        problem: "Traditional SEO is dying. Your competitors rank on Google, but you're invisible to AI search engines where high-intent buyers now search.",
+        solution: "I implement Entity Optimization strategies that influence LLM outputs: structured data that AI engines cite, FAQ schemas for featured snippets, and authority content that makes you the source AI references. Technical SEO + AEO + GEO combined.",
+        outcomes: ["40K+ Search Impressions", "AEO Visibility (ChatGPT/Perplexity)", "12% Organic Lead Conversion", "95+ Lighthouse Scores"],
+        tech: ["JSON-LD Schema", "Entity Optimization", "FAQ Markup", "Structured Data", "Core Web Vitals"],
+        idealClient: "SaaS founders, consultants, and B2B businesses wanting AI-era organic visibility",
         icon: <Search className="w-5 h-5" />,
-        image: "/services/seo.jpg",
+        image: "/services/seo-dominance.png",
         relatedProjects: [
-            { title: "Aviators Training Centre", url: "/projects#aviators-training-centre" },
-            { title: "AmanSuryavanshi.dev", url: "/projects#portfolio-website" }
+            { title: "Case Study: 40K+ Impressions via Entity SEO", url: "/projects/aviators-training-centre-executive-summary" }
         ]
     }
 ];
@@ -1611,13 +1606,13 @@ const servicesData: ServiceData[] = [
 
 const experienceData: ExperienceItem[] = [
     {
-        role: "AI Automation Engineer",
+        role: "AI Workflow Architect & Systems Builder",
         type: "Freelance & Indie",
         period: "Jan 2024 - Present",
         duration: "1+ years",
         achievements: [
-            "₹300K+ revenue generated through intelligent n8n automation workflows",
-            "15+ production workflows deployed (self-hosted, Docker, security-hardened)",
+            "₹300K+ ($3.5K+) revenue generated through self-healing n8n automation systems",
+            "15+ workflows deployed with deterministic state management and DLQ architecture",
             "8+ production applications built (Next.js, React, Firebase, AI integration)",
             "50+ active users served across enterprise & startup projects"
         ],

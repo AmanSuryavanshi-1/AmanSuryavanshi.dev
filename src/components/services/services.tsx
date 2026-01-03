@@ -1,302 +1,353 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from "@/components/ui/badge";
 import { portfolioData, ServiceData } from '@/data/portfolio';
 import { SolidButton } from '@/components/solid-button';
-import { AlertCircle, Lightbulb, Users, ExternalLink, ArrowRight } from 'lucide-react';
+import { AlertCircle, Lightbulb, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
+// Premium ServiceCard with Image Banner - Compact for 100vh fit
 const ServiceCard: React.FC<{ service: ServiceData, index: number }> = ({ service, index }) => {
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="h-full group perspective-1000"
+      className="h-full group/card select-none" // Named group for isolation
     >
-      <div className="h-full relative transition-all duration-500 transform group-hover:-translate-y-2 group-hover:rotate-x-2">
-        {/* Shadow element that appears on hover */}
-        <div className="absolute inset-x-4 -bottom-4 h-12 bg-lime-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="h-full relative transition-all duration-500 transform group-hover/card:-translate-y-2">
+        {/* Glow effect on hover */}
+        <div className="absolute inset-x-4 -bottom-4 h-12 bg-lime-500/20 blur-xl rounded-full opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-        <Card className="h-full flex flex-col overflow-hidden 
-                        border border-white/60 dark:border-white/10 
-                        bg-white/70 dark:bg-[#162c22]/80 backdrop-blur-md 
-                        shadow-lg shadow-forest-900/5 dark:shadow-black/20
-                        group-hover:shadow-2xl group-hover:shadow-lime-500/10 group-hover:border-lime-500/30 
-                        transition-all duration-500 relative rounded-3xl">
+        <div className="h-full flex flex-col overflow-hidden rounded-2xl
+                        border border-sage-200/60 dark:border-white/5
+                        bg-white dark:bg-[#162c22]
+                        shadow-lg shadow-forest-900/5 dark:shadow-black/30
+                        group-hover/card:shadow-2xl group-hover/card:shadow-lime-500/15 
+                        group-hover/card:border-lime-500/40 dark:group-hover/card:border-lime-500/30
+                        transition-all duration-500">
 
-          {/* Top decorative bar */}
-          <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-forest-100 dark:from-forest-700 via-lime-500 to-forest-100 dark:to-forest-700 opacity-50 group-hover:opacity-100 transition-opacity" />
+          {/* Image Banner with Tech Tags Overlay */}
+          <div className="relative h-32 md:h-36 w-full overflow-hidden bg-forest-900/5 dark:bg-forest-950/50">
+            <Image
+              src={service.image}
+              alt={service.title}
+              fill
+              className="object-cover transition-transform duration-700 group-hover/card:scale-110"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-forest-900/80 via-forest-900/20 to-transparent" />
 
-          <CardHeader className="pb-3 pt-5 sm:pt-6 px-4 sm:px-5 md:px-6">
-            <div className="flex items-start justify-between mb-4">
-              <div className="relative">
-                <div className="absolute inset-0 bg-lime-500 blur-lg opacity-0 group-hover:opacity-20 transition-opacity duration-500 rounded-full" />
-                <div className="relative p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-forest-50 dark:bg-forest-800 border border-forest-100 dark:border-forest-600 text-forest-900 dark:text-sage-100 
-                                group-hover:bg-lime-500 group-hover:text-white transition-colors duration-500">
-                  <div className="[&>svg]:w-5 [&>svg]:h-5 sm:[&>svg]:w-6 sm:[&>svg]:h-6">
-                    {service.icon}
-                  </div>
-                </div>
-              </div>
-              <Badge variant="secondary" className="bg-forest-50 dark:bg-forest-800 text-forest-700 dark:text-sage-300 font-mono text-[10px] tracking-wider border border-forest-100 dark:border-forest-600">
-                0{index + 1}
-              </Badge>
-            </div>
-            <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold font-serif text-forest-900 dark:text-sage-100 group-hover:text-lime-700 dark:group-hover:text-lime-400 transition-colors duration-300">
-              {service.title}
-            </CardTitle>
-            <p className="text-sm font-medium text-forest-500 dark:text-sage-400 mt-1.5 group-hover:text-forest-700 dark:group-hover:text-sage-300 transition-colors">
-              {service.subtitle}
-            </p>
-          </CardHeader>
-
-          <CardContent className="flex-grow flex flex-col gap-3 sm:gap-4 px-4 sm:px-5 md:px-6 pb-5 sm:pb-6">
-            {/* Problem & Solution */}
-            <div className="space-y-2.5 sm:space-y-3 p-3 sm:p-3.5 rounded-xl bg-forest-50/50 dark:bg-forest-800/50 border border-forest-100/50 dark:border-forest-600/50 group-hover:bg-forest-50 dark:group-hover:bg-forest-800 group-hover:border-forest-100 dark:group-hover:border-forest-600 transition-colors duration-300">
-              <div className="flex items-start gap-2.5">
-                <div className="mt-0.5 p-1 rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 shrink-0">
-                  <AlertCircle className="w-3 h-3" />
-                </div>
-                <p className="text-xs md:text-sm text-forest-600 dark:text-sage-300 leading-relaxed">
-                  <span className="font-semibold text-forest-900 dark:text-sage-100 block mb-0.5">Problem</span>
-                  {service.problem}
-                </p>
-              </div>
-              <div className="w-full h-px bg-forest-200/30 dark:bg-sage-300/10" />
-              <div className="flex items-start gap-2.5">
-                <div className="mt-0.5 p-1 rounded-full bg-lime-100 dark:bg-lime-500/20 text-lime-600 dark:text-lime-400 shrink-0">
-                  <Lightbulb className="w-3 h-3" />
-                </div>
-                <p className="text-xs md:text-sm text-forest-600 dark:text-sage-300 leading-relaxed">
-                  <span className="font-semibold text-forest-900 dark:text-sage-100 block mb-0.5">Solution</span>
-                  {service.solution}
-                </p>
-              </div>
-            </div>
-
-            {/* Outcomes */}
-            <div>
-              <p className="text-[10px] font-bold text-forest-400 dark:text-sage-400 uppercase tracking-widest mb-2">Outcomes</p>
-              <div className="flex flex-wrap gap-1.5">
-                {service.outcomes.map((outcome, idx) => (
-                  <Badge key={idx} variant="secondary" className="bg-white dark:bg-forest-800 border text-forest-600 dark:text-sage-300 border-forest-100 dark:border-forest-600 text-[10px] py-0.5 px-2 hover:border-lime-300 hover:text-lime-700 dark:hover:text-lime-400 transition-colors">
-                    {outcome}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            {/* Tech Stack */}
-            <div className="flex flex-wrap gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
-              {service.tech.map((tech, idx) => (
-                <span key={idx} className="text-[9px] px-1.5 py-0.5 rounded-full border border-forest-200 dark:border-forest-600 text-forest-600 dark:text-sage-200 bg-transparent dark:bg-forest-900/40">
+            {/* Tech Stack Tags - On Image */}
+            <div className="absolute bottom-2 left-3 right-3 flex flex-wrap gap-1">
+              {service.tech.slice(0, 4).map((tech, idx) => (
+                <span
+                  key={idx}
+                  className="text-[9px] px-1.5 py-0.5 rounded-full 
+                             border border-white/30
+                             text-white/90
+                             bg-black/30 backdrop-blur-sm"
+                >
                   {tech}
                 </span>
               ))}
             </div>
 
-            {/* Related Projects Link */}
-            {service.relatedProjects && service.relatedProjects.length > 0 && (
-              <div className="mt-auto pt-3 border-t border-forest-100 dark:border-forest-600 flex items-center justify-between group/link">
-                <span className="text-[10px] font-semibold text-forest-900 dark:text-sage-100 uppercase tracking-wide">
-                  See in Action
-                </span>
-                <div className="flex -space-x-1.5">
-                  {service.relatedProjects.map((project, idx) => (
-                    <Link key={idx} href={project.url} title={project.title}>
-                      <div className="w-7 h-7 rounded-full bg-forest-100 dark:bg-forest-800 border-2 border-white dark:border-forest-700 flex items-center justify-center text-forest-600 dark:text-sage-300 hover:bg-lime-500 hover:text-white hover:z-10 transition-colors relative">
-                        <ExternalLink className="w-3 h-3" />
-                      </div>
-                    </Link>
-                  ))}
+            {/* Service number badge */}
+            <div className="absolute top-3 right-3">
+              <Badge variant="secondary" className="bg-white/90 dark:bg-forest-900/90 text-forest-700 dark:text-sage-300 font-mono text-[10px] tracking-wider border-0 backdrop-blur-sm">
+                0{index + 1}
+              </Badge>
+            </div>
+          </div>
+
+          {/* Content Section - Compact Layout */}
+          <div className="flex-grow flex flex-col p-4 md:p-5 gap-3">
+
+            {/* Icon + Title Row */}
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-xl bg-forest-50 dark:bg-forest-800 border border-forest-100 dark:border-forest-600 
+                              text-forest-900 dark:text-sage-100
+                              group-hover/card:bg-lime-500 group-hover/card:text-white group-hover/card:border-lime-500
+                              transition-all duration-300 shrink-0">
+                <div className="[&>svg]:w-5 [&>svg]:h-5">
+                  {service.icon}
                 </div>
               </div>
+              <div className="min-w-0">
+                <h3 className="text-base sm:text-lg font-bold text-forest-900 dark:text-sage-100 
+                               group-hover/card:text-lime-700 dark:group-hover/card:text-lime-400 
+                               transition-colors duration-300 leading-tight">
+                  {service.title}
+                </h3>
+                <p className="text-[10px] sm:text-xs text-forest-500 dark:text-sage-400 mt-0.5 line-clamp-1">
+                  {service.subtitle}
+                </p>
+              </div>
+            </div>
+
+            {/* Problem/Solution Section - Readable Size */}
+            <div className="space-y-2.5 p-3 rounded-lg bg-forest-50/50 dark:bg-forest-800/30 border border-forest-100/50 dark:border-forest-600/30">
+              {/* Problem */}
+              <div className="flex items-start gap-2">
+                <div className="mt-0.5 p-1 rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 shrink-0">
+                  <AlertCircle className="w-3.5 h-3.5" />
+                </div>
+                <div>
+                  <span className="font-semibold text-xs text-forest-900 dark:text-sage-100 block mb-0.5">Problem</span>
+                  <p className="text-xs text-forest-600 dark:text-sage-300 leading-relaxed">
+                    {service.problem}
+                  </p>
+                </div>
+              </div>
+
+              <div className="w-full h-px bg-forest-200/30 dark:bg-sage-300/10" />
+
+              {/* Solution */}
+              <div className="flex items-start gap-2">
+                <div className="mt-0.5 p-1 rounded-full bg-lime-100 dark:bg-lime-500/20 text-lime-600 dark:text-lime-400 shrink-0">
+                  <Lightbulb className="w-3.5 h-3.5" />
+                </div>
+                <div>
+                  <span className="font-semibold text-xs text-forest-900 dark:text-sage-100 block mb-0.5">Solution</span>
+                  <p className="text-xs text-forest-600 dark:text-sage-300 leading-relaxed">
+                    {service.solution}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Outcomes Badges - Intuitive Results */}
+            <div className="flex flex-wrap gap-1.5">
+              {service.outcomes.slice(0, 3).map((outcome, idx) => (
+                <span
+                  key={idx}
+                  className="text-[10px] px-2 py-1 rounded-full 
+                             border border-lime-200 dark:border-lime-500/30 
+                             text-lime-700 dark:text-lime-400 
+                             bg-lime-50 dark:bg-lime-500/10
+                             font-medium"
+                >
+                  ✓ {outcome}
+                </span>
+              ))}
+            </div>
+
+            {/* Spacer */}
+            <div className="flex-grow" />
+
+            {/* See Proof Links */}
+            {service.relatedProjects && service.relatedProjects.length > 0 && (
+              <div className="pt-2 border-t border-forest-100/50 dark:border-forest-600/30">
+                {service.relatedProjects.filter(p => p && p.url).map((project, idx) => (
+                  <Link
+                    key={idx}
+                    href={project.url}
+                    className="inline-flex items-center gap-1 text-[10px] font-medium 
+                               text-lime-600 dark:text-lime-400 
+                               hover:text-lime-800 dark:hover:text-lime-300 
+                               transition-colors group/proof"
+                  >
+                    <span className="text-forest-400 dark:text-sage-500">See Proof:</span>
+                    <span className="underline underline-offset-2 line-clamp-1">{project.title}</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover/proof:opacity-100 group-hover/proof:translate-x-0 transition-all" />
+                  </Link>
+                ))}
+              </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </motion.div>
   );
 };
 
+// Services Carousel with Side Navigation & Touch Swipe
 const ServicesCarousel: React.FC<{ services: ServiceData[] }> = ({ services }) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [itemsPerPage, setItemsPerPage] = React.useState(1);
+  const [isPaused, setIsPaused] = React.useState(false);
   const [touchStart, setTouchStart] = React.useState<number | null>(null);
   const [touchEnd, setTouchEnd] = React.useState<number | null>(null);
 
-  // Minimum swipe distance for gesture recognition
-  const minSwipeDistance = 50;
-
   React.useEffect(() => {
     const handleResize = () => {
-      setItemsPerPage(window.innerWidth >= 1024 ? 2 : 1);
+      // Prioritize 2 cards for tablet/desktop
+      if (window.innerWidth >= 768) setItemsPerPage(2);
+      else setItemsPerPage(1);
     };
-    handleResize(); // Initial check
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const totalChunks = Math.ceil(services.length / itemsPerPage);
+  const totalPages = Math.ceil(services.length / itemsPerPage);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % totalChunks);
-  };
+  const nextSlide = React.useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % totalPages);
+  }, [totalPages]);
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + totalChunks) % totalChunks);
-  };
+  const prevSlide = React.useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
+  }, [totalPages]);
 
-  // Touch gesture handlers
+  // Autoplay functionality - 5 seconds
+  React.useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
+  }, [isPaused, nextSlide]);
+
+  // Touch handlers
   const onTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
+    setIsPaused(true);
   };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
+  const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
   const onTouchEnd = () => {
+    setIsPaused(false);
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
+    const minSwipeDistance = 50;
 
-    if (isLeftSwipe) {
-      nextSlide();
-    } else if (isRightSwipe) {
-      prevSlide();
-    }
+    if (distance > minSwipeDistance) nextSlide(); // Swipe Left -> Next
+    if (distance < -minSwipeDistance) prevSlide(); // Swipe Right -> Prev
   };
 
-  // Group services into chunks
-  const chunks = [];
-  for (let i = 0; i < services.length; i += itemsPerPage) {
-    chunks.push(services.slice(i, i + itemsPerPage));
-  }
-
-  // Safe current chunk
-  const currentChunk = chunks[currentIndex] || chunks[0];
+  const visibleServices = services.slice(
+    currentIndex * itemsPerPage,
+    currentIndex * itemsPerPage + itemsPerPage
+  );
 
   return (
-    <div className="max-w-6xl mx-auto px-2 sm:px-4 lg:px-12">
-      {/* Fixed height container with relative positioning for buttons */}
-      {/* Fixed height container with relative positioning for buttons - Increased height to prevent cutting off */}
-      <div className="relative h-[600px] sm:h-[640px] lg:h-[520px]">
-        {/* Scrollable content area with touch gestures */}
-        <div
-          className="overflow-hidden py-4 h-full touch-pan-y"
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          role="region"
-          aria-label="Services carousel - swipe left or right to navigate"
-          aria-live="polite"
-        >
-          <AnimatePresence mode='wait'>
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 h-full"
-            >
-              {currentChunk.map((service, index) => (
-                <ServiceCard key={service.id} service={service} index={index} />
-              ))}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Navigation Buttons - positioned relative to fixed-height container - Reduced size */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -ml-1 sm:-ml-2 lg:-ml-6"
-          aria-label="Previous services"
-        >
-          <ArrowRight className="w-5 h-5 rotate-180" />
-        </button>
-
-        <button
-          onClick={nextSlide}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white/80 backdrop-blur-md border border-forest-100 text-forest-600 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all duration-300 shadow-lg -mr-1 sm:-mr-2 lg:-mr-6"
-          aria-label="Next services"
-        >
-          <ArrowRight className="w-5 h-5" />
-        </button>
-      </div>
-
-      {/* Pagination Dots - outside fixed container */}
-      <div className="flex justify-center gap-2 mt-4" role="tablist" aria-label="Carousel navigation">
-        {chunks.map((_, idx) => (
+    <div
+      className="relative group/carousel px-2 max-w-6xl mx-auto" // Named group for carousel
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* Side Navigation Buttons - Desktop/Tablet Only */}
+      {totalPages > 1 && (
+        <>
           <button
-            key={idx}
-            onClick={() => setCurrentIndex(idx)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${currentIndex === idx ? 'bg-forest-900 dark:bg-lime-400 w-8' : 'bg-forest-200 dark:bg-forest-600 w-2 hover:bg-forest-400 dark:hover:bg-forest-500'
-              }`}
-            aria-label={`Go to slide ${idx + 1} of ${chunks.length}`}
-            aria-selected={currentIndex === idx}
-            role="tab"
-          />
-        ))}
+            onClick={prevSlide}
+            className="hidden md:flex absolute -left-4 lg:-left-12 top-1/2 -translate-y-1/2 z-20
+                       w-10 h-10 items-center justify-center rounded-full 
+                       bg-white/80 dark:bg-forest-900/80 backdrop-blur-sm
+                       border border-forest-100 dark:border-forest-700
+                       text-forest-600 dark:text-sage-300
+                       shadow-lg hover:bg-lime-500 hover:text-white hover:border-lime-500 hover:scale-110
+                       transition-all duration-300"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+
+          <button
+            onClick={nextSlide}
+            className="hidden md:flex absolute -right-4 lg:-right-12 top-1/2 -translate-y-1/2 z-20
+                       w-10 h-10 items-center justify-center rounded-full 
+                       bg-white/80 dark:bg-forest-900/80 backdrop-blur-sm
+                       border border-forest-100 dark:border-forest-700
+                       text-forest-600 dark:text-sage-300
+                       shadow-lg hover:bg-lime-500 hover:text-white hover:border-lime-500 hover:scale-110
+                       transition-all duration-300"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+        </>
+      )}
+
+      {/* Cards Grid */}
+      <div
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 touch-pan-y" // Enable vertical scroll, horizontal swipe handled
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        <AnimatePresence mode="wait">
+          {visibleServices.map((service, index) => (
+            <ServiceCard
+              key={service.id}
+              service={service}
+              index={currentIndex * itemsPerPage + index}
+            />
+          ))}
+        </AnimatePresence>
       </div>
-    </div>
+
+      {/* Pagination Dots (Context only, simplified) */}
+      {
+        totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2 mt-6">
+            {Array.from({ length: totalPages }).map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx)}
+                className={`h-1.5 rounded-full transition-all duration-500 ${idx === currentIndex
+                  ? 'bg-lime-500 w-8'
+                  : 'bg-forest-200 dark:bg-forest-800 w-2 hover:bg-lime-300'
+                  }`}
+                aria-label={`Go to page ${idx + 1}`}
+              />
+            ))}
+          </div>
+        )
+      }
+    </div >
   );
 };
 
+// Main Services Section
 const ServicesSection: React.FC = () => {
+  const services = portfolioData.services;
+
   return (
-    <section id="services" className="w-full relative py-8 lg:py-12 overflow-hidden">
-
-      {/* Background Elements - Clean global background now */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-lime-500/5 via-transparent to-transparent pointer-events-none" />
-
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-6 lg:mb-8"
-        >
-          <Badge variant="outline" className="mb-3 border-lime-500 bg-white/50 dark:bg-forest-800/50 text-forest-900 dark:text-sage-100 px-3 py-1">
-            Consulting Services
-          </Badge>
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold font-serif mb-3 tracking-tight">
-            <span className="text-forest-900 dark:text-sage-100">Solving  </span>
-            <span className="text-lime-600 dark:text-lime-400">Real Problems</span>
-          </h2>
-          <p className="text-forest-600 dark:text-sage-300 max-w-2xl mx-auto text-base">
-            I specialize in turning disconnected tools into seamless automated systems that deliver measurable business outcomes.
-          </p>
-        </motion.div>
-
-        <ServicesCarousel services={portfolioData.services} />
-
-        {/* Contact CTA */}
+    <section
+      id="services"
+      className="py-12 md:py-16 scroll-mt-20 bg-gradient-to-b from-transparent via-forest-50/30 to-transparent dark:via-forest-950/20"
+    >
+      <div className="container mx-auto px-4 sm:px-6">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mt-6 text-center"
+          className="text-center mb-8 md:mb-10"
         >
-          <p className="text-forest-500 dark:text-sage-400 mb-4 text-sm">Have a specific challenge? Let's discuss a custom solution.</p>
-          <div className="inline-flex justify-center">
-            <SolidButton
-              href="#contact"
-              icon={ArrowRight}
-              label="Book a discovery call"
-            />
-          </div>
+          <Badge variant="secondary" className="mb-2 bg-lime-100 dark:bg-lime-500/20 text-lime-700 dark:text-lime-400 border-lime-200 dark:border-lime-500/30">
+            Systems I Build
+          </Badge>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-serif text-forest-900 dark:text-sage-100 mb-3">
+            Production-Grade <span className="text-lime-500">AI Systems</span>
+          </h2>
+          <p className="text-forest-600 dark:text-sage-300 max-w-xl mx-auto text-xs sm:text-sm">
+            Revenue-generating systems with self-healing architecture, deployed in production.
+          </p>
+        </motion.div>
+
+        <ServicesCarousel services={services} />
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="text-center mt-8"
+        >
+          <SolidButton
+            href="/#contact"
+            label="Book Your System Audit"
+            icon={ArrowRight}
+          />
         </motion.div>
       </div>
     </section>
