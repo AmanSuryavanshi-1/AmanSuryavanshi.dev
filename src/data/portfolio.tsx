@@ -45,12 +45,78 @@ export interface HeroData {
 }
 
 export interface AboutData {
+    hero: {
+        badge: string;
+        title: string;
+        subtitle: string;
+        pitch: string;
+        skills: { icon: string; label: string }[];
+    };
+    bentoGrid: {
+        badge: string;
+        title: string;
+        origins: {
+            title: string;
+            subtitle: string;
+            description: string;
+            icon: string;
+        };
+        tStack: {
+            title: string;
+            subtitle: string;
+            descriptionPart1: string;
+            descriptionPart2: string;
+            highlight: string;
+            icon: string;
+            layers: { label: string; detail: string; type: 'depth' | 'breadth' }[];
+        };
+        philosophy: {
+            title: string;
+            icon: string;
+            items: { icon: string; label: string; detail: string }[];
+        };
+        systemArchitecture: {
+            title: string;
+            subtitle: string;
+            icon: string;
+            tags: { label: string; icon: string }[];
+        };
+        proofOfWork: {
+            title: string;
+            subtitle: string;
+            icon: string;
+            items: {
+                title: string;
+                project: string;
+                year: string;
+                metrics: string[];
+                url: string;
+                color: string;
+            }[];
+        };
+    };
+    timeline: {
+        badge: string;
+        title: string;
+        items: {
+            id: string;
+            year: string;
+            title: string;
+            description: string;
+            category: 'education' | 'milestone' | 'career' | 'project';
+            highlight?: boolean;
+        }[];
+    };
     title: string;
     intro: string;
     journey: string[];
     philosophy: string;
     differentiators: string[];
-    cta: string;
+    cta: {
+        title: string;
+        subtitle: string;
+        actionLabel: string;
+    };
     keywords: string[];
     personalInfo: {
         name: string;
@@ -251,6 +317,11 @@ export interface PortfolioData {
         label: string;
         icon: string;
     }>;
+    socials: Array<{
+        platform: string;
+        url: string;
+        icon: string;
+    }>;
 }
 
 // --- Data Definitions ---
@@ -284,6 +355,159 @@ const heroData: HeroData = {
 };
 
 const aboutData: AboutData = {
+    hero: {
+        badge: "Available for new projects",
+        title: "Full-Stack Agentic Developer",
+        subtitle: "Production n8n Architect • LangGraph Orchestrator • Next.js Systems Builder",
+        pitch: "\"I build intelligent multi-agent systems AND the frontend interfaces that let non-technical people control them—end-to-end.\"",
+        skills: [
+            { icon: "Workflow", label: "Production n8n" },
+            { icon: "Brain", label: "Multi-LLM Orchestration" },
+            { icon: "Layers", label: "LangGraph Agents" },
+            { icon: "Rocket", label: "Next.js Systems" },
+        ]
+    },
+    bentoGrid: {
+        badge: "The Expert-Builder Profile",
+        title: "Building Intelligent Systems End-to-End",
+        origins: {
+            title: "Engineering Origins",
+            subtitle: "ECE → AI",
+            description: "Electronics & Communication background shaped my systems thinking—building digital nervous systems that connect, adapt, and self-correct.",
+            icon: "GraduationCap"
+        },
+        tStack: {
+            title: "The T-Shaped Stack",
+            subtitle: "My Unfair Advantage",
+            descriptionPart1: "Most AI developers build the brain but not the body.",
+            descriptionPart2: "I do both.",
+            highlight: "I do both.",
+            icon: "Layers",
+            layers: [
+                {
+                    label: 'Multi-Agent Orchestration',
+                    detail: 'LangGraph + CrewAI + n8n AI Agents',
+                    type: 'depth'
+                },
+                {
+                    label: 'Frontend Excellence',
+                    detail: 'Next.js 15, 95+ Lighthouse',
+                    type: 'breadth'
+                },
+                {
+                    label: 'Workflow Automation',
+                    detail: '74-node production n8n',
+                    type: 'breadth'
+                },
+                {
+                    label: 'Technical SEO/GEO',
+                    detail: '#1 Rankings, AI Search',
+                    type: 'breadth'
+                },
+            ]
+        },
+        philosophy: {
+            title: "Philosophy",
+            icon: "Sparkles",
+            items: [
+                { icon: "Target", label: 'ROI-First Automation', detail: 'Every workflow must drive revenue' },
+                { icon: "Workflow", label: 'Systems Over Scripts', detail: 'Self-healing, production-grade' },
+                { icon: "Zap", label: 'Ship Fast, Scale Smart', detail: 'MVP to enterprise in weeks' },
+            ]
+        },
+        systemArchitecture: {
+            title: "System Architecture",
+            subtitle: "99.7% Reliability in Production",
+            icon: "Cpu",
+            tags: [
+                { label: "Deterministic State", icon: "CheckCircle" },
+                { label: "Dead Letter Queues", icon: "CheckCircle" },
+                { label: "Self-Healing", icon: "Zap" }
+            ]
+        },
+        proofOfWork: {
+            title: "Proof of Work",
+            subtitle: "Business Transformations, Not Just Projects",
+            icon: "Code2",
+            items: [
+                {
+                    title: 'How I Used Next.js + SEO to Generate ₹300K',
+                    project: 'Aviators Training Centre',
+                    year: '2025',
+                    metrics: ['#1 Google', '95+ Lighthouse', '₹300K Revenue'],
+                    url: '/projects/aviators-training-centre-executive-summary',
+                    color: 'lime',
+                },
+                {
+                    title: 'How I Built a 74-Node Self-Healing Pipeline',
+                    project: 'Omni-Post AI',
+                    year: '2025',
+                    metrics: ['80% Time Saved', '99.7% Reliable', '8+ Platforms'],
+                    url: '/projects/omni-post-ai-automation',
+                    color: 'amber',
+                },
+            ]
+        }
+    },
+    timeline: {
+        badge: "The Journey",
+        title: "From ECE to Agentic Systems",
+        items: [
+            {
+                id: 'ece',
+                year: '2020',
+                title: 'Electronics & Communication Engineering',
+                description: 'Started exploring how signals flow through systems—from sensor input to actuator output. This foundation shaped my systems-thinking approach.',
+                category: 'education',
+            },
+            {
+                id: 'first-code',
+                year: '2021-22',
+                title: 'First Lines of Code',
+                description: 'Discovered web development. Built my first projects and fell in love with the idea of making computers do the boring work.',
+                category: 'milestone',
+            },
+            {
+                id: 'fullstack',
+                year: '2023',
+                title: 'Full-Stack Development',
+                description: 'Mastered React, Next.js, and TypeScript. Started building production-grade applications with 95+ Lighthouse scores.',
+                category: 'career',
+            },
+            {
+                id: 'fooda-barkat',
+                year: '2024',
+                title: 'First Freelance Projects',
+                description: 'Delivered Foodah (live restaurant platform with Swiggy API) and Barkat Enterprise (3,000+ viewers, 50+ leads). First taste of client impact.',
+                category: 'project',
+            },
+            {
+                id: 'aviators',
+                year: '2025',
+                title: 'Aviators Training Centre',
+                description: '₹300K+ revenue impact through SEO-optimized web presence. Achieved #1 Google rankings. Major client success validation.',
+                category: 'project',
+                highlight: true,
+            },
+            {
+                id: 'automation',
+                year: '2025',
+                title: 'n8n & Multi-LLM Mastery',
+                description: 'Built 74-node production workflows with 99.7% reliability for Omni-Post AI. Mastered self-healing automation architecture.',
+                category: 'career',
+                highlight: true,
+            },
+            {
+                id: 'agentic',
+                year: '2026',
+                title: 'Agentic Systems Era',
+                description: 'Combining LangGraph, CrewAI, and n8n AI Agents. The T-Stack: depth in orchestration, breadth across the stack.',
+                category: 'milestone',
+                highlight: true,
+            },
+        ]
+    },
+    // Legacy fields kept for compatibility if needed, or can be deprecated
     title: "I Architect Systems That Generate Revenue & Scale Operations",
     intro: "From manual chaos to intelligent automation—I build production-grade agentic systems with deterministic state management, closed-loop feedback mechanisms, and self-healing error recovery. My solutions have generated ₹300K+ while eliminating 80% of manual work.",
     journey: [
@@ -296,7 +520,11 @@ const aboutData: AboutData = {
         "✅ Real Revenue Impact (₹300K+ generated, 80% cost reduction)",
         "✅ Complete Systems (Frontend → Automation → AI Agents → Monitoring)"
     ],
-    cta: "",
+    cta: {
+        title: "Let's Create Something Amazing Together!",
+        subtitle: "Whether you have a project in mind or just want to connect, I'm always excited to collaborate and bring ideas to life.",
+        actionLabel: "Let's Work Together"
+    },
     keywords: [
         "hire AI automation developer",
         "n8n expert business automation",
@@ -1211,7 +1439,7 @@ const rawProjects = [
         technicalOverview: "Built on Next.js 15 with App Router architecture, leveraging TypeScript for complete type safety and enhanced developer experience. Sanity CMS powers the headless content management system with scheduled publishing, versioning, and real-time preview capabilities. Firebase Firestore and Realtime Database handle analytics and user data with millisecond-level synchronization. n8n orchestrates complex automation workflows including Cal.com meeting scheduling with timezone conversion, Airtable CRM updates with duplicate detection, Resend email campaigns with dynamic templating, and Telegram notifications for real-time business alerts. Advanced features include React Server Components for optimal performance, automatic image optimization with Next/Image and WebP conversion, lazy loading with Suspense boundaries, code splitting for faster initial loads, role-based access control with Firebase Auth, and comprehensive security measures. Deployed on Vercel with edge functions for global low-latency access and automatic CI/CD pipelines integrated with GitHub.",
         techStack: ["Next.js 15", "TypeScript", "React 18", "Firebase", "Firestore", "Sanity CMS", "n8n", "Tailwind CSS", "Shadcn UI", "Framer Motion", "Resend", "Cal.com API", "Airtable API", "Telegram Bot API", "Vercel", "Docker", "Node.js"],
         badges: ["Next.js", "TypeScript", "Firebase", "AI/Automation", "n8n", "Production", "Freelance", "CRM", "SEO", "Full-Stack"],
-        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-13 Homepage Screenshot.webp",
+        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-13%20Homepage%20Screenshot.webp",
         imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768016/aviators-training-centre/docs-assets/ASSET-13_Homepage_Screenshot.png",
         videoYouTubeId: "7NSVxMqWUGU",
         video: "",
@@ -1239,12 +1467,12 @@ const rawProjects = [
         ],
         gallery: [
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/www.aviatorstrainingcentre.in_Blog.webp", alt: "Blog Section", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-14 Contact Form Screenshot.webp", alt: "Contact Form", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-16 Google Search Console Performance.webp", alt: "Google Search Console Performance", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-17 n8n Workflow Canvas - Firebase Trigger.webp", alt: "n8n Workflow - Firebase Trigger", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-18 n8n Workflow Canvas - Cal.com Trigger.webp", alt: "n8n Workflow - Cal.com Trigger", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-19 Mobile Homepage.webp", alt: "Mobile Homepage View", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-20 AvaitorsTrainingCenter_LighthouseScores.webp", alt: "Lighthouse Performance Scores", type: "image" }
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-14%20Contact%20Form%20Screenshot.webp", alt: "Contact Form", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-16%20Google%20Search%20Console%20Performance.webp", alt: "Google Search Console Performance", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-17%20n8n%20Workflow%20Canvas%20-%20Firebase%20Trigger.webp", alt: "n8n Workflow - Firebase Trigger", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-18%20n8n%20Workflow%20Canvas%20-%20Cal.com%20Trigger.webp", alt: "n8n Workflow - Cal.com Trigger", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-19%20Mobile%20Homepage.webp", alt: "Mobile Homepage View", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-20%20AvaitorsTrainingCenter_LighthouseScores.webp", alt: "Lighthouse Performance Scores", type: "image" }
         ]
     },
     {
@@ -1289,7 +1517,7 @@ const rawProjects = [
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-AboutUs.webp", alt: "About Us Section", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-Catalogues.webp", alt: "Catalogues Section", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-Products.webp", alt: "Products Section", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-Contact Page.webp", alt: "Contact Section", type: "image" }
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/barkat-enterprise-Contact%20Page.webp", alt: "Contact Section", type: "image" }
         ],
         documentation: [
             {
@@ -1644,6 +1872,13 @@ const experienceData: ExperienceItem[] = [
 
 // --- Export ---
 
+const socials = [
+    { platform: "Twitter", url: "https://twitter.com/_AmanSurya", icon: "FaXTwitter" },
+    { platform: "GitHub", url: "https://github.com/AmanSuryavanshi-1", icon: "Github" },
+    { platform: "LinkedIn", url: "https://www.linkedin.com/in/amansuryavanshi-ai/", icon: "Linkedin" },
+    { platform: "Instagram", url: "https://www.instagram.com/__aman_suryavanshi__/", icon: "Instagram" }
+];
+
 export const portfolioData: PortfolioData = {
     hero: heroData,
     about: aboutData,
@@ -1652,6 +1887,7 @@ export const portfolioData: PortfolioData = {
     projects: projectsData,
     services: servicesData,
     experience: experienceData,
-    workBanner: workBanner
+    workBanner: workBanner,
+    socials: socials
 };
 

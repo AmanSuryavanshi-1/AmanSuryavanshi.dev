@@ -82,28 +82,24 @@ export default function GithubProfile() {
     fetchUserData()
   }, [])
 
-  // Adding Shimmer UI for loading state
+  // Shimmer UI for loading state - with dark mode support
   if (isLoading) {
     return (
       <div className="w-full max-w-6xl mx-auto">
         {/* Skeleton for the title */}
-        <Skeleton className="w-48 h-12 mx-auto mb-8 rounded-lg" />
+        <Skeleton className="w-48 h-12 mx-auto mb-8 rounded-lg bg-forest-100 dark:bg-forest-800" />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           <div className="lg:col-span-1">
-            {/* Profile Card Skeleton */}
-            <Skeleton className="w-full h-[400px] rounded-2xl" />
+            <Skeleton className="w-full h-[400px] rounded-2xl bg-forest-100 dark:bg-forest-800" />
           </div>
           <div className="lg:col-span-2 space-y-5">
-            {/* Stat Cards Skeleton */}
             <div className="grid grid-cols-3 gap-4">
               {[1, 2, 3].map((_, index) => (
-                <Skeleton key={index} className="h-[80px] rounded-2xl" />
+                <Skeleton key={index} className="h-[80px] rounded-2xl bg-forest-100 dark:bg-forest-800" />
               ))}
             </div>
-
-            {/* Latest Repo Card Skeleton */}
-            <Skeleton className="w-full h-[280px] rounded-2xl" />
+            <Skeleton className="w-full h-[280px] rounded-2xl bg-forest-100 dark:bg-forest-800" />
           </div>
         </div>
       </div>
@@ -117,13 +113,13 @@ export default function GithubProfile() {
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-xl sm:text-2xl md:text-3xl mb-6 flex justify-center items-center font-bold font-serif text-forest-900">
-        My <span className="text-lime-500 px-2">GitHub</span> Profile
+        className="text-xl sm:text-2xl md:text-3xl mb-6 flex justify-center items-center font-bold font-serif text-forest-900 dark:text-sage-100">
+        My <span className="text-lime-500 dark:text-lime-400 px-2">GitHub</span> Profile
       </motion.h2>
 
-      {/* Updated Grid Structure - Removed Location StatCard */}
+      {/* Grid Structure with proper dark mode */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {/* Left Column: Profile Card (now includes location) */}
+        {/* Left Column: Profile Card */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -140,14 +136,14 @@ export default function GithubProfile() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="lg:col-span-2 flex flex-col gap-5"
         >
-          {/* Stats Row - Now only 3 cards */}
+          {/* Stats Row */}
           <div className="grid grid-cols-3 gap-4">
             <StatCard icon={BookOpen} title="Repositories" value={userData.public_repos} />
             <StatCard icon={Users} title="Followers" value={userData.followers} />
             <StatCard icon={Users} title="Following" value={userData.following} />
           </div>
 
-          {/* Latest Project Card - Will fill remaining space */}
+          {/* Latest Project Card */}
           <div className="flex-1">
             {latestRepo && (
               <LatestRepoCard repo={latestRepo} topics={repoTopics} />
