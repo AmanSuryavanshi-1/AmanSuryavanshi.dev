@@ -203,6 +203,19 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Keyword Anchoring for SEO */}
+        <div className="border-t border-forest-700/50 py-2 px-4">
+          <div className="flex flex-wrap justify-center gap-4 text-xs text-sage-400/60">
+            <Link href="/#services" className="hover:text-lime-400 transition-colors">n8n Automation Expert</Link>
+            <span className="text-forest-700">•</span>
+            <Link href="/#services" className="hover:text-lime-400 transition-colors">LangGraph Architect</Link>
+            <span className="text-forest-700">•</span>
+            <Link href="/#services" className="hover:text-lime-400 transition-colors">Next.js Systems Builder</Link>
+            <span className="text-forest-700">•</span>
+            <Link href="/#services" className="hover:text-lime-400 transition-colors">AI Workflow Automation India</Link>
+          </div>
+        </div>
       </div>
     </footer>
   )

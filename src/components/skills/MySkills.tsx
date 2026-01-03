@@ -121,7 +121,7 @@ const SkillsShowcase = () => {
                                                 {/* Related Projects - Compact */}
                                                 {skill.relatedProjects && skill.relatedProjects.length > 0 && (
                                                     <div className="flex flex-wrap gap-2 mt-2.5">
-                                                        {skill.relatedProjects.map((project, idx) => (
+                                                        {skill.relatedProjects.filter(p => p && p.url).map((project, idx) => (
                                                             <Link
                                                                 key={idx}
                                                                 href={project.url}

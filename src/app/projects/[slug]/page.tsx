@@ -29,17 +29,17 @@ const DOC_TO_PROJECT_ID: Record<string, string> = {
     'foodah-technical-documentation': 'foodah',
 };
 
-// Map slugs to readable titles for metadata
+// Map slugs to readable titles for metadata - Business Transformation framing
 const TITLES_MAP: Record<string, string> = {
-    // Executive Summaries
-    'aviators-training-centre-executive-summary': 'Aviators Training Centre - Executive Summary',
-    'omni-post-ai-executive-summary': 'Omni-Post AI - Executive Summary',
-    // Technical Documentation
-    'aviators-training-centre-technical-documentation': 'Aviators Training Centre - Technical Documentation',
-    'omni-post-ai-technical-documentation': 'Omni-Post AI - Technical Documentation',
-    'barkat-enterprise-technical-documentation': 'Barkat Enterprise - Technical Documentation',
-    'av-newsstream-technical-documentation': 'AV News Stream - Technical Documentation',
-    'foodah-technical-documentation': 'Foodah - Technical Documentation',
+    // Executive Summaries → Business Transformation titles
+    'aviators-training-centre-executive-summary': 'Aviators: How I Used n8n + Next.js to Generate ₹300K ($3.5K+) in Revenue',
+    'omni-post-ai-executive-summary': 'Omni-Post AI: How I Built a 74-Node Workflow That Reduced Manual Work by 80%',
+    // Technical Documentation → Architecture deep-dives
+    'aviators-training-centre-technical-documentation': 'Aviators Architecture: Self-Healing n8n, Firebase, and Production Workflows',
+    'omni-post-ai-technical-documentation': 'Omni-Post AI Architecture: Multi-LLM Orchestration with n8n and GPT-4',
+    'barkat-enterprise-technical-documentation': 'Barkat Enterprise: React E-Commerce with 3,000+ Viewers & 60+ Leads',
+    'av-newsstream-technical-documentation': 'AV NewsStream: API Key Rotation System Handling 300+ Requests/Day',
+    'foodah-technical-documentation': 'Foodah: 40% Load Time Reduction with Custom React Hooks',
 };
 
 interface PageProps {
@@ -66,23 +66,70 @@ export async function generateMetadata({ params }: PageProps) {
     const { slug } = await params;
     const title = TITLES_MAP[slug] || 'Project Documentation';
     const isExecutiveSummary = slug.includes('executive-summary');
-    const projectName = title.split(' - ')[0];
+    const projectId = DOC_TO_PROJECT_ID[slug];
 
+    // Client-focused descriptions with metrics
     const description = isExecutiveSummary
-        ? `Executive summary and business impact analysis for ${projectName}. Key metrics, architecture decisions, and results.`
-        : `Comprehensive technical documentation for ${projectName}. In-depth architecture, implementation details, and code examples.`;
+        ? `Business transformation case study. See how I used n8n, LangGraph, and Next.js to deliver measurable results: ₹300K revenue, 80% automation, 40K+ impressions.`
+        : `Technical deep-dive into production architecture. Self-healing workflows, deterministic state management, Dead-Letter Queues, and deployment strategies.`;
+
+    // Project-specific keywords for high-intent searches
+    const projectKeywords: Record<string, string[]> = {
+        'aviators-training-centre': ['n8n automation case study', 'Next.js SEO results', '₹300K revenue automation', 'aviation SaaS'],
+        'n8n-automation-suite': ['content automation workflow', 'multi-LLM orchestration', 'n8n GPT-4 integration', '74-node workflow'],
+        'barkat-enterprise': ['React e-commerce India', 'B2B tiles website', 'PDF catalogue integration'],
+        'av-newsstream': ['API key rotation', 'news aggregator architecture', 'rate limit handling'],
+        'foodah': ['React performance optimization', 'custom hooks architecture', 'lazy loading implementation'],
+    };
 
     return {
-        title: `${title} | Aman Suryavanshi Portfolio`,
+        title: `${title} | Aman Suryavanshi`,
         description,
-        keywords: ['portfolio', 'case study', 'technical documentation', projectName, 'Aman Suryavanshi'],
+        keywords: [
+            'n8n case study',
+            'AI automation results',
+            'self-healing workflows',
+            '₹300K revenue impact',
+            ...(projectKeywords[projectId || ''] || ['portfolio', 'case study'])
+        ],
         openGraph: {
-            title: title,
+            title,
             description,
             type: 'article',
+            authors: ['Aman Suryavanshi — AI Workflow Architect'],
         },
     };
 }
+
+// HowTo schema for technical documentation (ranks for "How to build" queries)
+const HOWTO_SCHEMAS: Record<string, object> = {
+    'aviators-training-centre-technical-documentation': {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Build a Self-Healing n8n Automation System",
+        "description": "Step-by-step guide to building production n8n workflows with Dead-Letter Queues, automatic retries, and health monitoring.",
+        "step": [
+            { "@type": "HowToStep", "name": "Setup n8n with Docker", "text": "Configure self-hosted n8n using Docker Compose with PostgreSQL for persistence." },
+            { "@type": "HowToStep", "name": "Configure Dead-Letter Queues", "text": "Implement DLQ pattern for failed executions with automatic retry logic." },
+            { "@type": "HowToStep", "name": "Add Health Monitoring", "text": "Set up Telegram/Slack notifications for real-time workflow health alerts." },
+            { "@type": "HowToStep", "name": "Connect to Firebase", "text": "Integrate Firebase triggers for real-time data sync and event processing." }
+        ],
+        "totalTime": "PT4H"
+    },
+    'omni-post-ai-technical-documentation': {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Build a Multi-LLM Content Automation Pipeline",
+        "description": "Architecture guide for building a 74-node n8n workflow with GPT-4 integration for multi-platform content distribution.",
+        "step": [
+            { "@type": "HowToStep", "name": "Design Node Architecture", "text": "Structure the workflow into content ingestion, AI processing, and distribution phases." },
+            { "@type": "HowToStep", "name": "Integrate Multi-LLM Routing", "text": "Connect OpenAI GPT-4 with fallback to Claude for intelligent content generation." },
+            { "@type": "HowToStep", "name": "Configure OAuth2 APIs", "text": "Set up authenticated connections to LinkedIn and Twitter/X for automated publishing." },
+            { "@type": "HowToStep", "name": "Implement Error Recovery", "text": "Add retry logic, dead-letter queues, and notification systems for failure handling." }
+        ],
+        "totalTime": "PT6H"
+    }
+};
 
 export default async function ProjectDocPage({ params }: PageProps) {
     const { slug } = await params;
@@ -95,6 +142,18 @@ export default async function ProjectDocPage({ params }: PageProps) {
     }
 
     const { technologies, ...serializableProject } = project;
+    const isTechnicalDoc = slug.includes('technical-documentation');
+    const howToSchema = HOWTO_SCHEMAS[slug];
 
-    return <DocPageClient project={serializableProject as any} content={content} slug={slug} />;
+    return (
+        <>
+            {isTechnicalDoc && howToSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+                />
+            )}
+            <DocPageClient project={serializableProject as any} content={content} slug={slug} />
+        </>
+    );
 }

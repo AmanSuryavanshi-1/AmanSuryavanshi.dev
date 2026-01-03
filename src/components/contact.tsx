@@ -76,7 +76,7 @@ const ContactForm = () => {
         id="Contact-us-heading"
         className="text-2xl md:text-4xl font-bold font-serif text-forest-900 dark:text-sage-100 text-center tracking-tight"
       >
-        Contact<span className="text-lime-500 dark:text-lime-400">Us</span>
+        Let&apos;s Architect <span className="text-lime-500 dark:text-lime-400">Your Solution</span>
       </motion.h1>
 
       <div className="md:hidden w-full max-w-[58rem] mt-8">
@@ -124,7 +124,7 @@ const ContactForm = () => {
                   <textarea
                     name="message"
                     rows={4}
-                    placeholder="Your Message"
+                    placeholder="Tell me about your manual process bottlenecks, automation needs, or the AI system you want to build..."
                     required
                     className="w-full h-52 px-4 py-4 text-sm rounded-2xl shadow-md shadow-forest-500 dark:shadow-forest-950/50 bg-transparent border-4 border-sage-100 dark:border-sage-300/30 text-forest-900 dark:text-sage-100 placeholder:text-forest-700 dark:placeholder:text-sage-400 focus:from-forest-900 focus:to-forest-500 focus:text-forest-700 focus:placeholder:text-sage-300 transition-all duration-300 focus:outline-none resize-none"
                   />
@@ -136,7 +136,7 @@ const ContactForm = () => {
                     type="submit"
                     className="flex rounded-3xl border-2 border-sage-100 dark:border-lime-500 items-center justify-center px-4 py-3 text-sm font-bold tracking-wide text-sage-100 bg-forest-900 hover:bg-forest-700 dark:bg-lime-500 dark:text-forest-950 dark:hover:bg-lime-400 transition-colors duration-300 disabled:opacity-50"
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    {isSubmitting ? 'Sending...' : 'Book Discovery Call'}
                     <Send className="ml-2 w-4 h-4" />
                   </motion.button>
                   {isMessageSent && (
