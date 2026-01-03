@@ -1,24 +1,31 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Briefcase, Code2, BookOpen, MessageSquare, Linkedin, Github, Instagram } from 'lucide-react'
+import { Briefcase, Code2, BookOpen, MessageSquare, Linkedin, Github, Instagram, type LucideIcon } from 'lucide-react'
 import { FaXTwitter } from 'react-icons/fa6'
 import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import PreviewCard from './PreviewCard'
 import { TransparentButton } from '../transparent-button'
+import { portfolioData } from '@/data/portfolio'
+import { IconType } from 'react-icons'
 
-const socialLinks = [
-  { Icon: FaXTwitter, href: "https://twitter.com/_AmanSurya", label: "Twitter" },
-  { Icon: Github, href: "https://github.com/AmanSuryavanshi-1", label: "GitHub" },
-  { Icon: Linkedin, href: "https://www.linkedin.com/in/amansuryavanshi-ai/", label: "LinkedIn" },
-  { Icon: Instagram, href: "https://www.instagram.com/__aman_suryavanshi__/", label: "Instagram" },
-]
+// Icon Mapping for Socials
+// Supporting both Lucide and React Icons (IconType)
+const SocialIconMap: Record<string, LucideIcon | IconType> = {
+  FaXTwitter,
+  Github,
+  Linkedin,
+  Instagram
+}
 
 export default function CTA() {
   const [activePreview, setActivePreview] = useState<string | null>(null)
   const pathname = usePathname()
   const router = useRouter()
+
+  const { cta } = portfolioData.about;
+  const { socials } = portfolioData;
 
   const isInBlogPost = pathname?.startsWith('/blogs/')
   const isInLearnMore = pathname === '/about'
@@ -49,6 +56,9 @@ export default function CTA() {
     })
   }
 
+  // Helper to get icon
+  const getSocialIcon = (name: string) => SocialIconMap[name] || Github;
+
   return (
     <section className="w-full py-12 sm:py-20 sm:pb-32">
       {/* Contact Section */}
@@ -70,16 +80,16 @@ export default function CTA() {
 
           <div className="space-y-4 relative z-10">
             <h3 className="text-2xl md:text-3xl font-bold font-serif text-forest-900 dark:text-sage-100">
-              Let&apos;s Create Something <span className="text-lime-600 dark:text-lime-400">Amazing</span> Together!
+              {cta?.title || "Let's Connect"}
             </h3>
             <p className="text-forest-700 dark:text-sage-300 text-base max-w-xl mx-auto leading-relaxed">
-              Whether you have a project in mind or just want to connect, I&apos;m always excited to collaborate and bring ideas to life.
+              {cta?.subtitle || "Extracted content placeholder. Update portfolio.tsx."}
             </p>
             <div className="flex justify-center pt-3">
               <TransparentButton
                 href="/#contact"
                 icon={MessageSquare}
-                label="Let&apos;s Work Together"
+                label={cta?.actionLabel || "Let's Work Together"}
               />
             </div>
           </div>
@@ -98,27 +108,34 @@ export default function CTA() {
                 }
               }}
             >
-              {socialLinks.map(({ Icon, href, label }) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative p-2.5 rounded-xl bg-white dark:bg-forest-800 border border-sage-100 dark:border-forest-700 text-forest-600 dark:text-sage-300 transition-all duration-200 hover:scale-110 hover:shadow-md hover:text-lime-600 dark:hover:text-lime-400 hover:border-lime-200 dark:hover:border-lime-500/30"
-                  aria-label={`Visit Aman Suryavanshi's ${label} profile`}
-                  variants={{
-                    hidden: { opacity: 0, y: 10 },
-                    visible: { opacity: 1, y: 0 }
-                  }}
-                >
-                  <Icon className="w-5 h-5" />
-                </motion.a>
-              ))}
+              {socials.map(({ icon, url, platform }) => {
+                const Icon = getSocialIcon(icon);
+                return (
+                  <motion.a
+                    key={platform}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative p-2.5 rounded-xl bg-white dark:bg-forest-800 border border-sage-100 dark:border-forest-700 text-forest-600 dark:text-sage-300 transition-all duration-200 hover:scale-110 hover:shadow-md hover:text-lime-600 dark:hover:text-lime-400 hover:border-lime-200 dark:hover:border-lime-500/30"
+                    aria-label={`Visit Aman Suryavanshi's ${platform} profile`}
+                    variants={{
+                      hidden: { opacity: 0, y: 10 },
+                      visible: { opacity: 1, y: 0 }
+                    }}
+                  >
+                    <Icon className="w-5 h-5" />
+                  </motion.a>
+                );
+              })}
             </motion.div>
           </div>
         </motion.div>
 
-        {/* Journey Section */}
+        {/* Journey Section - "Continue the Journey" - Keep hardcoded or user might want this to be data driven too?
+            The user said "Add *all* the data". But this is navigation UI.
+            I will leave it as UI structure unless strictly required.
+            The title "Continue the Journey" is UI.
+        */}
         <motion.div
           custom={0.4}
           variants={fadeInUpVariants}

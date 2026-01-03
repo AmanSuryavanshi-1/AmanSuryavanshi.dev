@@ -12,6 +12,11 @@ import {
 } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
 
+// ══════════════════════════════════════════════════════════════════════════
+// COMPREHENSIVE SKILLS ARSENAL - Production Grade with Full Dark Mode
+// Keywords targeted: n8n automation expert, AI workflow architect, LangGraph specialist
+// ══════════════════════════════════════════════════════════════════════════
+
 // Skill Icon Mapping - Maps skill names to relevant icons
 const getSkillIcon = (skillName: string, category: string) => {
     const name = skillName.toLowerCase();
@@ -163,43 +168,60 @@ const ComprehensiveSkills = () => {
         <section id="skills" className="w-full py-16 px-4 sm:px-6 lg:px-8 scroll-mt-20">
             <div className="container max-w-7xl mx-auto">
 
-                {/* Header */}
+                {/* Header - Enhanced for SEO with dark mode */}
                 <div className="text-center mb-16">
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-3xl md:text-5xl font-bold font-serif mb-6 text-forest-900"
+                        className="text-3xl md:text-5xl font-bold font-serif mb-6 text-forest-900 dark:text-sage-100"
                     >
-                        Complete <span className="text-lime-600">Skills Arsenal</span>
+                        Complete <span className="text-lime-600 dark:text-lime-400">Skills Arsenal</span>
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-forest-700 max-w-2xl mx-auto text-lg leading-relaxed"
+                        className="text-forest-700 dark:text-sage-300 max-w-2xl mx-auto text-lg leading-relaxed"
                     >
-                        Explore my comprehensive technical skills and expertise across various domains
+                        n8n Automation Expert • AI Workflow Architect • LangGraph Specialist
                     </motion.p>
                 </div>
 
-                {/* Search and Filter Bar */}
+                {/* Search and Filter Bar - High Contrast Dark Mode */}
                 <div className="mb-12 flex flex-col md:flex-row gap-4 items-center z-20 relative max-w-4xl mx-auto">
                     {/* Search Input */}
-                    <div className="relative flex-1 w-full z-10">
-                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-forest-700" />
+                    <div className="relative flex-1 w-full z-10 group">
                         <input
                             type="text"
                             placeholder="Search skills (e.g., n8n, React, Firebase)..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-14 pr-12 py-4 text-forest-900 bg-white/60 backdrop-blur-md border border-white/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-lime-500/50 focus:border-lime-500 transition-all shadow-lg shadow-forest-900/5 placeholder:text-forest-400"
+                            className="w-full pl-14 pr-12 py-4 
+                                       text-forest-900 dark:text-sage-100 
+                                       bg-white/60 dark:bg-forest-900/80 
+                                       backdrop-blur-md 
+                                       border border-sage-200/60 dark:border-white/20 
+                                       rounded-2xl 
+                                       focus:outline-none focus:ring-2 focus:ring-lime-500/50 focus:border-lime-500 dark:focus:border-lime-400
+                                       transition-all 
+                                       shadow-lg shadow-forest-900/5 dark:shadow-black/20
+                                       placeholder:text-forest-400 dark:placeholder:text-sage-400"
                         />
+                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 
+                                         text-forest-400 dark:text-sage-400 
+                                         group-focus-within:text-lime-600 dark:group-focus-within:text-lime-400 
+                                         transition-colors pointer-events-none z-10" />
+
                         {searchQuery && (
                             <button
                                 onClick={clearSearch}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-forest-900/5 text-forest-400 hover:text-forest-900 transition-colors"
+                                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-full 
+                                           hover:bg-forest-900/5 dark:hover:bg-white/10 
+                                           text-forest-400 dark:text-sage-300 
+                                           hover:text-forest-900 dark:hover:text-sage-100 
+                                           transition-colors z-10"
                             >
                                 <X className="w-4 h-4" />
                             </button>
@@ -211,14 +233,24 @@ const ComprehensiveSkills = () => {
                         <button
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                             onBlur={() => setTimeout(() => setIsDropdownOpen(false), 200)}
-                            className="w-full flex items-center justify-between px-6 py-4 text-forest-900 bg-white/60 backdrop-blur-md border border-white/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-lime-500/50 transition-all duration-300 hover:bg-white/80 shadow-lg shadow-forest-900/5 group"
+                            className="w-full flex items-center justify-between px-6 py-4 
+                                       text-forest-900 dark:text-sage-100 
+                                       bg-white/60 dark:bg-forest-900/80 
+                                       backdrop-blur-md 
+                                       border border-sage-200/60 dark:border-white/20 
+                                       rounded-2xl 
+                                       focus:outline-none focus:ring-2 focus:ring-lime-500/50 
+                                       transition-all duration-300 
+                                       hover:bg-white/80 dark:hover:bg-forest-800/80 
+                                       shadow-lg shadow-forest-900/5 dark:shadow-black/20 
+                                       group"
                         >
                             <div className="flex items-center gap-3">
-                                <Filter className="w-5 h-5 text-forest-500 group-hover:text-lime-600 transition-colors" />
+                                <Filter className="w-5 h-5 text-forest-500 dark:text-sage-300 group-hover:text-lime-600 dark:group-hover:text-lime-400 transition-colors" />
                                 <span className="font-medium truncate">{selectedCategory}</span>
                             </div>
                             <ChevronDown
-                                className={`w-5 h-5 text-forest-400 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-lime-600' : ''}`}
+                                className={`w-5 h-5 text-forest-400 dark:text-sage-300 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-lime-600 dark:text-lime-400' : ''}`}
                             />
                         </button>
 
@@ -229,7 +261,12 @@ const ComprehensiveSkills = () => {
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                                     transition={{ duration: 0.2 }}
-                                    className="absolute top-full left-0 right-0 mt-2 bg-white/90 backdrop-blur-xl border border-white/50 rounded-2xl shadow-xl overflow-hidden py-2 max-h-[300px] overflow-y-auto custom-scrollbar z-50"
+                                    className="absolute top-full left-0 right-0 mt-2 
+                                               bg-white/95 dark:bg-forest-950/95 
+                                               backdrop-blur-xl 
+                                               border border-sage-200/60 dark:border-white/10 
+                                               rounded-2xl shadow-xl dark:shadow-black/40 
+                                               overflow-hidden py-2 max-h-[300px] overflow-y-auto custom-scrollbar z-50"
                                 >
                                     {allCategories.map((category) => (
                                         <button
@@ -239,9 +276,9 @@ const ComprehensiveSkills = () => {
                                                 setIsDropdownOpen(false);
                                             }}
                                             className={`w-full text-left px-6 py-3 transition-colors flex items-center justify-between group
-                        ${selectedCategory === category
-                                                    ? 'bg-lime-50 text-forest-900 font-bold'
-                                                    : 'text-forest-600 hover:bg-sage-50 hover:text-forest-900'
+                                                ${selectedCategory === category
+                                                    ? 'bg-lime-50 dark:bg-lime-500/20 text-forest-900 dark:text-sage-100 font-bold'
+                                                    : 'text-forest-600 dark:text-sage-300 hover:bg-sage-50 dark:hover:bg-forest-800/50 hover:text-forest-900 dark:hover:text-sage-100'
                                                 }`}
                                         >
                                             <span>{category}</span>
@@ -259,13 +296,19 @@ const ComprehensiveSkills = () => {
                     </div>
                 </div>
 
-                {/* Results Count */}
-                <div className="mb-8 text-sm text-forest-600 text-center font-medium bg-white/30 inline-block px-4 py-1 rounded-full mx-auto backdrop-blur-sm border border-white/20">
-                    Found {filteredSkills.length} skill{filteredSkills.length !== 1 ? 's' : ''}
-                    {selectedCategory !== 'All' && ` in ${selectedCategory}`}
+                {/* Results Count - Dark Mode High Contrast */}
+                <div className="mb-8 text-center">
+                    <span className="text-sm text-forest-600 dark:text-sage-300 font-medium 
+                                     bg-white/50 dark:bg-forest-800/80 
+                                     inline-block px-4 py-1.5 rounded-full 
+                                     backdrop-blur-sm 
+                                     border border-sage-200/40 dark:border-white/10">
+                        Found <span className="font-bold text-forest-900 dark:text-white">{filteredSkills.length}</span> skill{filteredSkills.length !== 1 ? 's' : ''}
+                        {selectedCategory !== 'All' && <span className="text-lime-600 dark:text-lime-400"> in {selectedCategory}</span>}
+                    </span>
                 </div>
 
-                {/* Skills Grid */}
+                {/* Skills Grid - High Contrast Dark Mode */}
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={`${selectedCategory}-${searchQuery}`}
@@ -283,22 +326,36 @@ const ComprehensiveSkills = () => {
                                     key={`${skill.name}-${index}`}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: index * 0.05 }}
+                                    transition={{ delay: index * 0.03 }}
                                     className="group h-full"
                                 >
-                                    <div className="flex flex-col h-full overflow-hidden rounded-3xl border border-white/60 bg-white/40 backdrop-blur-md transition-all duration-300 hover:bg-white/60 hover:shadow-xl hover:-translate-y-1 hover:border-white">
-                                        <div className="p-6 flex flex-col h-full">
+                                    <div className="flex flex-col h-full overflow-hidden rounded-2xl 
+                                                    border border-sage-200/60 dark:border-white/10 
+                                                    bg-white/60 dark:bg-forest-900/60 
+                                                    backdrop-blur-md 
+                                                    transition-all duration-300 
+                                                    hover:bg-white/80 dark:hover:bg-forest-800/80 
+                                                    hover:shadow-xl hover:shadow-lime-500/10 
+                                                    hover:-translate-y-1 
+                                                    hover:border-lime-500/30 dark:hover:border-lime-500/30">
+                                        <div className="p-5 flex flex-col h-full">
                                             {/* Category & Group Tags */}
-                                            <div className="flex items-start gap-2 mb-4 flex-wrap">
+                                            <div className="flex items-start gap-2 mb-3 flex-wrap">
                                                 <span
-                                                    className="px-2.5 py-1 text-[10px] font-bold text-white bg-forest-900 rounded-lg uppercase tracking-wider shadow-sm"
+                                                    className="px-2 py-0.5 text-[10px] font-bold text-white 
+                                                               bg-forest-800 dark:bg-lime-600/90 
+                                                               rounded-md uppercase tracking-wider shadow-sm"
                                                     title={skill.category}
                                                 >
                                                     {skill.category}
                                                 </span>
                                                 {skill.groupTitle && (
                                                     <span
-                                                        className="px-2.5 py-1 text-[10px] text-forest-700 bg-white/50 border border-forest-900/5 rounded-lg font-medium uppercase tracking-wide truncate max-w-[120px]"
+                                                        className="px-2 py-0.5 text-[10px] 
+                                                                   text-forest-600 dark:text-sage-200 
+                                                                   bg-forest-50 dark:bg-forest-800/80 
+                                                                   border border-forest-100 dark:border-forest-600/50 
+                                                                   rounded-md font-medium uppercase tracking-wide truncate max-w-[100px]"
                                                         title={skill.groupTitle}
                                                     >
                                                         {skill.groupTitle}
@@ -307,42 +364,64 @@ const ComprehensiveSkills = () => {
                                             </div>
 
                                             {/* Skill Name with Icon */}
-                                            <div className="flex items-center gap-4 mb-4">
-                                                <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-white shadow-sm border border-forest-900/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                                    <SkillIcon className="w-6 h-6 text-forest-700 group-hover:text-lime-600 transition-colors" />
+                                            <div className="flex items-center gap-3 mb-3">
+                                                <div className="flex-shrink-0 w-10 h-10 rounded-xl 
+                                                                bg-forest-50 dark:bg-forest-800/80 
+                                                                border border-forest-100 dark:border-forest-700 
+                                                                flex items-center justify-center 
+                                                                group-hover:scale-110 group-hover:bg-lime-50 dark:group-hover:bg-lime-500/20
+                                                                transition-all duration-300">
+                                                    <SkillIcon className="w-5 h-5 text-forest-600 dark:text-sage-200 group-hover:text-lime-600 dark:group-hover:text-lime-300 transition-colors" />
                                                 </div>
-                                                <h3 className="text-lg font-serif font-bold text-forest-900 group-hover:text-lime-600 transition-colors duration-300 line-clamp-2 leading-tight">
+                                                <h3 className="text-base font-serif font-bold 
+                                                               text-forest-900 dark:text-white 
+                                                               group-hover:text-lime-600 dark:group-hover:text-lime-400 
+                                                               transition-colors duration-300 line-clamp-2 leading-tight">
                                                     {skill.label}
                                                 </h3>
                                             </div>
 
-                                            {/* Value/Details */}
-                                            <p className="text-sm text-forest-700 leading-relaxed mb-4 flex-grow line-clamp-3">
+                                            {/* Value/Details - Enhanced Readability */}
+                                            <p className="text-sm text-forest-600 dark:text-sage-200 leading-relaxed mb-4 flex-grow line-clamp-3 font-medium opacity-90">
                                                 {skill.value}
                                             </p>
 
                                             {/* Related Projects Links */}
                                             {skill.relatedProjects && skill.relatedProjects.length > 0 ? (
-                                                <div className="mt-auto pt-4 border-t border-forest-900/5">
-                                                    <p className="text-[10px] text-forest-500 mb-2 uppercase tracking-wider font-medium">Used In</p>
-                                                    <div className="flex flex-wrap gap-2">
-                                                        {skill.relatedProjects.map((project: { title: string; url: string }, idx: number) => (
+                                                <div className="mt-auto pt-3 border-t border-forest-100 dark:border-white/10">
+                                                    <p className="text-[10px] text-forest-500 dark:text-sage-400 mb-2 uppercase tracking-wider font-bold opacity-80">Used In</p>
+                                                    <div className="flex flex-wrap gap-1.5">
+                                                        {skill.relatedProjects.slice(0, 2).map((project: { title: string; url: string }, idx: number) => (
                                                             <a
                                                                 key={idx}
                                                                 href={project.url}
-                                                                className="inline-flex items-center gap-1 text-xs font-medium text-forest-700 hover:text-lime-600 transition-colors bg-forest-50 hover:bg-lime-50 px-2 py-1 rounded-lg border border-forest-100 hover:border-lime-200"
+                                                                className="inline-flex items-center gap-1 text-[11px] font-medium 
+                                                                           text-forest-700 dark:text-sage-100 
+                                                                           hover:text-lime-600 dark:hover:text-lime-300 
+                                                                           transition-colors 
+                                                                           bg-forest-50 dark:bg-white/5 
+                                                                           hover:bg-lime-50 dark:hover:bg-lime-500/20 
+                                                                           px-2 py-1 rounded-lg 
+                                                                           border border-forest-100 dark:border-white/10 
+                                                                           hover:border-lime-200 dark:hover:border-lime-500/30"
                                                             >
-                                                                <span className="truncate max-w-[100px]">{project.title}</span>
-                                                                <ExternalLink className="w-2.5 h-2.5 flex-shrink-0" />
+                                                                <span className="truncate max-w-[80px]">{project.title}</span>
+                                                                <ExternalLink className="w-2.5 h-2.5 flex-shrink-0 opacity-70" />
                                                             </a>
                                                         ))}
                                                     </div>
                                                 </div>
                                             ) : skill.projectUrl && (
-                                                <div className="mt-auto pt-4 border-t border-forest-900/5">
+                                                <div className="mt-auto pt-3 border-t border-forest-100 dark:border-white/10">
                                                     <a
                                                         href={skill.projectUrl}
-                                                        className="inline-flex items-center gap-2 text-xs font-bold text-forest-900 hover:text-lime-600 transition-colors group/link bg-white/50 px-3 py-2 rounded-xl w-full justify-center hover:bg-white"
+                                                        className="inline-flex items-center gap-2 text-xs font-bold 
+                                                                   text-forest-900 dark:text-white 
+                                                                   hover:text-lime-600 dark:hover:text-lime-400 
+                                                                   transition-colors group/link 
+                                                                   bg-forest-50 dark:bg-white/5 
+                                                                   hover:bg-lime-50 dark:hover:bg-lime-500/20 
+                                                                   px-3 py-2 rounded-xl w-full justify-center"
                                                     >
                                                         <span className="truncate">View Project</span>
                                                         <ExternalLink className="w-3 h-3 flex-shrink-0 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
@@ -357,16 +436,19 @@ const ComprehensiveSkills = () => {
                     </motion.div>
                 </AnimatePresence>
 
-                {/* No Results */}
+                {/* No Results - Dark Mode */}
                 {filteredSkills.length === 0 && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="text-center py-20 bg-white/30 backdrop-blur-sm rounded-3xl border border-white/50"
+                        className="text-center py-20 
+                                   bg-white/50 dark:bg-forest-900/40 
+                                   backdrop-blur-sm rounded-3xl 
+                                   border border-sage-200/50 dark:border-white/10"
                     >
                         <div className="text-6xl mb-6 opacity-50">🔍</div>
-                        <h3 className="text-2xl font-bold text-forest-900 mb-3">No skills found</h3>
-                        <p className="text-forest-600 mb-8 max-w-md mx-auto">
+                        <h3 className="text-2xl font-bold text-forest-900 dark:text-sage-100 mb-3">No skills found</h3>
+                        <p className="text-forest-600 dark:text-sage-300 mb-8 max-w-md mx-auto">
                             We couldn't find any skills matching your search. Try adjusting your filters or search terms.
                         </p>
                         <button
@@ -374,7 +456,12 @@ const ComprehensiveSkills = () => {
                                 setSearchQuery('');
                                 setSelectedCategory('All');
                             }}
-                            className="px-8 py-3 rounded-xl bg-forest-900 text-white font-bold hover:bg-lime-600 transition-all duration-300 shadow-lg hover:shadow-lime-500/20"
+                            className="px-8 py-3 rounded-xl 
+                                       bg-forest-900 dark:bg-lime-600 
+                                       text-white font-bold 
+                                       hover:bg-lime-600 dark:hover:bg-lime-500 
+                                       transition-all duration-300 
+                                       shadow-lg hover:shadow-lime-500/20"
                         >
                             Clear All Filters
                         </button>

@@ -10,10 +10,11 @@ import CTA from '@/components/about-page/CTA';
 import SectionTitle from '@/components/about/SectionTitle';
 import ScrollToHash from '@/components/ui/ScrollToHash';
 
-// Site Constants
+// Site Constants - Entity-Driven Keywords for AEO/GEO
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi-dev.vercel.app/";
-const ABOUT_TITLE = "About Aman Suryavanshi - AI Automation Engineer + Integration Specialist";
-const ABOUT_DESCRIPTION = "Learn about Aman Suryavanshi, an AI Automation Engineer specializing in gluing tools together. Expert at connecting apps, APIs, and services with n8n automation, LangChain, and OpenAI. Building Next.js apps with intelligent automation backends.";
+const ABOUT_TITLE = "About Aman Suryavanshi | Production n8n Architect & LangGraph Orchestrator";
+const ABOUT_DESCRIPTION = "Full-Stack Agentic Developer building self-healing automation systems with Multi-LLM Orchestration. Expert in Next.js Systems, n8n Production Workflows (74-node, 99.7% reliability), and Technical SEO/GEO. ₹300K+ revenue impact through AI-powered solutions.";
+
 
 // Metadata configuration
 export const metadata: Metadata = {
@@ -52,12 +53,13 @@ export const metadata: Metadata = {
     },
 };
 
-// Structured data for the about page
+// Enhanced Structured Data with ProfessionalService, SoftwareSourceCode, and FAQ Schema
 const aboutStructuredData = {
     "@context": "https://schema.org",
     "@graph": [
+        // AboutPage
         {
-            "@type": "WebPage",
+            "@type": "AboutPage",
             "@id": `${SITE_URL}/about#webpage`,
             url: `${SITE_URL}/about`,
             name: ABOUT_TITLE,
@@ -69,7 +71,11 @@ const aboutStructuredData = {
                 "@id": `${SITE_URL}/about#breadcrumb`
             },
             inLanguage: "en-US",
+            mainEntity: {
+                "@id": `${SITE_URL}/about#person`
+            }
         },
+        // Breadcrumb
         {
             "@type": "BreadcrumbList",
             "@id": `${SITE_URL}/about#breadcrumb`,
@@ -92,6 +98,7 @@ const aboutStructuredData = {
                 }
             ]
         },
+        // Enhanced Person Schema
         {
             "@type": "Person",
             "@id": `${SITE_URL}/about#person`,
@@ -101,40 +108,132 @@ const aboutStructuredData = {
             url: `${SITE_URL}/about`,
             image: {
                 "@type": "ImageObject",
-                url: "/Images/about-preview.png",
+                url: `${SITE_URL}/Profile/me main.png`,
                 width: 1200,
                 height: 630
             },
-            description: ABOUT_DESCRIPTION,
-            jobTitle: "AI Automation Engineer & Integration Specialist",
+            description: "Full-Stack Agentic Developer specializing in self-healing automation systems, Multi-LLM Orchestration, and Production n8n Architecture. ECE background bridging hardware and software.",
+            jobTitle: "Production n8n Architect & LangGraph Orchestrator",
+            alumniOf: {
+                "@type": "EducationalOrganization",
+                name: "Electronics & Communication Engineering"
+            },
             sameAs: [
                 "https://github.com/AmanSuryavanshi-1",
-                "https://www.linkedin.com/in/amansuryavanshi-ai/"
+                "https://www.linkedin.com/in/amansuryavanshi-ai/",
+                "https://twitter.com/_AmanSurya"
             ],
             knowsAbout: [
-                "AI Automation",
-                "Integration Specialist",
-                "n8n",
-                "Next.js",
+                // High-Intent Keywords from 2026 Research
+                "n8n automation expert",
+                "AI workflow architect",
+                "LangGraph specialist",
+                "CrewAI automation",
+                "agentic workflow specialist",
+                "enterprise n8n workflows",
+                "n8n AI agents",
+                // Technical Depth
+                "Multi-LLM Orchestration",
+                "Production n8n Architecture",
+                "Self-Healing Automations",
+                "Deterministic State Machines",
+                "Closed-Loop Feedback Systems",
+                "Dead Letter Queues (DLQs)",
+                // Stack
+                "Next.js Systems Building",
                 "TypeScript",
-                "Workflow Optimization",
-                "Business Process Automation"
+                "LangChain",
+                "Technical SEO/GEO",
+                // AEO/GEO Long-Tail
+                "hire n8n freelancer India",
+                "AI SEO workflows n8n"
             ],
-            worksFor: {
-                "@type": "Organization",
-                name: "Freelance"
+            hasOccupation: {
+                "@type": "Occupation",
+                name: "Full-Stack Agentic Developer",
+                skills: [
+                    "n8n Workflow Automation",
+                    "Next.js Development",
+                    "Multi-LLM Orchestration",
+                    "LangGraph",
+                    "TypeScript",
+                    "Technical SEO"
+                ]
             },
-            skills: [
-                "AI Automation",
-                "Integration Specialist",
-                "n8n",
-                "Next.js",
-                "TypeScript",
-                "Workflow Optimization"
+            makesOffer: {
+                "@type": "Offer",
+                itemOffered: {
+                    "@type": "ProfessionalService",
+                    name: "AI Automation & Systems Architecture",
+                    description: "Building production-grade self-healing automation systems with n8n, LangGraph, and Next.js",
+                    areaServed: {
+                        "@type": "Place",
+                        name: "Global"
+                    },
+                    serviceType: [
+                        "n8n Automation Architecture",
+                        "Multi-LLM Orchestration",
+                        "Next.js Systems Development",
+                        "AI/SEO Optimization"
+                    ]
+                }
+            }
+        },
+        // SoftwareSourceCode Schema (Reliability Block - Deterministic Engineering)
+        {
+            "@type": "SoftwareSourceCode",
+            "@id": `${SITE_URL}/about#sourceCode`,
+            name: "Self-Healing Automation Architecture",
+            description: "Production n8n workflows featuring Deterministic State Machines, Closed-Loop Feedback Systems, and Dead Letter Queues for 99.7% reliability",
+            codeRepository: "https://github.com/AmanSuryavanshi-1",
+            programmingLanguage: ["TypeScript", "JavaScript", "Python"],
+            runtimePlatform: ["n8n", "Node.js", "Next.js"],
+            author: {
+                "@id": `${SITE_URL}/about#person`
+            }
+        },
+        // FAQ Schema for Career-Related Queries
+        {
+            "@type": "FAQPage",
+            "@id": `${SITE_URL}/about#faq`,
+            mainEntity: [
+                {
+                    "@type": "Question",
+                    name: "What is Aman's approach to AI automation?",
+                    acceptedAnswer: {
+                        "@type": "Answer",
+                        text: "I design closed-loop, self-healing automation systems using n8n and multi-agent orchestration. Every workflow features deterministic state transitions, dead letter queues for graceful failure handling, and monitoring dashboards for non-technical stakeholders. My systems achieve 99.7% reliability in production."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    name: "What makes Aman different from other developers?",
+                    acceptedAnswer: {
+                        "@type": "Answer",
+                        text: "I bridge the gap between AI agents and usable products. Most AI developers build intelligence but can't create interfaces. Most frontend developers build UIs but don't understand orchestration. I deliver complete solutions—from LangGraph agents to the Next.js dashboard that controls them."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    name: "What results has Aman achieved?",
+                    acceptedAnswer: {
+                        "@type": "Answer",
+                        text: "₹300K+ revenue impact for Aviators Training Centre through SEO-optimized web presence. 80% time reduction in content workflows via 74-node n8n automation (Omni-Post AI). #1 Google rankings for client projects through Technical SEO/GEO optimization."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    name: "What is Aman's T-Shaped Stack?",
+                    acceptedAnswer: {
+                        "@type": "Answer",
+                        text: "Depth in Multi-Agent Orchestration (LangGraph + CrewAI + n8n AI Agents), with breadth across Frontend (Next.js), Automation (n8n + API), and Technical SEO. This combination is rare—most developers specialize in only one layer."
+                    }
+                }
             ]
         }
     ]
 };
+
 
 export default function AboutPage() {
     return (
@@ -148,9 +247,9 @@ export default function AboutPage() {
 
             <ScrollToHash />
 
-            <main className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-sage-100 to-lime-500">
+            <main className="min-h-screen w-full overflow-x-hidden bg-sage-50 dark:bg-forest-950">
                 {/* Hero Section - Fits in 100vh */}
-                <section className="relative pt-12 pb-0 lg:pt-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[calc(100vh-80px)] flex flex-col justify-center">
+                <section className="relative py-12 lg:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[calc(100vh-80px)] flex flex-col justify-center">
                     <SectionTitle />
 
                     <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
@@ -166,23 +265,23 @@ export default function AboutPage() {
                     </div>
                 </section>
 
-                {/* Details Grid Section */}
-                <section className="w-full py-16 px-4 sm:px-6 lg:px-8">
+                {/* Details Grid Section - Bento Grid */}
+                <section className="w-full py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
                     <ContentCard />
                 </section>
 
                 {/* Github Section */}
-                <section className="w-full py-16 px-4 sm:px-6 lg:px-8">
+                <section className="w-full py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
                     <GithubProfile />
                 </section>
 
                 {/* GitHub Calendar */}
-                <section className="w-full py-16 px-4 sm:px-6 lg:px-8">
+                <section className="w-full py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
                     <GithubCalendarComponent />
                 </section>
 
                 {/* Skills Section */}
-                <section id="skills">
+                <section id="skills" className="py-12 lg:py-16">
                     <ComprehensiveSkills />
                 </section>
 
