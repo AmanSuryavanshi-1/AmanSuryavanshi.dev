@@ -81,6 +81,51 @@ const project = portfolioData.projects.find(p => p.id === projectId);
 
 ---
 
+## Layout Components
+
+### `<Header/>`
+**Location**: `src/components/Header.tsx`
+
+**Type**: Client Component
+
+**Purpose**: Fixed top navigation bar
+
+**Features**:
+- Responsive mobile menu (hamburger)
+- Framer Motion animations
+- Active route highlighting
+- Theme toggle (Dark/Light mode)
+- Glassmorphism effect
+
+---
+
+### `<Footer/>`
+**Location**: `src/components/Footer.tsx`
+
+**Type**: Client Component
+
+**Purpose**: Site footer with links and branding
+
+**Features**:
+- Quick links grid
+- Social media links (via `HeaderSocial`)
+- Tech stack showcase
+- Contact information
+- Framer Motion scroll reveal
+
+---
+
+### `<GoogleAnalyticsWrapper/>`
+**Location**: `src/components/GoogleAnalyticsWrapper.tsx`
+
+**Type**: Client Component
+
+**Purpose**: Client-side wrapper for Google Analytics 4
+
+**Library**: `nextjs-google-analytics`
+
+---
+
 ## Section Components
 
 ### `<Hero/>`

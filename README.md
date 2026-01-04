@@ -383,10 +383,12 @@ npm run test:coverage    # Generate coverage report
 
 ### Project Resources
 - [Omni-Post AI Documentation](./Omni-Post-AI-Automation/README.md)
-- [Blog Automation Guide](./N8N_BLOG_AUTOMATION_GUIDE.md)
+- [Blog Automation Guide](./docs/guides/N8N-BLOG-AUTOMATION-GUIDE.md)
 
 ### Developer Documentation
 - **[Portfolio Technical Documentation](./docs/PORTFOLIO-DOCUMENTATION.md)** - Complete architecture, data flow, and design decisions
+- **[System Architecture](./ARCHITECTURE.md)** - High-level system overview and diagram
+- **[Contributing Guidelines](./CONTRIBUTING.md)** - Setup, workflow, and coding standards
 - **[Data Flow Reference](./docs/DATA-FLOW-REFERENCE.md)** - Visual diagrams of data movement
 - **[Component Reference](./docs/COMPONENT-REFERENCE.md)** - React component API reference
 - **[Quick Start Guide](./docs/QUICK-START-GUIDE.md)** - Common tasks and operations
