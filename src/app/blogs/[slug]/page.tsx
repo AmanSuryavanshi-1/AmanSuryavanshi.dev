@@ -115,7 +115,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${title} | Aman Suryavanshi`,
     description: description,
     keywords: post.tags?.filter(t => t && t.name).map(t => t.name).join(', '),
+    keywords: post.tags?.filter(t => t && t.name).map(t => t.name).join(', '),
     authors: post.author ? [{ name: post.author.name }] : undefined,
+    alternates: {
+      canonical: `https://amansuryavanshi.me/blogs/${slug}`,
+    },
     openGraph: {
       title: title,
       description: description,

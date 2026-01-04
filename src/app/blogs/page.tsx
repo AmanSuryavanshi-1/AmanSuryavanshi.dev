@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     'software engineering',
     'Aman Suryavanshi blog'
   ],
+  alternates: {
+    canonical: 'https://amansuryavanshi.me/blogs',
+  },
   openGraph: {
     title: 'Technical Blog | Aman Suryavanshi',
     description: 'Expert insights on AI automation, n8n, and modern web development.',

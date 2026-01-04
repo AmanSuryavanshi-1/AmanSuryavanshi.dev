@@ -64,7 +64,8 @@ async function getDocContent(slug: string) {
 
 export async function generateMetadata({ params }: PageProps) {
     const { slug } = await params;
-    const title = TITLES_MAP[slug] || 'Project Documentation';
+    const formatSlug = (str: string) => str.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    const title = TITLES_MAP[slug] || formatSlug(slug);
     const isExecutiveSummary = slug.includes('executive-summary');
     const projectId = DOC_TO_PROJECT_ID[slug];
 
