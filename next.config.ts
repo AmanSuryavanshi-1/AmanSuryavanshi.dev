@@ -33,6 +33,21 @@ const nextConfig: NextConfig = {
     // Temporarily ignore ESLint errors during build to resolve Vercel deployment issues
     ignoreDuringBuilds: true,
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'amansuryavanshi-dev.vercel.app',
+          },
+        ],
+        destination: 'https://amansuryavanshi.me/:path*',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
