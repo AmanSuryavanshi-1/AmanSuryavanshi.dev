@@ -27,7 +27,7 @@ const geistMono = localFont({
 const SITE_NAME = "Aman Suryavanshi";
 const SITE_TITLE = "Aman Suryavanshi | AI Workflow Architect & Systems Builder";
 const SITE_DESCRIPTION = "I build self-healing AI systems that drive revenue. ₹300K+ generated, 80% manual work eliminated. n8n automation, LangGraph agents, Next.js dashboards. Book a discovery call for your system audit.";
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi-dev.vercel.app/";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi.me";
 
 export const metadata: Metadata = {
     metadataBase: new URL(SITE_URL),
