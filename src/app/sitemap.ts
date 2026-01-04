@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '',
         '/projects',
         '/blogs',
+        '/about',
         // Add other static routes if any
     ].map((route) => ({
         url: `${baseUrl}${route}`,
@@ -25,9 +26,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.8,
     }));
 
-    // Dynamic Blog pages (if you have blog data source, map it here)
-    // Assuming blog data matches a similar structure or fetching it:
-    // const blogs = blogData.map((blog) => ({ ... }));
+    // Dynamic Blog pages from Sanity
+    const postsQuery = `*[_type == "post" && defined(slug.current) && status == "published"] {
+        "slug": slug.current,
+        _updatedAt
+    }`;
 
-    return [...routes, ...projects];
+    // We need to import client dynamically or assume it works in this context
+    // Since we can't easily import the client if it's not exported for edge/node specifically, 
+    // we'll try to import it. If it fails, we fall back to empty array.
+    // However, looking at the codebase, '@/sanity/lib/client' is available.
+
+    let blogs: any[] = [];
+    try {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        const { client } = require('@/sanity/lib/client');
+        const posts = await client.fetch(postsQuery);
+        blogs = posts.map((post: any) => ({
+            url: `${baseUrl}/blogs/${post.slug}`,
+            lastModified: new Date(post._updatedAt),
+            changeFrequency: 'weekly' as const,
+            priority: 0.7,
+        }));
+    } catch (error) {
+        console.error("Failed to fetch blog posts for sitemap:", error);
+    }
+
+    return [...routes, ...projects, ...blogs];
 }

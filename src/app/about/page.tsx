@@ -11,7 +11,7 @@ import SectionTitle from '@/components/about/SectionTitle';
 import ScrollToHash from '@/components/ui/ScrollToHash';
 
 // Site Constants - Entity-Driven Keywords for AEO/GEO
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi-dev.vercel.app/";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi.me";
 const ABOUT_TITLE = "About Aman Suryavanshi | Production n8n Architect & LangGraph Orchestrator";
 const ABOUT_DESCRIPTION = "Full-Stack Agentic Developer building self-healing automation systems with Multi-LLM Orchestration. Expert in Next.js Systems, n8n Production Workflows (74-node, 99.7% reliability), and Technical SEO/GEO. ₹300K+ revenue impact through AI-powered solutions.";
 
