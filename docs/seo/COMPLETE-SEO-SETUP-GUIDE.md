@@ -99,36 +99,50 @@ Nameservers tell the internet "where to find my website." By default, Namecheap 
    - This ensures `www.` traffic goes to apex domain
 
 ### 1.3 Verifying Domain Configuration
-
 **How to check if domain is working:**
-
 1. **Check Domain Status**
    - In Vercel > Domains
    - Status should show "Valid Configuration" (green checkmark)
-   - If showing "Invalid Configuration" (red):
-     - Wait 30 minutes for NS propagation
-     - Click "Refresh" button
-     - If still failing, re-check Namecheap nameserver settings
-
 2. **Test in Browser**
-   ```
-   https://yourdomain.me          → Should load your site
-   https://www.yourdomain.me      → Should redirect to apex
-   ```
+   - `https://yourdomain.me` → Should load your site
+   - `https://www.yourdomain.me` → Should redirect to apex
+3. **Verify DNS Records (Namecheap)**
+   - Namecheap Dashboard > Domain List > Manage > Nameservers
+   - Ensure "Custom DNS" is selected
+   - Nameservers must be: `ns1.vercel-dns.com` through `ns4.vercel-dns.com`
 
-3. **Verify DNS Records** (optional)
-   - Use online tool: https://mxtoolbox.com/
-   - Enter your domain
-   - Check "MX Lookup" to see nameserver records
-   - Should show Vercel's nameservers
-
-**Common Issues & Fixes:**
+**Advanced Troubleshooting (Vercel/Namecheap):**
 | Problem | Cause | Solution |
 |---------|-------|----------|
-| "Invalid Configuration" | NS not propagated | Wait 30min, click Refresh |
-| Domain times out | Nameservers not changed | Verify Namecheap settings |
-| www redirect not working | Redirect rule missing | Add www domain with redirect rule |
+| "Invalid Configuration" | NS not propagated | Wait 30min, click "Refresh" in Vercel. |
+| Domain times out | Nameservers incorrect | Verify no trailing spaces in Namecheap NS records. |
+| www redirect fails | Missing Vercel rule | Add `www.yourdomain.me` in Vercel > Domains, select "Redirect to" → `yourdomain.me`. |
+| "Sitemap not found" | `NEXT_PUBLIC_SITE_URL` missing | Ensure Vercel Env Var is set to `https://yourdomain.me`. |
 
+---
+
+## Phase 9: Implementation Status (Log)
+
+**Last Updated:** January 4, 2026
+
+| Service | Status | Verification Date |
+|---------|--------|-------------------|
+| **Google Search Console** | ✅ Verified | Jan 4, 2026 |
+| **Bing Webmaster** | ✅ Verified | Jan 4, 2026 |
+| **Sitemap** | ✅ Indexed (10 pages) | Jan 4, 2026 |
+| **Domain** | ✅ Verified & Active | Jan 4, 2026 |
+| **Google Analytics 4** | ⏳ Setup Required | - |
+| **Yandex/Baidu** | ❌ Skipped (Optional) | - |
+
+**Recent Achievements:**
+- Successfully verified `amansuryavanshi.me` on GSC.
+- Imported property to Bing Webmaster Tools.
+- Configured Vercel DNS with `ns1-ns4.vercel-dns.com`.
+- established 307 redirect for `www` subdomain.
+
+---
+**Maintained By:** Aman Suryavanshi
+**Status:** All Systems Operational ✅
 
 ---
 
