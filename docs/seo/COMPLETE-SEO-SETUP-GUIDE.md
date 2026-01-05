@@ -306,8 +306,27 @@ They allow your code to use your domain name dynamically. This is crucial for si
 
 ### 3.1 Google Search Console (GSC) Setup
 
-**What is Google Search Console?**
-GSC lets you see how Google finds and indexes your site. You can submit sitemaps, fix indexing issues, and monitor search performance.
+**Important: Domain Property vs. URL Prefix**
+
+When adding your site to GSC, you will see two options. **Always choose "Domain" property for best results.**
+
+![GSC Property Types](/assets/docs/gsc-property-types.png)
+*(Fig: Difference between Domain Property and URL Prefix)*
+
+| Feature | **Domain Property** (Recommended) | **URL Prefix** (Limited) |
+| :--- | :--- | :--- |
+| **Example** | `amansuryavanshi.me` | `https://amansuryavanshi.me` |
+| **Coverage** | Tracks **EVERYTHING**: `http`, `https`, `www`, `non-www`, `m.` | Tracks **ONLY** exact match. `https` won't see `http` traffic. |
+| **Verification** | DNS Record (TXT) only. | HTML file, Tag, Analytics, or DNS. |
+| **Best For** | Total visibility of your brand/domain. | Specific sub-sections or if you can't edit DNS. |
+| **www support** | Automatically includes `www` and `non-www`. | Must add `https://www.site.com` as separate property. |
+
+**Why Domain Property is better?**
+It collects data from all versions of your site into one dashboard. If you use URL Prefix, you might miss data if a user types `www.` instead of the naked domain.
+
+**Comparison:**
+- **Current Setup (Right Box):** You have `https://amansuryavanshi.me/` added. If someone types `http://amansuryavanshi.me` (unsecure) or `www.amansuryavanshi.me`, Google counts them as separate websites. You miss that data.
+- **New Setup (Left Box):** By adding `amansuryavanshi.me` in the Domain box, you track **ALL** versions of your site in one single dashboard.
 
 **Steps:**
 
@@ -317,10 +336,11 @@ GSC lets you see how Google finds and indexes your site. You can submit sitemaps
 
 2. **Add Your Domain Property**
    - Click "Add property"
-   - Enter your domain: `https://yourdomain.me` (use https://)
+   - **Select "Domain" on the left** (Not URL Prefix)
+   - Enter your domain: `yourdomain.me` (No https://, no www)
    - Click "Continue"
 
-3. **Verify Ownership (Choose One Method)**
+3. **Verify Ownership (DNS Method)**
 
    **Method 1: HTML File (Recommended)**
    - Download the HTML verification file
