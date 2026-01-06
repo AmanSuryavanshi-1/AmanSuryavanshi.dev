@@ -35,15 +35,18 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Redirect dev domain to main domain
       {
         source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'amansuryavanshi-dev.vercel.app',
-          },
-        ],
-        destination: 'https://amansuryavanshi.me/:path*',
+        has: [{ type: 'host', value: 'amansuryavanshi-dev.vercel.app' }],
+        destination: 'https://www.amansuryavanshi.me/:path*',
+        permanent: true,
+      },
+      // Redirect non-www to www
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'amansuryavanshi.me' }],
+        destination: 'https://www.amansuryavanshi.me/:path*',
         permanent: true,
       },
     ];
