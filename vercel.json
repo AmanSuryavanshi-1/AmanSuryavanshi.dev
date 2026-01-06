@@ -8,8 +8,19 @@
           "value": "amansuryavanshi-dev.vercel.app"
         }
       ],
-      "destination": "https://amansuryavanshi.me/:path*",
-      "permanent": false
+      "destination": "https://www.amansuryavanshi.me/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "amansuryavanshi.me"
+        }
+      ],
+      "destination": "https://www.amansuryavanshi.me/:path*",
+      "permanent": true
     }
   ]
 }
