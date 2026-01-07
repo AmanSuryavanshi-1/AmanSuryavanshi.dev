@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { Play, Pause, Volume2, VolumeX, Maximize, Minimize } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, Maximize, Minimize, RotateCcw, RotateCw } from "lucide-react";
 
 // Declare YouTube API types
 declare global {
@@ -51,6 +51,12 @@ interface CustomVideoPlayerProps {
     className?: string;
     poster?: string;
     accentColor?: string;
+    /** Optional zoom level for the video (1.0 = no zoom, 1.2 = 120% zoom). Default: 1.0 */
+    zoom?: number;
+    /** Optional class name for the controls container */
+    controlsClassName?: string;
+    /** Optional styles for the main container */
+    style?: React.CSSProperties;
 }
 
 // Global flag to track if YouTube API is loaded
@@ -106,6 +112,9 @@ export default function CustomVideoPlayer({
     className,
     poster,
     accentColor = "#84cc16",
+    zoom = 1.0,
+    controlsClassName,
+    style,
 }: CustomVideoPlayerProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const playerContainerRef = useRef<HTMLDivElement>(null);
@@ -403,7 +412,10 @@ export default function CustomVideoPlayer({
                 isFullscreen ? "fixed inset-0 z-50" : "rounded-xl",
                 className
             )}
-            style={{ aspectRatio: isFullscreen ? undefined : "16/9" }}
+            style={{
+                aspectRatio: isFullscreen ? undefined : "16/9",
+                ...style
+            }}
             onMouseMove={handleMouseMove}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
@@ -422,8 +434,8 @@ export default function CustomVideoPlayer({
                         position: absolute;
                         top: 50%;
                         left: 50%;
-                        width: 120%;
-                        height: 120%;
+                        width: ${zoom * 100}%;
+                        height: ${zoom * 100}%;
                         transform: translate(-50%, -50%);
                         pointer-events: none;
                     }
@@ -491,7 +503,8 @@ export default function CustomVideoPlayer({
                     <div
                         className={cn(
                             "absolute bottom-0 left-0 right-0 z-30 transition-all duration-300",
-                            showControls ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full"
+                            showControls ? "opacity-100 translate-y-0" : "opacity-0 translate-y-full",
+                            controlsClassName
                         )}
                     >
                         {/* Gradient background for controls */}
@@ -541,17 +554,21 @@ export default function CustomVideoPlayer({
                                 {/* -5 seconds */}
                                 <button
                                     onClick={(e) => { e.stopPropagation(); seekBy(-5); }}
-                                    className="flex items-center justify-center px-2 h-8 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white text-xs font-medium"
+                                    className="flex items-center justify-center gap-0.5 px-2 h-8 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white text-xs font-medium"
+                                    title="Rewind 5 seconds"
                                 >
-                                    -5s
+                                    <RotateCcw className="w-3.5 h-3.5" />
+                                    <span>5</span>
                                 </button>
 
                                 {/* +5 seconds */}
                                 <button
                                     onClick={(e) => { e.stopPropagation(); seekBy(5); }}
-                                    className="flex items-center justify-center px-2 h-8 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white text-xs font-medium"
+                                    className="flex items-center justify-center gap-0.5 px-2 h-8 rounded-lg hover:bg-white/10 transition-colors text-white/80 hover:text-white text-xs font-medium"
+                                    title="Forward 5 seconds"
                                 >
-                                    +5s
+                                    <span>5</span>
+                                    <RotateCw className="w-3.5 h-3.5" />
                                 </button>
 
                                 {/* Volume */}
