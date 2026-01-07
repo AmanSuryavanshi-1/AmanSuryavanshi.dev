@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Play, Pause, X, ZoomIn, Maximize2 } from "lu
 import { cn } from "@/lib/utils";
 import { Project } from "@/data/portfolio";
 import { FallbackImageManager } from "@/lib/fallback-image-manager";
+import CustomVideoPlayer from "@/components/ui/CustomVideoPlayer";
 
 interface ProjectMediaCarouselProps {
     project: Project;
@@ -426,19 +427,37 @@ export default function ProjectMediaCarousel({ project, className }: ProjectMedi
                             onClick={(e) => e.stopPropagation()}
                         >
                             {mediaSlides[lightboxIndex].type === "youtube" && mediaSlides[lightboxIndex].youtubeId ? (
-                                // YouTube in lightbox - wider container to fill more space
-                                <div className="relative w-full max-w-[90vw] aspect-video max-h-[85vh] rounded-lg overflow-hidden shadow-2xl">
-                                    {/* Blurred background for YouTube too */}
+                                // YouTube in lightbox - full video with subtitles visible
+                                // Using height-based sizing to maximize video area while keeping 16:9 aspect ratio
+                                <div className="relative flex items-center justify-center w-full h-full">
+                                    {/* Blurred background fills empty space around video */}
                                     <div className="absolute inset-0 bg-gradient-to-br from-forest-800 via-forest-900 to-forest-950">
-                                        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_50%_50%,rgba(132,204,22,0.15),transparent_70%)]" />
+                                        <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_50%_50%,rgba(132,204,22,0.2),transparent_70%)]" />
                                     </div>
-                                    <iframe
-                                        src={buildYoutubeUrl(mediaSlides[lightboxIndex].youtubeId!, true, true)}
-                                        title={mediaSlides[lightboxIndex].alt}
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                                        allowFullScreen
-                                        className="w-full h-full border-0 relative z-[1]"
-                                    />
+                                    {/* Video container - maintains 16:9 aspect ratio, fits within viewport */}
+                                    <div
+                                        className="relative rounded-lg overflow-hidden shadow-2xl z-[1]"
+                                        style={{
+                                            width: '90vw',
+                                            height: '85vh',
+                                            maxWidth: '1600px', // Prevent too wide on huge screens
+                                        }}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <div className="absolute inset-0 bg-black">
+                                            <CustomVideoPlayer
+                                                videoId={mediaSlides[lightboxIndex].youtubeId!}
+                                                title={mediaSlides[lightboxIndex].alt}
+                                                poster={mediaSlides[lightboxIndex].type === 'image' ? mediaSlides[lightboxIndex].src : undefined}
+                                                accentColor="#84cc16"
+                                                // Apply 1.0 zoom (no zoom) for Aviators to show subtitles
+                                                // Apply 1.5 zoom for others for clean/sleek look
+                                                zoom={project.id === 'aviators-training-centre' ? 1.0 : 1.5}
+                                                className="h-full w-full"
+                                                style={{ aspectRatio: 'unset' }} // Allow filling the container
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             ) : mediaSlides[lightboxIndex].type === "video" ? (
                                 // Native video in lightbox - larger
@@ -474,7 +493,7 @@ export default function ProjectMediaCarousel({ project, className }: ProjectMedi
                         </div>
 
                         {/* Caption */}
-                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-6 py-3 rounded-full bg-white/10 backdrop-blur-md text-white text-sm max-w-md text-center">
+                        <div className="absolute bottom-48 left-1/2 -translate-x-1/2 z-10 px-6 py-3 rounded-full bg-white/10 backdrop-blur-md text-white text-sm max-w-md text-center">
                             {mediaSlides[lightboxIndex].alt}
                         </div>
 
@@ -506,7 +525,7 @@ export default function ProjectMediaCarousel({ project, className }: ProjectMedi
 
                         {/* Thumbnails */}
                         {mediaSlides.length > 1 && (
-                            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 flex gap-2 px-4 py-2 rounded-xl bg-black/50 backdrop-blur-md max-w-[90vw] overflow-x-auto">
+                            <div className="absolute bottom-28 left-1/2 -translate-x-1/2 z-10 flex gap-2 px-4 py-2 rounded-xl bg-black/50 backdrop-blur-md max-w-[90vw] overflow-x-auto">
                                 {mediaSlides.map((slide, idx) => (
                                     <button
                                         key={idx}

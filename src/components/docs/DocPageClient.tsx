@@ -343,6 +343,7 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                                                     title={`${project.title} - Full Walkthrough`}
                                                     poster={project.imageUrl || project.image}
                                                     accentColor="#84cc16"
+                                                    zoom={project.id === 'aviators-training-centre' ? 1.0 : 1.3}
                                                 />
                                             </div>
                                         </div>
