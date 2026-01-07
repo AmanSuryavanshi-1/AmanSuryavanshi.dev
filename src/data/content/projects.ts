@@ -254,6 +254,62 @@ const rawProjects = [
         ]
     },
     {
+        id: "n8n-github-backup",
+        title: "N8N GitHub Backup V5",
+        tagLine: "Enterprise-Grade Automated Workflow Backup with Zero-Trust Security",
+        category: "featured",
+        type: "automation",
+        shortDescription: "Production-grade n8n workflow backup system using dual-stream Loop-to-Webhook architecture. Features 100% rate limit compliance, failure isolation, location-agnostic sync, and recursive credential scrubbing-achieving 99.9% recovery rate with zero manual intervention.",
+        description: "A revolutionary approach to n8n workflow backup that breaks the traditional monolithic pattern. The Loop-to-Webhook dual-stream architecture separates orchestration (Manager) from execution (Worker) within a single n8n workflow file, enabling mathematical guarantees on rate limit compliance and complete failure isolation. The system tracks workflows by ID rather than path, automatically relocating files when reorganized on GitHub. Zero-trust security is achieved through recursive JSON traversal that redacts all credential patterns before commits, making repositories auditable and public-safe. Split-tag nesting enables infinite folder depth for monorepo structures without character limits. Self-healing retry logic handles 422/409 conflicts with automatic SHA refresh, achieving 99.9% recovery success rate.",
+        challenge: "Traditional backup automations follow a monolithic, linear pattern: they execute sequentially, hit GitHub's 30-request/minute API rate limits, crash on single errors blocking entire queues, and create duplicate 'ghost files' when workflows are reorganized. Credentials scattered throughout workflow JSON (in nodes, settings, OAuth tokens, nested configs) leak into Git history if not manually redacted. These aren't edge cases-they're daily operational realities for teams running 50+ automations.",
+        solution: "Architected a dual-stream 'Loop-to-Webhook' system that runs orchestration and execution independently within a single n8n workflow file. The Manager stream dispatches workflows via webhook URLs to isolated Worker instances, each processing independently with 2-second delays mathematically guaranteeing 30 requests/minute (GitHub's limit). Implemented ID-based file tracking with smart search to relocate moved files without creating duplicates. Built recursive credential scrubbing that traverses the entire JSON tree-nodes, parameters, settings, pinData-replacing sensitive patterns with ***REDACTED***. Added self-healing retry loop for 422/409 conflicts with automatic SHA refresh, achieving 99.9% recovery rate.",
+        impact: [
+            "99.9% recovery success rate with self-healing retry logic (up from ~85% with traditional approaches)",
+            "100% GitHub API rate limit compliance via mathematically proven 2-second delay pattern",
+            "Zero credential leaks through recursive zero-trust scrubbing of entire workflow JSON",
+            "Complete failure isolation-one workflow error doesn't block remaining queue",
+            "Location-agnostic sync that finds and updates moved files without creating duplicates",
+            "5-minute setup time with immediate ROI on first backup",
+            "Handles 1000+ workflows with linear scaling"
+        ],
+        technicalOverview: "Built entirely in n8n using dual-stream architecture: Stream A (Manager) orchestrates by fetching all workflows via n8n API, filtering by tags, and dispatching each to Stream B via webhook with 2-second delays. Stream B (Worker) processes each workflow independently-scrubbing credentials recursively, checking GitHub for existing file by ID (not path), computing diff to avoid empty commits, and pushing via GitHub API with self-healing SHA conflict resolution. Split-tag system concatenates multiple tags for unlimited folder nesting (e.g., 'Project: Internal' + 'Sub: Ops/Critical' → 'Internal/Ops/Critical/WorkflowName/'). Credential redaction uses regex patterns for keywords (password, token, api_key, bearer, secret, credentials, auth) with recursive JSON traversal covering nodes[], settings, parameters, and pinData. Idempotency check compares scrubbed JSON with remote content to prevent meaningless commits. Error handling implements exponential backoff with automatic retry on 422 (SHA mismatch) and 409 (conflict) responses.",
+        techStack: ["n8n", "GitHub API", "Node.js", "Webhooks", "REST API", "JSON", "Regex", "Rate Limiting"],
+        badges: ["n8n", "Automation", "GitHub", "Security", "DevOps", "Open Source", "Self-Healing", "Production"],
+        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/N8N-GithubBackup/v5_canvas_overview.webp",
+        imageUrlFallback: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/N8N-GithubBackup/v5_dual_stream_architecture.webp",
+        liveUrl: "https://github.com/AmanSuryavanshi-1/n8n-production-workflows",
+        codeUrl: "https://github.com/AmanSuryavanshi-1/n8n-production-workflows/tree/main/%5BProd%5D%20N8N_GitHub_Backup_V5_Unified",
+        blogUrl: "https://www.amansuryavanshi.me/blogs/n8n-automation",
+        featured: true,
+        metrics: {
+            recovery: "99.9%",
+            rateLimit: "100%",
+            setupTime: "5 min",
+            scalability: "1000+ workflows"
+        },
+        gallery: [
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/N8N-GithubBackup/v5_canvas_overview.webp", alt: "V5 Workflow Canvas Overview", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/N8N-GithubBackup/v5_dual_stream_architecture.webp", alt: "Dual-Stream Architecture Diagram", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/N8N-GithubBackup/v5_recursive_scrubbing_flow.webp", alt: "Recursive Credential Scrubbing Flow", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/N8N-GithubBackup/v5_smart_search_logic_flow.webp", alt: "Smart Search Logic for File Location", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/N8N-GithubBackup/self_healing_logic_diagram.webp", alt: "Self-Healing Retry Logic", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/N8N-GithubBackup/split_tag_organization_flow.webp", alt: "Split-Tag Organization Strategy", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/N8N-GithubBackup/zero_trust_security_scrubbing.webp", alt: "Zero-Trust Security Model", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/N8N-GithubBackup/commit_efficiency_comparison.webp", alt: "Commit Efficiency Comparison", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/N8N-GithubBackup/v5_real_repo_structure.webp", alt: "Real Repository Structure", type: "image" }
+        ],
+        documentation: [
+            {
+                title: "Executive Summary",
+                url: "/projects/n8n-github-backup-executive-summary"
+            },
+            {
+                title: "Technical Documentation",
+                url: "/projects/n8n-github-backup-technical-documentation"
+            }
+        ]
+    },
+    {
         id: "portfolio-website",
         title: "AmanSuryavanshi.dev",
         tagLine: "Modern Developer Portfolio & Technical Blog Platform",
