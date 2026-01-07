@@ -185,7 +185,7 @@ Created `src/data/centralized-assets.json`:
         "type": "image"
       }
     ],
-    "youtubeUrl": "https://youtube.com/watch?v=7NSVxMqWUGU"
+    "youtubeUrl": "https://youtube.com/watch?v=lk35G_YVbSo"
   }
 }
 ```

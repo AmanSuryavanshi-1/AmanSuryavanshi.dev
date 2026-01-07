@@ -26,7 +26,7 @@ const rawProjects = [
         badges: ["Next.js", "TypeScript", "Firebase", "AI/Automation", "n8n", "Production", "Freelance", "CRM", "SEO", "Full-Stack"],
         imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-13%20Homepage%20Screenshot.webp",
         imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768016/aviators-training-centre/docs-assets/ASSET-13_Homepage_Screenshot.png",
-        videoYouTubeId: "7NSVxMqWUGU",
+        videoYouTubeId: "lk35G_YVbSo",
         video: "",
         liveUrl: "https://www.aviatorstrainingcentre.in",
         codeUrl: "https://github.com/AmanSuryavanshi-1/Aviators_Training_Centre",
