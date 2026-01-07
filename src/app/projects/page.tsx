@@ -13,11 +13,12 @@ import Lightbox from "@/components/ui/Lightbox";
 const PROJECT_ORDER: Record<string, number> = {
     "aviators-training-centre": 1,
     "n8n-automation-suite": 2,
-    "barkat-enterprise": 3,
-    "av-newsstream": 4,
-    "foodah": 5,
-    "portfolio-website": 6,
-    "ecommerce-platform": 7,
+    "n8n-github-backup": 3,
+    "barkat-enterprise": 4,
+    "av-newsstream": 5,
+    "foodah": 6,
+    "portfolio-website": 7,
+    "ecommerce-platform": 8,
 };
 
 export default function ProjectsPage() {

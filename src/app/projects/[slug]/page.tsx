@@ -8,9 +8,11 @@ const DOCS_MAP: Record<string, string> = {
     // Executive Summaries
     'aviators-training-centre-executive-summary': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/Aviators_Training_Centre/main/docs/aviators-training-centre-executive-summary.md',
     'omni-post-ai-executive-summary': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/main/Omni-Post-AI-Automation/OMNI-POST-AI-EXECUTIVE-SUMMARY.md',
+    'n8n-github-backup-executive-summary': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/n8n-production-workflows/main/%5BProd%5D%20N8N_GitHub_Backup_V5_Unified/02-EXECUTIVE-SUMMARY.md',
     // Technical Documentation
     'aviators-training-centre-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/Aviators_Training_Centre/main/docs/aviators-training-centre-technical-documentation.md',
     'omni-post-ai-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/main/Omni-Post-AI-Automation/OMNI-POST-AI-TECHNICAL-DOCUMENTATION.md',
+    'n8n-github-backup-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/n8n-production-workflows/main/%5BProd%5D%20N8N_GitHub_Backup_V5_Unified/01-TECHNICAL-DOCUMENTATION.md',
     // Barkat Enterprise
     'barkat-enterprise-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/BarkatEnterprise/main/docs/BARKAT-ENTERPRISE-TECHNICAL-DOCUMENTATION.md',
     // AV News Stream
@@ -24,6 +26,8 @@ const DOC_TO_PROJECT_ID: Record<string, string> = {
     'aviators-training-centre-technical-documentation': 'aviators-training-centre',
     'omni-post-ai-executive-summary': 'n8n-automation-suite',
     'omni-post-ai-technical-documentation': 'n8n-automation-suite',
+    'n8n-github-backup-executive-summary': 'n8n-github-backup',
+    'n8n-github-backup-technical-documentation': 'n8n-github-backup',
     'barkat-enterprise-technical-documentation': 'barkat-enterprise',
     'av-newsstream-technical-documentation': 'av-newsstream',
     'foodah-technical-documentation': 'foodah',
@@ -34,9 +38,11 @@ const TITLES_MAP: Record<string, string> = {
     // Executive Summaries → Business Transformation titles
     'aviators-training-centre-executive-summary': 'Aviators: How I Used n8n + Next.js to Generate ₹300K ($3.5K+) in Revenue',
     'omni-post-ai-executive-summary': 'Omni-Post AI: How I Built a 74-Node Workflow That Reduced Manual Work by 80%',
+    'n8n-github-backup-executive-summary': 'GitHub Backup V5: How I Built a Self-Healing n8n System with 99.9% Recovery Rate',
     // Technical Documentation → Architecture deep-dives
     'aviators-training-centre-technical-documentation': 'Aviators Architecture: Self-Healing n8n, Firebase, and Production Workflows',
     'omni-post-ai-technical-documentation': 'Omni-Post AI Architecture: Multi-LLM Orchestration with n8n and GPT-4',
+    'n8n-github-backup-technical-documentation': 'GitHub Backup Architecture: Dual-Stream Webhook Design with Zero-Trust Security',
     'barkat-enterprise-technical-documentation': 'Barkat Enterprise: React E-Commerce with 3,000+ Viewers & 60+ Leads',
     'av-newsstream-technical-documentation': 'AV NewsStream: API Key Rotation System Handling 300+ Requests/Day',
     'foodah-technical-documentation': 'Foodah: 40% Load Time Reduction with Custom React Hooks',
@@ -78,6 +84,7 @@ export async function generateMetadata({ params }: PageProps) {
     const projectKeywords: Record<string, string[]> = {
         'aviators-training-centre': ['n8n automation case study', 'Next.js SEO results', '₹300K revenue automation', 'aviation SaaS'],
         'n8n-automation-suite': ['content automation workflow', 'multi-LLM orchestration', 'n8n GPT-4 integration', '74-node workflow'],
+        'n8n-github-backup': ['n8n backup automation', 'GitHub workflow backup', 'self-healing n8n', 'zero-trust credential scrubbing', 'rate limit handling n8n'],
         'barkat-enterprise': ['React e-commerce India', 'B2B tiles website', 'PDF catalogue integration'],
         'av-newsstream': ['API key rotation', 'news aggregator architecture', 'rate limit handling'],
         'foodah': ['React performance optimization', 'custom hooks architecture', 'lazy loading implementation'],
@@ -166,6 +173,19 @@ const HOWTO_SCHEMAS: Record<string, object> = {
             { "@type": "HowToStep", "name": "Implement Code Splitting", "text": "Use React.lazy and Suspense to load route components only when needed." }
         ],
         "totalTime": "PT8H"
+    },
+    'n8n-github-backup-technical-documentation': {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Build an Enterprise n8n Workflow Backup System",
+        "description": "Architecture guide for building a dual-stream n8n backup system with automatic GitHub synchronization, credential redaction, and failure isolation.",
+        "step": [
+            { "@type": "HowToStep", "name": "Design Dual-Stream Architecture", "text": "Create Manager stream for orchestration and Worker stream for isolated workflow processing via webhooks." },
+            { "@type": "HowToStep", "name": "Implement Zero-Trust Scrubbing", "text": "Add recursive JSON traversal to redact all credential patterns before GitHub commits." },
+            { "@type": "HowToStep", "name": "Configure Rate Limiting", "text": "Enforce 2-second delays between GitHub API calls to guarantee 30 requests/minute compliance." },
+            { "@type": "HowToStep", "name": "Add Self-Healing Logic", "text": "Implement 422/409 error detection with automatic SHA refresh and retry mechanisms." }
+        ],
+        "totalTime": "PT4H"
     }
 };
 
