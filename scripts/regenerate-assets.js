@@ -13,8 +13,8 @@ const CDN_BASE = `https://cdn.jsdelivr.net/gh/${GITHUB_USER}/${GITHUB_REPO}@${BR
 
 // YouTube URL mapping
 const youtubeMap = {
-    'AviatorsTrainingCenter_WalkThrough': 'https://youtu.be/7NSVxMqWUGU',
-    'AviatorsTrainingCenter_WalkThrough_720p': 'https://youtu.be/7NSVxMqWUGU',
+    'AviatorsTrainingCenter_WalkThrough': 'https://youtu.be/lk35G_YVbSo',
+    'AviatorsTrainingCenter_WalkThrough_720p': 'https://youtu.be/lk35G_YVbSo',
     'AVNewsStream': 'https://youtu.be/IkFf7UnI2U4',
     'Foodah': 'https://youtu.be/GwJz9MRstuU',
     'Enterprise_FullWalkThrough': 'https://youtu.be/jBLsJyNLVcA'

@@ -5,8 +5,8 @@ const mdPath = path.join(__dirname, '../public/CLOUDINARY_ASSET_INVENTORY.md');
 // const jsonPath = path.join(__dirname, '../Omni-Post-AI-Automation/cloudinary-assets.json'); // Optional for cross-check
 
 const youtubeMap = {
-    'AviatorsTrainingCenter_WalkThrough': 'https://youtu.be/7NSVxMqWUGU',
-    'AviatorsTrainingCenter_WalkThrough_720p': 'https://youtu.be/7NSVxMqWUGU', // Mapping both to same if needed
+    'AviatorsTrainingCenter_WalkThrough': 'https://youtu.be/lk35G_YVbSo',
+    'AviatorsTrainingCenter_WalkThrough_720p': 'https://youtu.be/lk35G_YVbSo', // Mapping both to same if needed
     'AVNewsStream': 'https://youtu.be/IkFf7UnI2U4',
     'Foodah': 'https://youtu.be/GwJz9MRstuU',
     'Enterprise_FullWalkThrough': 'https://youtu.be/jBLsJyNLVcA'
