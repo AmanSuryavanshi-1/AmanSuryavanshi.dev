@@ -99,7 +99,7 @@ export const metadata: Metadata = {
         },
     },
     verification: {
-        google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
+        google: "YTi2T-zaP-PmKYqKKZ--FNQgEnEM8JQo-HNxqLqQ6gk",
     },
     icons: {
         icon: '/Profile/PFP-Cricular.webp',

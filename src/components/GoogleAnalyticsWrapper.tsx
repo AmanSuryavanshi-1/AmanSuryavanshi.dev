@@ -3,5 +3,5 @@
 import { GoogleAnalytics } from "nextjs-google-analytics";
 
 export default function GoogleAnalyticsWrapper() {
-  return <GoogleAnalytics trackPageViews />;
+  return <GoogleAnalytics trackPageViews gaMeasurementId="G-MFT0S3Y2PX" />;
 } 
