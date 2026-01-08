@@ -43,14 +43,14 @@ const nextConfig: NextConfig = {
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'amansuryavanshi-dev.vercel.app' }],
-        destination: 'https://www.amansuryavanshi.me/:path*',
+        destination: 'https://amansuryavanshi.me/:path*',
         permanent: true,
       },
-      // Redirect non-www to www
+      // Redirect www to non-www (canonical)
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'amansuryavanshi.me' }],
-        destination: 'https://www.amansuryavanshi.me/:path*',
+        has: [{ type: 'host', value: 'www.amansuryavanshi.me' }],
+        destination: 'https://amansuryavanshi.me/:path*',
         permanent: true,
       },
     ];
