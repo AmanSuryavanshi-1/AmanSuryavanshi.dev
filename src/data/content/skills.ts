@@ -442,7 +442,7 @@ export const skillsData: SkillsData = {
         },
         familiar: {
             title: "Familiar (Learning/Used Once)",
-            skills: ["C++", "DSA", "Webpack", "Parcel", "Alan AI", "ExcaliDraw"]
+            skills: ["C++", "DSA", "Webpack", "Parcel", "Web Speech API", "ExcaliDraw"]
         }
     },
 
