@@ -1,173 +1,142 @@
-# Omni-Post AI Enhancement PRD & Implementation Plan
+# OMNI-POST AI v5.0 - PRODUCT REQUIREMENTS DOCUMENT
 
-> **Version:** 2.0  
-> **Status:** Planning Phase  
-> **Author:** Antigravity (AI Agent) & Aman Suryavanshi  
-> **Last Updated:** January 9, 2026
-
----
-
-## 1. Executive Summary
-
-The goal is to evolve the existing production-ready **Omni-Post AI** (v4.2) from a monolithic linear workflow into a modular, **Agentic "Manager-Employee" Architecture**. This refactor will improve maintainability, professionalize the structure, and enable easy scaling (adding new platforms like Medium/Dev.to).
-
-Key Enhancements:
-1.  **Architecture:** Switch to Webhook-based "Manager" (Orchestrator) and "Employee" (Task Worker) workflows.
-2.  **Data Source:** Replace hardcoded personal context with dynamic execution-time fetching from the **Portfolio API**.
-3.  **Image Gen:** Dedicated "Creative Director" agent using LongCat API for image asset generation.
-4.  **New Platforms:** Expand distribution to **Medium** and **Dev.to** for long-form content.
-5.  **Growth:** Implement specific features to maximize impressions (Smart Threading, SEO-first Blog formatting).
+> **Version:** 5.0 (Final)  
+> **Status:** Ready for Implementation  
+> **Author:** Aman Suryavanshi & Antigravity  
+> **Date:** January 9, 2026  
+> **Architecture:** Manager-Employee "Newsroom" Model (n8n-mcp)
 
 ---
 
-## 2. Theoretical Architecture: The "Newsroom" Model
+## 1. 🎯 EXECUTIVE SUMMARY
 
-We will adopt a "Digital Newsroom" structure where a Manager coordinates specialized employees.
+This PRD defines the evolution of **Omni-Post AI** from a monolithic workflow into a modular, **Agentic "Newsroom" Architecture**. We are refactoring "Part 1" (Generation) into a **Manager** (Editor-in-Chief) orchestrating 5 specialized **Employee Agents**.
 
-**The Manager ("Editor-in-Chief")**
-*   **Role:** Orchestration, Strategy, context gathering, and final approval routing.
-*   **Triggers:** Notion "Ready to Generate" status.
+This refactor will:
+1.  **Professionalize the Codebase:** Decouple monolithic logic into maintainable, specific agents.
+2.  **Enable Dynamic Context:** Integrate the **Portfolio API** to replace hardcoded personal data.
+3.  **Autonomous Creativity:** Deploy a "Creative Director" agent using **LongCat AI** for image generation.
+4.  **Expand Reach:** Add support for **dev.to** (via canonical strategy).
+5.  **Maximize Engagement:** Implement specific algorithm optimizations for LinkedIn (hooks) and Twitter (8-12 tweet threads).
+
+---
+
+## 2. 🏗️ ARCHITECTURE: THE "NEWSROOM" MODEL
+
+We will move from a linear flow to a **Hub-and-Spoke** architecture.
+
+### The Manager ("Editor-in-Chief")
+*   **Role:** Orchestration, Strategy, Context Gathering.
+*   **Trigger:** Webhook `POST /omnipost/generate` or Manual Notion Trigger.
 *   **Responsibilities:**
-    *   Fetches dynamic context (Portfolio API).
-    *   Performs Market Research (Perplexity).
-    *   Decides *which* platforms to target.
-    *   Delegates tasks to specific Employees via Webhooks (HTTP Request nodes).
-    *   Collects results and updates Notion.
+    *   Fetches **Portfolio API** for real-time author context.
+    *   Determines which platforms to target.
+    *   Delegates tasks to specific **Employees** via `Execute Workflow`.
+    *   Aggregates results and updates Notion.
 
-**The Employees (Specialized Agents)**
-Each employee is a separate n8n workflow listening on a webhook.
+### The Employees (Specialized Agents)
+Each employee is a separate n8n workflow listening on a webhook/execute-workflow trigger.
 
-1.  **Agent: Viral Tweeter (Twitter/X)**
-    *   **Input:** Source Content + Strategy + Personal Context.
-    *   **Task:** Write 4-6 tweet thread, engaging hooks, viral formatting.
-    *   **Output:** JSON specific to Twitter Thread format.
-
-2.  **Agent: LinkedIn Voice (LinkedIn)**
-    *   **Input:** Source Content + Strategy + Personal Context.
-    *   **Task:** Write "Business Value" post, 1200-2000 chars, optimized for "Read More" clicks.
-    *   **Output:** Markdown formatted text + Image suggestions.
-
-3.  **Agent: Tech Editor (Blog/Medium/Dev.to)**
-    *   **Input:** Source Content + SEO Keywords.
-    *   **Task:** Transform notes into a full technical article. Differentiates slight variations for Canonical Blog vs Medium/Dev.to.
-    *   **Output:** HTML/Markdown body, Title, Canonical URL, Tags.
-
-4.  **Agent: Creative Director (Images)**
-    *   **Input:** Content Summary + Platform constraints.
-    *   **Task:** Generate prompt for LongCat API, fetch image, upload to Drive.
-    *   **Output:** Public/Drive URL of generated asset.
+| ID | Agent Name | Role | Responsibility |
+| :--- | :--- | :--- | :--- |
+| **E1** | **Content Extractor** | *Researcher* | Extract & structure hierarchical content from Notion. |
+| **E2** | **AI Content Generator** | *Writer* | Generate platform-specific copy (X, LinkedIn, Blog, dev.to). |
+| **E3** | **Image Prompt Gen** | *Creative Director* | Create visual briefs (prompts + color schemes). |
+| **E4** | **Image Generator** | *Artist* | Generate assets via **LongCat AI** (with fallback). |
+| **E5** | **Draft Stager** | *Archivist* | Package drafts, save to Drive, update Notion status. |
 
 ---
 
-## 3. Product Requirements (PRD)
+## 3. 🔌 API INTEGRATIONS
 
-### 3.1. Core System Enhancements
+### 3.1. Portfolio API (Dynamic Context)
+*   **Endpoint:** `GET https://your-portfolio-api.com/profile` (Replace with actual endpoint)
+*   **Usage:** Called ONCE by Manager at start of execution.
+*   **Data Flow:** Passed down to all Employees (E2, E3, E5) to ensure "Author Voice" is consistent.
+*   **Fallback:** If API fails (retry 2x), use cached hardcoded profile.
 
-#### [Feature 1] Dynamic Context Injection (Portfolio API)
-*   **Requirement:** Remove static JSON object in `Code: Personal Context Builder`.
-*   **Implementation:** 
-    *   Call `GET https://www.amansuryavanshi.me/api/portfolio?sections=core,skills,projects,voice`
-    *   Map response to existing `personalContext` XML schema.
-*   **Benefit:** Workflow automatically adapts as you update your portfolio/resume; no manual JSON updates needed.
-
-#### [Feature 2] "Manager-Employee" Webhook Architecture
-*   **Requirement:** Split "Part 1" into:
-    *   `Workflow A: Omni-Post Manager`
-    *   `Workflow B: Agent - Twitter Writer`
-    *   `Workflow C: Agent - LinkedIn Writer`
-    *   `Workflow D: Agent - Blog Writer`
-    *   `Workflow E: Agent - Image Gen`
-*   **Implementation:** Use `Execute Workflow` node (or HTTP Webhook if preferred for decoupling) to pass data.
-*   **Benefit:** If Twitter changes character limit, we only edit Workflow B. Easier debugging.
-
-#### [Feature 3] Image Generation Agent
-*   **Requirement:** New employee to handle visual assets.
-*   **Tools:** LongCat API (Free tier/limits applied).
-*   **Trigger:** Invoked by Manager if `image_strategy.needs_images === true`.
-*   **Process:**
-    1.  Receive prompt/topic.
-    2.  Enhance prompt for visual style (Midjourney-style descriptive text).
-    3.  Call LongCat API.
-    4.  Save result to current Session Folder in Drive.
-
-### 3.2. New Platform Extensions
-
-#### [Feature 4] Medium & Dev.to Posting
-*   **Requirement:** Cross-post technical articles to developer hubs.
-*   **Strategy:** "Canonical Link" Strategy. Use the *Personal Blog* as the source of truth, and syndicate to Medium/Dev.to to prevent SEO penalties.
-*   **Implementation:**
-    *   **Medium:** Use HTTP POST to `https://api.medium.com/v1/users/{{userId}}/posts`.
-    *   **Dev.to:** Use HTTP POST to `https://dev.to/api/articles`.
-    *   **Constraint:** Set `canonical_url` to the personal website URL in both payloads.
-
-### 3.3. Growth & Impression Optimization
-
-Based on research, the following will be implemented to key "Employees":
-
-*   **Twitter Agent:**
-    *   **"The Hook"**: Force the first tweet to follow a specific "Curiosity Gap" framework.
-    *   **Self-Reply**: Automatically add a final tweet linking to the Blog/Newsletter (best for conversion).
-*   **LinkedIn Agent:**
-    *   **Carousel Support**: (Future) If multiple images are generated, combine into PDF for Carousel (highest engagement format). For now, strict "Text + 1 High Value Image" format.
-    *   **First Comment:** Prepare a "Resources" comment to be posted immediately after the main post (keeps links out of main post for algorithm reach).
+### 3.2. LongCat AI (Image Generation)
+*   **Agent:** Employee 4
+*   **Endpoint:** `POST https://api.longcat.ai/generate` (Verify specific endpoint in docs)
+*   **Model:** `flux-pro` (Check free tier limits)
+*   **Fallback:** If generation fails/times out (>15s), generate a "Visual Coming Soon" placeholder image programmatically.
 
 ---
 
-## 4. Implementation Steps (Execution Guide)
+## 4. 👔 DETAILED SPECIFICATIONS (THE EMPLOYEES)
 
-### Phase 1: Preparation & Portfolio Integration
-- [ ] **Task 1.1:** Fetch current `Part 1` workflow JSON.
-- [ ] **Task 1.2:** Implement the **Portfolio API** fetch in the existing workflow (Validation Step).
-    - *Goal:* Verify dynamic context works before splitting the workflow.
+### EMPLOYEE 1: Content Extractor
+*   **Input:** `content_id`, `notion_db_id`
+*   **Logic:** Query Notion → Parse Blocks (H1-H3, Lists, Code) → Return JSON.
+*   **Output Structure:** `{ full_text, sections: [{ types, content }], stats: { word_count, code_blocks } }`
 
-### Phase 2: "The Newsroom" Breakdown (Refactoring)
-- [ ] **Task 2.1:** Create `Agent - Twitter Writer` workflow.
-    - Copy logic from Part 1 -> Clean inputs -> Set up Webhook Trigger.
-- [ ] **Task 2.2:** Create `Agent - LinkedIn Writer` workflow.
-- [ ] **Task 2.3:** Create `Agent - Blog/Tech Writer` workflow.
-    - *Note:* This agent will now handle generating the body for Blog, Medium, AND Dev.to.
+### EMPLOYEE 2: AI Content Generator
+*   **Input:** `content_structure`, `platform` (enum: x, linkedin, blog, dev_to), `author_profile`
+*   **Engine:** Gemini 2.5 Flash (Temp: 0.7)
+*   **Platform Rules:**
+    *   **Twitter/X:** Thread of **8-12 tweets**. First tweet follows "Curiosity Gap" hook. Last tweet asks discussion question.
+    *   **LinkedIn:** **180-250 words**. Structure: Hook → Value (Data/Insight) → Discussion Question. NO generic openings ("Let me share...").
+    *   **Blog:** **800-1200 words**. SEO-optimized Markdown.
+    *   **dev.to:** **600-1000 words**. Practical/Tutorial focus. Frontmatter included.
 
-### Phase 3: The Manager & New Features
-- [ ] **Task 3.1:** Rebuild "Part 1" to become the **Manager**.
-    - Replace generation nodes with `Execute Workflow`/`HTTP Request` nodes.
-- [ ] **Task 3.2:** Implement **Medium** & **Dev.to** distribution logic in the "Part 2" (Distribution) or a new "Content Distributor" agent.
-    - *Correction:* Best to keep distribution separate. "Part 2" currently distributes. We should add Medium/Dev.to to "Part 2" Distribution workflow.
+### EMPLOYEE 3: Image Prompt Generator
+*   **Input:** `all_platform_content`
+*   **Logic:** Extract 3-5 keywords → Determine Topic (AI/Web/Career) → Select Color Scheme.
+*   **Output:** `{ image_prompt, color_scheme_name, hex_codes }`
 
-### Phase 4: Image Agent
-- [ ] **Task 4.1:** Create `Agent - Creative Director`.
-    - Implement LongCat API integration.
-    - Test prompt enhancement.
+### EMPLOYEE 4: Image Generator (LongCat)
+*   **Input:** `image_prompt`, `color_scheme`
+*   **Logic:** Call LongCat API → Upload to Drive → Return URL.
+*   **Constraint:** Max 20s execution.
 
----
-
-## 5. Technical Guidelines for Agents
-
-*   **Inputs:** All Agents must accept a standard JSON object:
-    ```json
-    {
-      "sessionId": "...",
-      "sourceContent": "...",
-      "context": { ...xml_data... },
-      "platformParams": { ... }
-    }
-    ```
-*   **Outputs:** All Agents must return:
-    ```json
-    {
-      "status": "success",
-      "content": "...",
-      "usage": { "tokens": 123 }
-    }
-    ```
-*   **Error Handling:** If an Agent fails, it should return `status: "error"` so the Manager can log it or retry, rather than breaking the whole flow.
+### EMPLOYEE 5: Draft Stager
+*   **Input:** `generated_content` (all platforms), `generated_images`, `session_id`
+*   **Logic:**
+    1.  Create `draft_{session_id}.md` (Markdown Preview).
+    2.  Upload to Drive Folder `/OMNI-POST-AI/Drafts/`.
+    3.  Update Notion: Status = "Pending Approval", set `draft_url`.
 
 ---
 
-## 6. Future Web App (Spec)
-*   **Concept:** "Omni-Post Control Center"
-*   **Stack:** Next.js (Frontend) + n8n (Backend).
-*   **Features:**
-    *   View "Ready" Notion items.
-    *   Trigger "Generate" webhook.
-    *   View/Edit Drafts (Markdown editor).
-    *   Approve & Post.
+## 5. 🚀 IMPLEMENTATION PLAN
+
+### Phase 1: Foundation (Manager + E1)
+- [ ] **Task 1:** Create `Manager` workflow skeleton.
+- [ ] **Task 2:** Create `Employee 1 (Extractor)` workflow (port logic from v4.2).
+- [ ] **Task 3:** Implement Portfolio API fetch in Manager.
+- [ ] **Validation:** Verify Manager can fetch Profile + Content.
+
+### Phase 2: The Writers (E2)
+- [ ] **Task 4:** Create `Employee 2` workflow (Base).
+- [ ] **Task 5:** Implement Twitter Logic (Gemini 2.5 Flash, 8-12 tweets).
+- [ ] **Task 6:** Implement LinkedIn Logic (Algorithm hooks).
+- [ ] **Task 7:** Implement Blog/dev.to Logic.
+- [ ] **Validation:** Generate text content for all 4 platforms.
+
+### Phase 3: The Visuals (E3 + E4)
+- [ ] **Task 8:** Create `Employee 3 (Prompt Gen)`.
+- [ ] **Task 9:** Create `Employee 4 (Image Gen)` with LongCat integration.
+- [ ] **Task 10:** Implement Fallback Image logic.
+- [ ] **Validation:** Verify images appear in Drive.
+
+### Phase 4: Staging & End-to-End (E5)
+- [ ] **Task 11:** Create `Employee 5 (Stager)`.
+- [ ] **Task 12:** Connect Manager to all Employees.
+- [ ] **Task 13:** End-to-End Test (Notion → Manager → All Agents → Notion Update).
+
+---
+
+## 6. 🧠 AI AGENT GUIDELINES
+
+1.  **Single Source of Truth:** This document supersedes all previous PRDs.
+2.  **Prompt Structure:** Do NOT modify the XML prompt structures defined in the `v5.0-PRD` research note (Conceptually included here by reference).
+3.  **Workflow Separation:** Use **separate workflow files** (Option A), not sub-workflows, for maximum modularity.
+4.  **Error Handling:** All agents must return `{ status: "error", message: "..." }` on failure, allowing the Manager to decide (Retry vs Skip).
+
+---
+
+## 7. SUCCESS METRICS
+*   **Reliability:** 99.7% Success Rate.
+*   **Speed:** Total Execution < 100 seconds (Parallelized E2 calls).
+*   **Cost:** $0/mo (Free Tiers: Gemini Flash, LongCat Free, Drive).
+*   **Quality:** Replaces v4.2 with indistinguishable or better content quality.
