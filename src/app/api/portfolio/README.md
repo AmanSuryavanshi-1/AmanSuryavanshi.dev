@@ -1,164 +1,270 @@
-# Portfolio API
+# Portfolio API - Quick Reference Guide
 
-> **External-Only API** for automation tools and third-party integrations.
-
-## Why This API Exists
-
-This API endpoint was created specifically for **external systems** (like n8n workflows, automation tools, or third-party integrations) that need programmatic access to portfolio data.
-
-### Important: Not Used by the Website
-
-The portfolio website itself does **NOT** use this API. All website components import data directly from `src/data/portfolio.tsx` for:
-
-- ✅ **Better performance** - No HTTP overhead
-- ✅ **Type safety** - Full TypeScript support with interfaces
-- ✅ **Build-time optimization** - Next.js can statically analyze direct imports
-- ✅ **Simpler debugging** - No network layer to troubleshoot
-
-### Primary Use Case: n8n Automation
-
-The main consumer of this API is the **Omni-Post AI** n8n workflow, which:
-
-1. Fetches personal context dynamically before generating content
-2. Uses the `core` data for consistent author attribution
-3. Pulls project details for relevant content references
-4. Minimizes token usage by requesting only needed sections
+> **Last Updated:** January 9, 2026  
+> **Purpose:** External API for n8n workflows, automation tools, and third-party integrations
 
 ---
 
-## API Reference
-
-### Endpoint
+## Base URL
 
 ```
-GET /api/portfolio
+https://www.amansuryavanshi.me/api/portfolio
 ```
 
-### Query Parameters
+---
+
+## Query Parameters
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `sections` | comma-separated | Sections to include: `core`, `skills`, `experience`, `services`, `about`, `projects` |
-| `projects` | comma-separated | Specific project IDs to fetch full details for |
+| `sections` | comma-separated | `core`, `skills`, `experience`, `services`, `about`, `projects` |
+| `projects` | comma-separated | Specific project IDs for full details |
 
-### Default Response (No Parameters)
+---
 
-Returns only `core` identity for minimal token usage:
+## Available Project IDs
 
+| ID | Project Name |
+|----|--------------|
+| `aviators-training-centre` | Aviators Training Centre |
+| `barkat-enterprise` | Barkat Enterprise |
+| `av-newsstream` | AV NewsStream |
+| `foodah` | Foodah |
+| `n8n-automation-suite` | Omni-Post AI Automation |
+| `n8n-github-backup` | N8N GitHub Backup V5 |
+| `portfolio-website` | AmanSuryavanshi.dev |
+
+---
+
+## Response Structure
+
+### `core` (Always Included)
 ```json
 {
-  "core": {
-    "name": "Aman Suryavanshi",
-    "role": "AI Automation Engineer + Full-Stack Developer",
-    "tagline": "Building Next.js apps with intelligent n8n automation backends",
-    "socials": {
-      "email": "amansurya.work@gmail.com",
-      "resume": "/AmanSuryavanshi_Resume_Latest.pdf",
-      "portfolio": "/projects"
-    }
+  "name": "Aman Suryavanshi",
+  "role": "AI Automation Engineer + Full-Stack Developer",
+  "tagline": "Building Next.js apps with intelligent n8n automation backends",
+  "socials": {
+    "email": "amansurya.work@gmail.com",
+    "resume": "/AmanSuryavanshi_Resume_Latest.pdf",
+    "portfolio": "/projects"
   }
 }
 ```
 
----
-
-## Example Requests
-
-### 1. Core Only (Default)
-```bash
-curl https://amansuryavanshi.me/api/portfolio
-```
-
-### 2. Multiple Sections
-```bash
-curl "https://amansuryavanshi.me/api/portfolio?sections=skills,experience,about"
-```
-
-### 3. Project Summaries
-```bash
-curl "https://amansuryavanshi.me/api/portfolio?sections=projects"
-```
-
-Returns lightweight summaries (id, title, shortDescription, top 5 tech):
+### `skills`
 ```json
 {
-  "core": { ... },
-  "projects": [
-    {
-      "id": "aviators-training-centre",
-      "title": "Aviators Training Centre",
-      "shortDescription": "Production-ready flight training platform...",
-      "techStack": ["Next.js 15", "TypeScript", "React 18", "Firebase", "Firestore"],
-      "featured": true,
-      "liveUrl": "https://www.aviatorstrainingcentre.in"
-    }
-  ]
+  "mainTitle": "...",
+  "subTitle": "...",
+  "coreSpecialty": {
+    "title": "...",
+    "description": "...",
+    "skills": [{ "name": "...", "details": "..." }],
+    "impact": ["..."]
+  },
+  "categories": [{
+    "id": "...",
+    "title": "...",
+    "description": "...",
+    "groups": [{
+      "title": "...",
+      "items": [{ "label": "...", "value": "..." }]
+    }]
+  }],
+  "proficiencySummary": "...",
+  "currentlyLearning": "..."
 }
 ```
 
-### 4. Full Project Details
-```bash
-curl "https://amansuryavanshi.me/api/portfolio?projects=aviators-training-centre,n8n-automation-suite"
+### `experience`
+```json
+[{
+  "role": "...",
+  "type": "freelance|personal",
+  "period": "...",
+  "duration": "...",
+  "achievements": ["..."],
+  "keyProjects": [{ "title": "...", "url": "..." }]
+}]
 ```
 
-Returns complete project data including description, challenge, solution, impact, gallery, etc.
+### `services`
+```json
+[{
+  "id": "...",
+  "title": "...",
+  "subtitle": "...",
+  "problem": "...",
+  "solution": "...",
+  "outcomes": ["..."],
+  "tech": ["..."],
+  "idealClient": "...",
+  "relatedProjects": [{ "title": "...", "url": "..." }]
+}]
+```
+
+### `about`
+```json
+{
+  "title": "...",
+  "intro": "...",
+  "journey": "...",
+  "philosophy": "...",
+  "differentiators": ["..."],
+  "personalInfo": {
+    "name": "...",
+    "title": "...",
+    "description": "...",
+    "email": "...",
+    "education": "...",
+    "address": "...",
+    "languages": ["..."]
+  },
+  "qualifications": ["..."]
+}
+```
+
+### `projects` (Summary Mode via `sections=projects`)
+```json
+[{
+  "id": "aviators-training-centre",
+  "title": "Aviators Training Centre",
+  "shortDescription": "...",
+  "techStack": ["Next.js 15", "TypeScript", "React 18", "Firebase", "Firestore"],
+  "featured": true,
+  "liveUrl": "https://..."
+}]
+```
+
+### `projects` (Full Mode via `projects=id1,id2`)
+```json
+[{
+  "id": "...",
+  "title": "...",
+  "tagLine": "...",
+  "category": "featured|web",
+  "type": "freelance|personal|automation",
+  "shortDescription": "...",
+  "description": "...",
+  "challenge": "...",
+  "solution": "...",
+  "impact": ["..."],
+  "technicalOverview": "...",
+  "techStack": ["..."],
+  "badges": ["..."],
+  "imageUrl": "...",
+  "liveUrl": "...",
+  "codeUrl": "...",
+  "blogUrl": "...",
+  "featured": true,
+  "metrics": { "revenue": "₹300,000+", "leads": "50+" },
+  "documentation": [{ "title": "...", "url": "..." }],
+  "gallery": [{ "src": "...", "alt": "...", "type": "image" }]
+}]
+```
 
 ---
 
-## CORS Support
+## n8n HTTP Request Examples
 
-This API includes full CORS headers for external access:
+### 1. Core Only (Minimal Tokens)
+```
+GET /api/portfolio
+```
 
+### 2. Bio Context for AI
+```
+GET /api/portfolio?sections=about,skills
+```
+
+### 3. All Project Summaries
+```
+GET /api/portfolio?sections=projects
+```
+
+### 4. Featured Projects Full Details
+```
+GET /api/portfolio?projects=aviators-training-centre,n8n-automation-suite,n8n-github-backup
+```
+
+### 5. Complete Profile
+```
+GET /api/portfolio?sections=skills,experience,services,about,projects
+```
+
+---
+
+## n8n Node Setup
+
+**HTTP Request Node:**
+```
+Method: GET
+URL: https://www.amansuryavanshi.me/api/portfolio?sections=about,skills
+```
+
+**Access in Code Node:**
+```javascript
+const name = $json.core.name;
+const role = $json.core.role;
+const skills = $json.skills.coreSpecialty.skills;
+const experience = $json.experience;
+```
+
+---
+
+## CORS
+
+Full CORS enabled for external access:
 ```
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Methods: GET, OPTIONS
 Access-Control-Allow-Headers: Content-Type, Authorization
 ```
 
-This allows n8n, Zapier, Make, or any automation tool to fetch data without CORS issues.
+---
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────┐
+│            src/data/portfolio.tsx               │
+│           (Single Source of Truth)              │
+└─────────────────────────────────────────────────┘
+                    │
+        ┌───────────┴───────────┐
+        ▼                       ▼
+┌───────────────────┐   ┌───────────────────┐
+│ Website Components│   │ /api/portfolio    │
+│ (Direct Import)   │   │ (HTTP Endpoint)   │
+│                   │   │                   │
+│ • Hero.tsx        │   │ • n8n workflows   │
+│ • Projects.tsx    │   │ • External tools  │
+│ • About.tsx       │   │ • Automations     │
+└───────────────────┘   └───────────────────┘
+```
 
 ---
 
-## n8n Integration Example
+## Data Source Files
 
-In your n8n HTTP Request node:
-
-```
-Method: GET
-URL: https://amansuryavanshi.me/api/portfolio?sections=about,experience
-```
-
-Then access the data in subsequent nodes:
-```javascript
-// In a Code node
-const name = $json.core.name;
-const experience = $json.experience;
-```
+| File | Purpose |
+|------|---------|
+| `src/data/portfolio.tsx` | Main data aggregator |
+| `src/data/content/projects.ts` | Project details |
+| `src/data/content/skills.ts` | Skills & tech stack |
+| `src/data/content/experience.ts` | Work experience |
+| `src/data/content/services.ts` | Service offerings |
+| `src/data/content/about.ts` | Bio & personal info |
 
 ---
 
-## Architecture Decision
+## Changelog
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    portfolio.tsx                            │
-│              (Single Source of Truth)                       │
-└─────────────────────────────────────────────────────────────┘
-                    │                          │
-                    ▼                          ▼
-    ┌───────────────────────────┐   ┌─────────────────────────┐
-    │   Website Components      │   │   /api/portfolio        │
-    │   (Direct Import)         │   │   (HTTP Endpoint)       │
-    │                           │   │                         │
-    │   • Hero.tsx              │   │   • n8n workflows       │
-    │   • Projects.tsx          │   │   • External tools      │
-    │   • About.tsx             │   │   • Third-party apps    │
-    │   • Services.tsx          │   │                         │
-    └───────────────────────────┘   └─────────────────────────┘
-```
+| Date | Change |
+|------|--------|
+| Jan 9, 2026 | Initial comprehensive documentation |
 
-This pattern ensures:
-- **Single source of truth** - All data lives in `portfolio.tsx`
-- **Optimal internal performance** - Website uses direct imports
-- **External accessibility** - API exposes data for automation
-- **No duplication** - API reads from the same data source
+---
+
+> **Note:** When adding new projects or modifying data, update `src/data/content/projects.ts` and the API will automatically reflect changes.
