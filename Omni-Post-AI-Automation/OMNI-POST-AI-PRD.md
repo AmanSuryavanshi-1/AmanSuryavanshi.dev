@@ -52,8 +52,12 @@ Each employee is a separate n8n workflow listening on a webhook/execute-workflow
 ### 3.1. Portfolio API (Dynamic Context)
 *   **Endpoint:** `GET https://your-portfolio-api.com/profile` (Replace with actual endpoint)
 *   **Usage:** Called ONCE by Manager at start of execution.
+*   **Smart Context Filter (NEW):** 
+    *   **Problem:** API returns huge JSON with all projects/skills.
+    *   **Solution:** Pass full JSON + Content Topic to **Gemini Flash**.
+    *   **Prompt:** "Extract only the case studies, service offerings, and social proof RELEVANT to this topic: {topic}. Return JSON."
+    *   **Fallback:** If no relevant context found, return generic "About Me" blurb.
 *   **Data Flow:** Passed down to all Employees (E2, E3, E5) to ensure "Author Voice" is consistent.
-*   **Fallback:** If API fails (retry 2x), use cached hardcoded profile.
 
 ### 3.2. LongCat AI (Image Generation)
 *   **Agent:** Employee 4
@@ -81,16 +85,18 @@ Each employee is a separate n8n workflow listening on a webhook/execute-workflow
 
 ### EMPLOYEE 3: Image Prompt Generator
 *   **Input:** `all_platform_content`
-*   **Logic:** Extract 3-5 keywords → Determine Topic (AI/Web/Career) → Select Color Scheme.
+*   **Logic:** **CRITICAL:** Port the *exact* prompt generation logic from Part 1 (`Process & Format Image Tasklist` node).
+*   **Constraint:** Do NOT invent new prompting strategies. Reuse the existing defined prompts (strategy.image_strategy.specific_prompts) to ensure consistency.
 *   **Output:** `{ image_prompt, color_scheme_name, hex_codes }`
 
 ### EMPLOYEE 4: Image Generator (LongCat)
-*   **Input:** `image_prompt`, `color_scheme`
+*   **Input:** `image_prompt` (from Employee 3)
 *   **Logic:** Call LongCat API → Upload to Drive → Return URL.
 *   **Constraint:** Max 20s execution.
 
 ### EMPLOYEE 5: Draft Stager
 *   **Input:** `generated_content` (all platforms), `generated_images`, `session_id`
+*   **Constraint:** **STRICT FORMATTING REQUIRED.** Output must match `Drafts_sample_drive` exactly (e.g., `<<IMAGE_1>>` markers, specific header styles) to ensure Part 2 compatability.
 *   **Logic:**
     1.  Create `draft_{session_id}.md` (Markdown Preview).
     2.  Upload to Drive Folder `/OMNI-POST-AI/Drafts/`.
