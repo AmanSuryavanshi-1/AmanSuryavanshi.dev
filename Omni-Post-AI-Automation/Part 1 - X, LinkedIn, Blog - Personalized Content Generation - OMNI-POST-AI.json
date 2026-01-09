@@ -5,8 +5,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        3600,
-        1568
+        3632,
+        896
       ],
       "id": "34b004fa-a214-4f49-b663-d515bdb0439b",
       "name": "When clicking 'Execute workflow'"
@@ -56,8 +56,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2,
       "position": [
-        3824,
-        1568
+        3856,
+        896
       ],
       "credentials": {
         "notionApi": {
@@ -95,8 +95,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
       "position": [
-        4048,
-        1568
+        4080,
+        896
       ]
     },
     {
@@ -108,8 +108,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4272,
-        1568
+        4304,
+        896
       ]
     },
     {
@@ -166,8 +166,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2,
       "position": [
-        4720,
-        1568
+        4752,
+        896
       ],
       "credentials": {
         "notionApi": {
@@ -194,8 +194,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        4944,
-        1568
+        4976,
+        896
       ],
       "credentials": {
         "notionApi": {
@@ -213,8 +213,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5168,
-        1568
+        4272,
+        1088
       ]
     },
     {
@@ -224,8 +224,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        7664,
-        1440
+        5200,
+        1904
       ],
       "id": "28779653-efde-4fc7-a4ee-4a96e75294ff",
       "name": "Merge2"
@@ -237,21 +237,21 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7888,
-        1472
+        5424,
+        1936
       ],
       "id": "a6944843-4483-4b1a-a744-b7c50c8b49fd",
       "name": "ID Structuring"
     },
     {
       "parameters": {
-        "jsCode": "// Personal Brand Context - The Foundation\n// Handles: Toggle headings, nested sections, code blocks, variable lengths\nconst personalContext = {\n  // CORE IDENTITY\n  name: \"Aman Suryavanshi\",\n  primary_focus: \"AI Automation Developer | Full Stack Automation Developer\",\n  experience_type: \"Fresh CS Graduate | Project-based only (No Professional Experience)\",\n  \n  // LOCATION & AVAILABILITY (Corrected field, avoid duplicate)\n  location: \"Delhi/NCR + Remote (India & Global)\",\n  availability: \"Open to full-time, contract, freelance\",\n  \n  // TARGET POSITIONS (Primary focus for content positioning)\n  targetRoles: [\n    \"No-Code/Low-Code Developer\",\n    \"Automation Developer\", \n    \"Automation Specialist\",\n    \"Technical Product Coordinator\",\n    \"AI Developer\",\n    \"Automation Architect\",\n    \"Systems & Process Automation Engineer\",\n    \"AI Product Manager (after 1-2 years experience)\"\n  ],\n  \n  // TECH STACK (What makes you HIREABLE)\n  skills: {\n    frontend: [\"Next.js 14\", \"React.js\", \"TypeScript\", \"Tailwind CSS\"],\n    automation: [\"n8n Workflow Orchestration\", \"Cloudflare Tunnel\", \"AI Agent Dev\"],\n    aiml: [\"Python\", \"LLMs (Gemini, Claude, GPT)\", \"RAG\", \"LangChain\"],\n    integration: [\"RESTful APIs\", \"Webhooks\", \"Firebase\", \"Supabase\"],\n    systems: [\"Performance Optimization\", \"Modular Architecture\", \"Technical Docs\"]\n  },\n\n  // LIVE PROJECTS (Include in content when relevant)\n  projects: {\n    workflow_repo: {\n      name: \"N8N Workflows Repository\",\n      url: \"https://github.com/AmanSuryavanshi-1/N8N/tree/main/workflows\",\n      description: \"Centralized n8n workflow logic\"\n    },\n    aviators: {\n      name: \"Aviators Training Centre\",\n      url: \"https://github.com/AmanSuryavanshi-1/AviatorsTrainingCentre\",\n      tech: [\"Next.js\", \"Firebase\", \"n8n\"],\n      achievement: \"95+ Lighthouse score, 80% reduction in manual tasks, 3L+ revenue\"\n    },\n    build_in_public: {\n      name: \"Build-in-Public Automation\",\n      status: \"Ongoing\",\n      tech: [\"n8n\", \"AI/LLMs\", \"Notion API\", \"X/LinkedIn APIs\"],\n      goal: \"Multi-platform content distribution automation\"\n    },\n    efficiency_agent: {\n      name: \"Personal Efficiency Agent\",\n      status: \"Ongoing\",\n      tech: [\"n8n AI Agents\", \"Notion API\", \"Postgres Memory\"],\n      goal: \"AI task management & daily tracking\"\n    }\n  },\n\n  // SERVICES YOU OFFER (For client attraction)\n  services: [\n    \"NextJS website development (Lighthouse & SEO optimized)\",\n    \"Front-end Web Development\",\n    \"n8n workflow automation for businesses + Next JS frontend\",\n    \"API integration & backend systems\",\n    \"No-code/low-code developement/consulting\"\n  ],\n\n  // SOCIAL PROOF LINKS\n  socials: {\n    github: \"https://github.com/AmanSuryavanshi-1\",\n    linkedin: \"https://www.linkedin.com/in/amansuryavanshi-ai/\",\n    twitter: \"https://x.com/_AmanSurya\",\n    portfolio: \"https://amansuryavanshi-dev.vercel.app/\"\n  },\n\n  // CONTENT VOICE (How you sound)\n  voiceAttributes: [\n    \"Authentic & transparent (share real struggles + wins)\",\n    \"Detail-oriented with technical depth\",\n    \"Growth-minded (always learning)\",\n    \"Practical over theoretical\",\n    \"Builds in public\",\n    \"Helpful & community-focused\"\n  ],\n\n  // HIDDEN OBJECTIVES (guides content strategy but never stated explicitly)\n  hiddenGoals: {\n    primary: \"Get inbound job offers without applying\",\n    secondary: \"Attract freelance/contract clients organically\",\n    tertiary: \"Build reputation as automation expert\",\n    longTerm: \"Become go-to person for no-code/automation in network\"\n  }\n};\n\n// Main n8n code node logic\nconst incomingItems = $input.all();\n\n\n// INTELLIGENT CONTENT SUMMARIZATION (Cost-Optimized)\n// Limits to 2000 chars while preserving structure\n// ────────────────────────────────────────────────────────────────\nfunction intelligentSummarize(sourceContent) {\n  if (!sourceContent) return { summary: \"No content available\", structure: \"empty\", wordCount: 0,complexity: \"unknown\" };\n\n  // Extract key structural elements\n  const { fullText, sections, extractionStats } = sourceContent;\n\n  let summary = \"\";\n  // Priority 1: Section headings (highest signal-to-noise ratio)\n  const sectionTitles = (sections || [])\n    .filter(s => s.title && s.title.length > 3) // Skip very short titles\n    .map(s => `• ${s.title}`)\n    .slice(0, 12) // Max 12 headings\n    .join('\\n');\n  \n  if (sectionTitles) {\n    summary += \"**Key Sections:**\\n\" + sectionTitles + \"\\n\\n\";\n  }\n  \n  // Priority 2: First substantive section content (provides context)\n  if (sections && sections.length > 0) {\n    // Find first section with actual content (not just heading)\n    const contentSection = sections.find(s => \n      s.content && s.content.length > 50\n    );\n    \n    if (contentSection) {\n      summary += \"**Core Content Sample:**\\n\" \n        + contentSection.content.substring(0, 500)\n        .replace(/\\n+/g, ' ') // Remove line breaks for compactness\n        + \"...\\n\";\n    }\n  }\n  \n  // Priority 3: Fallback to fullText if sections are empty\n  if (!sections || sections.length === 0) {\n    summary = \"**Content Preview:**\\n\" + (fullText || \"\").substring(0, 1800) + \"...\";\n  }\n  \n  // Enforce strict 2000 char limit (API cost control)\n  summary = summary.substring(0, 2000);\n  \n  return {\n    summary,\n    structure: extractionStats?.hasToggles ? \"hierarchical\" : \"linear\",\n    wordCount: extractionStats?.wordCount || 0,\n    complexity: extractionStats?.complexity || \"unknown\",\n    sectionCount: sections?.length || 0,\n    hasCode: extractionStats?.codeSections > 0,\n    hasToggles: extractionStats?.toggleSections > 0\n  };\n}\n\n// ────────────────────────────────────────────────────────────────\n// PROCESS AND MERGE\n// ────────────────────────────────────────────────────────────────\nreturn incomingItems.map(item => {\n  const sourceContent = item.json.sourceContent || {};\n  const contentSummary = intelligentSummarize(sourceContent);\n  \n  return {\n    json: {\n      // Preserve all original data from previous nodes\n      ...item.json,\n      // Added personal context\n      personalContext,\n      // Add optimized content summary for AI prompts\n      contentSummary, // This is what AI nodes will use\n      // Keep full sourceContent for reference if needed\n      _fullSourceContent: sourceContent\n    }\n  };\n});\n\n// INTELLIGENT NOTION CONTENT SUMMARIZATION (Cost-Optimized)\n// Limits to 2000 chars while preserving structure\n// ────────────────────────────────────────────────────────────────\nfunction intelligentSummarize(sourceContent) {\n  if (!sourceContent) return { summary: \"\", structure: \"empty\" };\n  \n  // Extract key structural elements\n  const { fullText, sections, extractionStats } = sourceContent;\n  \n  // Priority 1: Section headings (most informative)\n  let summary = \"\";\n  const sectionTitles = (sections || [])\n    .filter(s => s.title && s.title.length > 0)\n    .map(s => `• ${s.title}`)\n    .slice(0, 10) // Max 10 headings\n    .join('\\n');\n  \n  if (sectionTitles) {\n    summary += \"**Key Sections:**\\n\" + sectionTitles + \"\\n\\n\";\n  }\n  \n  // Priority 2: First substantive content (context)\n  if (sections && sections.length > 0) {\n    const firstContentSection = sections.find(s => s.content && s.content.length > 100);\n    if (firstContentSection) {\n      summary += \"**Core Content:**\\n\" + firstContentSection.content.substring(0, 600) + \"...\\n\";\n    }\n  }\n  \n  // Priority 3: Full text truncation if sections unavailable\n  if (!sections || sections.length === 0) {\n    summary = \"**Content Preview:**\\n\" + (fullText || \"\").substring(0, 1500) + \"...\";\n  }\n  \n  // Enforce 2000 char limit\n  summary = summary.substring(0, 2000);\n  \n  return {\n    summary,\n    structure: extractionStats?.hasToggles ? \"hierarchical\" : \"linear\",\n    wordCount: extractionStats?.wordCount || 0,\n    complexity: extractionStats?.complexity || \"unknown\"\n  };\n}\n\n// PROCESS AND MERGE\nreturn incomingItems.map(item => {\n  const sourceContent = item.json.sourceContent || {};\n  const contentSummary = intelligentSummarize(sourceContent);\n  \n  return {\n    json: {\n      ...item.json,\n      personalContext,\n      contentSummary, // This is what AI nodes will use\n      // Keep full sourceContent for reference\n      _fullSourceContent: sourceContent\n    }\n  };\n});\n"
+        "jsCode": "// Personal Brand Context - The Foundation\n// Handles: Toggle headings, nested sections, code blocks, variable lengths\nconst personalContext = {\n  // CORE IDENTITY\n  name: \"Aman Suryavanshi\",\n  primary_focus: \"Full-Stack Agentic Developer | AI Automation Engineer + Next.js Developerr\",\n  experience_type: \"Early Career (0-2 years) | Senior-level output in n8n, SEO/GEO, workflow automation\",\n  \n  // LOCATION & AVAILABILITY (Corrected field, avoid duplicate)\n  location: \"Delhi/NCR + Remote (India & Global)\",\n  availability: \"Open to full-time, contract, freelance\",\n  \n  // TARGET POSITIONS (Primary focus for content positioning)\n  targetRoles: [\n    \"Technical Solutions Engineer (TSE)\",\n    \"Associate Product Manager (APM)\",\n    \"Developer Relations (DevRel)\",\n    \"Growth Engineer\",\n    \"Founder's Office (Technical)\",\n    \"AI Automation Engineer\",\n    \"Agentic AI Developer\",\n    \"Full-Stack AI Developer\",\n    \"No-Code/Low-Code Developer\",\n    \"Automation Specialist\",\n    \"Automation Architect\",\n    \"AI Product Manager (after 1-2 years experience)\"\n  ],\n  \n  // TECH STACK (What makes you HIREABLE)\n  skills: {\n    frontend: [\"Next.js 14\", \"React.js\", \"TypeScript\", \"Tailwind CSS\"],\n    automation: [\"n8n Workflow Orchestration\", \"Cloudflare Tunnel\", \"AI Agent Dev\"],\n    aiml: [\"Python\", \"LLMs (Gemini, Claude, GPT)\", \"RAG\", \"LangChain\"],\n    integration: [\"RESTful APIs\", \"Webhooks\", \"Firebase\", \"Supabase\"],\n    systems: [\"Performance Optimization\", \"Modular Architecture\", \"Technical Docs\"]\n  },\n\n  // LIVE PROJECTS (Include in content when relevant)\n  projects: {\n    workflow_repo: {\n      name: \"N8N Workflows Repository\",\n      url: \"https://github.com/AmanSuryavanshi-1/N8N/tree/main/workflows\",\n      description: \"Centralized n8n workflow logic\"\n    },\n    aviators: {\n      name: \"Aviators Training Centre\",\n      url: \"https://github.com/AmanSuryavanshi-1/AviatorsTrainingCentre\",\n      tech: [\"Next.js\", \"Firebase\", \"n8n\"],\n      achievement: \"95+ Lighthouse score, 80% reduction in manual tasks, 3L+ revenue\"\n    },\n    build_in_public: {\n      name: \"Build-in-Public Automation\",\n      status: \"Ongoing\",\n      tech: [\"n8n\", \"AI/LLMs\", \"Notion API\", \"X/LinkedIn APIs\"],\n      goal: \"Multi-platform content distribution automation\"\n    },\n    efficiency_agent: {\n      name: \"Personal Efficiency Agent\",\n      status: \"Ongoing\",\n      tech: [\"n8n AI Agents\", \"Notion API\", \"Postgres Memory\"],\n      goal: \"AI task management & daily tracking\"\n    }\n  },\n\n  // SERVICES YOU OFFER (For client attraction)\n  services: [\n    \"NextJS website development (Lighthouse & SEO optimized)\",\n    \"Front-end Web Development\",\n    \"n8n workflow automation for businesses + Next JS frontend\",\n    \"API integration & backend systems\",\n    \"No-code/low-code developement/consulting\"\n  ],\n\n  // SOCIAL PROOF LINKS\n  socials: {\n    github: \"https://github.com/AmanSuryavanshi-1\",\n    linkedin: \"https://www.linkedin.com/in/aman-suryavanshi-6b0aba347/\",\n    twitter: \"https://x.com/_AmanSurya\",\n    portfolio: \"https://amansuryavanshi-dev.vercel.app/\"\n  },\n\n  // CONTENT VOICE (How you sound)\n  voiceAttributes: [\n    \"Authentic & transparent (share real struggles + wins)\",\n    \"Detail-oriented with technical depth\",\n    \"Growth-minded (always learning)\",\n    \"Practical over theoretical\",\n    \"Builds in public\",\n    \"Helpful & community-focused\"\n  ],\n\n  // FORBIDDEN PHRASES (AI slop detection)\nforbiddenPhrases: [\n  \"In today's digital landscape\",\n  \"Delve\", \"Unlock\", \"Unleash\", \"Leverage\",\n  \"Game-changer\", \"Revolutionary\", \"Cutting-edge\",\n  \"Humbled to announce\", \"Thrilled to share\",\n  \"Let's dive in\", \"Without further ado\",\n  \"Excited to announce\", \"Honored to\"\n],\n\n  // HIDDEN OBJECTIVES (guides content strategy but never stated explicitly)\n  hiddenGoals: {\n    primary: \"Get inbound TSE/APM/DevRel offers from target companies\",\n    secondary: \"Attract ₹75K-3L freelance automation projects organically\",\n    tertiary: \"Build reputation as Agentic AI + n8n expert\",\n    longTerm: \"Transition to robotics/edge AI within 2-3 years\"\n  }\n};\n\n// Main n8n code node logic\nconst incomingItems = $input.all();\n\n\n// INTELLIGENT CONTENT SUMMARIZATION (Cost-Optimized)\n// Limits to 2000 chars while preserving structure\n// ────────────────────────────────────────────────────────────────\nfunction intelligentSummarize(sourceContent) {\n  if (!sourceContent) return { summary: \"No content available\", structure: \"empty\", wordCount: 0,complexity: \"unknown\" };\n\n  // Extract key structural elements\n  const { fullText, sections, extractionStats } = sourceContent;\n\n  let summary = \"\";\n  // Priority 1: Section headings (highest signal-to-noise ratio)\n  const sectionTitles = (sections || [])\n    .filter(s => s.title && s.title.length > 3) // Skip very short titles\n    .map(s => `• ${s.title}`)\n    .slice(0, 12) // Max 12 headings\n    .join('\\n');\n  \n  if (sectionTitles) {\n    summary += \"**Key Sections:**\\n\" + sectionTitles + \"\\n\\n\";\n  }\n  \n  // Priority 2: First substantive section content (provides context)\n  if (sections && sections.length > 0) {\n    // Find first section with actual content (not just heading)\n    const contentSection = sections.find(s => \n      s.content && s.content.length > 50\n    );\n    \n    if (contentSection) {\n      summary += \"**Core Content Sample:**\\n\" \n        + contentSection.content.substring(0, 500)\n        .replace(/\\n+/g, ' ') // Remove line breaks for compactness\n        + \"...\\n\";\n    }\n  }\n  \n  // Priority 3: Fallback to fullText if sections are empty\n  if (!sections || sections.length === 0) {\n    summary = \"**Content Preview:**\\n\" + (fullText || \"\").substring(0, 1800) + \"...\";\n  }\n  \n  // Enforce strict 2000 char limit (API cost control)\n  summary = summary.substring(0, 2000);\n  \n  return {\n    summary,\n    structure: extractionStats?.hasToggles ? \"hierarchical\" : \"linear\",\n    wordCount: extractionStats?.wordCount || 0,\n    complexity: extractionStats?.complexity || \"unknown\",\n    sectionCount: sections?.length || 0,\n    hasCode: extractionStats?.codeSections > 0,\n    hasToggles: extractionStats?.toggleSections > 0\n  };\n}\n\n// ────────────────────────────────────────────────────────────────\n// PROCESS AND MERGE\n// ────────────────────────────────────────────────────────────────\nreturn incomingItems.map(item => {\n  const sourceContent = item.json.sourceContent || {};\n  const contentSummary = intelligentSummarize(sourceContent);\n  \n  return {\n    json: {\n      // Preserve all original data from previous nodes\n      ...item.json,\n      // Added personal context\n      personalContext,\n      // Add optimized content summary for AI prompts\n      contentSummary, // This is what AI nodes will use\n      // Keep full sourceContent for reference if needed\n      _fullSourceContent: sourceContent\n    }\n  };\n});\n\n// INTELLIGENT NOTION CONTENT SUMMARIZATION (Cost-Optimized)\n// Limits to 2000 chars while preserving structure\n// ────────────────────────────────────────────────────────────────\nfunction intelligentSummarize(sourceContent) {\n  if (!sourceContent) return { summary: \"\", structure: \"empty\" };\n  \n  // Extract key structural elements\n  const { fullText, sections, extractionStats } = sourceContent;\n  \n  // Priority 1: Section headings (most informative)\n  let summary = \"\";\n  const sectionTitles = (sections || [])\n    .filter(s => s.title && s.title.length > 0)\n    .map(s => `• ${s.title}`)\n    .slice(0, 10) // Max 10 headings\n    .join('\\n');\n  \n  if (sectionTitles) {\n    summary += \"**Key Sections:**\\n\" + sectionTitles + \"\\n\\n\";\n  }\n  \n  // Priority 2: First substantive content (context)\n  if (sections && sections.length > 0) {\n    const firstContentSection = sections.find(s => s.content && s.content.length > 100);\n    if (firstContentSection) {\n      summary += \"**Core Content:**\\n\" + firstContentSection.content.substring(0, 600) + \"...\\n\";\n    }\n  }\n  \n  // Priority 3: Full text truncation if sections unavailable\n  if (!sections || sections.length === 0) {\n    summary = \"**Content Preview:**\\n\" + (fullText || \"\").substring(0, 1500) + \"...\";\n  }\n  \n  // Enforce 2000 char limit\n  summary = summary.substring(0, 2000);\n  \n  return {\n    summary,\n    structure: extractionStats?.hasToggles ? \"hierarchical\" : \"linear\",\n    wordCount: extractionStats?.wordCount || 0,\n    complexity: extractionStats?.complexity || \"unknown\"\n  };\n}\n\n// PROCESS AND MERGE\nreturn incomingItems.map(item => {\n  const sourceContent = item.json.sourceContent || {};\n  const contentSummary = intelligentSummarize(sourceContent);\n  \n  return {\n    json: {\n      ...item.json,\n      personalContext,\n      contentSummary, // This is what AI nodes will use\n      // Keep full sourceContent for reference\n      _fullSourceContent: sourceContent\n    }\n  };\n});\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5392,
-        1568
+        4496,
+        1088
       ],
       "id": "a636cf45-5f8f-409e-a046-238071c3332d",
       "name": "Code – Personal Context Builder"
@@ -265,8 +265,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5840,
-        1568
+        4928,
+        1088
       ]
     },
     {
@@ -276,8 +276,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7216,
-        896
+        4752,
+        1360
       ],
       "id": "7ca9d7b9-2b60-46de-8d46-e4e9231221a2",
       "name": "Process & Format Twitter Draft"
@@ -289,8 +289,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7216,
-        1280
+        4752,
+        1744
       ],
       "id": "6828111d-07ff-4779-802a-48fb187d480d",
       "name": "Process & Format LinkedIn Draft"
@@ -316,8 +316,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        4496,
-        1568
+        4528,
+        896
       ],
       "id": "3199b02d-d2c2-4c1b-9cea-872272bf8946",
       "name": "Create folder for title",
@@ -336,8 +336,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4432,
-        1504
+        4464,
+        832
       ],
       "typeVersion": 1,
       "id": "9d3de995-099b-4a5e-9c87-9e27b5a0c0a2",
@@ -352,8 +352,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3552,
-        1488
+        3584,
+        816
       ],
       "typeVersion": 1,
       "id": "b0424145-e67f-4970-abeb-19e2d61b23e1",
@@ -368,8 +368,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4784,
-        1520
+        3584,
+        1056
       ],
       "typeVersion": 1,
       "id": "bac34e09-e326-465e-88be-49c1991e2795",
@@ -384,8 +384,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        6024,
-        800
+        3568,
+        1248
       ],
       "typeVersion": 1,
       "id": "a8046985-f260-415b-9710-c8c56800f017",
@@ -400,8 +400,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        7824,
-        1392
+        5360,
+        1856
       ],
       "typeVersion": 1,
       "id": "a99c9f48-8e09-4bff-a77e-67a75a6b52c1",
@@ -432,8 +432,8 @@
       "type": "n8n-nodes-base.perplexity",
       "typeVersion": 1,
       "position": [
-        5616,
-        1568
+        4720,
+        1088
       ],
       "credentials": {
         "perplexityApi": {
@@ -462,8 +462,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        7440,
-        1280
+        4976,
+        1744
       ],
       "id": "134bf35b-54c4-4e28-8a1c-01885ce1a8fd",
       "name": "Create LinkedIn Draft",
@@ -496,8 +496,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        7440,
-        896
+        4976,
+        1360
       ],
       "id": "d69526fe-8309-4e11-95bb-180a729a2fb5",
       "name": "Create Twitter Draft",
@@ -515,8 +515,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7216,
-        1664
+        4752,
+        2112
       ],
       "id": "5129f483-7ccc-49fd-890f-63b2c3a76527",
       "name": "Process & Format Blog Draft"
@@ -541,8 +541,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        7440,
-        1664
+        4976,
+        2112
       ],
       "id": "b485c559-0b49-4261-9859-f14241caf0ec",
       "name": "Create Blog Draft",
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6416,
-        1568
+        3952,
+        2032
       ],
       "id": "12833281-018c-4116-93cd-990d423ec605",
       "name": "Process AI Strategy & MERGE CONTEXT"
@@ -594,8 +594,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        6928,
-        2048
+        4464,
+        2512
       ],
       "id": "04298295-2ebd-47eb-8bf2-49d0f2f0658b",
       "name": "Are Images Needed?",
@@ -609,8 +609,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        6904,
-        2016
+        4448,
+        2480
       ],
       "typeVersion": 1,
       "id": "5944f845-70db-431a-9ab6-c81825163826",
@@ -623,8 +623,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7216,
-        2048
+        4752,
+        2512
       ],
       "id": "74d1cc9e-2137-4e65-8824-61623cd2c61f",
       "name": "Process & Format Image Tasklist"
@@ -649,8 +649,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        7440,
-        2048
+        4976,
+        2512
       ],
       "id": "bb5aa201-eb0f-4239-a045-e920def9fbd6",
       "name": "Create Image Tasklist",
@@ -689,8 +689,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        6640,
-        992
+        4176,
+        1456
       ],
       "id": "53dba41b-b1db-4c6f-855f-c2ad8be2183d",
       "name": "IF - Twitter Selected?"
@@ -723,8 +723,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        6640,
-        1376
+        4176,
+        1840
       ],
       "id": "2aad5498-be7b-4dd1-8afc-822d35452677",
       "name": "IF - LinkedIn Selected?"
@@ -757,8 +757,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        6640,
-        1760
+        4176,
+        2224
       ],
       "id": "c14eb2bf-7e48-4910-9c19-af3de71de31a",
       "name": "IF - Blog Selected?"
@@ -770,8 +770,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7440,
-        1088
+        4976,
+        1552
       ],
       "id": "b3fbfba6-3858-4ce4-8635-897c7f3d79a5",
       "name": "Code - No-Op Twitter Draft"
@@ -783,8 +783,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7440,
-        1472
+        4976,
+        1936
       ],
       "id": "24c79a31-8326-4e83-bb00-736e96e04a77",
       "name": "Code - No-Op LinkedIn Draft"
@@ -796,8 +796,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        7440,
-        1856
+        4976,
+        2320
       ],
       "id": "0e60e08d-57c5-4c70-b276-f8c2f242c144",
       "name": "Code - No-Op Blog Draft"
@@ -946,8 +946,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2,
       "position": [
-        8112,
-        1472
+        5648,
+        1936
       ],
       "credentials": {
         "notionApi": {
@@ -985,8 +985,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        6064,
-        1568
+        3600,
+        2032
       ],
       "retryOnFail": true,
       "maxTries": 5,
@@ -1027,8 +1027,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        6864,
-        896
+        4400,
+        1360
       ],
       "retryOnFail": true,
       "maxTries": 5,
@@ -1068,8 +1068,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        6864,
-        1280
+        4400,
+        1744
       ],
       "retryOnFail": true,
       "maxTries": 5,
@@ -1107,8 +1107,8 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1,
       "position": [
-        6864,
-        1664
+        4400,
+        2112
       ],
       "id": "c47db764-6d0d-4b0b-b3af-bbb1e6d1f7e1",
       "name": "Blog Content Generation",

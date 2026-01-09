@@ -30,7 +30,7 @@
       "typeVersion": 2,
       "position": [
         -5376,
-        -288
+        -592
       ],
       "credentials": {
         "notionApi": {
@@ -47,7 +47,7 @@
       "typeVersion": 1,
       "position": [
         -5600,
-        -288
+        -592
       ]
     },
     {
@@ -58,7 +58,7 @@
       "typeVersion": 2,
       "position": [
         -5152,
-        -288
+        -592
       ],
       "id": "09f03e1e-62f3-4873-a6bf-ce48a219c406",
       "name": "Extract Folder Details"
@@ -76,7 +76,7 @@
       "typeVersion": 3,
       "position": [
         -4928,
-        -288
+        -592
       ],
       "id": "000a486f-65b1-4126-a7eb-6f420b95dee2",
       "name": "List Drive Folder Files",
@@ -95,7 +95,7 @@
       "typeVersion": 2,
       "position": [
         -4704,
-        -288
+        -592
       ],
       "id": "91cd0cb6-c418-47d3-af1f-308a53b8722f",
       "name": "Organize Assets"
@@ -115,8 +115,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -4480,
-        -584
+        -4496,
+        -880
       ],
       "retryOnFail": true,
       "alwaysOutputData": true,
@@ -135,8 +135,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -4032,
-        -584
+        -4064,
+        -880
       ],
       "id": "517b3350-c6c9-449d-b2f3-716ef98e720f",
       "name": "Parse Image Manifest"
@@ -148,8 +148,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -3360,
-        -296
+        -3456,
+        -672
       ],
       "id": "1d33dcd3-ac15-4575-97c7-300741f9269c",
       "name": "Loop to Download Images",
@@ -170,8 +170,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -3136,
-        -344
+        -3216,
+        -656
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -195,8 +195,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -4480,
-        -384
+        -4496,
+        -704
       ],
       "retryOnFail": false,
       "credentials": {
@@ -222,8 +222,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -4480,
-        -192
+        -4496,
+        -528
       ],
       "retryOnFail": false,
       "credentials": {
@@ -249,8 +249,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -4480,
-        0
+        -4496,
+        -336
       ],
       "retryOnFail": false,
       "credentials": {
@@ -269,8 +269,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -4256,
-        -584
+        -4288,
+        -880
       ],
       "id": "b937bc7f-4797-4d5a-ae9e-85011a895591",
       "name": "Extract from File - ImageTaskList",
@@ -285,8 +285,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -4256,
-        -384
+        -4272,
+        -704
       ],
       "id": "c9355c6d-6968-4b39-ba3d-f885fca4d5cb",
       "name": "Extract from File - Twitter"
@@ -300,8 +300,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -4256,
-        -192
+        -4272,
+        -528
       ],
       "id": "371e04b9-03c7-4763-9204-e598a5b9e2a4",
       "name": "Extract from File - LinkedIn"
@@ -315,8 +315,8 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        -4256,
-        0
+        -4272,
+        -336
       ],
       "id": "ec13165b-7f75-4034-820f-f533159b78aa",
       "name": "Extract from File - Blog"
@@ -328,8 +328,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -4032,
-        -208
+        -4048,
+        -496
       ],
       "id": "1e72ad50-9485-4276-bd3d-4f9ce3a45f9f",
       "name": "Merge - All Text Ready",
@@ -340,8 +340,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -3808,
-        -296
+        -3872,
+        -672
       ],
       "id": "762e8184-ce79-4fe0-a4cb-d8d76fd44e7c",
       "name": "Merge - All Assets Ready",
@@ -354,8 +354,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -3584,
-        -296
+        -3680,
+        -672
       ],
       "id": "92546aec-1826-4e5a-8ba4-3d122b9d22f4",
       "name": "Code - Prepare Image Downloads"
@@ -431,8 +431,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -3136,
-        -152
+        -3408,
+        -352
       ],
       "id": "a9851ecc-31c3-4436-86bb-212064c956f2",
       "name": "Set - All Data Ready",
@@ -445,8 +445,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2912,
-        -152
+        -5600,
+        384
       ],
       "id": "217cd488-7193-4ada-94dc-6d505de19fbd",
       "name": "Detect Images Needed vs Present"
@@ -460,8 +460,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2464,
-        -736
+        -4880,
+        -48
       ]
     },
     {
@@ -486,8 +486,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -1792,
-        -688
+        -4208,
+        48
       ],
       "credentials": {
         "httpBearerAuth": {
@@ -527,8 +527,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -1344,
-        -880
+        -3760,
+        -144
       ],
       "credentials": {
         "httpBearerAuth": {
@@ -544,8 +544,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1568,
-        352
+        -4864,
+        992
       ],
       "id": "0b22bb65-d2d3-4bad-8388-488312a2f1e1",
       "name": "Code - Parse & Attach Tweets"
@@ -560,8 +560,8 @@
       "type": "n8n-nodes-base.twitter",
       "typeVersion": 2,
       "position": [
-        224,
-        256
+        -3072,
+        800
       ],
       "id": "9131c094-6756-4a9b-8da5-d3edb7de8b7d",
       "name": "Create Tweet",
@@ -583,8 +583,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -1344,
-        352
+        -4640,
+        992
       ],
       "id": "bcccbbf1-419a-4555-9c1a-5c0084b8f05e",
       "name": "SplitInBatches - Loop Tweets"
@@ -611,8 +611,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -672,
-        208
+        -3968,
+        752
       ],
       "id": "981f63cb-4ef5-4983-a068-69946b416b90",
       "name": "Upload Media to Twitter",
@@ -630,8 +630,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -896,
-        208
+        -4192,
+        752
       ],
       "id": "80cf5cd6-5350-4ba6-8074-d7bb1803adad",
       "name": "Prepare Binary for Upload"
@@ -664,8 +664,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -1120,
-        352
+        -4416,
+        928
       ],
       "id": "53531328-4e89-4db3-9f06-685d8b0a6b95",
       "name": "IF - Image Exists?"
@@ -677,8 +677,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -448,
-        352
+        -3744,
+        928
       ],
       "id": "3c61e69a-9f78-4b84-b20a-2bf5acf03f57",
       "name": "Code - Unified Tweet Preparation"
@@ -690,8 +690,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -224,
-        352
+        -3520,
+        928
       ],
       "id": "dce802be-feb8-4317-9b11-b5132331b7bb",
       "name": "Code - Add Parent Tweet ID"
@@ -725,8 +725,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        0,
-        352
+        -3296,
+        928
       ],
       "id": "ef40be48-2ea0-4253-9fdc-a496c76cdc67",
       "name": "IF - Is This First Tweet?"
@@ -746,8 +746,8 @@
       "type": "n8n-nodes-base.twitter",
       "typeVersion": 2,
       "position": [
-        224,
-        448
+        -3072,
+        992
       ],
       "id": "4ff03625-0c1b-4ac3-8905-3c98f4de7a81",
       "name": "Create Tweet Reply",
@@ -766,8 +766,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        448,
-        352
+        -2848,
+        928
       ],
       "id": "38f18428-95e8-466c-9563-4e9a32e74de3",
       "name": "Merge1"
@@ -779,8 +779,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2240,
-        -736
+        -4656,
+        -48
       ],
       "id": "8ee966db-d7a6-44af-80ba-3ba0182cedd6",
       "name": "Prepare Image"
@@ -794,8 +794,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1568,
-        -880
+        -3984,
+        -144
       ]
     },
     {
@@ -805,8 +805,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -2016,
-        -736
+        -4432,
+        -48
       ],
       "id": "e7f3df0a-8523-4842-b707-bf3fdd94c2f3",
       "name": "Loop Over Images"
@@ -818,8 +818,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1792,
-        -880
+        -4208,
+        -144
       ],
       "id": "0426a000-c12e-4b82-a79b-02a2f61aa9b0",
       "name": "Code - Build Image Reference Map"
@@ -832,8 +832,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -5624,
-        -416
+        -5632,
+        -720
       ],
       "typeVersion": 1,
       "id": "4a2e36f1-89bc-402c-9743-893326b6a903",
@@ -848,8 +848,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -4512,
-        -752
+        -4544,
+        -1104
       ],
       "typeVersion": 1,
       "id": "2c916dbd-88b0-4419-861e-0bb059ce63c8",
@@ -864,8 +864,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3640,
-        -584
+        -3728,
+        -912
       ],
       "typeVersion": 1,
       "id": "440dc834-7c10-421f-8fc2-96fdc12c7b93",
@@ -880,8 +880,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -3272,
-        -216
+        -3536,
+        -432
       ],
       "typeVersion": 1,
       "id": "804ddfc8-a736-4f30-ae00-ba94c02551fe",
@@ -896,8 +896,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -2752,
-        -760
+        -5200,
+        -160
       ],
       "typeVersion": 1,
       "id": "da934d00-f8b3-44c2-b4d1-08311f61595f",
@@ -912,8 +912,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1984,
-        -320
+        -5200,
+        256
       ],
       "typeVersion": 1,
       "id": "ab54cb75-47c5-416b-8815-923d923ac504",
@@ -928,8 +928,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1864,
-        160
+        -5200,
+        704
       ],
       "typeVersion": 1,
       "id": "4f36b118-1636-43fc-8e14-85b012e8cd61",
@@ -942,8 +942,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -1120,
-        -656
+        -3200,
+        288
       ],
       "id": "23933bb0-4330-4f89-ba79-0c363440396b",
       "name": "Merge"
@@ -979,8 +979,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        -896,
-        -640
+        -2976,
+        304
       ],
       "id": "ab77e6c1-095e-43e1-8f37-546e2e70e2a8",
       "name": "Update Notion database",
@@ -1020,8 +1020,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        672,
-        424
+        -2640,
+        928
       ],
       "id": "f2c0b8e3-945e-440d-bdd8-0b68eeb12614",
       "name": "Prepare for Next Loop"
@@ -1043,14 +1043,46 @@
     },
     {
       "parameters": {
+        "content": "## 3. **Draft Extraction** (4 nodes)\n   - Download Twitter draft\n   - Download LinkedIn draft\n   - Download Blog draft\n   - Extract all three to memory",
+        "height": 144,
+        "width": 352,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4704,
+        -1024
+      ],
+      "typeVersion": 1,
+      "id": "4d0ea761-8452-427b-9812-ea8928709016",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## 4. **Image Task Processing** (2 nodes)\n   - Download image task manifest\n   - Parse image requirements",
+        "height": 144,
+        "width": 336,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4352,
+        -1024
+      ],
+      "typeVersion": 1,
+      "id": "c45d808e-33c4-4294-882e-f12af7150ff4",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
         "content": "## 11. **Status Tracking & Completion** (2 nodes)\n   - Update Notion with all platform links\n   - Set status to \"Posted\"\n   - Log execution metadata\n",
         "height": 304,
         "width": 512
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1216,
-        -768
+        -3296,
+        176
       ],
       "typeVersion": 1,
       "id": "887461f2-8629-4ce3-892e-589b2ff4acde",
@@ -1084,8 +1116,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -2688,
-        -688
+        -5104,
+        64
       ],
       "id": "05869711-1fb7-4d3d-ab9a-36f99d6ee94b",
       "name": "IF - Post to Blog?"
@@ -1118,8 +1150,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -1792,
-        -200
+        -5088,
+        448
       ],
       "id": "90683232-9536-4010-ac0f-7715aca7fb19",
       "name": "IF - Post to LinkedIn?"
@@ -1152,8 +1184,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -1792,
-        312
+        -5104,
+        896
       ],
       "id": "0e0d0d9e-ca82-4189-926f-be6d98cdc2b3",
       "name": "IF - Post to Twitter?"
@@ -1165,8 +1197,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1344,
-        -520
+        -3984,
+        80
       ],
       "id": "6e4daac0-5521-4a60-b701-d4b57361f16e",
       "name": "No-Op Blog Branch"
@@ -1178,8 +1210,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1344,
-        -32
+        -4496,
+        544
       ],
       "id": "a9b975dc-419f-4ff6-90d6-75e12aa9242b",
       "name": "No-Op LinkedIn Branch"
@@ -1191,8 +1223,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1344,
-        160
+        -4496,
+        720
       ],
       "id": "b8a74a6d-956b-4c1f-9396-27f25ed597da",
       "name": "No-Op Twitter Branch"
@@ -1206,8 +1238,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1568,
-        -272
+        -4800,
+        336
       ]
     },
     {
@@ -1219,8 +1251,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1120,
-        -272
+        -4336,
+        352
       ]
     },
     {
@@ -1238,8 +1270,8 @@
       "type": "n8n-nodes-base.linkedIn",
       "typeVersion": 1,
       "position": [
-        -896,
-        -272
+        -4128,
+        352
       ],
       "retryOnFail": false,
       "maxTries": 3,
@@ -1261,8 +1293,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1,
       "position": [
-        -672,
-        -200
+        -3920,
+        352
       ],
       "webhookId": "f4cc921f-b21d-49b0-8f7e-11724995a618"
     },
@@ -1273,8 +1305,8 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        -1344,
-        -272
+        -4576,
+        336
       ],
       "id": "e82f2c77-2eb5-410c-b54d-842f4248058d",
       "name": "Loop Over Items"
