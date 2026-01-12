@@ -52,7 +52,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Takes a single Notion item and finds all associated files in Google Drive.\n\nconst item = $input.first().json;\n\n// --- 1. Extract Core Information ---\n// Property names\nconst driveFolderUrl = item.property_drive_folder_link;\nconst sessionId = item.property_session_id;\nconst twitterDraftUrl = item.property_twitter_draft_url;\nconst linkedinDraftUrl = item.property_linked_in_draft_url;\nconst blogDraftUrl = item.property_blog_draft_url;\n\nif (!driveFolderUrl) {\n  throw new Error('FATAL: Drive Folder Link is missing from Notion item.');\n}\n\n// --- 2. Extract Folder ID from URL ---\nconst folderIdMatch = driveFolderUrl.match(/folders\\/([a-zA-Z0-9_-]+)/);\nconst folderId = folderIdMatch ? folderIdMatch[1] : null;\n\nif (!folderId) {\n  throw new Error(`FATAL: Could not extract Folder ID from URL: ${driveFolderUrl}`);\n}\n\n// --- 3. Pass Folder ID to the next node ---\n// The next node will list all files in this folder.\nreturn {\n  json: {\n    notionItem: $input.first().json, // Keep the original Notion data\n    sessionId: sessionId,\n    folderId: folderId,\n     draftUrls: {\n      twitter: twitterDraftUrl,\n      linkedin: linkedinDraftUrl,\n      blog: blogDraftUrl\n    }\n  }\n};\n"
+        "jsCode": "// MASTER DATA EXTRACTOR - Notion-Centric Architecture (Full Migration)\n// Version 2.0 - Reads drafts directly from Notion properties\n// Supports: X, LinkedIn, Blog, Dev.to, Hashnode\n\nconst item = $input.first().json;\n\n// === 1. CORE IDENTIFIERS ===\nconst pageId = item.id;\nconst sessionId = item.property_session_id?.trim() || `session_${Date.now()}`;\n\n// === 2. SHARED SEO METADATA ===\nconst sharedMeta = {\n  title: item.property_shared_seo_title?.trim() || item.name || 'Untitled Post',\n  description: item.property_shared_seo_description?.trim() || '',\n  slug: item.property_shared_slug?.trim() || '',\n  tags: (item.property_shared_tags || []).map(t => typeof t === 'string' ? t : t.name).filter(Boolean),\n  canonicalUrl: item.property_shared_canonical_url?.trim() || ''\n};\n\n// === 3. PLATFORM-SPECIFIC DRAFTS (Notion-Centric) ===\nconst drafts = {\n  twitter: item.property_twitter_draft?.trim() || '',\n  linkedin: item.property_linkedin_draft?.trim() || '',\n  sanityBlog: item.property_sanity_blog_draft?.trim() || '',\n  devTo: item.property_devto_draft?.trim() || '',\n  hashnode: item.property_hashnode_draft?.trim() || '',\n  hashnodeSubtitle: item.property_hashnode_subtitle?.trim() || ''\n};\n\n// === 4. ASSET CONFIGURATION ===\nconst assets = {\n  hasImages: !!item.property_has_images_assets || !!item.property_has_images,\n  driveFolderLink: item.property_drive_folder_link?.trim() || '',\n  imageTaskList: item.property_image_task_list?.trim() || '',\n  folderId: null\n};\n\n// Extract folder ID from Drive URL (for image downloads)\nif (assets.driveFolderLink) {\n  const match = assets.driveFolderLink.match(/folders\\/([a-zA-Z0-9_-]+)/);\n  assets.folderId = match ? match[1] : null;\n}\n\n// === 5. PLATFORM SELECTION ===\nconst postToRaw = item.property_post_to || [];\nconst postTo = postToRaw.map(p => typeof p === 'string' ? p : p.name).filter(Boolean);\nconst platforms = {\n  twitter: postTo.includes('X'),\n  linkedin: postTo.includes('LinkedIn'),\n  blog: postTo.includes('Blog'),\n  devTo: postTo.includes('Dev.to'),\n  hashnode: postTo.includes('Hashnode')\n};\n\n// === 6. PARSE IMAGE MARKERS FROM DRAFTS ===\nconst extractMarkers = (text) => {\n  if (!text) return [];\n  const matches = text.matchAll(/<<IMAGE_(\\d+)>>/g);\n  return [...new Set([...matches].map(m => parseInt(m[1])))].sort((a, b) => a - b);\n};\n\nconst requiredImages = {\n  twitter: extractMarkers(drafts.twitter),\n  linkedin: extractMarkers(drafts.linkedin),\n  blog: extractMarkers(drafts.sanityBlog),\n  devTo: extractMarkers(drafts.devTo),\n  hashnode: extractMarkers(drafts.hashnode),\n  all: []\n};\nrequiredImages.all = [...new Set([\n  ...requiredImages.twitter, \n  ...requiredImages.linkedin,\n  ...requiredImages.blog, \n  ...requiredImages.devTo, \n  ...requiredImages.hashnode\n])].sort((a, b) => a - b);\n\n// === 7. OUTPUT FOR DOWNSTREAM NODES ===\nreturn [{\n  json: {\n    pageId,\n    sessionId,\n    sharedMeta,\n    drafts,\n    assets,\n    platforms,\n    requiredImages,\n    // Legacy compatibility for downstream nodes\n    notionItem: item,\n    folderId: assets.folderId\n  }\n}];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -61,7 +61,7 @@
         -592
       ],
       "id": "09f03e1e-62f3-4873-a6bf-ce48a219c406",
-      "name": "Extract Folder Details"
+      "name": "Code - Master Data Extractor"
     },
     {
       "parameters": {
@@ -89,7 +89,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// FINAL, 100% ROBUST ASSET ORGANIZER (Nov 2025 revision)\ntry {\n  // Input from \"List Drive Files\"\n  const files = $input.all();\n  // Input from \"Extract Folder Details\"\n  const { notionItem, sessionId } = $('Extract Folder Details').first().json;\n\n  // --- Helpers ---\n  // Safely gets a property from either .json or top-level\n  function getProp(item, propName) {\n    if (item.json && typeof item.json === 'object' && propName in item.json) {\n      return item.json[propName];\n    }\n    if (propName in item) {\n      return item[propName];\n    }\n    return null;\n  }\n  // Robustly extracts fileId from Google Drive URL\n  function extractFileIdFromUrl(url) {\n    if (!url) return null;\n    let match = url.match(/file\\/d\\/([a-zA-Z0-9_-]+)/);\n    if (match) return match[1];\n    match = url.match(/id=([a-zA-Z0-9_-]+)/);\n    if (match) return match[1];\n    return null;\n  }\n\n  // --- Draft Identification (using URLs from Notion) ---\n  const drafts = {\n    twitter: { fileId: extractFileIdFromUrl(notionItem.property_twitter_draft_url) },\n    linkedin: { fileId: extractFileIdFromUrl(notionItem.property_linked_in_draft_url) },\n    blog: { fileId: extractFileIdFromUrl(notionItem.property_blog_draft_url) },\n    imageTaskList: { fileId: extractFileIdFromUrl(notionItem.property_image_task_list_url) }\n  };\n\n  // --- Image Identification (using file list from Drive) ---\n  // Acceptable image extensions\n  const validExtensions = ['.jpeg', '.jpg', '.png', '.webp'];\n  // Sort by asset number in file name (asset-<n>)\n  const availableImages = files\n    .map(item => {\n      const name = getProp(item, 'name');\n      const id = getProp(item, 'id');\n      // Must have valid name/id and begin with \"asset-<n>\"\n      if (\n        !name ||\n        !id ||\n        !name.match(/^asset-\\d+-session_/) || // regex matches asset-number-session\n        !validExtensions.some(ext => name.toLowerCase().endsWith(ext))\n      ) {\n        return null;\n      }\n      // Extract asset number robustly\n      const assetMatch = name.match(/^asset-(\\d+)-session_/);\n      if (assetMatch) {\n        return {\n          assetNumber: parseInt(assetMatch[1], 10),\n          fileId: id,\n          fileName: name\n        };\n      }\n      return null;\n    })\n    .filter(img => img !== null)\n    .sort((a, b) => a.assetNumber - b.assetNumber);\n\n  // --- Debugging: Log edge cases to n8n console (viewable in browser logs)\n  console.log('[DEBUG: organize assets] files:', files);\n  console.log('[DEBUG: organize assets] availableImages:', availableImages);\n\n  // --- Final Output ---\n  return [{\n    json: {\n      notionItem,\n      sessionId,\n      assets: {\n        availableImages,\n        drafts\n      }\n    }\n  }];\n} catch (error) {\n  return [{\n    json: {\n      error: true,\n      message: \"Error in Organize Assets: \" + error.message\n    }\n  }];\n}\n"
+        "jsCode": "// SIMPLIFIED ASSET ORGANIZER - Images Only (Notion-Centric v2.0)\ntry {\n  // Input from \"List Drive Files\"\n  const files = $input.all();\n  // Get master data from upstream extractor\n  const masterData = $('Code - Master Data Extractor').first().json;\n  const { notionItem, sessionId } = masterData;\n\n  // --- Helpers ---\n  function getProp(item, propName) {\n    if (item.json && typeof item.json === 'object' && propName in item.json) {\n      return item.json[propName];\n    }\n    if (propName in item) {\n      return item[propName];\n    }\n    return null;\n  }\n\n  // --- Image Identification (using file list from Drive) ---\n  const validExtensions = ['.jpeg', '.jpg', '.png', '.webp'];\n  const availableImages = files\n    .map(item => {\n      const name = getProp(item, 'name');\n      const id = getProp(item, 'id');\n      if (\n        !name ||\n        !id ||\n        !name.match(/^asset-\\d+-session_/) ||\n        !validExtensions.some(ext => name.toLowerCase().endsWith(ext))\n      ) {\n        return null;\n      }\n      const assetMatch = name.match(/^asset-(\\d+)-session_/);\n      if (assetMatch) {\n        return {\n          assetNumber: parseInt(assetMatch[1], 10),\n          fileId: id,\n          fileName: name\n        };\n      }\n      return null;\n    })\n    .filter(img => img !== null)\n    .sort((a, b) => a.assetNumber - b.assetNumber);\n\n  console.log('[DEBUG: organize assets] availableImages:', availableImages);\n\n  return [{\n    json: {\n      notionItem,\n      sessionId,\n      assets: {\n        availableImages\n      }\n    }\n  }];\n} catch (error) {\n  return [{\n    json: {\n      error: true,\n      message: \"Error in Organize Assets: \" + error.message\n    }\n  }];\n}\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -182,87 +182,6 @@
     },
     {
       "parameters": {
-        "operation": "download",
-        "fileId": {
-          "__rl": true,
-          "value": "={{ $json.notionItem.property_twitter_draft_url }}",
-          "mode": "url"
-        },
-        "options": {}
-      },
-      "id": "26fdb157-a7d9-45eb-a74c-0486c70791e7",
-      "name": "Download – Twitter Draft",
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        -4496,
-        -704
-      ],
-      "retryOnFail": false,
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "1hcyFpBqSOMDRDna",
-          "name": "Google Drive Adude"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "operation": "download",
-        "fileId": {
-          "__rl": true,
-          "value": "={{ $json.notionItem.property_linked_in_draft_url }}",
-          "mode": "url"
-        },
-        "options": {}
-      },
-      "id": "07f05b95-4ae7-4913-a0ba-3189da6d5623",
-      "name": "Download – LinkedIn Draft",
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        -4496,
-        -528
-      ],
-      "retryOnFail": false,
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "1hcyFpBqSOMDRDna",
-          "name": "Google Drive Adude"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "operation": "download",
-        "fileId": {
-          "__rl": true,
-          "value": "={{ $json.notionItem.property_blog_draft_url }}",
-          "mode": "url"
-        },
-        "options": {}
-      },
-      "id": "8484a8d9-b500-4c0f-994b-3e14a00bbbd1",
-      "name": "Download – Blog Draft",
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        -4496,
-        -336
-      ],
-      "retryOnFail": false,
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "1hcyFpBqSOMDRDna",
-          "name": "Google Drive Adude"
-        }
-      },
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
         "operation": "text",
         "options": {}
       },
@@ -275,65 +194,6 @@
       "id": "b937bc7f-4797-4d5a-ae9e-85011a895591",
       "name": "Extract from File - ImageTaskList",
       "alwaysOutputData": true
-    },
-    {
-      "parameters": {
-        "operation": "text",
-        "destinationKey": "TwitterData",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1,
-      "position": [
-        -4272,
-        -704
-      ],
-      "id": "c9355c6d-6968-4b39-ba3d-f885fca4d5cb",
-      "name": "Extract from File - Twitter"
-    },
-    {
-      "parameters": {
-        "operation": "text",
-        "destinationKey": "LinkedInData",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1,
-      "position": [
-        -4272,
-        -528
-      ],
-      "id": "371e04b9-03c7-4763-9204-e598a5b9e2a4",
-      "name": "Extract from File - LinkedIn"
-    },
-    {
-      "parameters": {
-        "operation": "text",
-        "destinationKey": "BlogData",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1,
-      "position": [
-        -4272,
-        -336
-      ],
-      "id": "ec13165b-7f75-4034-820f-f533159b78aa",
-      "name": "Extract from File - Blog"
-    },
-    {
-      "parameters": {
-        "numberInputs": 3
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        -4048,
-        -496
-      ],
-      "id": "1e72ad50-9485-4276-bd3d-4f9ce3a45f9f",
-      "name": "Merge - All Text Ready",
-      "retryOnFail": true
     },
     {
       "parameters": {},
@@ -373,20 +233,26 @@
             {
               "id": "2dd9f062-c8df-4b7c-9152-9968f289cdfc",
               "name": "twitterDraft",
-              "value": "={{ $('Extract from File - Twitter').isExecuted ? $('Extract from File - Twitter').first().json.TwitterData : '' }}",
+              "value": "={{ $('Code - Master Data Extractor').first().json.drafts.twitter }}",
               "type": "string"
             },
             {
               "id": "37686633-743a-4c7a-a158-df29afad8ffc",
               "name": "linkedinDraft",
-              "value": "={{ $('Extract from File - LinkedIn').isExecuted ? $('Extract from File - LinkedIn').first().json.LinkedInData : '' }}",
+              "value": "={{ $('Code - Master Data Extractor').first().json.drafts.linkedin }}",
               "type": "string"
             },
             {
               "id": "9a2f68a9-fa02-44e0-84d4-6f959b216994",
               "name": "blogDraft",
-              "value": "={{ $('Extract from File - Blog').isExecuted ? $('Extract from File - Blog').first().json.BlogData : '' }}",
+              "value": "={{ $('Code - Master Data Extractor').first().json.drafts.sanityBlog }}",
               "type": "string"
+            },
+            {
+              "id": "drafts_object",
+              "name": "drafts",
+              "value": "={{ $('Code - Master Data Extractor').first().json.drafts }}",
+              "type": "object"
             },
             {
               "id": "5d5eff14-59ba-4e64-9826-54ebbbdbc086",
@@ -539,7 +405,7 @@
     },
     {
       "parameters": {
-        "jsCode": "try {\n  // Get data from the previous node\n  const data_node = $('Set - All Data Ready').first().json;\n  const markdownText = data_node.twitterDraft;\n  \n  // Get the image cache, which is now 100% ready.\n  const allCachedImages = $('Loop to Download Images').all();\n  \n  // Split by \"Tweet X/Y\" pattern to separate individual tweets\n  // The regex captures \"Tweet 1/4\", \"Tweet 2/4\", etc.\n  const tweetBlocks = markdownText.match(/\\d+\\/\\d+[\\s\\S]*?(?=\\n\\n---\\n\\nTweet \\d+\\/\\d+|\\n\\n---\\n\\n$|$)/g);\n  \n  if (!tweetBlocks) throw new Error('No tweet blocks found in Twitter draft.');\n  \n  const tweets = tweetBlocks.map((block, index) => {\n    // Extract the tweet number from \"Tweet X/Y\"\n    const markerMatch = block.match(/(Tweet \\d+\\/\\d+)/);\n    const marker = markerMatch ? markerMatch[1] : null;\n    \n    // Find image placeholders like <<IMAGE_1>>\n    const imageMatch = block.match(/<<IMAGE_(\\d+)>>/);\n    let imageBinary = null;\n    \n    if (imageMatch) {\n      const imageNumber = parseInt(imageMatch[1]);\n      const targetImage = allCachedImages.find(img => \n        img.json.fileName.includes(`asset-${imageNumber}-`)\n      );\n      \n      if (!targetImage) {\n        // This will cause the workflow to fail and retry, as you requested.\n        throw new Error(`Image asset-${imageNumber} was required but not found in cache.`);\n      }\n      \n      imageBinary = targetImage.binary.data;\n    }\n    \n    // Clean the text: remove the marker, image placeholder, and \"---\" separators\n    const cleanText = block\n      .replace(/Tweet \\d+\\/\\d+/, '')  // Remove \"Tweet X/Y\"\n      .replace(/<<IMAGE_\\d+>>/, '')    // Remove image placeholders\n      .replace(/\\n\\n---\\n\\n$/, '')    // Remove trailing separator\n      .replace(/^\\n+/, '')             // Remove leading newlines\n      .replace(/\\n+$/, '')             // Remove trailing newlines\n      .replace(/^(Tweet\\s+)?\\d+\\/\\d+\\s*\\n*/mi, '')  // Remove \"Tweet X/Y\" or just \"X/Y\"\n      .trim();\n    \n    return {\n      json: {\n        order: index + 1,\n        text: cleanText,\n        inReplyTo: index > 0,\n        imageBinary: imageBinary\n      }\n    };\n  });\n  \n  return tweets;\n} catch (error) {\n  return [{ json: { error: true, message: `[Twitter Parse]: ${error.message}` } }];\n}"
+        "jsCode": "// Get data from the previous node\n  const data_node = $('Set - All Data Ready').first().json;\n  const markdownText = data_node.twitterDraft;\n  \n  // Get the image cache, which is now 100% ready.\n  const allCachedImages = $('Loop to Download Images').all();\n  \n  // Split by \"Tweet X/Y\" pattern to separate individual tweets\n  // The regex captures \"Tweet 1/4\", \"Tweet 2/4\", etc.\n  const tweetBlocks = markdownText.match(/\\d+\\/\\d+[\\s\\S]*?(?=\\n\\n---\\n\\nTweet \\d+\\/\\d+|\\n\\n---\\n\\n$|$)/g);\n  \n  if (!tweetBlocks) throw new Error('No tweet blocks found in Twitter draft.');\n  \n  const tweets = tweetBlocks.map((block, index) => {\n    // Extract the tweet number from \"Tweet X/Y\"\n    const markerMatch = block.match(/(Tweet \\d+\\/\\d+)/);\n    const marker = markerMatch ? markerMatch[1] : null;\n    \n    // Find image placeholders like <<IMAGE_1>>\n    const imageMatch = block.match(/<<IMAGE_(\\d+)>>/);\n    let imageBinary = null;\n    \n    if (imageMatch) {\n      const imageNumber = parseInt(imageMatch[1]);\n      const targetImage = allCachedImages.find(img => \n        img.json.fileName.includes(`asset-${imageNumber}-`)\n      );\n      \n      if (!targetImage) {\n        // This will cause the workflow to fail and retry, as you requested.\n        throw new Error(`Image asset-${imageNumber} was required but not found in cache.`);\n      }\n      \n      imageBinary = targetImage.binary.data;\n    }\n    \n    // Clean the text: remove the marker, image placeholder, and \"---\" separators\n    const cleanText = block\n      .replace(/Tweet \\d+\\/\\d+/, '')  // Remove \"Tweet X/Y\"\n      .replace(/<<IMAGE_\\d+>>/, '')    // Remove image placeholders\n      .replace(/\\n\\n---\\n\\n$/, '')    // Remove trailing separator\n      .replace(/^\\n+/, '')             // Remove leading newlines\n      .replace(/\\n+$/, '')             // Remove trailing newlines\n      .replace(/^(Tweet\\s+)?\\d+\\/\\d+\\s*\\n*/mi, '')  // Remove \"Tweet X/Y\" or just \"X/Y\"\n      .trim();\n    \n    return {\n      json: {\n        order: index + 1,\n        text: cleanText,\n        inReplyTo: index > 0,\n        imageBinary: imageBinary\n      }\n    };\n  });\n  \n  return tweets;\n} catch (error) {\n  return [{ json: { error: true, message: `[Twitter Parse]: ${error.message}` } }];\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -813,7 +679,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Code - Build Uploaded Image Map (CORRECTED)\ntry {\n  // Get all uploaded image responses from Sanity\n  const uploads = $input.all();\n  \n  // Get original image metadata from \"Prepare Image\" node\n  const preparedImages = $('Prepare Image').all();\n  \n  // Build map by matching fileName or imageNumber\n  return uploads.map((upload, index) => {\n    const originalMeta = preparedImages[index]; // Match by order/index\n    \n    return {\n      marker: originalMeta.json.marker,           // <<IMAGE_1>>\n      imageNumber: originalMeta.json.imageNumber, // 1, 2, 3\n      assetId: upload.json.body.document._id,     // from Sanity upload response\n      alt: originalMeta.json.alt,                 // \"Blog image\"\n      caption: originalMeta.json.caption          // \"\"\n    };\n  });\n} catch (error) {\n  return [{json: {error: true, message: `[Build Image Map]: ${error.message}`}}];\n}\n"
+        "jsCode": "// Code - Build Uploaded Image Map (CORRECTED & ROBUST)\ntry {\n  // Get all uploaded image responses from Sanity\n  const uploads = $input.all();\n  \n  // Get original image metadata from \"Prepare Image\" node\n  const preparedImages = $('Prepare Image').all();\n  \n  // Build map by matching fileName or imageNumber\n  return uploads.map((upload, index) => {\n    const originalMeta = preparedImages[index]; // Match by order/index\n    const body = upload.json.body || {};\n    \n    return {\n      marker: originalMeta.json.marker,           // <<IMAGE_1>>\n      imageNumber: originalMeta.json.imageNumber, // 1, 2, 3\n      assetId: body.document?._id || body._id,    // Handle different response structures\n      alt: originalMeta.json.alt,                 // \"Blog image\"\n      caption: originalMeta.json.caption,          // \"\"\n      cdnUrl: body.url || body.asset?.url         // Robust check for URL\n    };\n  });\n} catch (error) {\n  return [{json: {error: true, message: `[Build Image Map]: ${error.message}`}}];\n}\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -937,7 +803,7 @@
     },
     {
       "parameters": {
-        "numberInputs": 3
+        "numberInputs": 5
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
@@ -966,7 +832,7 @@
             },
             {
               "key": "Post Status|multi_select",
-              "multiSelectValue": "={{ \n  (() => {\n    const statuses = [];\n    const items = $input.all().map(i => i.json);\n    \n    // Check for LinkedIn success (has 'urn' field)\n    const linkedinPosted = items.some(item => item.urn && !item.skipped);\n    if (linkedinPosted) {\n      statuses.push('Posted at LinkedIn');\n    }\n    \n    // Check for Twitter/X success (has 'lastTweetId' field)\n    const twitterPosted = items.some(item => item.lastTweetId && !item.skipped);\n    if (twitterPosted) {\n      statuses.push('Posted at X');\n    }\n    \n    // Check for Blog success (has 'platform' === 'blog' and NOT skipped)\n    const blogPosted = items.some(item => item.platform === 'blog' && item.success === true && !item.skipped);\n    if (blogPosted) {\n      statuses.push('Posted as blog at site');\n    }\n    \n    return statuses;\n  })()\n}}"
+              "multiSelectValue": "={{ \n  (() => {\n    const statuses = [];\n    const items = $input.all().map(i => i.json);\n    \n    // Check for LinkedIn success (has 'urn' field)\n    const linkedinPosted = items.some(item => item.urn && !item.skipped);\n    if (linkedinPosted) {\n      statuses.push('Posted at LinkedIn');\n    }\n    \n    // Check for Twitter/X success (has 'lastTweetId' field)\n    const twitterPosted = items.some(item => item.lastTweetId && !item.skipped);\n    if (twitterPosted) {\n      statuses.push('Posted at X');\n    }\n    \n    // Check for Blog success (has 'platform' === 'blog' and NOT skipped)\n    const blogPosted = items.some(item => item.platform === 'blog' && item.success === true && !item.skipped);\n    if (blogPosted) {\n      statuses.push('Posted as blog at site');\n    }\n    \n    // Check for Dev.to success (NEW)\n    const devtoPosted = items.some(item => item.platform === 'devto' && item.success === true && !item.skipped);\n    if (devtoPosted) {\n      statuses.push('Posted at Dev.to');\n    }\n    \n    // Check for Hashnode success (NEW)\n    const hashnodePosted = items.some(item => item.platform === 'hashnode' && item.success === true && !item.skipped);\n    if (hashnodePosted) {\n      statuses.push('Posted at Hashnode');\n    }\n    \n    return statuses;\n  })()\n}}"
             },
             {
               "key": "Status|select",
@@ -1310,6 +1176,240 @@
       ],
       "id": "e82f2c77-2eb5-410c-b54d-842f4248058d",
       "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "devto-condition-01",
+              "leftValue": "={{ $('Code - Master Data Extractor').first().json.platforms.devTo }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -5088,
+        1280
+      ],
+      "id": "devto-if-001",
+      "name": "IF - Dev.to Selected?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// PREPARE DEV.TO CONTENT\n// Transforms Notion draft into Dev.to API payload\n\n// Get data from correct upstream nodes\nconst masterData = $('Code - Master Data Extractor').first().json;\nconst imageMapItems = $('Code - Build Image Reference Map').all();\n\n// Build image map from uploaded images\nconst imageMap = {};\nimageMapItems.forEach(item => {\n  if (item.json.marker && item.json.cdnUrl) {\n    imageMap[item.json.marker] = { cdnUrl: item.json.cdnUrl };\n  }\n});\n\n// === 1. VALIDATE DRAFT EXISTS ===\nif (!masterData.drafts?.devTo) {\n  return [{\n    json: {\n      platform: 'devto',\n      error: true,\n      skipped: true,\n      message: 'DevTo Draft is empty - skipping'\n    }\n  }];\n}\n\nlet markdown = masterData.drafts.devTo;\n\n// === 2. REPLACE IMAGE MARKERS WITH SANITY CDN URLS ===\nif (Object.keys(imageMap).length > 0) {\n  Object.entries(imageMap).forEach(([marker, data]) => {\n    const imgTag = `![${masterData.sharedMeta.title}](${data.cdnUrl})`;\n    const escapedMarker = marker.replace(/[<>]/g, '\\\\$&');\n    markdown = markdown.replace(new RegExp(escapedMarker, 'g'), imgTag);\n  });\n}\n\n// === 3. STRIP ANY REMAINING MARKERS ===\nmarkdown = markdown.replace(/<<IMAGE_\\d+>>/g, '');\nmarkdown = markdown.replace(/^```(markdown|md)?\\s*/i, '').replace(/```$/, '');\nmarkdown = markdown.trim();\n\n// === 4. SANITIZE TAGS FOR DEV.TO ===\nconst cleanTags = (masterData.sharedMeta.tags || [])\n  .slice(0, 4)\n  .map(t => t.toLowerCase().replace(/[^a-z0-9]/g, ''))\n  .filter(t => t.length > 0 && t.length <= 30);\n\n// === 5. BUILD DEV.TO API PAYLOAD ===\nconst payload = {\n  article: {\n    title: masterData.sharedMeta.title,\n    body_markdown: markdown,\n    published: true,\n    tags: cleanTags,\n    description: (masterData.sharedMeta.description || '').slice(0, 155)\n  }\n};\n\nif (masterData.sharedMeta.canonicalUrl && \n    masterData.sharedMeta.canonicalUrl.startsWith('http')) {\n  payload.article.canonical_url = masterData.sharedMeta.canonicalUrl;\n}\n\nreturn [{ json: payload }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4800,
+        1168
+      ],
+      "id": "devto-prepare-001",
+      "name": "Code - Prepare DevTo Content"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://dev.to/api/articles",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4544,
+        1168
+      ],
+      "id": "devto-http-001",
+      "name": "HTTP Request - Post to Dev.to",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "DEVTO_CREDENTIAL_ID",
+          "name": "Dev.to API Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// EXTRACT DEV.TO PUBLISHED URL\nconst response = $input.first().json;\n\nif (response.error || !response.body) {\n  return [{\n    json: {\n      platform: 'devto',\n      success: false,\n      skipped: false,\n      error: true,\n      errorMessage: response.error || 'No response body from Dev.to API',\n      statusCode: response.statusCode\n    }\n  }];\n}\n\nconst article = response.body;\n\nreturn [{\n  json: {\n    platform: 'devto',\n    success: true,\n    skipped: false,\n    url: article.url,\n    articleId: article.id,\n    slug: article.slug,\n    publishedAt: article.published_at\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4288,
+        1168
+      ],
+      "id": "devto-extract-001",
+      "name": "Code - Extract DevTo URL"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Skipped - Dev.to not selected\nreturn [{\n  json: {\n    platform: 'devto',\n    skipped: true,\n    success: true,\n    message: 'Dev.to not selected for this post'\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4496,
+        1360
+      ],
+      "id": "devto-noop-001",
+      "name": "No-Op DevTo Branch"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "hashnode-condition-01",
+              "leftValue": "={{ $('Code - Master Data Extractor').first().json.platforms.hashnode }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -5088,
+        1664
+      ],
+      "id": "hashnode-if-001",
+      "name": "IF - Hashnode Selected?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// PREPARE HASHNODE CONTENT (GraphQL Mutation)\n\n// Get data from correct upstream nodes\nconst masterData = $('Code - Master Data Extractor').first().json;\nconst imageMapItems = $('Code - Build Image Reference Map').all();\n\n// Build image map from uploaded images\nconst imageMap = {};\nimageMapItems.forEach(item => {\n  if (item.json.marker && item.json.cdnUrl) {\n    imageMap[item.json.marker] = { cdnUrl: item.json.cdnUrl };\n  }\n});\n\n// === 1. VALIDATE DRAFT EXISTS ===\nif (!masterData.drafts?.hashnode) {\n  return [{\n    json: {\n      platform: 'hashnode',\n      error: true,\n      skipped: true,\n      message: 'Hashnode Draft is empty - skipping'\n    }\n  }];\n}\n\nlet markdown = masterData.drafts.hashnode;\n\n// === 2. REPLACE IMAGE MARKERS ===\nif (Object.keys(imageMap).length > 0) {\n  Object.entries(imageMap).forEach(([marker, data]) => {\n    const imgTag = `![${masterData.sharedMeta.title}](${data.cdnUrl})`;\n    const escapedMarker = marker.replace(/[<>]/g, '\\\\$&');\n    markdown = markdown.replace(new RegExp(escapedMarker, 'g'), imgTag);\n  });\n}\n\nmarkdown = markdown.replace(/<<IMAGE_\\d+>>/g, '');\nmarkdown = markdown.replace(/^```(markdown|md)?\\s*/i, '').replace(/```$/, '');\nmarkdown = markdown.trim();\n\n// === 3. SANITIZE TAGS ===\nconst cleanTags = (masterData.sharedMeta.tags || [])\n  .slice(0, 5)\n  .map(t => ({ \n    slug: t.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-'),\n    name: t \n  }))\n  .filter(t => t.slug.length > 0);\n\n// === 4. BUILD HASHNODE GRAPHQL MUTATION ===\n// TODO: Replace 'YOUR_HASHNODE_PUBLICATION_ID' with your actual Publication ID from Hashnode dashboard\nconst PUBLICATION_ID = 'YOUR_HASHNODE_PUBLICATION_ID';\n\nconst mutation = {\n  query: `\n    mutation PublishPost($input: PublishPostInput!) {\n      publishPost(input: $input) {\n        post {\n          id\n          slug\n          url\n          title\n          publishedAt\n        }\n      }\n    }\n  `,\n  variables: {\n    input: {\n      title: masterData.sharedMeta.title,\n      contentMarkdown: markdown,\n      publicationId: PUBLICATION_ID,\n      slug: masterData.sharedMeta.slug || undefined,\n      tags: cleanTags,\n      metaTags: {\n        title: (masterData.sharedMeta.title || '').slice(0, 60),\n        description: (masterData.sharedMeta.description || '').slice(0, 155)\n      },\n      settings: {\n        enableTableOfContent: true,\n        isNewsletterActivated: false\n      }\n    }\n  }\n};\n\nif (masterData.drafts.hashnodeSubtitle) {\n  mutation.variables.input.subtitle = masterData.drafts.hashnodeSubtitle;\n}\n\nif (masterData.sharedMeta.canonicalUrl && \n    masterData.sharedMeta.canonicalUrl.startsWith('http')) {\n  mutation.variables.input.originalArticleURL = masterData.sharedMeta.canonicalUrl;\n}\n\nreturn [{ json: mutation }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4800,
+        1552
+      ],
+      "id": "hashnode-prepare-001",
+      "name": "Code - Prepare Hashnode Content"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://gql.hashnode.com/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -4544,
+        1552
+      ],
+      "id": "hashnode-http-001",
+      "name": "HTTP Request - Post to Hashnode",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "HASHNODE_CREDENTIAL_ID",
+          "name": "Hashnode API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// EXTRACT HASHNODE PUBLISHED URL\nconst response = $input.first().json;\n\nif (response.body?.errors && response.body.errors.length > 0) {\n  return [{\n    json: {\n      platform: 'hashnode',\n      success: false,\n      skipped: false,\n      error: true,\n      errorMessage: response.body.errors.map(e => e.message).join(', '),\n      errors: response.body.errors\n    }\n  }];\n}\n\nconst post = response.body?.data?.publishPost?.post;\n\nif (!post) {\n  return [{\n    json: {\n      platform: 'hashnode',\n      success: false,\n      skipped: false,\n      error: true,\n      errorMessage: 'No post returned from Hashnode API',\n      rawResponse: response.body\n    }\n  }];\n}\n\nreturn [{\n  json: {\n    platform: 'hashnode',\n    success: true,\n    skipped: false,\n    url: post.url,\n    postId: post.id,\n    slug: post.slug,\n    publishedAt: post.publishedAt\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4288,
+        1552
+      ],
+      "id": "hashnode-extract-001",
+      "name": "Code - Extract Hashnode URL"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Skipped - Hashnode not selected\nreturn [{\n  json: {\n    platform: 'hashnode',\n    skipped: true,\n    success: true,\n    message: 'Hashnode not selected for this post'\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -4496,
+        1744
+      ],
+      "id": "hashnode-noop-001",
+      "name": "No-Op Hashnode Branch"
     }
   ],
   "connections": {
@@ -1317,7 +1417,7 @@
       "main": [
         [
           {
-            "node": "Extract Folder Details",
+            "node": "Code - Master Data Extractor",
             "type": "main",
             "index": 0
           }
@@ -1335,7 +1435,7 @@
         ]
       ]
     },
-    "Extract Folder Details": {
+    "Code - Master Data Extractor": {
       "main": [
         [
           {
@@ -1362,21 +1462,6 @@
         [
           {
             "node": "Download – Image Task list",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Download – Twitter Draft",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Download – LinkedIn Draft",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Download – Blog Draft",
             "type": "main",
             "index": 0
           }
@@ -1434,39 +1519,6 @@
         ]
       ]
     },
-    "Download – Twitter Draft": {
-      "main": [
-        [
-          {
-            "node": "Extract from File - Twitter",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Download – LinkedIn Draft": {
-      "main": [
-        [
-          {
-            "node": "Extract from File - LinkedIn",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Download – Blog Draft": {
-      "main": [
-        [
-          {
-            "node": "Extract from File - Blog",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Extract from File - ImageTaskList": {
       "main": [
         [
@@ -1478,51 +1530,7 @@
         ]
       ]
     },
-    "Extract from File - Twitter": {
-      "main": [
-        [
-          {
-            "node": "Merge - All Text Ready",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract from File - LinkedIn": {
-      "main": [
-        [
-          {
-            "node": "Merge - All Text Ready",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Extract from File - Blog": {
-      "main": [
-        [
-          {
-            "node": "Merge - All Text Ready",
-            "type": "main",
-            "index": 2
-          }
-        ]
-      ]
-    },
-    "Merge - All Text Ready": {
-      "main": [
-        [
-          {
-            "node": "Merge - All Assets Ready",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Merge - All Assets Ready": {
+    "Parse Image Manifest": {
       "main": [
         [
           {
@@ -1570,6 +1578,16 @@
           },
           {
             "node": "IF - Post to Twitter?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF - Dev.to Selected?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF - Hashnode Selected?",
             "type": "main",
             "index": 0
           }
@@ -1969,6 +1987,130 @@
             "node": "Code - Prepare LinkedIn Data",
             "type": "main",
             "index": 0
+          }
+        ]
+      ]
+    },
+    "IF - Dev.to Selected?": {
+      "main": [
+        [
+          {
+            "node": "Code - Prepare DevTo Content",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No-Op DevTo Branch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Prepare DevTo Content": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Post to Dev.to",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - Post to Dev.to": {
+      "main": [
+        [
+          {
+            "node": "Code - Extract DevTo URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Extract DevTo URL": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "No-Op DevTo Branch": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "IF - Hashnode Selected?": {
+      "main": [
+        [
+          {
+            "node": "Code - Prepare Hashnode Content",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No-Op Hashnode Branch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Prepare Hashnode Content": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Post to Hashnode",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - Post to Hashnode": {
+      "main": [
+        [
+          {
+            "node": "Code - Extract Hashnode URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code - Extract Hashnode URL": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "No-Op Hashnode Branch": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
           }
         ]
       ]
