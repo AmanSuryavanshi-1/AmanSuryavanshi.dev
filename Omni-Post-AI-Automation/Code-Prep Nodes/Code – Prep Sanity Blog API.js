@@ -1,8 +1,15 @@
 // ════════════════════════════════════════════════════════════════════════════
-// SANITY BLOG PAYLOAD ARCHITECT (v2.0 - PRODUCTION READY)
+// SANITY BLOG PAYLOAD ARCHITECT (v3.0 - BATTLE-TESTED PRODUCTION)
 // Target: "Sanity Blog Draft" + SEO Metadata
 // Input: Gemini AI Output JSON with formatted_markdown + structured_data.seo
 // Output: Clean markdown + SEO fields
+// 
+// HANDLES:
+// - Escaped newlines (\\n, \\\\n, etc.)
+// - Truncated AI responses (MAX_TOKENS)
+// - JSON wrapped in markdown fences
+// - Very long content (proper Notion chunking)
+// - Malformed JSON recovery
 // ════════════════════════════════════════════════════════════════════════════
 
 const input = $input.first().json;
@@ -12,6 +19,9 @@ const notionData = $('Notion – Get Ready Content').first().json;
 // 1. UTILITY FUNCTIONS
 // ═══════════════════════════════════════════════════════════════════════════
 
+/**
+ * Sanitizes text by removing zero-width characters and normalizing linebreaks
+ */
 function sanitizeText(text) {
     if (!text) return "";
     return String(text)
@@ -21,115 +31,211 @@ function sanitizeText(text) {
         .replace(/\r\n/g, '\n');
 }
 
-function unescapeNewlines(text) {
+/**
+ * CRITICAL: Properly unescape newlines from JSON strings
+ * AI returns content like: "Line 1\\n\\nLine 2" which needs to become actual newlines
+ * Must handle multiple levels of escaping
+ */
+function unescapeContent(text) {
     if (!text) return "";
-    return text
-        .replace(/\\n\\n\\n/g, '\n\n\n')
-        .replace(/\\n\\n/g, '\n\n')
-        .replace(/\\n/g, '\n')
-        .replace(/\\r/g, '\r')
-        .replace(/\\t/g, '\t')
-        .replace(/\\"/g, '"');
+
+    let result = text;
+
+    // Handle quadruple escaping first (\\\\n -> \\n)
+    result = result.replace(/\\\\\\\\n/g, '\n');
+
+    // Handle triple escaping (rare but possible)
+    result = result.replace(/\\\\\\n/g, '\n');
+
+    // Handle double escaping (\\n -> newline) - most common in JSON
+    result = result.replace(/\\\\n/g, '\n');
+
+    // Handle single escaping (\n -> newline) - already actual newlines in most cases
+    // But if still escaped as literal backslash-n, convert
+    result = result.replace(/\\n/g, '\n');
+
+    // Handle other escape sequences
+    result = result.replace(/\\\\r/g, '\r');
+    result = result.replace(/\\r/g, '\r');
+    result = result.replace(/\\\\t/g, '\t');
+    result = result.replace(/\\t/g, '\t');
+    result = result.replace(/\\\\"/g, '"');
+    result = result.replace(/\\"/g, '"');
+
+    // Clean up any remaining double backslashes
+    result = result.replace(/\\\\/g, '\\');
+
+    return result;
 }
 
+/**
+ * Robust JSON parser that handles:
+ * - Markdown code fences (```json ... ```)
+ * - Embedded JSON strings
+ * - Malformed JSON with recovery
+ * - Truncated JSON (MAX_TOKENS)
+ */
 function robustJSONParse(rawStr) {
     if (!rawStr) return null;
-    if (typeof rawStr !== 'string') return rawStr;
+    if (typeof rawStr === 'object') return rawStr; // Already parsed
 
-    let cleanStr = rawStr
-        .replace(/^```json\s*/i, '')
-        .replace(/^```\s*/i, '')
-        .replace(/```$/g, '')
-        .trim();
+    // Step 1: Clean the input string - remove markdown fences
+    let cleanStr = rawStr.trim();
 
+    // Remove leading ```json or ``` fences
+    cleanStr = cleanStr.replace(/^```(?:json)?\s*/i, '');
+    // Remove trailing ``` fences
+    cleanStr = cleanStr.replace(/```\s*$/g, '');
+    cleanStr = cleanStr.trim();
+
+    // Step 2: Try direct parse
     try {
         return JSON.parse(cleanStr);
-    } catch (e) { }
+    } catch (e) {
+        // Continue to recovery
+    }
 
-    const jsonMatch = cleanStr.match(/\{[\s\S]*\}/);
-    if (jsonMatch) {
+    // Step 3: Find the outermost JSON object
+    const firstBrace = cleanStr.indexOf('{');
+    const lastBrace = cleanStr.lastIndexOf('}');
+
+    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+        const jsonCandidate = cleanStr.substring(firstBrace, lastBrace + 1);
         try {
-            return JSON.parse(jsonMatch[0]);
+            return JSON.parse(jsonCandidate);
         } catch (e) {
-            const cleaned = jsonMatch[0].replace(/```json/g, '').replace(/```/g, '');
-            try { return JSON.parse(cleaned); } catch (e2) { }
+            // Continue to more aggressive recovery
         }
+    }
+
+    // Step 4: Handle truncated JSON (common with MAX_TOKENS)
+    // Try to extract formatted_markdown even from broken JSON
+    const markdownMatch = cleanStr.match(/"formatted_markdown"\s*:\s*"([\s\S]*?)(?:(?<!\\)"(?:\s*,|\s*})|$)/);
+    if (markdownMatch && markdownMatch[1]) {
+        // Return a synthetic object with just the markdown
+        return {
+            formatted_markdown: markdownMatch[1],
+            _recovered: true,
+            _warning: "JSON was truncated, extracted markdown via regex"
+        };
     }
 
     return null;
 }
 
-function semanticChunking(text, maxChars = 1900) {
-    const chunks = [];
-    let currentChunk = "";
-    const paragraphs = text.split('\n\n');
+/**
+ * CRITICAL: Proper chunking for Notion API
+ * - Each rich_text element can be max 2000 chars
+ * - Max 100 elements in a rich_text array
+ * - We use 1900 to leave buffer for unicode expansion
+ */
+function chunkForNotion(text, maxCharsPerChunk = 1900) {
+    if (!text) return [{ type: "text", text: { content: "" } }];
 
-    for (const paragraph of paragraphs) {
-        if ((currentChunk.length + paragraph.length + 2) <= maxChars) {
-            currentChunk += (currentChunk ? '\n\n' : '') + paragraph;
+    const chunks = [];
+    let remaining = text;
+
+    while (remaining.length > 0) {
+        if (remaining.length <= maxCharsPerChunk) {
+            chunks.push(remaining);
+            break;
+        }
+
+        // Find a good break point - prefer paragraph breaks, then line breaks, then spaces
+        let breakPoint = maxCharsPerChunk;
+
+        // Look for paragraph break (\n\n) within last 200 chars of chunk
+        const paragraphBreak = remaining.lastIndexOf('\n\n', maxCharsPerChunk);
+        if (paragraphBreak > maxCharsPerChunk - 200 && paragraphBreak > 0) {
+            breakPoint = paragraphBreak + 2; // Include the newlines
         } else {
-            if (currentChunk) { chunks.push(currentChunk); currentChunk = ""; }
-            if (paragraph.length <= maxChars) {
-                currentChunk = paragraph;
+            // Look for line break
+            const lineBreak = remaining.lastIndexOf('\n', maxCharsPerChunk);
+            if (lineBreak > maxCharsPerChunk - 100 && lineBreak > 0) {
+                breakPoint = lineBreak + 1;
             } else {
-                const lines = paragraph.split('\n');
-                for (const line of lines) {
-                    if ((currentChunk.length + line.length + 1) <= maxChars) {
-                        currentChunk += (currentChunk ? '\n' : '') + line;
-                    } else {
-                        if (currentChunk) { chunks.push(currentChunk); currentChunk = ""; }
-                        if (line.length > maxChars) {
-                            let remaining = line;
-                            while (remaining.length > 0) {
-                                chunks.push(remaining.substring(0, maxChars));
-                                remaining = remaining.substring(maxChars);
-                            }
-                        } else {
-                            currentChunk = line;
-                        }
-                    }
+                // Look for space
+                const spaceBreak = remaining.lastIndexOf(' ', maxCharsPerChunk);
+                if (spaceBreak > maxCharsPerChunk - 50 && spaceBreak > 0) {
+                    breakPoint = spaceBreak + 1;
                 }
             }
         }
+
+        chunks.push(remaining.substring(0, breakPoint));
+        remaining = remaining.substring(breakPoint);
     }
-    if (currentChunk) chunks.push(currentChunk);
-    return chunks.length > 0 ? chunks : [""];
+
+    // Convert to Notion rich_text format, limiting to 95 chunks (Notion allows 100)
+    return chunks.slice(0, 95).map(chunk => ({
+        type: "text",
+        text: { content: chunk }
+    }));
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// 2. EXTRACTION
+// 2. EXTRACTION - Get raw text from Gemini response
 // ═══════════════════════════════════════════════════════════════════════════
 
 let rawStr = "";
 
+// Priority order for extraction from Gemini response
 if (input.generated_content) {
     rawStr = input.generated_content;
 } else if (input.content?.parts?.[0]?.text) {
+    // Standard Gemini API format
     rawStr = input.content.parts[0].text;
 } else if (input.text) {
     rawStr = input.text;
 } else if (typeof input === 'string') {
     rawStr = input;
+} else {
+    // Try to stringify if it's an object we can't parse
+    try {
+        rawStr = JSON.stringify(input);
+    } catch (e) {
+        rawStr = "";
+    }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// 3. PARSING
+// 3. PARSING - Extract formatted_markdown from JSON
 // ═══════════════════════════════════════════════════════════════════════════
 
 let extractedText = "";
 let seoData = {};
+let debugInfo = {
+    rawLength: rawStr.length,
+    parseAttempted: false,
+    parseSuccess: false,
+    recoveryUsed: false,
+    extractionMethod: "none"
+};
+
 const parsedJSON = robustJSONParse(rawStr);
+debugInfo.parseAttempted = true;
 
 if (parsedJSON) {
-    // Extract formatted markdown
+    debugInfo.parseSuccess = true;
+
+    if (parsedJSON._recovered) {
+        debugInfo.recoveryUsed = true;
+        debugInfo.warning = parsedJSON._warning;
+    }
+
+    // Extract formatted markdown - check multiple possible locations
     if (parsedJSON.formatted_markdown) {
         extractedText = parsedJSON.formatted_markdown;
+        debugInfo.extractionMethod = "formatted_markdown";
     } else if (parsedJSON.markdown) {
         extractedText = parsedJSON.markdown;
+        debugInfo.extractionMethod = "markdown";
     } else if (parsedJSON.content) {
         extractedText = parsedJSON.content;
+        debugInfo.extractionMethod = "content";
     } else if (parsedJSON.text) {
         extractedText = parsedJSON.text;
+        debugInfo.extractionMethod = "text";
     }
 
     // Extract SEO metadata
@@ -138,43 +244,64 @@ if (parsedJSON) {
     } else if (parsedJSON.seo) {
         seoData = parsedJSON.seo;
     }
+
 } else {
-    // JSON parsing failed - try regex
-    const markdownMatch = rawStr.match(/"formatted_markdown"\s*:\s*"([\s\S]*?)(?<!\\)"/);
-    if (markdownMatch) {
+    // JSON parsing failed completely - try direct regex extraction
+    debugInfo.parseSuccess = false;
+    debugInfo.extractionMethod = "regex_fallback";
+
+    // Try to extract formatted_markdown via regex
+    const markdownMatch = rawStr.match(/"formatted_markdown"\s*:\s*"([\s\S]*?)(?:(?<!\\)"(?:\s*,|\s*\})|$)/);
+    if (markdownMatch && markdownMatch[1]) {
         extractedText = markdownMatch[1];
     } else {
+        // Last resort: try extracting content from markdown fence
         const fenceMatch = rawStr.match(/```(?:markdown)?\s*([\s\S]*?)```/);
         if (fenceMatch) {
             extractedText = fenceMatch[1];
+            debugInfo.extractionMethod = "markdown_fence";
         } else {
+            // Absolute last resort: clean the raw string
             extractedText = rawStr
+                .replace(/^```json\s*/i, '')
+                .replace(/```$/g, '')
                 .replace(/^Here is the.*?:\s*/i, '')
-                .replace(/^Sure.*?:\s*/i, '');
+                .replace(/^Sure.*?:\s*/i, '')
+                .trim();
+            debugInfo.extractionMethod = "raw_cleaned";
         }
     }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// 4. CLEANING
+// 4. CLEANING - Make it human-readable
 // ═══════════════════════════════════════════════════════════════════════════
 
-let cleanText = unescapeNewlines(extractedText);
+// Step 1: Unescape all newlines and other escape sequences
+let cleanText = unescapeContent(extractedText);
+
+// Step 2: Sanitize (remove zero-width chars, normalize unicode)
 cleanText = sanitizeText(cleanText).trim();
 
-// Remove generic headers (but keep actual article titles)
+// Step 3: Remove AI-generated platform headers
 cleanText = cleanText
     .replace(/^#\s*Blog\s*Draft\s*\n+/i, '')
     .replace(/^#\s*Sanity\s*Blog\s*Draft\s*\n+/i, '')
     .replace(/^---\s*\n+/, '')
     .trim();
 
-// Handle extraction failure
-if (!cleanText || cleanText.length < 10) {
+// Step 4: Handle extraction failure
+if (!cleanText || cleanText.length < 20) {
     cleanText = "⚠️ Error: Content extraction failed.\n\n" +
+        "Debug Info:\n" +
+        "- Raw Length: " + rawStr.length + " chars\n" +
+        "- Parse Success: " + debugInfo.parseSuccess + "\n" +
+        "- Extraction Method: " + debugInfo.extractionMethod + "\n\n" +
         "Raw input preview:\n" +
-        rawStr.substring(0, 500).replace(/"/g, "'");
+        rawStr.substring(0, 800).replace(/"/g, "'");
 }
+
+debugInfo.cleanedLength = cleanText.length;
 
 // ═══════════════════════════════════════════════════════════════════════════
 // 5. SEO METADATA PROCESSING
@@ -191,32 +318,36 @@ const seoTags = Array.isArray(seoData.tags)
     : (seoData.tags || "");
 
 // ═══════════════════════════════════════════════════════════════════════════
-// 6. OUTPUT
+// 6. OUTPUT - Build Notion API Payload
 // ═══════════════════════════════════════════════════════════════════════════
 
-const finalChunks = semanticChunking(cleanText, 1900);
-const richTextArray = finalChunks.map(chunk => ({
-    type: "text",
-    text: { content: chunk }
-}));
+const richTextArray = chunkForNotion(cleanText, 1900);
 
 // Build properties object
 const properties = {
-    "Sanity Blog Draft": { "rich_text": richTextArray.slice(0, 95) }
+    "Sanity Blog Draft": { "rich_text": richTextArray }
 };
 
-// Add SEO fields if available
+// Add SEO fields if available (each capped at 2000 chars for Notion)
 if (seoTitle) {
-    properties["SEO Title"] = { "rich_text": [{ type: "text", text: { content: seoTitle.substring(0, 2000) } }] };
+    properties["SEO Title"] = {
+        "rich_text": [{ type: "text", text: { content: seoTitle.substring(0, 2000) } }]
+    };
 }
 if (seoSlug) {
-    properties["SEO Slug"] = { "rich_text": [{ type: "text", text: { content: seoSlug.substring(0, 2000) } }] };
+    properties["SEO Slug"] = {
+        "rich_text": [{ type: "text", text: { content: seoSlug.substring(0, 2000) } }]
+    };
 }
 if (seoDescription) {
-    properties["SEO Meta Description"] = { "rich_text": [{ type: "text", text: { content: seoDescription.substring(0, 2000) } }] };
+    properties["SEO Meta Description"] = {
+        "rich_text": [{ type: "text", text: { content: seoDescription.substring(0, 2000) } }]
+    };
 }
 if (seoKeywords) {
-    properties["SEO Keywords"] = { "rich_text": [{ type: "text", text: { content: seoKeywords.substring(0, 2000) } }] };
+    properties["SEO Keywords"] = {
+        "rich_text": [{ type: "text", text: { content: seoKeywords.substring(0, 2000) } }]
+    };
 }
 
 return {
@@ -225,11 +356,11 @@ return {
         finalApiBody: {
             properties: properties
         },
+        // Debug info for troubleshooting (can be removed in production)
         _debug: {
-            rawLength: rawStr.length,
-            extractedLength: cleanText.length,
-            hasSeoData: Object.keys(seoData).length > 0,
-            parsedSuccessfully: !!parsedJSON
+            ...debugInfo,
+            richTextChunks: richTextArray.length,
+            hasSeoData: Object.keys(seoData).length > 0
         }
     }
 };
