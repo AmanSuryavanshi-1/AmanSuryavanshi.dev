@@ -1,0 +1,1 @@
+mermaid\ngraph TD\n    A[Next.js 14 Frontend] -->|Non-blocking Webhook| B[n8n Automation]\n    A -->|Server Actions| C[Firebase Realtime DB]\n    B --> D[Airtable CRM]\n    B --> E[Resend/Gmail API]\n    B --> F[Cal.com Scheduling]\n    G[Sanity.io CMS] -->|ISR| A\n    H[Google Search/AI Engines] --> A\n
