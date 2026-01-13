@@ -34,7 +34,9 @@ The goal was to keep infrastructure costs at ₹0/month while maintaining enterp
 
 ## 1. The Architecture: Non-Blocking Webhooks
 
-One of the biggest mistakes I see beginners make is making the user wait while the automation runs. If your `n8n` workflow takes 5 seconds to process, your user shouldn't see a loading spinner for 5 seconds.I implemented a **non-blocking architecture**. When a student submits a lead form, the Next.js API route saves the data to Firebase immediately and triggers the n8n webhook *asynchronously*.
+One of the biggest mistakes I see beginners make is making the user wait while the automation runs. If your `n8n` workflow takes 5 seconds to process, your user shouldn't see a loading spinner for 5 seconds.
+
+I implemented a **non-blocking architecture**. When a student submits a lead form, the Next.js API route saves the data to Firebase immediately and triggers the n8n webhook *asynchronously*.
 
 ```javascript
 // src/app/api/leads/route.ts
@@ -93,7 +95,9 @@ This simple check improved our workflow reliability from **60% to 99.7%**.
 
 ---
 
-## 3. Optimizing for SEO (Lighthouse 95+)Google doesn't just care about keywords; it cares about speed. The original site had a Lighthouse score below 50. Organic leads don't come to slow sites.
+## 3. Optimizing for SEO (Lighthouse 95+)
+
+Google doesn't just care about keywords; it cares about speed. The original site had a Lighthouse score below 50. Organic leads don't come to slow sites.
 
 I implemented a 5-part optimization strategy:
 1. **Image Optimization**: Used `next/image` to reduce asset sizes by 93%.
@@ -125,6 +129,8 @@ I implemented a 5-part optimization strategy:
 
 I’m currently looking at moving some of these workflows to a more localized AI-driven approach using Ollama. 
 
-**How are you handling lead processing in your projects?** Do you prefer low-code tools like n8n/Zapier, or do you write custom Cron jobs? Let’s discuss in the comments!{% note %}
+**How are you handling lead processing in your projects?** Do you prefer low-code tools like n8n/Zapier, or do you write custom Cron jobs? Let’s discuss in the comments!
+
+{% note %}
 If you're interested in the full technical breakdown, you can check out the [GitHub Repo](https://github.com/AmanSuryavanshi-1/Aviators_Training_Centre) or watch my [video walkthrough](https://youtu.be/lk35G_YVbSo).
 {% endnote %}

@@ -1,8 +1,10 @@
 // ════════════════════════════════════════════════════════════════════════════
-// DEV.TO PAYLOAD ARCHITECT (v2.0 - PRODUCTION READY)
+// DEV.TO PAYLOAD ARCHITECT (v3.0 - BATTLE-TESTED PRODUCTION)
 // Target: "Dev.to Draft"
 // Input: Gemini AI Output JSON with formatted_markdown
-// Output: Clean human-readable article (already working, but hardened)
+// Output: Clean human-readable article
+// 
+// Note: DevTo output often comes wrapped in ```json fences - handled here
 // ════════════════════════════════════════════════════════════════════════════
 
 const input = $input.first().json;
@@ -21,79 +23,97 @@ function sanitizeText(text) {
         .replace(/\r\n/g, '\n');
 }
 
-function unescapeNewlines(text) {
+function unescapeContent(text) {
     if (!text) return "";
-    return text
-        .replace(/\\n\\n\\n/g, '\n\n\n')
-        .replace(/\\n\\n/g, '\n\n')
-        .replace(/\\n/g, '\n')
-        .replace(/\\r/g, '\r')
-        .replace(/\\t/g, '\t')
-        .replace(/\\"/g, '"');
+
+    let result = text;
+    result = result.replace(/\\\\\\\\n/g, '\n');
+    result = result.replace(/\\\\\\n/g, '\n');
+    result = result.replace(/\\\\n/g, '\n');
+    result = result.replace(/\\n/g, '\n');
+    result = result.replace(/\\\\r/g, '\r');
+    result = result.replace(/\\r/g, '\r');
+    result = result.replace(/\\\\t/g, '\t');
+    result = result.replace(/\\t/g, '\t');
+    result = result.replace(/\\\\"/g, '"');
+    result = result.replace(/\\"/g, '"');
+    result = result.replace(/\\\\/g, '\\');
+
+    return result;
 }
 
 function robustJSONParse(rawStr) {
     if (!rawStr) return null;
-    if (typeof rawStr !== 'string') return rawStr;
+    if (typeof rawStr === 'object') return rawStr;
 
-    let cleanStr = rawStr
-        .replace(/^```json\s*/i, '')
-        .replace(/^```\s*/i, '')
-        .replace(/```$/g, '')
-        .trim();
+    let cleanStr = rawStr.trim();
+
+    // CRITICAL: DevTo often wraps in ```json fences
+    cleanStr = cleanStr.replace(/^```(?:json)?\s*/i, '');
+    cleanStr = cleanStr.replace(/```\s*$/g, '');
+    cleanStr = cleanStr.trim();
 
     try {
         return JSON.parse(cleanStr);
     } catch (e) { }
 
-    const jsonMatch = cleanStr.match(/\{[\s\S]*\}/);
-    if (jsonMatch) {
+    const firstBrace = cleanStr.indexOf('{');
+    const lastBrace = cleanStr.lastIndexOf('}');
+
+    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+        const jsonCandidate = cleanStr.substring(firstBrace, lastBrace + 1);
         try {
-            return JSON.parse(jsonMatch[0]);
-        } catch (e) {
-            const cleaned = jsonMatch[0].replace(/```json/g, '').replace(/```/g, '');
-            try { return JSON.parse(cleaned); } catch (e2) { }
-        }
+            return JSON.parse(jsonCandidate);
+        } catch (e) { }
+    }
+
+    const markdownMatch = cleanStr.match(/"formatted_markdown"\s*:\s*"([\s\S]*?)(?:(?<!\\)"(?:\s*,|\s*})|$)/);
+    if (markdownMatch && markdownMatch[1]) {
+        return {
+            formatted_markdown: markdownMatch[1],
+            _recovered: true
+        };
     }
 
     return null;
 }
 
-function semanticChunking(text, maxChars = 1900) {
-    const chunks = [];
-    let currentChunk = "";
-    const paragraphs = text.split('\n\n');
+function chunkForNotion(text, maxCharsPerChunk = 1900) {
+    if (!text) return [{ type: "text", text: { content: "" } }];
 
-    for (const paragraph of paragraphs) {
-        if ((currentChunk.length + paragraph.length + 2) <= maxChars) {
-            currentChunk += (currentChunk ? '\n\n' : '') + paragraph;
+    const chunks = [];
+    let remaining = text;
+
+    while (remaining.length > 0) {
+        if (remaining.length <= maxCharsPerChunk) {
+            chunks.push(remaining);
+            break;
+        }
+
+        let breakPoint = maxCharsPerChunk;
+        const paragraphBreak = remaining.lastIndexOf('\n\n', maxCharsPerChunk);
+        if (paragraphBreak > maxCharsPerChunk - 200 && paragraphBreak > 0) {
+            breakPoint = paragraphBreak + 2;
         } else {
-            if (currentChunk) { chunks.push(currentChunk); currentChunk = ""; }
-            if (paragraph.length <= maxChars) {
-                currentChunk = paragraph;
+            const lineBreak = remaining.lastIndexOf('\n', maxCharsPerChunk);
+            if (lineBreak > maxCharsPerChunk - 100 && lineBreak > 0) {
+                breakPoint = lineBreak + 1;
             } else {
-                const lines = paragraph.split('\n');
-                for (const line of lines) {
-                    if ((currentChunk.length + line.length + 1) <= maxChars) {
-                        currentChunk += (currentChunk ? '\n' : '') + line;
-                    } else {
-                        if (currentChunk) { chunks.push(currentChunk); currentChunk = ""; }
-                        if (line.length > maxChars) {
-                            let remaining = line;
-                            while (remaining.length > 0) {
-                                chunks.push(remaining.substring(0, maxChars));
-                                remaining = remaining.substring(maxChars);
-                            }
-                        } else {
-                            currentChunk = line;
-                        }
-                    }
+                const spaceBreak = remaining.lastIndexOf(' ', maxCharsPerChunk);
+                if (spaceBreak > maxCharsPerChunk - 50 && spaceBreak > 0) {
+                    breakPoint = spaceBreak + 1;
                 }
             }
         }
+
+        chunks.push(remaining.substring(0, breakPoint));
+        remaining = remaining.substring(breakPoint);
     }
-    if (currentChunk) chunks.push(currentChunk);
-    return chunks.length > 0 ? chunks : [""];
+
+    return chunks.slice(0, 95).map(chunk => ({
+        type: "text",
+        text: { content: chunk }
+    }));
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -110,6 +130,8 @@ if (input.generated_content) {
     rawStr = input.text;
 } else if (typeof input === 'string') {
     rawStr = input;
+} else {
+    try { rawStr = JSON.stringify(input); } catch (e) { rawStr = ""; }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -117,38 +139,46 @@ if (input.generated_content) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 let extractedText = "";
+let debugInfo = {
+    rawLength: rawStr.length,
+    parseSuccess: false,
+    extractionMethod: "none"
+};
+
 const parsedJSON = robustJSONParse(rawStr);
 
 if (parsedJSON) {
-    // Priority 1: formatted_markdown
+    debugInfo.parseSuccess = true;
+
     if (parsedJSON.formatted_markdown) {
         extractedText = parsedJSON.formatted_markdown;
-    }
-    // Priority 2: markdown
-    else if (parsedJSON.markdown) {
+        debugInfo.extractionMethod = "formatted_markdown";
+    } else if (parsedJSON.markdown) {
         extractedText = parsedJSON.markdown;
-    }
-    // Priority 3: content
-    else if (parsedJSON.content) {
+        debugInfo.extractionMethod = "markdown";
+    } else if (parsedJSON.content) {
         extractedText = parsedJSON.content;
-    }
-    // Priority 4: text
-    else if (parsedJSON.text) {
+        debugInfo.extractionMethod = "content";
+    } else if (parsedJSON.text) {
         extractedText = parsedJSON.text;
+        debugInfo.extractionMethod = "text";
     }
+
 } else {
-    // JSON parsing failed - try regex
-    const markdownMatch = rawStr.match(/"formatted_markdown"\s*:\s*"([\s\S]*?)(?<!\\)"/);
-    if (markdownMatch) {
+    debugInfo.parseSuccess = false;
+
+    const markdownMatch = rawStr.match(/"formatted_markdown"\s*:\s*"([\s\S]*?)(?:(?<!\\)"(?:\s*,|\s*\})|$)/);
+    if (markdownMatch && markdownMatch[1]) {
         extractedText = markdownMatch[1];
+        debugInfo.extractionMethod = "regex_formatted_markdown";
     } else {
         const fenceMatch = rawStr.match(/```(?:markdown)?\s*([\s\S]*?)```/);
         if (fenceMatch) {
             extractedText = fenceMatch[1];
+            debugInfo.extractionMethod = "markdown_fence";
         } else {
-            extractedText = rawStr
-                .replace(/^Here is the.*?:\s*/i, '')
-                .replace(/^Sure.*?:\s*/i, '');
+            extractedText = rawStr.replace(/^```json\s*/i, '').replace(/```$/g, '').trim();
+            debugInfo.extractionMethod = "raw_cleaned";
         }
     }
 }
@@ -157,45 +187,45 @@ if (parsedJSON) {
 // 4. CLEANING
 // ═══════════════════════════════════════════════════════════════════════════
 
-let cleanText = unescapeNewlines(extractedText);
+let cleanText = unescapeContent(extractedText);
 cleanText = sanitizeText(cleanText).trim();
 
-// Remove generic headers
+// Remove platform headers
 cleanText = cleanText
     .replace(/^#\s*Dev\.?to\s*Draft\s*\n+/i, '')
     .replace(/^---\s*\n+/, '')
     .trim();
 
 // Handle extraction failure
-if (!cleanText || cleanText.length < 10) {
+if (!cleanText || cleanText.length < 20) {
     cleanText = "⚠️ Error: Content extraction failed.\n\n" +
+        "Debug Info:\n" +
+        "- Raw Length: " + rawStr.length + " chars\n" +
+        "- Parse Success: " + debugInfo.parseSuccess + "\n" +
+        "- Extraction Method: " + debugInfo.extractionMethod + "\n\n" +
         "Raw input preview:\n" +
-        rawStr.substring(0, 500).replace(/"/g, "'");
+        rawStr.substring(0, 800).replace(/"/g, "'");
 }
+
+debugInfo.cleanedLength = cleanText.length;
 
 // ═══════════════════════════════════════════════════════════════════════════
 // 5. OUTPUT
 // ═══════════════════════════════════════════════════════════════════════════
 
-const finalChunks = semanticChunking(cleanText, 1900);
-const richTextArray = finalChunks.map(chunk => ({
-    type: "text",
-    text: { content: chunk }
-}));
+const richTextArray = chunkForNotion(cleanText, 1900);
 
 return {
     json: {
         notionPageId: notionData.id,
         finalApiBody: {
             properties: {
-                "Dev.to Draft": { "rich_text": richTextArray.slice(0, 95) }
+                "DevTo Draft": { "rich_text": richTextArray }
             }
         },
         _debug: {
-            rawLength: rawStr.length,
-            extractedLength: cleanText.length,
-            chunksCount: finalChunks.length,
-            parsedSuccessfully: !!parsedJSON
+            ...debugInfo,
+            richTextChunks: richTextArray.length
         }
     }
 };
