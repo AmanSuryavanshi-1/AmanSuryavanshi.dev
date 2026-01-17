@@ -41,6 +41,7 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle, className =
     const excerpt = extractTextFromBody(post.body);
 
     // Smart header image selection: mainImage → first asset → fallback
+    // Handles both Sanity assets and external URLs (from n8n)
     const getCardImage = () => {
         if (post.mainImage) {
             return {
@@ -51,6 +52,14 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle, className =
 
         const firstAsset = getFirstAssetFromBody(post.body);
         if (firstAsset) {
+            // Handle external images with direct URLs
+            if (firstAsset.isExternal && 'url' in firstAsset.image) {
+                return {
+                    url: firstAsset.image.url,
+                    alt: firstAsset.alt || post.title
+                };
+            }
+            // Handle Sanity images with asset references
             return {
                 url: urlFor(firstAsset.image).url(),
                 alt: firstAsset.alt || post.title
@@ -107,14 +116,14 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle, className =
                     {post.tags && post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-2 sm:mb-3 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
                             {post.tags
-                                .filter(t => t && t.name && t.name.toLowerCase() !== 'featured' && t.slug?.current !== 'featured')
+                                .filter(t => t && t.label && t.label.toLowerCase() !== 'featured' && t.slug !== 'featured')
                                 .slice(0, 3)
                                 .map(tag => (
                                     <span
-                                        key={tag._id}
+                                        key={tag._key}
                                         className="px-1.5 py-0.5 sm:px-2 sm:py-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-md sm:rounded-lg text-white/90 bg-white/10 backdrop-blur-md border border-white/10"
                                     >
-                                        {tag.name}
+                                        {tag.label}
                                     </span>
                                 ))}
                         </div>

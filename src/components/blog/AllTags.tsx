@@ -1,16 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-
-interface Tag {
-    _id: string;
-    name: string;
-    slug: { current: string };
-    color?: string;
-}
+import type { InlineTag } from '@/sanity/sanity';
 
 interface AllTagsProps {
-    tags: Tag[];
+    tags: InlineTag[];
 }
 
 export default function AllTags({ tags }: AllTagsProps) {
@@ -22,18 +16,13 @@ export default function AllTags({ tags }: AllTagsProps) {
                 Topics
             </h3>
             <div className="flex flex-wrap gap-3">
-                {tags.filter(tag => tag && tag.name).map((tag) => (
+                {tags.filter(tag => tag && tag.label).map((tag) => (
                     <Link
-                        key={tag._id}
-                        href={`/blogs?tag=${tag.slug.current}`}
-                        className="px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105 border"
-                        style={{
-                            backgroundColor: tag.color ? `${tag.color}20` : 'rgb(243 244 246 / 0.5)', // sage-100/50 fallback
-                            borderColor: tag.color || '#E5E7EB', // sage-200 fallback
-                            color: tag.color || '#12372A' // forest-900 fallback
-                        }}
+                        key={tag._key}
+                        href={`/blogs?tag=${tag.slug}`}
+                        className="px-4 py-2 rounded-full text-sm font-medium transition-all hover:scale-105 border bg-sage-100/50 dark:bg-forest-800/50 border-sage-200 dark:border-forest-700 text-forest-900 dark:text-sage-100 hover:bg-lime-100 dark:hover:bg-lime-900/30"
                     >
-                        {tag.name}
+                        {tag.label}
                     </Link>
                 ))}
             </div>

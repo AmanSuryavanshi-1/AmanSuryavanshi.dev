@@ -44,11 +44,11 @@ const POSTS_QUERY = `*[ _type == "post" && defined(slug.current) && status == "p
     },
     bio
   },
-  tags[]->{
-    _id,
-    name,
-    slug,
-    color
+  tags[]{
+    _key,
+    "label": coalesce(label, @->name),
+    "slug": coalesce(slug, @->slug.current),
+    "color": @->color
   },
   status
 }`;
@@ -118,12 +118,49 @@ export default function BlogList() {
     fetchPosts();
   }, []);
 
-  // Filter Logic
+  // Smart Search Helper - fuzzy matching
+  const smartMatch = (text: string | undefined, query: string): boolean => {
+    if (!text || !query) return false;
+    const normalizedText = text.toLowerCase();
+    const normalizedQuery = query.toLowerCase().trim();
+
+    // Exact substring match
+    if (normalizedText.includes(normalizedQuery)) return true;
+
+    // Word-by-word matching (all words must match somewhere)
+    const queryWords = normalizedQuery.split(/\s+/).filter(w => w.length > 1);
+    if (queryWords.length > 1) {
+      return queryWords.every(word => normalizedText.includes(word));
+    }
+
+    // Fuzzy match for single words (handle typos)
+    if (normalizedQuery.length >= 3) {
+      // Check if query matches start of any word in text
+      const textWords = normalizedText.split(/\s+/);
+      return textWords.some(word => word.startsWith(normalizedQuery.slice(0, 3)));
+    }
+
+    return false;
+  };
+
+  // Filter Logic with Smart Search
   const filteredPosts = useMemo(() => {
     return posts.filter(post => {
-      const matchesSearch =
-        post.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.excerpt?.toLowerCase().includes(searchQuery.toLowerCase());
+      const query = searchQuery.trim();
+
+      // Smart search across multiple fields
+      const matchesSearch = !query ||
+        smartMatch(post.title, query) ||
+        smartMatch(post.excerpt, query) ||
+        // Search in tags
+        post.tags?.some(tag => {
+          if (!tag) return false;
+          const tagLabel = (tag as any).label || (tag as any).name || '';
+          return smartMatch(tagLabel, query);
+        }) ||
+        // Search in SEO keywords
+        smartMatch((post as any).primaryKeyword, query) ||
+        (post as any).secondaryKeywords?.some((kw: string) => smartMatch(kw, query));
 
       const matchesTags = selectedTags.length === 0 ||
         selectedTags.every(selectedTag => {
@@ -132,8 +169,8 @@ export default function BlogList() {
 
           return post.tags?.some(postTag => {
             if (!postTag) return false; // Skip null tag references
-            const tagName = postTag.name?.toLowerCase() || '';
-            const tagSlug = postTag.slug?.current?.toLowerCase() || '';
+            const tagName = postTag.label?.toLowerCase() || '';
+            const tagSlug = postTag.slug?.toLowerCase() || '';
 
             // Check if the post's tag matches any of the related tags
             return relatedTags.some(related =>

@@ -71,11 +71,11 @@ async function getPost(slug: string): Promise<Post | null> {
       image,
       bio
     },
-    tags[]->{
-      _id,
-      name,
-      slug,
-      color
+    tags[]{
+      _key,
+      "label": coalesce(label, @->name),
+      "slug": coalesce(slug, @->slug.current),
+      "color": @->color
     },
     status,
     seoTitle,
@@ -244,15 +244,12 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                 {/* Tags */}
                 {post.tags && post.tags.length > 0 && (
                   <div className="mb-6 flex flex-wrap gap-2">
-                    {post.tags.filter(tag => tag && tag.name).slice(0, 4).map((tag) => (
+                    {post.tags.filter(tag => tag && tag.label).slice(0, 4).map((tag) => (
                       <span
-                        key={tag._id}
+                        key={tag._key}
                         className="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-lg text-sage-100 border border-sage-200/20 backdrop-blur-md bg-white/5 shadow-sm"
-                        style={{
-                          borderColor: tag.color ? `${tag.color}60` : 'rgba(255,255,255,0.2)'
-                        }}
                       >
-                        {tag.name}
+                        {tag.label}
                       </span>
                     ))}
                   </div>

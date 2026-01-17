@@ -83,3 +83,13 @@ Omni-Post-AI-Automation/Part-2 Code Nodes/Code - Parse LinkedIn Content.js
 Omni-Post-AI-Automation/Part-2 Code Nodes/Code - Parse Twitter Content.js
 Omni-Post-AI-Automation/Part-2 Code Nodes/Code - Prepare DevTo Content.js
 Omni-Post-AI-Automation/Part-2 Code Nodes/Code - Prepare Hashnode Content.js
+.playwright-mcp/sanity_schema_update_verified.png
+scripts/check-seo.js
+scripts/fix-invalid-tags.js
+scripts/migrate-tags.js
+scripts/README.md
+scripts/seo-direct-update.js
+scripts/seo-enhance-all.js
+scripts/seo-fetch-all.js
+scripts/seo-fetch-posts.js
+scripts/seo-update-sanity.js
