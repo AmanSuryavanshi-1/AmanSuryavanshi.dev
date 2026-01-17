@@ -32,7 +32,7 @@ function getHeaderImageSource(post: Post): HeaderImageSource {
         postSlug: post.slug.current,
         component: 'BlogHeaderImage'
       });
-      
+
       return {
         type: 'main',
         url: urlFor(post.mainImage).url(),
@@ -47,7 +47,17 @@ function getHeaderImageSource(post: Post): HeaderImageSource {
         postSlug: post.slug.current,
         component: 'BlogHeaderImage'
       });
-      
+
+      // Handle external images (from n8n) with direct URLs
+      if (firstAsset.isExternal && 'url' in firstAsset.image) {
+        return {
+          type: 'first-asset',
+          url: firstAsset.image.url,
+          alt: firstAsset.alt || post.title
+        };
+      }
+
+      // Handle Sanity images with asset references
       return {
         type: 'first-asset',
         url: urlFor(firstAsset.image).url(),
@@ -62,7 +72,7 @@ function getHeaderImageSource(post: Post): HeaderImageSource {
       postSlug: post.slug.current,
       component: 'BlogHeaderImage'
     });
-    
+
     return {
       type: 'fallback',
       url: fallbackImage.path,
@@ -74,14 +84,14 @@ function getHeaderImageSource(post: Post): HeaderImageSource {
       postSlug: post.slug.current,
       component: 'BlogHeaderImage'
     }, error as Error);
-    
+
     // Priority 4: Ultimate fallback (inline SVG)
     BlogLogger.logFallbackUsage('ultimate-fallback', {
       postId: post._id,
       postSlug: post.slug.current,
       component: 'BlogHeaderImage'
     });
-    
+
     return {
       type: 'ultimate-fallback',
       url: FallbackImageManager.getUltimateFallback(),
@@ -94,13 +104,13 @@ function getHeaderImageSource(post: Post): HeaderImageSource {
  * BlogHeaderImage Component
  * Intelligently selects and displays the appropriate header image for a blog post
  */
-export default function BlogHeaderImage({ 
-  post, 
-  className = '', 
-  priority = true 
+export default function BlogHeaderImage({
+  post,
+  className = '',
+  priority = true
 }: BlogHeaderImageProps) {
   const [imageError, setImageError] = useState(false);
-  const [headerSource, setHeaderSource] = useState<HeaderImageSource>(() => 
+  const [headerSource, setHeaderSource] = useState<HeaderImageSource>(() =>
     getHeaderImageSource(post)
   );
 
@@ -110,9 +120,9 @@ export default function BlogHeaderImage({
       postSlug: post.slug.current,
       component: 'BlogHeaderImage'
     });
-    
+
     setImageError(true);
-    
+
     // Try next fallback level
     if (headerSource.type === 'main' || headerSource.type === 'first-asset') {
       const fallbackImage = FallbackImageManager.getRandomFallback();
@@ -121,7 +131,7 @@ export default function BlogHeaderImage({
         postSlug: post.slug.current,
         component: 'BlogHeaderImage'
       });
-      
+
       setHeaderSource({
         type: 'fallback',
         url: fallbackImage.path,
@@ -133,7 +143,7 @@ export default function BlogHeaderImage({
         postSlug: post.slug.current,
         component: 'BlogHeaderImage'
       });
-      
+
       setHeaderSource({
         type: 'ultimate-fallback',
         url: FallbackImageManager.getUltimateFallback(),
@@ -160,10 +170,10 @@ export default function BlogHeaderImage({
         onLoad={handleImageLoad}
         sizes="100vw"
       />
-      
+
       {/* Gradient overlay - maintaining existing styling */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-      
+
       {/* Debug info in development */}
       {process.env.NODE_ENV === 'development' && (
         <div className="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded">

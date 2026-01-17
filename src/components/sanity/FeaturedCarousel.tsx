@@ -75,11 +75,18 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ posts }) => {
     const readTime = calculateReadTime(currentPost.body);
     const excerpt = extractTextFromBody(currentPost.body);
 
-    // Helper to get image URL safely
+    // Helper to get image URL safely (handles both Sanity assets and external URLs)
     const getImageUrl = (post: Post) => {
         if (post.mainImage) return urlFor(post.mainImage).url();
         const firstAsset = getFirstAssetFromBody(post.body);
-        if (firstAsset) return urlFor(firstAsset.image).url();
+        if (firstAsset) {
+            // Handle external images with direct URLs
+            if (firstAsset.isExternal && 'url' in firstAsset.image) {
+                return firstAsset.image.url;
+            }
+            // Handle Sanity images with asset references
+            return urlFor(firstAsset.image).url();
+        }
         return FallbackImageManager.getRandomFallback().path;
     };
 

@@ -15,7 +15,7 @@ import NotFound from '@/app/not-found';
 import { notFound } from 'next/navigation';
 import CTA from '@/components/about-page/CTA';
 import BlogHeaderImage from '@/components/blog/BlogHeaderImage';
-import { getOpenGraphImage, getTwitterCardImage } from '@/lib/metadata-utils';
+import { getOpenGraphImage, getTwitterCardImage, getMetadataImageUrl } from '@/lib/metadata-utils';
 import { BlogErrorBoundary } from '@/components/blog/BlogErrorBoundary';
 import ReadingProgress from '@/components/blog/ReadingProgress';
 import Breadcrumbs from '@/components/blog/Breadcrumbs';
@@ -48,6 +48,13 @@ async function getPost(slug: string): Promise<Post | null> {
             dimensions
           }
         }
+      },
+      _type == "externalImage" => {
+        _type,
+        _key,
+        url,
+        alt,
+        caption
       },
       _type == "video" => {
         "videoUrl": videoFile.asset->url,
@@ -115,7 +122,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${title} | Aman Suryavanshi`,
     description: description,
     keywords: post.tags?.filter(t => t && t.name).map(t => t.name).join(', '),
-    keywords: post.tags?.filter(t => t && t.name).map(t => t.name).join(', '),
     authors: post.author ? [{ name: post.author.name }] : undefined,
     alternates: {
       canonical: `https://amansuryavanshi.me/blogs/${slug}`,
@@ -150,6 +156,35 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
 
   const readTime = calculateReadTime(post.body);
 
+  // Generate JSON-LD structured data for SEO
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": post.articleType === 'case-study' ? "TechArticle" : "Article",
+    "headline": post.title,
+    "description": post.metaDescription || post.seoDescription || post.excerpt,
+    "author": {
+      "@type": "Person",
+      "name": post.author?.name || "Aman Suryavanshi",
+      "url": "https://amansuryavanshi.me"
+    },
+    "datePublished": post.publishedAt || post._createdAt,
+    "dateModified": post._updatedAt || post._createdAt,
+    "image": getMetadataImageUrl(post),
+    "publisher": {
+      "@type": "Person",
+      "name": "Aman Suryavanshi",
+      "url": "https://amansuryavanshi.me"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://amansuryavanshi.me/blogs/${post.slug.current}`
+    },
+    "articleSection": post.articleType || "Technology",
+    "keywords": post.tags?.filter(t => t && t.name).map(t => t.name).join(", "),
+    "wordCount": post.body ? JSON.stringify(post.body).split(/\s+/).length : undefined,
+    "timeRequired": `PT${readTime}M`
+  };
+
   // Fetch related posts
   const relatedPostsQuery = `*[_type == "post" && slug.current != $slug && count((tags[]->slug.current)[@ in $tags]) > 0] | order(_createdAt desc)[0...3]{
     _id,
@@ -169,6 +204,11 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
   return (
     <BlogImageGalleryWrapper>
       <BlogErrorBoundary>
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <ReadingProgress />
 
         <article className="min-h-screen pb-20 lg:pb-0">
@@ -266,22 +306,16 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
 
               {/* Center: Content */}
               <div className="lg:col-span-7 xl:col-span-7">
-                <div className="prose prose-lg md:prose-xl max-w-none text-forest-900
-                  prose-headings:font-serif prose-headings:font-bold prose-headings:!text-forest-900
-                  prose-h2:!text-forest-900 prose-h3:!text-forest-900 prose-h4:!text-forest-900
-                  prose-p:!text-forest-900 prose-p:leading-relaxed
-                  prose-li:!text-forest-900 prose-ul:!text-forest-900 prose-ol:!text-forest-900
-                  prose-blockquote:!text-forest-900 prose-blockquote:border-l-forest-500
-                  prose-strong:!text-forest-900
-                  prose-th:!text-forest-900 prose-td:!text-forest-900
-                  prose-figcaption:!text-forest-900
-                  prose-a:text-lime-600 prose-a:no-underline hover:prose-a:text-lime-700 hover:prose-a:underline
-                  prose-img:rounded-2xl prose-img:shadow-lg
-                  prose-code:!text-lime-700 prose-code:bg-lime-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none">
-                  <PortableText
-                    value={post.body}
-                    components={portableTextComponents}
-                  />
+                {/* Clean content container for reading comfort */}
+                <div className="bg-white/90 dark:bg-forest-950/90 rounded-2xl p-6 md:p-8 lg:p-10 shadow-sm border border-sage-100/50 dark:border-forest-800/50">
+                  <div className="prose prose-lg max-w-none
+                    prose-img:rounded-xl prose-img:shadow-lg
+                    prose-code:before:content-none prose-code:after:content-none">
+                    <PortableText
+                      value={post.body}
+                      components={portableTextComponents}
+                    />
+                  </div>
                 </div>
 
                 {/* All Tags Section */}

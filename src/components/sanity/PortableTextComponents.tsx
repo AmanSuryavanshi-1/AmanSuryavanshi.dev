@@ -35,13 +35,78 @@ const extractText = (children: React.ReactNode): string => {
   }, '') as string;
 };
 
+// Helper to parse and convert markdown links [text](url) to clickable React elements
+const parseMarkdownLinks = (children: React.ReactNode): React.ReactNode => {
+  return React.Children.map(children, (child) => {
+    if (typeof child === 'string') {
+      // Regex to match markdown links: [text](url)
+      const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+
+      if (!linkRegex.test(child)) {
+        return child;
+      }
+
+      // Reset regex lastIndex
+      linkRegex.lastIndex = 0;
+
+      const parts: React.ReactNode[] = [];
+      let lastIndex = 0;
+      let match;
+
+      while ((match = linkRegex.exec(child)) !== null) {
+        // Add text before the link
+        if (match.index > lastIndex) {
+          parts.push(child.slice(lastIndex, match.index));
+        }
+
+        // Add the link as a clickable element
+        const [, linkText, linkUrl] = match;
+        const isExternal = linkUrl.startsWith('http');
+        parts.push(
+          <a
+            key={match.index}
+            href={linkUrl}
+            target={isExternal ? '_blank' : undefined}
+            rel={isExternal ? 'noopener noreferrer' : undefined}
+            className="inline-block relative text-lime-600 dark:text-lime-400 font-medium transition-all duration-200
+              after:content-[''] after:absolute after:w-full after:scale-x-100 after:h-0.5 after:bottom-0 after:left-0 after:bg-lime-500/30 after:origin-bottom-right after:transition-transform after:duration-300
+              hover:after:scale-x-0 hover:text-lime-700 dark:hover:text-lime-300
+              hover:bg-lime-50/50 dark:hover:bg-lime-900/10 rounded px-0.5 -mx-0.5"
+          >
+            {linkText}
+          </a>
+        );
+
+        lastIndex = match.index + match[0].length;
+      }
+
+      // Add remaining text after the last link
+      if (lastIndex < child.length) {
+        parts.push(child.slice(lastIndex));
+      }
+
+      return parts.length > 0 ? parts : child;
+    }
+
+    // If it's a React element with children, recursively parse
+    if (React.isValidElement(child) && child.props.children) {
+      return React.cloneElement(child, {
+        ...child.props,
+        children: parseMarkdownLinks(child.props.children)
+      });
+    }
+
+    return child;
+  });
+};
+
 export const portableTextComponents: PortableTextComponents = {
   block: {
     // === Typography: Serif + Tracking Tight + Fluid Scale ===
     h1: ({ children }) => {
       const id = generateSlug(extractText(children));
       return (
-        <h1 id={id} className="text-[clamp(2.25rem,4vw,3rem)] font-serif font-bold tracking-tight text-forest-900 dark:text-sage-100 mt-16 mb-6 leading-[1.1] scroll-mt-32">
+        <h1 id={id} className="text-[clamp(1.75rem,3vw,2.25rem)] font-serif font-bold tracking-tight text-forest-900 dark:text-sage-50 mt-12 mb-5 leading-[1.15] scroll-mt-32">
           {children}
         </h1>
       );
@@ -49,7 +114,7 @@ export const portableTextComponents: PortableTextComponents = {
     h2: ({ children }) => {
       const id = generateSlug(extractText(children));
       return (
-        <h2 id={id} className="text-[clamp(1.75rem,3vw,2.5rem)] font-serif font-bold tracking-tight text-forest-900 dark:text-sage-100 mt-14 mb-4 leading-[1.15] border-l-4 border-lime-500 pl-6 scroll-mt-32">
+        <h2 id={id} className="text-[clamp(1.375rem,2.5vw,1.75rem)] font-serif font-bold tracking-tight text-forest-900 dark:text-sage-50 mt-10 mb-4 leading-[1.2] border-l-4 border-lime-500 pl-5 scroll-mt-32">
           {children}
         </h2>
       );
@@ -57,16 +122,16 @@ export const portableTextComponents: PortableTextComponents = {
     h3: ({ children }) => {
       const id = generateSlug(extractText(children));
       return (
-        <h3 id={id} className="text-[clamp(1.4rem,2.5vw,2rem)] font-serif font-semibold tracking-tight text-forest-800 dark:text-sage-200 mt-10 mb-3 leading-[1.2] scroll-mt-32 flex items-center gap-3">
-          <span className="w-2 h-2 rounded-full bg-lime-500/60 shrink-0 mt-1" />
-          {children}
+        <h3 id={id} className="text-[clamp(1.125rem,2vw,1.375rem)] font-serif font-semibold tracking-tight text-forest-800 dark:text-sage-100 mt-8 mb-3 leading-[1.25] scroll-mt-32 flex items-start gap-2.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-lime-500/70 shrink-0 mt-2" />
+          <span className="flex-1">{children}</span>
         </h3>
       );
     },
     h4: ({ children }) => {
       const id = generateSlug(extractText(children));
       return (
-        <h4 id={id} className="text-[clamp(1.2rem,2vw,1.5rem)] font-serif font-semibold text-forest-700 dark:text-sage-300 mt-8 mb-2 leading-[1.25] scroll-mt-32">
+        <h4 id={id} className="text-[clamp(1rem,1.5vw,1.25rem)] font-serif font-semibold text-forest-700 dark:text-sage-200 mt-6 mb-2 leading-[1.3] scroll-mt-32">
           {children}
         </h4>
       );
@@ -88,13 +153,157 @@ export const portableTextComponents: PortableTextComponents = {
       );
     },
 
-    // === Paragraphs: Relaxed Loading + Semantic Colors ===
+
+    // === Paragraphs: Relaxed Loading + Semantic Colors + Callout Detection ===
     normal: ({ children, value }) => {
       const indentMark = value?.markDefs?.find(mark => mark._type === 'indent');
       const indent = typeof indentMark?.level === 'number' ? indentMark.level : 0;
+
+      // Extract text for pattern detection
+      const text = extractText(children);
+
+      // TL;DR Callout - Summary/highlights
+      if (text.startsWith('TL;DR:') || text.startsWith('TL;DR')) {
+        return (
+          <div className="my-8 p-6 bg-gradient-to-r from-lime-50 to-emerald-50/50 dark:from-lime-900/20 dark:to-emerald-900/10 border-l-4 border-lime-500 rounded-r-2xl shadow-sm">
+            <div className="flex gap-4">
+              <span className="text-2xl mt-0.5 shrink-0">📋</span>
+              <div className="prose-p:m-0 text-forest-800 dark:text-sage-200 font-semibold text-lg leading-relaxed">
+                {children}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // Result/Success Callout
+      if (text.startsWith('Result:') || text.startsWith('Results:')) {
+        return (
+          <div className="my-8 p-6 bg-gradient-to-r from-emerald-50 to-green-50/50 dark:from-emerald-900/20 dark:to-green-900/10 border border-emerald-200 dark:border-emerald-500/30 rounded-2xl shadow-sm">
+            <div className="flex gap-4">
+              <span className="text-2xl mt-0.5 shrink-0">🎯</span>
+              <div className="prose-p:m-0 text-emerald-900 dark:text-emerald-200 font-medium text-lg leading-relaxed">
+                {children}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // Key Takeaway Callout
+      if (text.startsWith('Key Takeaway:') || text.startsWith('Takeaway:')) {
+        return (
+          <div className="my-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/10 border border-blue-200 dark:border-blue-500/30 rounded-2xl shadow-sm">
+            <div className="flex gap-4">
+              <span className="text-2xl mt-0.5 shrink-0">💎</span>
+              <div className="prose-p:m-0 text-blue-900 dark:text-blue-200 font-medium text-lg leading-relaxed">
+                {children}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // Pro Tip Callout (direct pattern)
+      if (text.startsWith('Pro Tip:') || text.startsWith('ProTip:')) {
+        return (
+          <div className="my-6 p-5 bg-gradient-to-r from-purple-50 to-violet-50/50 dark:from-purple-900/20 dark:to-violet-900/10 border border-purple-200 dark:border-purple-500/30 rounded-2xl shadow-sm">
+            <div className="flex gap-3">
+              <span className="text-xl mt-0.5 shrink-0">⚡</span>
+              <div className="prose-p:m-0 text-purple-900 dark:text-purple-200 font-medium text-base leading-relaxed">
+                {parseMarkdownLinks(children)}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      // Markdown Blockquote Pattern: "> text" or "> **Pro Tip:** text"
+      // This handles cases where n8n sends raw markdown blockquote syntax
+      if (text.startsWith('> ') || text.startsWith('>')) {
+        const cleanText = text.replace(/^>\s*/, '');
+
+        // Check for callout types within the blockquote
+        const isProTip = cleanText.includes('Pro Tip:') || cleanText.includes('ProTip:');
+        const isTip = cleanText.startsWith('Tip:') || cleanText.includes('💡');
+        const isWarning = cleanText.startsWith('Warning:') || cleanText.includes('⚠️');
+        const isNote = cleanText.startsWith('Note:') || cleanText.includes('📝');
+
+        // Helper to strip markdown blockquote prefix from rendered content
+        const strippedChildren = React.Children.map(children, child => {
+          if (typeof child === 'string') {
+            return child.replace(/^>\s*/, '');
+          }
+          return child;
+        });
+
+        if (isProTip) {
+          return (
+            <div className="my-6 p-5 bg-gradient-to-r from-purple-50 to-violet-50/50 dark:from-purple-900/20 dark:to-violet-900/10 border border-purple-200 dark:border-purple-500/30 rounded-2xl shadow-sm">
+              <div className="flex gap-3">
+                <span className="text-xl mt-0.5 shrink-0">⚡</span>
+                <div className="prose-p:m-0 text-purple-900 dark:text-purple-200 font-medium text-base leading-relaxed">
+                  {parseMarkdownLinks(strippedChildren)}
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        if (isTip) {
+          return (
+            <div className="my-6 p-5 bg-lime-50/50 dark:bg-lime-900/10 border border-lime-200 dark:border-lime-500/30 rounded-2xl shadow-sm">
+              <div className="flex gap-3">
+                <span className="text-xl mt-0.5 shrink-0">💡</span>
+                <div className="prose-p:m-0 text-forest-800 dark:text-sage-200 font-medium text-base leading-relaxed">
+                  {parseMarkdownLinks(strippedChildren)}
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        if (isWarning) {
+          return (
+            <div className="my-6 p-5 bg-amber-50/50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-500/30 rounded-2xl shadow-sm">
+              <div className="flex gap-3">
+                <span className="text-xl mt-0.5 shrink-0">⚠️</span>
+                <div className="prose-p:m-0 text-amber-900 dark:text-amber-200 font-medium text-base leading-relaxed">
+                  {parseMarkdownLinks(strippedChildren)}
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        if (isNote) {
+          return (
+            <div className="my-6 p-5 bg-blue-50/50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-500/30 rounded-2xl shadow-sm">
+              <div className="flex gap-3">
+                <span className="text-xl mt-0.5 shrink-0">📝</span>
+                <div className="prose-p:m-0 text-blue-900 dark:text-blue-200 font-medium text-base leading-relaxed">
+                  {parseMarkdownLinks(strippedChildren)}
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        // Default blockquote style (for generic quotes)
+        return (
+          <blockquote className="relative my-6 pl-6 pr-4 py-3 border-l-4 border-lime-500 bg-gradient-to-r from-forest-50/50 to-transparent dark:from-forest-900/30 rounded-r-xl">
+            <div className="text-lg font-serif italic text-forest-800 dark:text-sage-200 leading-relaxed">
+              {parseMarkdownLinks(strippedChildren)}
+            </div>
+          </blockquote>
+        );
+      }
+
+      // Default paragraph - optimized for readability  
+      // Parse markdown links [text](url) that weren't converted by n8n
       return (
-        <p className={`my-4 text-lg md:text-xl leading-[1.8] text-forest-700 dark:text-sage-300 font-sans ${indent > 0 ? `pl-${indent * 6} border-l-2 border-sage-200 dark:border-forest-700` : ''}`}>
-          {children}
+        <p className={`my-5 text-base md:text-lg leading-relaxed text-forest-700 dark:text-sage-200 font-sans ${indent > 0 ? `pl-${indent * 6} border-l-2 border-sage-200 dark:border-forest-700` : ''}`}>
+          {parseMarkdownLinks(children)}
         </p>
       );
     },
@@ -219,31 +428,37 @@ export const portableTextComponents: PortableTextComponents = {
   list: {
     bullet: ({ children }) => (
       <ul className="pl-6 space-y-3 my-6 text-forest-700 dark:text-sage-300">
-        {React.Children.map(children, (child) => (
-          <li className="relative pl-5 before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:w-2 before:h-2 before:bg-lime-500 before:rounded-full text-lg leading-[1.7]">
-            {child?.props?.children}
-          </li>
-        ))}
+        {children}
       </ul>
     ),
     number: ({ children }) => (
       <ol className="list-decimal pl-8 space-y-3 my-6 text-forest-700 dark:text-sage-300 marker:text-lime-600 dark:marker:text-lime-500 marker:font-bold text-lg leading-[1.7]">
-        {React.Children.map(children, (child) => (
-          <li className="pl-2">
-            {child?.props?.children}
-          </li>
-        ))}
+        {children}
       </ol>
     ),
     checkbox: ({ children }) => (
       <ul className="pl-2 space-y-2 my-6">
-        {React.Children.map(children, child => (
-          <li className="flex items-start gap-3 p-3 rounded-lg hover:bg-forest-50 dark:hover:bg-forest-800/50 transition-colors border border-transparent hover:border-forest-100 dark:hover:border-forest-700">
-            <input type="checkbox" checked disabled className="mt-1.5 accent-lime-600 h-4 w-4 rounded-sm border-forest-300" />
-            <span className="text-forest-700 dark:text-sage-300 text-lg">{child}</span>
-          </li>
-        ))}
+        {children}
       </ul>
+    ),
+  },
+
+  listItem: {
+    bullet: ({ children }) => (
+      <li className="relative pl-5 before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:w-2 before:h-2 before:bg-lime-500 before:rounded-full text-lg leading-[1.7]">
+        {children}
+      </li>
+    ),
+    number: ({ children }) => (
+      <li className="pl-2 text-lg leading-[1.7]">
+        {children}
+      </li>
+    ),
+    checkbox: ({ children }) => (
+      <li className="flex items-start gap-3 p-3 rounded-lg hover:bg-forest-50 dark:hover:bg-forest-800/50 transition-colors border border-transparent hover:border-forest-100 dark:hover:border-forest-700">
+        <input type="checkbox" checked disabled className="mt-1.5 accent-lime-600 h-4 w-4 rounded-sm border-forest-300" />
+        <span className="text-forest-700 dark:text-sage-300 text-lg">{children}</span>
+      </li>
     ),
   },
 

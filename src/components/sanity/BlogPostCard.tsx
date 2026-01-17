@@ -60,6 +60,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
     const readTime = calculateReadTime(post.body);
 
     // Smart header image selection: mainImage → first asset → fallback
+    // Handles both Sanity assets and external URLs (from n8n)
     const getCardImage = () => {
         if (post.mainImage) {
             return {
@@ -70,6 +71,14 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
 
         const firstAsset = getFirstAssetFromBody(post.body);
         if (firstAsset) {
+            // Handle external images with direct URLs
+            if (firstAsset.isExternal && 'url' in firstAsset.image) {
+                return {
+                    url: firstAsset.image.url,
+                    alt: firstAsset.alt || post.title
+                };
+            }
+            // Handle Sanity images with asset references
             return {
                 url: urlFor(firstAsset.image).url(),
                 alt: firstAsset.alt || post.title

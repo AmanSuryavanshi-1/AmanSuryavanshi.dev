@@ -77,6 +77,9 @@ export interface Post {
   focusKeyword?: string;
   seoTitle?: string;
   metaDescription?: string;
+  seoDescription?: string; // Alias for metaDescription (automation compatibility)
+  articleType?: 'case-study' | 'tutorial' | 'guide' | 'opinion';
+  canonicalUrl?: string;
   _createdAt: string;
   _updatedAt: string;
   viewCount?: number;

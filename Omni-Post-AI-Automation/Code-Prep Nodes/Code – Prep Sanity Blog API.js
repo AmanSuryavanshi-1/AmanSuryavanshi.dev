@@ -112,11 +112,37 @@ function robustJSONParse(rawStr) {
     // Try to extract formatted_markdown even from broken JSON
     const markdownMatch = cleanStr.match(/"formatted_markdown"\s*:\s*"([\s\S]*?)(?:(?<!\\)"(?:\s*,|\s*})|$)/);
     if (markdownMatch && markdownMatch[1]) {
-        // Return a synthetic object with just the markdown
+        // Also try to extract SEO data via regex since JSON is truncated
+        const seoData = {};
+
+        // Extract SEO title
+        const titleMatch = cleanStr.match(/"title"\s*:\s*"([^"\\]*(?:\\.[^"\\]*)*)"/);
+        if (titleMatch) seoData.title = titleMatch[1].replace(/\\"/g, '"');
+
+        // Extract SEO slug
+        const slugMatch = cleanStr.match(/"slug"\s*:\s*"([^"\\]*(?:\\.[^"\\]*)*)"/);
+        if (slugMatch) seoData.slug = slugMatch[1];
+
+        // Extract SEO meta_description
+        const descMatch = cleanStr.match(/"meta_description"\s*:\s*"([^"\\]*(?:\\.[^"\\]*)*)"/);
+        if (descMatch) seoData.meta_description = descMatch[1].replace(/\\"/g, '"');
+
+        // Extract tags array - look for the pattern ["tag1", "tag2", ...]
+        const tagsMatch = cleanStr.match(/"tags"\s*:\s*\[([\s\S]*?)\]/);
+        if (tagsMatch) {
+            // Parse individual tags from the array
+            const tagStrings = tagsMatch[1].match(/"([^"]+)"/g);
+            if (tagStrings) {
+                seoData.tags = tagStrings.map(t => t.replace(/"/g, ''));
+            }
+        }
+
+        // Return a synthetic object with markdown AND recovered SEO data
         return {
             formatted_markdown: markdownMatch[1],
+            structured_data: Object.keys(seoData).length > 0 ? { seo: seoData } : undefined,
             _recovered: true,
-            _warning: "JSON was truncated, extracted markdown via regex"
+            _warning: "JSON was truncated, extracted markdown and SEO via regex"
         };
     }
 
@@ -313,9 +339,11 @@ const seoDescription = seoData.meta_description || seoData.description || "";
 const seoKeywords = Array.isArray(seoData.keywords)
     ? seoData.keywords.join(", ")
     : (seoData.keywords || "");
-const seoTags = Array.isArray(seoData.tags)
-    ? seoData.tags.join(", ")
-    : (seoData.tags || "");
+
+// Handle tags - can be array or string
+const seoTagsArray = Array.isArray(seoData.tags)
+    ? seoData.tags
+    : (typeof seoData.tags === 'string' ? seoData.tags.split(',').map(t => t.trim()) : []);
 
 // ═══════════════════════════════════════════════════════════════════════════
 // 6. OUTPUT - Build Notion API Payload
@@ -328,25 +356,26 @@ const properties = {
     "Sanity Blog Draft": { "rich_text": richTextArray }
 };
 
-// Add SEO fields if available (each capped at 2000 chars for Notion)
+// Add SHARED SEO fields for all platforms (matching Notion property names)
 if (seoTitle) {
-    properties["SEO Title"] = {
+    properties["Shared_SEO_Title"] = {
         "rich_text": [{ type: "text", text: { content: seoTitle.substring(0, 2000) } }]
     };
 }
 if (seoSlug) {
-    properties["SEO Slug"] = {
+    properties["Shared_Slug"] = {
         "rich_text": [{ type: "text", text: { content: seoSlug.substring(0, 2000) } }]
     };
 }
 if (seoDescription) {
-    properties["SEO Meta Description"] = {
+    properties["Shared_SEO_Description"] = {
         "rich_text": [{ type: "text", text: { content: seoDescription.substring(0, 2000) } }]
     };
 }
-if (seoKeywords) {
-    properties["SEO Keywords"] = {
-        "rich_text": [{ type: "text", text: { content: seoKeywords.substring(0, 2000) } }]
+// Shared_Tags is a MULTI-SELECT property in Notion, not Text!
+if (seoTagsArray.length > 0) {
+    properties["Shared_Tags"] = {
+        "multi_select": seoTagsArray.map(tag => ({ name: tag.trim() }))
     };
 }
 
@@ -360,7 +389,13 @@ return {
         _debug: {
             ...debugInfo,
             richTextChunks: richTextArray.length,
-            hasSeoData: Object.keys(seoData).length > 0
+            hasSeoData: Object.keys(seoData).length > 0,
+            seoDataExtracted: {
+                title: seoTitle ? seoTitle.substring(0, 50) + "..." : null,
+                slug: seoSlug || null,
+                description: seoDescription ? seoDescription.substring(0, 50) + "..." : null,
+                tagsCount: seoTagsArray.length
+            }
         }
     }
 };
