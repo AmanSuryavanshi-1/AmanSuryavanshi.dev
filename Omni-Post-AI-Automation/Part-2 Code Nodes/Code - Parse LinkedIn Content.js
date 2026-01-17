@@ -1,17 +1,19 @@
 // ════════════════════════════════════════════════════════════════════════════
-// LINKEDIN CONTENT PARSER (v3.0 - Production Ready)
+// LINKEDIN CONTENT PARSER V5.0 (Part 2 Compatible - ROBUST IMAGE ACCESS)
 // Parses LinkedIn draft from Notion → Prepares for LinkedIn API
+// FIXED: Uses $('Loop to Download Images').all() to access ALL downloaded binaries
 // ════════════════════════════════════════════════════════════════════════════
 
 try {
-    // ═══════════════════════════════════════════════════════════════════════
-    // 1. GET DATA
-    // ═══════════════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 1. GET DATA FROM CORRECT SOURCE
+    // ═══════════════════════════════════════════════════════════════════════════
 
-    const masterData = $('Code - Master Data Extractor').first().json;
-    let linkedinDraft = masterData.drafts.linkedin;
+    const masterData = $('Set - All Data Ready').first().json;
+    let linkedinDraft = masterData.linkedinDraft;
 
     if (!linkedinDraft || linkedinDraft.length < 20) {
+        console.log('⏭️ LinkedIn draft is empty or too short, skipping.');
         return [{
             json: {
                 platform: 'linkedin',
@@ -22,58 +24,41 @@ try {
         }];
     }
 
-    // Get cached images if available
-    const allCachedImages = $('Loop to Download Images').all() || [];
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 2. GET IMAGE BINARIES FROM CORRECT SOURCE
+    // CRITICAL FIX: $('Download Image Binary').all() only returns LAST item!
+    // We MUST use $('Loop to Download Images').all() to get ALL images
+    // ═══════════════════════════════════════════════════════════════════════════
 
-    // ═══════════════════════════════════════════════════════════════════════
-    // 2. ROBUST JSON EXTRACTION (if draft is JSON-wrapped)
-    // ═══════════════════════════════════════════════════════════════════════
+    let allCachedImages = [];
 
-    function robustJSONParse(rawStr) {
-        if (!rawStr) return null;
-        const jsonMatch = rawStr.match(/{[\s\S]*}/);
-        if (jsonMatch) {
-            try {
-                return JSON.parse(jsonMatch[0]);
-            } catch (e) {
-                try {
-                    const cleanBlock = jsonMatch[0].replace(/```json/g, '').replace(/```/g, '');
-                    return JSON.parse(cleanBlock);
-                } catch (e2) { /* Failed */ }
-            }
+    // PRIMARY: Use Loop to Download Images (SplitInBatches node stores ALL items)
+    try {
+        allCachedImages = $('Loop to Download Images').all() || [];
+        console.log(`📸 Found ${allCachedImages.length} images from Loop to Download Images`);
+    } catch (e) {
+        // FALLBACK: Try Download Image Binary (will only have last item)
+        try {
+            allCachedImages = $('Download Image Binary').all() || [];
+            console.log(`⚠️ Fallback: ${allCachedImages.length} images from Download Image Binary`);
+        } catch (e2) {
+            console.log('⚠️ No image cache available');
         }
-        return null;
     }
 
-    // Try to extract from JSON if wrapped
-    const parsed = robustJSONParse(linkedinDraft);
-    if (parsed) {
-        linkedinDraft = parsed.formatted_markdown ||
-            parsed.markdown ||
-            parsed.content ||
-            parsed.text ||
-            linkedinDraft;
-    }
-
-    // ═══════════════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════════════════
     // 3. CLEAN CONTENT
-    // ═══════════════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════════════════
 
-    // Remove markdown header if present
-    linkedinDraft = linkedinDraft
-        .replace(/^#\s*LinkedIn\s*Draft\s*/i, '')
-        .replace(/^---\s*\n?/, '')
-        .trim();
-
-    // Handle escaped newlines (from Notion storage) → convert to actual newlines
-    // Then later we'll re-encode for LinkedIn API
+    // Handle escaped newlines
     linkedinDraft = linkedinDraft
         .replace(/\\n/g, '\n')
-        .replace(/\\"/g, '"');
+        .replace(/\\"/g, '"')
+        .trim();
 
-    // ═══════════════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════════════════
     // 4. SPLIT INTO POSTS (if multiple posts separated by ---)
-    // ═══════════════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════════════════
 
     const postBlocks = linkedinDraft
         .split(/\n-{3,}\n/)
@@ -81,12 +66,13 @@ try {
         .filter(block => block.length > 20);
 
     if (postBlocks.length === 0) {
-        throw new Error('No valid post content found after parsing.');
+        // If no separator, treat entire draft as single post
+        postBlocks.push(linkedinDraft.trim());
     }
 
-    // ═══════════════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════════════════
     // 5. PROCESS EACH POST
-    // ═══════════════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════════════════
 
     const postsToExecute = postBlocks.map((block, index) => {
         // Find image markers in this block
@@ -104,15 +90,15 @@ try {
             .replace(/^\s*[-*+]\s+(.*)/gm, '• $1') // Convert bullets
             .trim();
 
-        // Normalize newlines (CRITICAL for LinkedIn API)
+        // Normalize newlines
         cleanText = cleanText
-            .replace(/\n{4,}/g, '\n\n\n')  // Max 3 consecutive newlines
-            .replace(/\n{3}/g, '\n\n')     // Triple → Double (for most cases)
+            .replace(/\n{4,}/g, '\n\n\n')
+            .replace(/\n{3}/g, '\n\n')
             .trim();
 
-        // ═══════════════════════════════════════════════════════════════════
+        // ═══════════════════════════════════════════════════════════════════════
         // 6. CHARACTER LIMIT ENFORCEMENT (2800 max for LinkedIn)
-        // ═══════════════════════════════════════════════════════════════════
+        // ═══════════════════════════════════════════════════════════════════════
 
         const MAX_CHARS = 2800;
         if (cleanText.length > MAX_CHARS) {
@@ -121,25 +107,31 @@ try {
             console.warn(`⚠️ LinkedIn post ${index + 1} truncated to ${MAX_CHARS} chars`);
         }
 
-        // ═══════════════════════════════════════════════════════════════════
-        // 7. FIND BINARY FOR IMAGE (if any)
-        // ═══════════════════════════════════════════════════════════════════
+        // ═══════════════════════════════════════════════════════════════════════
+        // 7. FIND BINARY FOR IMAGE (ROBUST - graceful if missing)
+        // ═══════════════════════════════════════════════════════════════════════
 
         let firstBinaryData = null;
         if (markersInBlock.length > 0 && allCachedImages.length > 0) {
             const num = markersInBlock[0]; // LinkedIn only supports 1 image
-            const targetImage = allCachedImages.find(img =>
-                img.json?.fileName?.includes(`asset-${num}`)
-            );
+            const targetImage = allCachedImages.find(img => {
+                const fileName = img.json?.fileName || '';
+                const pattern = new RegExp(`asset[-_]?${num}([_\\.-]|$)`, 'i');
+                return pattern.test(fileName);
+            });
+
             if (targetImage?.binary) {
                 const binaryKey = Object.keys(targetImage.binary)[0];
                 firstBinaryData = targetImage.binary[binaryKey];
+                console.log(`✅ Attached image asset-${num} to LinkedIn post ${index + 1}`);
+            } else {
+                console.warn(`⚠️ Image asset-${num} not found for LinkedIn post ${index + 1}`);
             }
         }
 
-        // ═══════════════════════════════════════════════════════════════════
+        // ═══════════════════════════════════════════════════════════════════════
         // 8. BUILD OUTPUT
-        // ═══════════════════════════════════════════════════════════════════
+        // ═══════════════════════════════════════════════════════════════════════
 
         const outputItem = {
             json: {

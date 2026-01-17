@@ -19,10 +19,11 @@ export interface BodyAsset {
 }
 
 export interface ExtractedAsset {
-  image: SanityImage;
+  image: SanityImage | { url: string };
   alt: string;
   caption?: string;
   index: number;
+  isExternal?: boolean;
 }
 
 /**
@@ -45,7 +46,7 @@ export function extractAssetsFromBody(body: PortableTextBlockType[]): ExtractedA
         continue;
       }
 
-      // Handle direct image blocks
+      // Handle direct image blocks (Sanity assets)
       // @ts-expect-error - Sanity block types can include image blocks not in the base type
       if (block._type === 'image' && isValidImageBlock(block)) {
         const imageBlock = block as unknown as BodyAsset;
@@ -57,8 +58,39 @@ export function extractAssetsFromBody(body: PortableTextBlockType[]): ExtractedA
           },
           alt: imageBlock.alt || `Blog image ${imageIndex + 1}`,
           caption: imageBlock.caption,
-          index: imageIndex++
+          index: imageIndex++,
+          isExternal: false
         });
+        continue;
+      }
+
+      // Handle externalImage blocks (from n8n automation)
+      // @ts-expect-error - externalImage is a custom block type
+      if (block._type === 'externalImage' && isValidExternalImage(block)) {
+        extractedAssets.push({
+          image: { url: block.url },
+          alt: block.alt || `External image ${imageIndex + 1}`,
+          caption: block.caption,
+          index: imageIndex++,
+          isExternal: true
+        });
+        continue;
+      }
+
+      // CATCH-ALL: Check if ANY block has a direct URL property (handles unknown block types)
+      // @ts-expect-error - checking for any URL-like properties
+      const directUrl = block.url || block.src || block.imageUrl;
+      if (directUrl && typeof directUrl === 'string' && (directUrl.startsWith('http://') || directUrl.startsWith('https://'))) {
+        extractedAssets.push({
+          image: { url: directUrl },
+          // @ts-expect-error - accessing dynamic properties
+          alt: block.alt || `Image ${imageIndex + 1}`,
+          // @ts-expect-error - accessing dynamic properties
+          caption: block.caption,
+          index: imageIndex++,
+          isExternal: true
+        });
+        continue;
       }
 
       // Handle nested images in other block types
@@ -93,19 +125,43 @@ export function getFirstAssetFromBody(body: PortableTextBlockType[]): ExtractedA
 
 /**
  * Check if a block is a valid image block
+ * Handles both referenced assets (_ref) and dereferenced assets (_id or url)
  * @param block - The block to check
  * @returns {boolean} True if it's a valid image block
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isValidImageBlock(block: any): boolean {
+  if (!block || typeof block !== 'object' || block._type !== 'image') {
+    return false;
+  }
+
+  // Check for asset object
+  if (!block.asset || typeof block.asset !== 'object') {
+    return false;
+  }
+
+  // Valid if asset has _ref (reference) OR _id (dereferenced) OR url (external)
+  const hasRef = block.asset._ref && typeof block.asset._ref === 'string';
+  const hasId = block.asset._id && typeof block.asset._id === 'string';
+  const hasUrl = block.asset.url && typeof block.asset.url === 'string';
+
+  return hasRef || hasId || hasUrl;
+}
+
+/**
+ * Check if a block is a valid external image block (from n8n)
+ * @param block - The block to check
+ * @returns {boolean} True if it's a valid external image block
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isValidExternalImage(block: any): boolean {
   return (
     block &&
     typeof block === 'object' &&
-    block._type === 'image' &&
-    block.asset &&
-    typeof block.asset === 'object' &&
-    block.asset._ref &&
-    typeof block.asset._ref === 'string'
+    block._type === 'externalImage' &&
+    block.url &&
+    typeof block.url === 'string' &&
+    (block.url.startsWith('http://') || block.url.startsWith('https://'))
   );
 }
 
@@ -117,8 +173,8 @@ function isValidImageBlock(block: any): boolean {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function extractNestedImages(
-  block: any, 
-  extractedAssets: ExtractedAsset[], 
+  block: any,
+  extractedAssets: ExtractedAsset[],
   imageIndex: number
 ): void {
   try {

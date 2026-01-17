@@ -23,6 +23,11 @@ export function getMetadataImageUrl(post: Post): string {
     // Priority 2: Use first image from body content
     const firstAsset = getFirstAssetFromBody(post.body);
     if (firstAsset) {
+      // Handle external images (from n8n) with direct URLs
+      if (firstAsset.isExternal && 'url' in firstAsset.image) {
+        return firstAsset.image.url;
+      }
+      // Handle Sanity images with asset references
       return urlFor(firstAsset.image).url();
     }
 

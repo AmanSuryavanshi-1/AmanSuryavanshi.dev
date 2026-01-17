@@ -154,6 +154,36 @@ export const postType = defineType({
       validation: (Rule) => Rule.max(160),
     }),
     defineField({
+      name: 'seoDescription',
+      type: 'text',
+      title: 'SEO Description (Automation)',
+      description: 'Alias for Meta Description - used by n8n automation. Maps to metaDescription.',
+      rows: 3,
+      validation: (Rule) => Rule.max(160).warning('SEO descriptions should be under 160 characters'),
+      hidden: true, // Hidden in UI since it duplicates metaDescription - automation writes here
+    }),
+    defineField({
+      name: 'articleType',
+      type: 'string',
+      title: 'Article Type',
+      description: 'Categorize the content for schema.org structured data',
+      options: {
+        list: [
+          { title: 'Case Study', value: 'case-study' },
+          { title: 'Tutorial', value: 'tutorial' },
+          { title: 'Guide', value: 'guide' },
+          { title: 'Opinion', value: 'opinion' },
+        ],
+        layout: 'dropdown',
+      },
+    }),
+    defineField({
+      name: 'canonicalUrl',
+      type: 'url',
+      title: 'Canonical URL',
+      description: 'Override canonical URL if this content was originally published elsewhere',
+    }),
+    defineField({
       name: 'views',
       type: 'number',
       title: 'Views',

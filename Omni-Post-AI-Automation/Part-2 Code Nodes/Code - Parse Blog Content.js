@@ -1,17 +1,19 @@
 // ════════════════════════════════════════════════════════════════════════════
-// BLOG CONTENT PARSER (v3.0 - Sanity Portable Text Ready)
+// ROBUST BLOG PARSER V14.0 (DIRECT LOOP ACCESS - PRODUCTION READY)
 // Parses Blog draft from Notion → Prepares for Sanity CMS API
+// CRITICAL FIX: Accesses image binaries directly from $('Loop to Download Images').all()
 // ════════════════════════════════════════════════════════════════════════════
 
 try {
-    // ═══════════════════════════════════════════════════════════════════════
-    // 1. GET DATA
-    // ═══════════════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 1. GET DATA FROM CORRECT SOURCE (Part 2 workflow uses 'Set - All Data Ready')
+    // ═══════════════════════════════════════════════════════════════════════════
 
-    const masterData = $('Code - Master Data Extractor').first().json;
-    let blogDraft = masterData.drafts.sanityBlog;
+    const masterData = $('Set - All Data Ready').first().json;
+    const markdownText = masterData.blogDraft;
 
-    if (!blogDraft || blogDraft.length < 100) {
+    if (!markdownText || markdownText.length < 100) {
+        console.log('⏭️ Blog draft is empty or too short, skipping.');
         return [{
             json: {
                 platform: 'blog',
@@ -22,209 +24,232 @@ try {
         }];
     }
 
-    // Get image map if available
-    const imageMapItems = $('Code - Build Image Reference Map').all() || [];
-    const imageMap = {};
-    imageMapItems.forEach(item => {
-        if (item.json?.marker && item.json?.cdnUrl) {
-            imageMap[item.json.marker] = { cdnUrl: item.json.cdnUrl, alt: item.json.alt || '' };
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 2. GET IMAGE BINARIES DIRECTLY FROM LOOP
+    // CRITICAL: This is the pattern that works - access $('Loop to Download Images').all()
+    // The SplitInBatches node stores ALL processed items, not just the last one
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    let allCachedImages = [];
+    let imageSource = 'none';
+
+    // PRIMARY: Use Loop to Download Images (SplitInBatches stores ALL items)
+    try {
+        allCachedImages = $('Loop to Download Images').all() || [];
+        if (allCachedImages.length > 0) {
+            imageSource = 'Loop to Download Images';
+            console.log(`📸 Found ${allCachedImages.length} images from Loop to Download Images`);
+
+            // Log available images for debugging
+            allCachedImages.forEach((img, i) => {
+                const fileName = img.json?.fileName || img.json?.name || 'unknown';
+                const hasBinary = !!img.binary;
+                console.log(`   [${i}] ${fileName} - Binary: ${hasBinary}`);
+            });
         }
-    });
+    } catch (e) {
+        console.log('⚠️ Loop to Download Images not accessible:', e.message);
+    }
 
-    // ═══════════════════════════════════════════════════════════════════════
-    // 2. ROBUST JSON EXTRACTION (if draft is JSON-wrapped)
-    // ═══════════════════════════════════════════════════════════════════════
+    // FALLBACK: Try Download Image Binary (will only have last item - not ideal)
+    if (allCachedImages.length === 0) {
+        try {
+            allCachedImages = $('Download Image Binary').all() || [];
+            if (allCachedImages.length > 0) {
+                imageSource = 'Download Image Binary (fallback)';
+                console.log(`⚠️ Fallback: ${allCachedImages.length} images from Download Image Binary`);
+            }
+        } catch (e2) {
+            console.log('⚠️ Download Image Binary not accessible');
+        }
+    }
 
-    function robustJSONParse(rawStr) {
-        if (!rawStr) return null;
-        const jsonMatch = rawStr.match(/{[\s\S]*}/);
-        if (jsonMatch) {
-            try {
-                return JSON.parse(jsonMatch[0]);
-            } catch (e) {
-                try {
-                    const cleanBlock = jsonMatch[0].replace(/```json/g, '').replace(/```/g, '');
-                    return JSON.parse(cleanBlock);
-                } catch (e2) { /* Failed */ }
+    // FALLBACK: Try to get metadata from Organize Images (no binaries)
+    let availableImagesMetadata = [];
+    if (allCachedImages.length === 0) {
+        try {
+            const organizeData = $('Organize Images').first().json;
+            availableImagesMetadata = organizeData.availableImages || [];
+            if (availableImagesMetadata.length > 0) {
+                imageSource = 'Organize Images metadata (no binaries)';
+                console.log(`📋 Found ${availableImagesMetadata.length} image metadata entries (no binaries)`);
+            }
+        } catch (e) {
+            console.log('ℹ️ Organize Images not accessible:', e.message);
+        }
+    }
+
+    if (allCachedImages.length === 0 && availableImagesMetadata.length === 0) {
+        imageSource = 'none (text-only post)';
+        console.log('ℹ️ No images available, proceeding with text-only content');
+    }
+
+    console.log(`📂 Image source: ${imageSource}`);
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 3. GET SEO FIELDS FROM NOTION (using correct property_shared_* naming)
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    const notionItem = masterData.notionItem || {};
+
+    // SEO Title - fallback chain
+    const title = notionItem.property_shared_seo_title ||
+        notionItem.name ||
+        'Untitled Post';
+
+    // Slug - REQUIRED for Sanity
+    const slug = notionItem.property_shared_slug || '';
+    if (!slug) {
+        throw new Error('Shared_Slug property is missing. Please ensure the Notion item has a property_shared_slug value.');
+    }
+
+    // Description
+    const description = notionItem.property_shared_seo_description || '';
+
+    // Tags/Keywords - property_shared_tags is an ARRAY, not a string
+    const tagsArray = notionItem.property_shared_tags || [];
+    const keywords = Array.isArray(tagsArray) ? tagsArray : [];
+
+    console.log(`📋 SEO: title="${title.slice(0, 50)}...", slug="${slug}"`);
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 4. SPLIT MARKDOWN INTO BLOCKS (text + image tags)
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    const blockPattern = /<<IMAGE_(\d+)>>/g;
+    let lastIdx = 0;
+    let match;
+    let blocks = [];
+
+    while ((match = blockPattern.exec(markdownText)) !== null) {
+        // Text before this image tag
+        if (match.index > lastIdx) {
+            blocks.push({ type: 'text', content: markdownText.slice(lastIdx, match.index) });
+        }
+        // Image block for this marker
+        blocks.push({ type: 'image', imageNumber: parseInt(match[1]), marker: match[0] });
+        lastIdx = blockPattern.lastIndex;
+    }
+
+    // Any trailing text after last marker
+    if (lastIdx < markdownText.length) {
+        blocks.push({ type: 'text', content: markdownText.slice(lastIdx) });
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 5. PROCESS BLOCKS - Attach binaries directly from cached images
+    // This is the KEY fix - we attach binaries here, not in a separate node
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    let outputBlocks = [];
+    let imageMarkers = [];
+    let textBlockCount = 0;
+
+    blocks.forEach(block => {
+        if (block.type === 'text') {
+            // Only push non-empty blocks
+            if (block.content && block.content.trim().length > 0) {
+                outputBlocks.push({ type: 'text', content: block.content.trim() });
+                textBlockCount++;
+            }
+        } else if (block.type === 'image') {
+            // CRITICAL: Find the matching image with binary data from allCachedImages
+            const targetImage = allCachedImages.find(img => {
+                const fileName = img.json?.fileName || img.json?.name || '';
+                const pattern = new RegExp(`asset[-_]?${block.imageNumber}([_\\.-]|$)`, 'i');
+                return pattern.test(fileName);
+            });
+
+            if (targetImage && targetImage.binary) {
+                // Image found with binary - attach it directly
+                outputBlocks.push({
+                    type: 'image',
+                    marker: block.marker,
+                    imageNumber: block.imageNumber,
+                    fileName: targetImage.json?.fileName || `asset-${block.imageNumber}`,
+                    binary: targetImage.binary // CRITICAL: Attach binary directly
+                });
+                imageMarkers.push(block.imageNumber);
+                console.log(`✅ Image ${block.imageNumber}: Binary attached from ${targetImage.json?.fileName || 'cache'}`);
+            } else if (availableImagesMetadata.length > 0) {
+                // Fallback: Try metadata-only match (for Prepare Image node to attach binaries later)
+                const metaImage = availableImagesMetadata.find(img => {
+                    if (img.assetNumber === block.imageNumber) return true;
+                    const fileName = img.fileName || '';
+                    const pattern = new RegExp(`asset[-_]?${block.imageNumber}([_\\.-]|$)`, 'i');
+                    return pattern.test(fileName);
+                });
+
+                if (metaImage) {
+                    outputBlocks.push({
+                        type: 'image',
+                        marker: block.marker,
+                        imageNumber: block.imageNumber,
+                        fileId: metaImage.fileId,
+                        fileName: metaImage.fileName,
+                        needsBinary: true // Flag for Prepare Image node
+                    });
+                    imageMarkers.push(block.imageNumber);
+                    console.log(`⚠️ Image ${block.imageNumber}: Metadata only, binary needed later`);
+                } else {
+                    console.warn(`⚠️ No data for image ${block.imageNumber}, using placeholder`);
+                    outputBlocks.push({
+                        type: 'text',
+                        content: `[Image ${block.imageNumber} pending]`
+                    });
+                }
+            } else {
+                // No image data at all - use placeholder
+                console.warn(`⚠️ Image ${block.imageNumber} not found, using placeholder`);
+                outputBlocks.push({
+                    type: 'text',
+                    content: `[Image ${block.imageNumber} pending]`
+                });
             }
         }
-        return null;
-    }
-
-    let markdown = blogDraft;
-    let seoData = {};
-
-    // Try to extract from JSON if wrapped
-    const parsed = robustJSONParse(blogDraft);
-    if (parsed) {
-        markdown = parsed.formatted_markdown ||
-            parsed.markdown ||
-            parsed.content ||
-            blogDraft;
-
-        // Extract SEO data if present
-        if (parsed.structured_data?.seo) {
-            seoData = parsed.structured_data.seo;
-        }
-    }
-
-    // ═══════════════════════════════════════════════════════════════════════
-    // 3. CLEAN MARKDOWN
-    // ═══════════════════════════════════════════════════════════════════════
-
-    // Remove markdown fences
-    markdown = markdown
-        .replace(/^```(markdown|md)?\s*/i, '')
-        .replace(/```$/g, '')
-        .trim();
-
-    // Handle escaped characters
-    markdown = markdown
-        .replace(/\\n/g, '\n')
-        .replace(/\\"/g, '"');
-
-    // ═══════════════════════════════════════════════════════════════════════
-    // 4. REPLACE IMAGE MARKERS
-    // ═══════════════════════════════════════════════════════════════════════
-
-    markdown = markdown.replace(/<<IMAGE_(\d+)>>/g, (match, num) => {
-        const image = imageMap[`<<IMAGE_${num}>>`];
-        if (image?.cdnUrl) {
-            return `![${image.alt || `Image ${num}`}](${image.cdnUrl})`;
-        }
-        // Remove marker if no image available
-        return '';
     });
 
-    // ═══════════════════════════════════════════════════════════════════════
-    // 5. BUILD SEO METADATA
-    // ═══════════════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════════════════
+    // 6. OUTPUT WITH VALIDATION INFO
+    // ═══════════════════════════════════════════════════════════════════════════
 
-    const finalSeo = {
-        title: (seoData.title || masterData.sharedMeta.title || 'Untitled Post').slice(0, 60),
-        slug: seoData.slug || masterData.sharedMeta.slug ||
-            (masterData.sharedMeta.title || 'untitled').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 80),
-        description: (seoData.meta_description || masterData.sharedMeta.description || '').slice(0, 160),
-        keywords: [...new Set([
-            ...(seoData.keywords || []),
-            ...(masterData.sharedMeta.tags || [])
-        ])].slice(0, 10)
+    const result = {
+        json: {
+            title,
+            slug,
+            description,
+            keywords,
+            blocks: outputBlocks,
+            success: true,
+            platform: 'blog',
+            imageStats: {
+                source: imageSource,
+                cachedImages: allCachedImages.length,
+                metadataImages: availableImagesMetadata.length,
+                imagesInContent: imageMarkers.length,
+                textBlocks: textBlockCount
+            },
+            // Pass image list for downstream nodes
+            imagesToProcess: imageMarkers.map(num => {
+                const cached = allCachedImages.find(a => {
+                    const fileName = a.json?.fileName || '';
+                    return fileName.includes(`asset-${num}`) || fileName.includes(`asset_${num}`);
+                });
+                if (cached) {
+                    return {
+                        assetNumber: num,
+                        fileName: cached.json?.fileName,
+                        hasBinary: !!cached.binary
+                    };
+                }
+                return { assetNumber: num, fileId: null, fileName: `asset-${num}.png`, hasBinary: false };
+            })
+        }
     };
 
-    // ═══════════════════════════════════════════════════════════════════════
-    // 6. PARSE MARKDOWN INTO BLOCKS (for Sanity Portable Text)
-    // ═══════════════════════════════════════════════════════════════════════
+    console.log(`✅ Blog Parser V14.0: ${outputBlocks.length} blocks (${textBlockCount} text, ${imageMarkers.length} images)`);
 
-    function generateKey() {
-        return Math.random().toString(36).slice(2, 11);
-    }
-
-    function detectHeadingLevel(text) {
-        const trimmed = text.trim();
-        if (trimmed.startsWith('####')) return { level: 'h4', text: trimmed.replace(/^####\s*/, '').trim() };
-        if (trimmed.startsWith('###')) return { level: 'h3', text: trimmed.replace(/^###\s*/, '').trim() };
-        if (trimmed.startsWith('##')) return { level: 'h2', text: trimmed.replace(/^##\s*/, '').trim() };
-        if (trimmed.startsWith('#')) return { level: 'h1', text: trimmed.replace(/^#\s*/, '').trim() };
-        return null;
-    }
-
-    function isListItem(text) {
-        const trimmed = text.trim();
-        return /^\s*[-*+]\s+/.test(trimmed) || /^\s*\d+[.)]\\s+/.test(trimmed);
-    }
-
-    const lines = markdown.split('\n');
-    const blocks = [];
-    let currentCodeBlock = null;
-    let codeLanguage = '';
-
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-
-        // Code block handling
-        if (line.startsWith('```')) {
-            if (currentCodeBlock === null) {
-                codeLanguage = line.slice(3).trim() || 'plaintext';
-                currentCodeBlock = [];
-            } else {
-                blocks.push({
-                    _type: 'code',
-                    _key: generateKey(),
-                    language: codeLanguage,
-                    code: currentCodeBlock.join('\n')
-                });
-                currentCodeBlock = null;
-                codeLanguage = '';
-            }
-            continue;
-        }
-
-        if (currentCodeBlock !== null) {
-            currentCodeBlock.push(line);
-            continue;
-        }
-
-        // Heading detection
-        const heading = detectHeadingLevel(line);
-        if (heading) {
-            blocks.push({
-                _type: 'block',
-                _key: generateKey(),
-                style: heading.level,
-                children: [{ _type: 'span', _key: generateKey(), text: heading.text }]
-            });
-            continue;
-        }
-
-        // Image markdown detection
-        const imageMatch = line.match(/!\[([^\]]*)\]\(([^)]+)\)/);
-        if (imageMatch) {
-            blocks.push({
-                _type: 'image',
-                _key: generateKey(),
-                alt: imageMatch[1] || 'Article image',
-                url: imageMatch[2]
-            });
-            continue;
-        }
-
-        // Empty lines (skip)
-        if (line.trim() === '') continue;
-
-        // Regular paragraph
-        blocks.push({
-            _type: 'block',
-            _key: generateKey(),
-            style: 'normal',
-            children: [{ _type: 'span', _key: generateKey(), text: line }]
-        });
-    }
-
-    // Close any unclosed code block
-    if (currentCodeBlock !== null) {
-        blocks.push({
-            _type: 'code',
-            _key: generateKey(),
-            language: codeLanguage || 'plaintext',
-            code: currentCodeBlock.join('\n')
-        });
-    }
-
-    // ═══════════════════════════════════════════════════════════════════════
-    // 7. OUTPUT
-    // ═══════════════════════════════════════════════════════════════════════
-
-    console.log(`✅ Blog Parser: Generated ${blocks.length} blocks for Sanity`);
-
-    return [{
-        json: {
-            platform: 'blog',
-            seo: finalSeo,
-            markdown: markdown,
-            blocks: blocks,
-            success: true
-        }
-    }];
+    return [result];
 
 } catch (error) {
     console.error('❌ Blog Parse Error:', error.message);
@@ -233,7 +258,8 @@ try {
             platform: 'blog',
             error: true,
             skipped: false,
-            message: `[Blog Parse]: ${error.message}`
+            message: `[Blog Parse V14.0]: ${error.message}`
         }
     }];
 }
+
