@@ -50,12 +50,27 @@ export interface Tag {
   };
 }
 
+// Inline tag for n8n automation (embedded in post, not a reference)
+export interface InlineTag {
+  _key: string;
+  label: string;
+  slug: string;
+  color?: string; // Optional color support (legacy tags have color)
+}
+
 export interface Category {
   _id: string;
   _type: 'category';
   title: string;
   description?: string;
   tags?: Tag[];
+}
+
+// FAQ item for AI SEO
+export interface FaqItem {
+  _key?: string;
+  question: string;
+  answer: string;
 }
 
 export interface Post {
@@ -69,7 +84,7 @@ export interface Post {
   body: PortableTextBlockType[];
   author?: Author;
   // categories?: Category[]; // Deprecated
-  tags?: Tag[]; // Updated from string[] to Tag[]
+  tags?: InlineTag[]; // Updated for n8n automation format
   status?: 'draft' | 'published' | 'archived';
   featured?: boolean;
   publishedAt?: string;
@@ -79,6 +94,16 @@ export interface Post {
   metaDescription?: string;
   seoDescription?: string; // Alias for metaDescription (automation compatibility)
   articleType?: 'case-study' | 'tutorial' | 'guide' | 'opinion';
+  estimatedReadTime?: number;
+  faqItems?: FaqItem[];
+  keyTakeaways?: string[];
+  // AI SEO Enhancement Fields
+  primaryKeyword?: string;
+  secondaryKeywords?: string[];
+  aiSeoScore?: number;
+  lastSeoEnhanced?: string;
+  quotableSnippet?: string;
+  contentSummary?: string;
   canonicalUrl?: string;
   _createdAt: string;
   _updatedAt: string;

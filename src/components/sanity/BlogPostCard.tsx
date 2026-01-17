@@ -40,14 +40,14 @@ const TAG_PRIORITY = ['Projects', 'Featured', 'AI Agents', 'n8n automation'];
 const getPrioritizedTags = (tags: Post['tags']) => {
     if (!tags) return [];
 
-    // Filter out null tags first, then deduplicate based on name
-    const validTags = tags.filter(tag => tag && tag.name);
-    const uniqueTags = Array.from(new Map(validTags.map(tag => [tag.name, tag])).values());
+    // Filter out null tags first, then deduplicate based on label
+    const validTags = tags.filter(tag => tag && tag.label);
+    const uniqueTags = Array.from(new Map(validTags.map(tag => [tag.label, tag])).values());
 
     // Sort tags: priority tags first, then others
     return uniqueTags.sort((a, b) => {
-        const aPriority = TAG_PRIORITY.indexOf(a.name);
-        const bPriority = TAG_PRIORITY.indexOf(b.name);
+        const aPriority = TAG_PRIORITY.indexOf(a.label);
+        const bPriority = TAG_PRIORITY.indexOf(b.label);
 
         if (aPriority !== -1 && bPriority !== -1) return aPriority - bPriority;
         if (aPriority !== -1) return -1;
@@ -108,21 +108,20 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                             sizes="(max-width: 768px) 100vw, 33vw"
                             className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                        {/* Tags */}
+                        {/* Tags - horizontal scroll with theme colors */}
                         {prioritizedTags && prioritizedTags.length > 0 && (
-                            <div className="absolute top-3 left-3 z-10 flex flex-wrap gap-2">
-                                {prioritizedTags.slice(0, 3).map(tag => (
+                            <div className="absolute top-2 left-2 z-10 flex gap-1.5 overflow-x-auto max-w-[85%] scrollbar-hide">
+                                {prioritizedTags.slice(0, 4).map(tag => (
                                     <span
                                         key={tag._id}
-                                        className="px-2 py-1 text-[10px] font-medium rounded-full text-white backdrop-blur-md border border-white/20"
-                                        style={{ backgroundColor: tag.color ? `${tag.color}dd` : '#6366f1dd' }}
+                                        className="px-2 py-0.5 text-[9px] font-semibold rounded-full bg-forest-900/90 text-lime-400 backdrop-blur-sm border border-lime-500/30 whitespace-nowrap shrink-0"
                                     >
-                                        {tag.name}
+                                        {tag.label}
                                     </span>
                                 ))}
-                                {prioritizedTags.length > 3 && (
-                                    <span className="px-2 py-1 text-[10px] font-medium rounded-full bg-white/90 dark:bg-forest-800/90 text-forest-600 dark:text-sage-300 border border-forest-200 dark:border-forest-600 backdrop-blur-md">
-                                        +{prioritizedTags.length - 3}
+                                {prioritizedTags.length > 4 && (
+                                    <span className="px-1.5 py-0.5 text-[9px] font-semibold rounded-full bg-lime-500/90 text-forest-900 shrink-0">
+                                        +{prioritizedTags.length - 4}
                                     </span>
                                 )}
                             </div>
@@ -183,21 +182,20 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    {/* Tags */}
+                    {/* Tags - horizontal scroll with theme colors */}
                     {prioritizedTags && prioritizedTags.length > 0 && (
-                        <div className="absolute z-10 top-3 right-3 flex flex-wrap gap-2 justify-end max-w-[80%]">
-                            {prioritizedTags.slice(0, 3).map(tag => (
+                        <div className="absolute z-10 top-2 right-2 flex gap-1.5 overflow-x-auto max-w-[80%] scrollbar-hide">
+                            {prioritizedTags.slice(0, 4).map(tag => (
                                 <span
                                     key={tag._id}
-                                    className="px-2 sm:px-3 py-1 text-[10px] sm:text-xs font-medium rounded-full text-white backdrop-blur-md border border-white/20"
-                                    style={{ backgroundColor: tag.color ? `${tag.color}dd` : '#6366f1dd' }}
+                                    className="px-2 py-0.5 text-[9px] font-semibold rounded-full bg-forest-900/90 text-lime-400 backdrop-blur-sm border border-lime-500/30 whitespace-nowrap shrink-0"
                                 >
-                                    {tag.name}
+                                    {tag.label}
                                 </span>
                             ))}
-                            {prioritizedTags.length > 3 && (
-                                <span className="px-2 py-1 text-[10px] font-medium rounded-full bg-white/90 dark:bg-forest-800/90 text-forest-600 dark:text-sage-300 border border-forest-200 dark:border-forest-600 backdrop-blur-md">
-                                    +{prioritizedTags.length - 3}
+                            {prioritizedTags.length > 4 && (
+                                <span className="px-1.5 py-0.5 text-[9px] font-semibold rounded-full bg-lime-500/90 text-forest-900 shrink-0">
+                                    +{prioritizedTags.length - 4}
                                 </span>
                             )}
                         </div>

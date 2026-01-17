@@ -137,6 +137,8 @@ try {
         }
 
         // Build output
+        // CRITICAL: n8n IF node cannot check $binary directly!
+        // It can only check $json properties, so we add explicit flags
         const outputItem = {
             json: {
                 order: tweet.position,
@@ -144,6 +146,9 @@ try {
                 charCount: text.length,
                 inReplyTo: index > 0,
                 hasImage: !!imageBinary,
+                // CRITICAL: This flag is what the IF node should check!
+                // IF node condition: {{ $json.imageBinaryExists }} is not empty
+                imageBinaryExists: imageBinary ? 'yes' : '',
                 platform: 'twitter'
             }
         };
@@ -152,6 +157,9 @@ try {
             outputItem.binary = {
                 imageBinary: imageBinary
             };
+            console.log(`📎 Binary attached to tweet ${tweet.position} - imageBinaryExists: yes`);
+        } else {
+            console.log(`📝 No image for tweet ${tweet.position} - imageBinaryExists: empty`);
         }
 
         return outputItem;

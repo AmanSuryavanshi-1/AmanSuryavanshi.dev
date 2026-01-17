@@ -169,7 +169,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ posts }) => {
                                 <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                                     {currentPost.tags && currentPost.tags.length > 0 && (
                                         <span className="px-3 py-1 bg-forest-50 text-forest-700 dark:bg-forest-800 dark:text-lime-400 rounded-full text-xs font-bold uppercase tracking-wide">
-                                            {currentPost.tags[0].name}
+                                            {currentPost.tags[0].label}
                                         </span>
                                     )}
                                     <div className="flex items-center gap-1.5">

@@ -6,6 +6,11 @@ export const postType = defineType({
   title: 'Post',
   type: 'document',
   icon: DocumentTextIcon,
+  groups: [
+    { name: 'content', title: 'Content', default: true },
+    { name: 'seo', title: 'SEO & AI' },
+    { name: 'meta', title: 'Metadata' },
+  ],
   fields: [
     defineField({
       name: 'title',
@@ -75,13 +80,20 @@ export const postType = defineType({
     }),
     defineField({
       name: 'tags',
-      type: 'array',
       title: 'Tags',
+      type: 'array',
       description: 'Add tags for better content organization',
-      of: [defineArrayMember({ type: 'reference', to: { type: 'tag' } })],
-      options: {
-        layout: 'tags',
-      },
+      of: [{
+        type: 'object',
+        name: 'tag',
+        fields: [
+          { name: 'label', title: 'Label', type: 'string' },
+          { name: 'slug', title: 'Slug', type: 'string' }
+        ],
+        preview: {
+          select: { title: 'label' }
+        }
+      }],
     }),
     defineField({
       name: 'status',
@@ -176,6 +188,83 @@ export const postType = defineType({
         ],
         layout: 'dropdown',
       },
+    }),
+    defineField({
+      name: 'estimatedReadTime',
+      title: 'Estimated Read Time (min)',
+      type: 'number',
+      description: 'Estimated reading time in minutes - set by automation',
+    }),
+    defineField({
+      name: 'faqItems',
+      title: 'FAQ Items',
+      type: 'array',
+      description: 'FAQ items for AI SEO (GEO/AIO)',
+      of: [{
+        type: 'object',
+        fields: [
+          { name: 'question', type: 'string', title: 'Question' },
+          { name: 'answer', type: 'text', title: 'Answer' }
+        ],
+        preview: {
+          select: { title: 'question' }
+        }
+      }]
+    }),
+    defineField({
+      name: 'keyTakeaways',
+      title: 'Key Takeaways',
+      type: 'array',
+      description: 'Key takeaways for AI SEO',
+      of: [{ type: 'string' }]
+    }),
+    // AI SEO Enhancement Fields
+    defineField({
+      name: 'primaryKeyword',
+      title: 'Primary Keyword',
+      type: 'string',
+      description: 'Main focus keyword for SEO (AI-suggested)',
+      group: 'seo',
+    }),
+    defineField({
+      name: 'secondaryKeywords',
+      title: 'Secondary Keywords (LSI)',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Related semantic keywords for better AI engine discovery',
+      group: 'seo',
+    }),
+    defineField({
+      name: 'aiSeoScore',
+      title: 'AI SEO Score',
+      type: 'number',
+      description: 'AI-calculated SEO optimization score (0-100)',
+      readOnly: true,
+      group: 'seo',
+    }),
+    defineField({
+      name: 'lastSeoEnhanced',
+      title: 'Last SEO Enhancement',
+      type: 'datetime',
+      description: 'When this post was last SEO-enhanced by AI',
+      readOnly: true,
+      group: 'seo',
+    }),
+    defineField({
+      name: 'quotableSnippet',
+      title: 'Quotable Snippet',
+      type: 'text',
+      rows: 2,
+      description: 'Short, quotable answer for AI search engines (Perplexity, ChatGPT)',
+      group: 'seo',
+    }),
+    defineField({
+      name: 'contentSummary',
+      title: 'Content Summary',
+      type: 'text',
+      rows: 3,
+      description: '2-3 sentence summary optimized for AI citation',
+      group: 'seo',
     }),
     defineField({
       name: 'canonicalUrl',
