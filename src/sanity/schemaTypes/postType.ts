@@ -280,6 +280,13 @@ export const postType = defineType({
       initialValue: 0,
     }),
     defineField({
+      name: 'likes',
+      type: 'number',
+      title: 'Likes',
+      description: 'Total likes from readers.',
+      initialValue: 0,
+    }),
+    defineField({
       name: 'viewCount',
       type: 'number',
       title: 'View Count (Deprecated)',

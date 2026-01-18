@@ -1,54 +1,93 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { BiLogoLinkedin, BiCopy, BiLike, BiSolidLike } from 'react-icons/bi';
+import { useState, useEffect, useCallback } from 'react';
+import { BiLogoLinkedin, BiCopy } from 'react-icons/bi';
 import { FaXTwitter } from 'react-icons/fa6';
+import { Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface ShareBarProps {
     title: string;
     slug: string;
+    postId: string;
+    initialLikes?: number;
 }
 
-export default function ShareBar({ title, slug }: ShareBarProps) {
+export default function ShareBar({ title, slug, postId, initialLikes = 0 }: ShareBarProps) {
     const [isLiked, setIsLiked] = useState(false);
+    const [likes, setLikes] = useState(initialLikes);
+    const [isLikeLoading, setIsLikeLoading] = useState(false);
     const [copied, setCopied] = useState(false);
     const url = typeof window !== 'undefined' ? `${window.location.origin}/blogs/${slug}` : '';
 
     useEffect(() => {
-        const likedPosts = JSON.parse(localStorage.getItem('liked_posts') || '[]');
-        setIsLiked(likedPosts.includes(slug));
+        // Use object format, matching FloatingActions and MobileActionBar
+        const likedPosts = JSON.parse(localStorage.getItem('liked_posts') || '{}');
+        setIsLiked(!!likedPosts[postId]);
 
-        // Listen for storage changes to sync like state
-        const handleStorageChange = (e: StorageEvent) => {
-            if (e.key === 'liked_posts') {
-                const likedPosts = JSON.parse(e.newValue || '[]');
-                setIsLiked(likedPosts.includes(slug));
-            }
+        // Listen for sync events from other components (FloatingActions)
+        const handleStorageChange = () => {
+            const updatedLikedPosts = JSON.parse(localStorage.getItem('liked_posts') || '{}');
+            setIsLiked(!!updatedLikedPosts[postId]);
         };
 
         window.addEventListener('storage', handleStorageChange);
-        return () => window.removeEventListener('storage', handleStorageChange);
-    }, [slug]);
+        window.addEventListener('likesUpdated', handleStorageChange);
 
-    const toggleLike = () => {
-        const newState = !isLiked;
-        setIsLiked(newState);
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('likesUpdated', handleStorageChange);
+        };
+    }, [postId]);
 
-        const likedPosts = JSON.parse(localStorage.getItem('liked_posts') || '[]');
-        if (newState) {
-            localStorage.setItem('liked_posts', JSON.stringify([...likedPosts, slug]));
+    const toggleLike = useCallback(async () => {
+        if (isLikeLoading) return;
+
+        const newIsLiked = !isLiked;
+        const action = newIsLiked ? 'like' : 'unlike';
+
+        // Optimistic update
+        setIsLiked(newIsLiked);
+        setLikes(prev => newIsLiked ? prev + 1 : Math.max(0, prev - 1));
+        setIsLikeLoading(true);
+
+        // Update localStorage (object format)
+        const likedPosts = JSON.parse(localStorage.getItem('liked_posts') || '{}');
+        if (newIsLiked) {
+            likedPosts[postId] = true;
         } else {
-            localStorage.setItem('liked_posts', JSON.stringify(likedPosts.filter((s: string) => s !== slug)));
+            delete likedPosts[postId];
         }
+        localStorage.setItem('liked_posts', JSON.stringify(likedPosts));
 
-        // Dispatch storage event to sync across components
-        window.dispatchEvent(new StorageEvent('storage', {
-            key: 'liked_posts',
-            newValue: localStorage.getItem('liked_posts'),
-            storageArea: localStorage
-        }));
-    };
+        try {
+            const response = await fetch('/api/toggle-like', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ postId, action }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                // Revert on error
+                setIsLiked(!newIsLiked);
+                setLikes(prev => !newIsLiked ? prev + 1 : Math.max(0, prev - 1));
+                console.error('Failed to toggle like:', data);
+            } else {
+                setLikes(data.likes);
+            }
+        } catch (error) {
+            // Revert on error
+            setIsLiked(!newIsLiked);
+            setLikes(prev => !newIsLiked ? prev + 1 : Math.max(0, prev - 1));
+            console.error('Error toggling like:', error);
+        } finally {
+            setIsLikeLoading(false);
+            // Dispatch custom event to sync with other components
+            window.dispatchEvent(new CustomEvent('likesUpdated'));
+        }
+    }, [postId, isLiked, isLikeLoading]);
 
     const copyToClipboard = async () => {
         try {
@@ -108,13 +147,14 @@ export default function ShareBar({ title, slug }: ShareBarProps) {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={toggleLike}
+                    disabled={isLikeLoading}
                     className={`flex items-center gap-2 px-5 py-2.5 rounded-full border transition-all duration-200 shadow-sm ${isLiked
-                        ? 'border-lime-200 dark:border-lime-500/30 bg-lime-50 dark:bg-lime-500/10 text-lime-600 dark:text-lime-400 font-bold'
-                        : 'border-sage-200 dark:border-forest-600 bg-white dark:bg-forest-800/50 text-forest-700 dark:text-sage-300 hover:border-lime-300 dark:hover:border-lime-500/50 hover:text-lime-600 dark:hover:text-lime-400'
-                        }`}
+                        ? 'border-red-200 dark:border-red-500/30 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 font-bold'
+                        : 'border-sage-200 dark:border-forest-600 bg-white dark:bg-forest-800/50 text-forest-700 dark:text-sage-300 hover:border-red-300 dark:hover:border-red-500/50 hover:text-red-600 dark:hover:text-red-400'
+                        } ${isLikeLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                    {isLiked ? <BiSolidLike size={20} /> : <BiLike size={20} />}
-                    <span className="font-medium">{isLiked ? 'Liked' : 'Like'}</span>
+                    <Heart size={20} className={isLiked ? 'fill-current' : ''} />
+                    <span className="font-medium">{likes}</span>
                 </motion.button>
             </div>
         </div>

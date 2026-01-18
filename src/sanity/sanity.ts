@@ -109,4 +109,5 @@ export interface Post {
   _updatedAt: string;
   viewCount?: number;
   views?: number;
+  likes?: number;
 }

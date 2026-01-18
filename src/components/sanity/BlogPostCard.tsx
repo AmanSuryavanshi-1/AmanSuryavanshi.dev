@@ -108,20 +108,20 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                             sizes="(max-width: 768px) 100vw, 33vw"
                             className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                        {/* Tags - horizontal scroll with theme colors */}
+                        {/* Tags - premium pill design with hover effects */}
                         {prioritizedTags && prioritizedTags.length > 0 && (
-                            <div className="absolute top-2 left-2 z-10 flex gap-1.5 overflow-x-auto max-w-[85%] scrollbar-hide">
-                                {prioritizedTags.slice(0, 4).map(tag => (
+                            <div className="absolute top-2 left-2 z-10 flex gap-1.5 flex-wrap max-w-[90%]">
+                                {prioritizedTags.slice(0, 3).map(tag => (
                                     <span
                                         key={tag._id}
-                                        className="px-2 py-0.5 text-[9px] font-semibold rounded-full bg-forest-900/90 text-lime-400 backdrop-blur-sm border border-lime-500/30 whitespace-nowrap shrink-0"
+                                        className="px-3 py-1 text-[10px] font-semibold rounded-full bg-sage-100/95 dark:bg-forest-800/95 text-forest-800 dark:text-lime-400 backdrop-blur-sm border-2 border-forest-600/40 dark:border-lime-500/40 whitespace-nowrap shadow-sm transition-all duration-300 hover:bg-lime-400 hover:text-forest-900 hover:border-lime-500 hover:scale-105 cursor-default"
                                     >
                                         {tag.label}
                                     </span>
                                 ))}
-                                {prioritizedTags.length > 4 && (
-                                    <span className="px-1.5 py-0.5 text-[9px] font-semibold rounded-full bg-lime-500/90 text-forest-900 shrink-0">
-                                        +{prioritizedTags.length - 4}
+                                {prioritizedTags.length > 3 && (
+                                    <span className="px-2.5 py-1 text-[10px] font-bold rounded-full bg-lime-500/95 text-forest-900 shadow-sm border-2 border-lime-600/50 transition-all duration-300 hover:bg-lime-400 hover:scale-105 cursor-default">
+                                        +{prioritizedTags.length - 3}
                                     </span>
                                 )}
                             </div>
@@ -182,20 +182,20 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    {/* Tags - horizontal scroll with theme colors */}
+                    {/* Tags - premium pill design with hover effects */}
                     {prioritizedTags && prioritizedTags.length > 0 && (
-                        <div className="absolute z-10 top-2 right-2 flex gap-1.5 overflow-x-auto max-w-[80%] scrollbar-hide">
-                            {prioritizedTags.slice(0, 4).map(tag => (
+                        <div className="absolute z-10 top-2 right-2 flex gap-1.5 flex-wrap justify-end max-w-[85%]">
+                            {prioritizedTags.slice(0, 3).map(tag => (
                                 <span
                                     key={tag._id}
-                                    className="px-2 py-0.5 text-[9px] font-semibold rounded-full bg-forest-900/90 text-lime-400 backdrop-blur-sm border border-lime-500/30 whitespace-nowrap shrink-0"
+                                    className="px-3 py-1 text-[10px] font-semibold rounded-full bg-sage-100/95 dark:bg-forest-800/95 text-forest-800 dark:text-lime-400 backdrop-blur-sm border-2 border-forest-600/40 dark:border-lime-500/40 whitespace-nowrap shadow-sm transition-all duration-300 hover:bg-lime-400 hover:text-forest-900 hover:border-lime-500 hover:scale-105 cursor-default"
                                 >
                                     {tag.label}
                                 </span>
                             ))}
-                            {prioritizedTags.length > 4 && (
-                                <span className="px-1.5 py-0.5 text-[9px] font-semibold rounded-full bg-lime-500/90 text-forest-900 shrink-0">
-                                    +{prioritizedTags.length - 4}
+                            {prioritizedTags.length > 3 && (
+                                <span className="px-2.5 py-1 text-[10px] font-bold rounded-full bg-lime-500/95 text-forest-900 shadow-sm border-2 border-lime-600/50 transition-all duration-300 hover:bg-lime-400 hover:scale-105 cursor-default">
+                                    +{prioritizedTags.length - 3}
                                 </span>
                             )}
                         </div>

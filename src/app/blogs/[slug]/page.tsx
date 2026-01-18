@@ -27,6 +27,7 @@ import ShareBar from '@/components/blog/ShareBar';
 import AllTags from '@/components/blog/AllTags';
 import BlogImageGalleryWrapper from '@/components/blog/BlogImageGalleryWrapper';
 import ScrollIndicator from '@/components/blog/ScrollIndicator';
+import ViewTracker from '@/components/blog/ViewTracker';
 
 type NextPageProps = {
   params: Promise<{ slug: string }>;
@@ -65,6 +66,7 @@ async function getPost(slug: string): Promise<Post | null> {
     excerpt,
     mainImage,
     views,
+    likes,
     author->{
       _id,
       name,
@@ -210,6 +212,8 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <ReadingProgress />
+        {/* ViewTracker - increments view count on page load */}
+        <ViewTracker postId={post._id} />
 
         <article className="min-h-screen pb-20 lg:pb-0">
           {/* Hero Section - Optimized for Immersive Reading */}
@@ -297,7 +301,12 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
               {/* Left Sidebar: Floating Actions (Desktop > 1024px) */}
               <div className="hidden lg:block lg:col-span-2">
                 <div className="sticky top-32">
-                  <FloatingActions title={post.title} slug={post.slug.current} />
+                  <FloatingActions
+                    title={post.title}
+                    slug={post.slug.current}
+                    postId={post._id}
+                    initialLikes={post.likes || 0}
+                  />
                 </div>
               </div>
 
@@ -361,7 +370,12 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                 )}
 
                 {/* Share Bar */}
-                <ShareBar title={post.title} slug={post.slug.current} />
+                <ShareBar
+                  title={post.title}
+                  slug={post.slug.current}
+                  postId={post._id}
+                  initialLikes={post.likes || 0}
+                />
 
                 {/* Related Posts */}
 
@@ -375,7 +389,12 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
           </div>
 
           {/* Mobile Action Bar */}
-          <MobileActionBar title={post.title} slug={post.slug.current} />
+          <MobileActionBar
+            title={post.title}
+            slug={post.slug.current}
+            postId={post._id}
+            initialLikes={post.likes || 0}
+          />
 
           {/* Related Posts Section - Full Width */}
           <RelatedPosts posts={relatedPosts} />
