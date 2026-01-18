@@ -39,11 +39,24 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // Redirect dev domain to main domain
+      // Redirect www to non-www (canonical domain)
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.amansuryavanshi.me' }],
+        destination: 'https://amansuryavanshi.me/:path*',
+        permanent: true,
+      },
+      // Redirect dev domain to main domain (non-www)
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'amansuryavanshi-dev.vercel.app' }],
-        destination: 'https://www.amansuryavanshi.me/:path*',
+        destination: 'https://amansuryavanshi.me/:path*',
+        permanent: true,
+      },
+      // Redirect old /contact URL to homepage contact section
+      {
+        source: '/contact',
+        destination: '/#contact',
         permanent: true,
       },
     ];

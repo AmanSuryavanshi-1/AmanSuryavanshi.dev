@@ -3,5 +3,6 @@ Allow: /
 Disallow: /private/
 Disallow: /admin/
 Disallow: /api/
+Disallow: /blogs?*
 
 Sitemap: https://amansuryavanshi.me/sitemap.xml
