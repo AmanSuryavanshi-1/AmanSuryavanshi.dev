@@ -1,23 +1,26 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     BiShareAlt,
-    BiLike,
-    BiSolidLike,
     BiListUl,
     BiX
 } from 'react-icons/bi';
+import { Heart } from 'lucide-react';
 import TableOfContents from './TableOfContents';
 
 interface MobileActionBarProps {
     title: string;
     slug: string;
+    postId: string;
+    initialLikes?: number;
 }
 
-export default function MobileActionBar({ title, slug }: MobileActionBarProps) {
+export default function MobileActionBar({ title, slug, postId, initialLikes = 0 }: MobileActionBarProps) {
     const [isLiked, setIsLiked] = useState(false);
+    const [likes, setLikes] = useState(initialLikes);
+    const [isLikeLoading, setIsLikeLoading] = useState(false);
     const [showToc, setShowToc] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
@@ -37,44 +40,75 @@ export default function MobileActionBar({ title, slug }: MobileActionBarProps) {
             setLastScrollY(currentScrollY);
         };
 
-        // Check local storage
-        const likedPosts = JSON.parse(localStorage.getItem('liked_posts') || '[]');
-        setIsLiked(likedPosts.includes(slug));
+        // Check local storage (using object format, matching FloatingActions)
+        const likedPosts = JSON.parse(localStorage.getItem('liked_posts') || '{}');
+        setIsLiked(!!likedPosts[postId]);
 
-        // Listen for storage changes to sync like state
-        const handleStorageChange = (e: StorageEvent) => {
-            if (e.key === 'liked_posts') {
-                const likedPosts = JSON.parse(e.newValue || '[]');
-                setIsLiked(likedPosts.includes(slug));
-            }
+        // Listen for sync events from other components
+        const handleLikeSync = () => {
+            const updatedLikedPosts = JSON.parse(localStorage.getItem('liked_posts') || '{}');
+            setIsLiked(!!updatedLikedPosts[postId]);
         };
 
         window.addEventListener('scroll', handleScroll);
-        window.addEventListener('storage', handleStorageChange);
+        window.addEventListener('storage', handleLikeSync);
+        window.addEventListener('likesUpdated', handleLikeSync);
+
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('storage', handleLikeSync);
+            window.removeEventListener('likesUpdated', handleLikeSync);
         };
-    }, [slug, lastScrollY]);
+    }, [lastScrollY, postId]);
 
-    const toggleLike = () => {
-        const newState = !isLiked;
-        setIsLiked(newState);
+    const toggleLike = useCallback(async () => {
+        if (isLikeLoading) return;
 
-        const likedPosts = JSON.parse(localStorage.getItem('liked_posts') || '[]');
-        if (newState) {
-            localStorage.setItem('liked_posts', JSON.stringify([...likedPosts, slug]));
+        const newIsLiked = !isLiked;
+        const action = newIsLiked ? 'like' : 'unlike';
+
+        // Optimistic update
+        setIsLiked(newIsLiked);
+        setLikes(prev => newIsLiked ? prev + 1 : Math.max(0, prev - 1));
+        setIsLikeLoading(true);
+
+        // Update localStorage (object format)
+        const likedPosts = JSON.parse(localStorage.getItem('liked_posts') || '{}');
+        if (newIsLiked) {
+            likedPosts[postId] = true;
         } else {
-            localStorage.setItem('liked_posts', JSON.stringify(likedPosts.filter((s: string) => s !== slug)));
+            delete likedPosts[postId];
         }
+        localStorage.setItem('liked_posts', JSON.stringify(likedPosts));
 
-        // Dispatch storage event to sync across components
-        window.dispatchEvent(new StorageEvent('storage', {
-            key: 'liked_posts',
-            newValue: localStorage.getItem('liked_posts'),
-            storageArea: localStorage
-        }));
-    };
+        try {
+            const response = await fetch('/api/toggle-like', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ postId, action }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                // Revert on error
+                setIsLiked(!newIsLiked);
+                setLikes(prev => !newIsLiked ? prev + 1 : Math.max(0, prev - 1));
+                console.error('Failed to toggle like:', data);
+            } else {
+                setLikes(data.likes);
+            }
+        } catch (error) {
+            // Revert on error
+            setIsLiked(!newIsLiked);
+            setLikes(prev => !newIsLiked ? prev + 1 : Math.max(0, prev - 1));
+            console.error('Error toggling like:', error);
+        } finally {
+            setIsLikeLoading(false);
+            // Dispatch custom event to sync with other components
+            window.dispatchEvent(new CustomEvent('likesUpdated'));
+        }
+    }, [postId, isLiked, isLikeLoading]);
 
     const sharePost = async () => {
         if (navigator.share) {
@@ -104,10 +138,11 @@ export default function MobileActionBar({ title, slug }: MobileActionBarProps) {
                 <div className="flex justify-around items-center max-w-md mx-auto">
                     <button
                         onClick={toggleLike}
-                        className={`flex flex-col items-center gap-1 text-xs font-medium ${isLiked ? 'text-lime-500' : 'text-sage-300'}`}
+                        disabled={isLikeLoading}
+                        className={`flex flex-col items-center gap-1 text-xs font-medium ${isLiked ? 'text-red-500' : 'text-sage-300'} ${isLikeLoading ? 'opacity-50' : ''}`}
                     >
-                        {isLiked ? <BiSolidLike size={24} /> : <BiLike size={24} />}
-                        <span>Like</span>
+                        <Heart size={24} className={isLiked ? 'fill-current' : ''} />
+                        <span>{likes}</span>
                     </button>
 
                     <button

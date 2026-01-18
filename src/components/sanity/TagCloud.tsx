@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import type { Post, Tag, InlineTag } from '@/sanity/sanity';
-import { X, Hash, GripHorizontal } from 'lucide-react';
+import { X, Hash, ChevronLeft, ChevronRight } from 'lucide-react';
 import { normalizeTag } from '@/lib/tag-utils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Priority tags shown first, then others by count
 const PRIORITY_TAGS = [
@@ -21,6 +22,10 @@ interface TagCloudProps {
 }
 
 export default function TagCloud({ posts, selectedTags, onTagSelect, allTags = [] }: TagCloudProps) {
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(false);
+
     // Calculate tag counts with normalization
     const tagStats = React.useMemo(() => {
         const stats: Record<string, { count: number; color?: string; slug?: string }> = {};
@@ -53,17 +58,15 @@ export default function TagCloud({ posts, selectedTags, onTagSelect, allTags = [
             }
             stats[normalizedName].count += 1;
 
-            // If the current tag has a color and the stored one doesn't, update it
             if (color && !stats[normalizedName].color) {
                 stats[normalizedName].color = color;
             }
         };
 
-        // 2. Count from posts (InlineTags: label, slug (string))
+        // 2. Count from posts
         posts.forEach(post => {
             post.tags?.forEach(tag => {
                 if (!tag) return;
-                // Check if it's an InlineTag (has label) or legacy reference (has name)
                 const tagName = (tag as InlineTag).label || (tag as any).name;
                 const tagSlug = (tag as InlineTag).slug || (tag as any).slug?.current;
                 const tagColor = (tag as InlineTag).color || (tag as any).color;
@@ -76,158 +79,209 @@ export default function TagCloud({ posts, selectedTags, onTagSelect, allTags = [
     }, [posts, allTags]);
 
     const sortedTags = React.useMemo(() => {
-        // Get all tags with count > 0, sorted by: priority tags first, then by count
         return Object.entries(tagStats)
             .filter(([, stat]) => stat.count > 0)
             .sort((a, b) => {
                 const aIsPriority = PRIORITY_TAGS.some(p => p.toLowerCase() === a[0].toLowerCase());
                 const bIsPriority = PRIORITY_TAGS.some(p => p.toLowerCase() === b[0].toLowerCase());
 
-                // Priority tags first
                 if (aIsPriority && !bIsPriority) return -1;
                 if (!aIsPriority && bIsPriority) return 1;
 
-                // Then by count
                 return b[1].count - a[1].count;
             })
-            .slice(0, 12); // Show up to 12 tags
+            .slice(0, 15); // Show up to 15 tags
     }, [tagStats]);
 
-    // Drag to scroll functionality - must be before early return!
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
-    const [isDragging, setIsDragging] = useState(false);
-
-    // Use refs to track drag state without causing re-renders
-    const dragState = useRef({
-        isDown: false,
-        startX: 0,
-        scrollLeft: 0,
-        hasMoved: false, // Track if we actually moved (to differentiate click vs drag)
-        moveThreshold: 5, // Pixels moved before considering it a drag
-    });
-
-    const handlePointerDown = useCallback((e: React.PointerEvent) => {
-        if (!scrollContainerRef.current) return;
-
+    // Check scroll position and update button visibility
+    const updateScrollButtons = () => {
         const container = scrollContainerRef.current;
-        dragState.current = {
-            ...dragState.current,
-            isDown: true,
-            startX: e.clientX,
-            scrollLeft: container.scrollLeft,
-            hasMoved: false,
+        if (!container) return;
+
+        setCanScrollLeft(container.scrollLeft > 0);
+        setCanScrollRight(
+            container.scrollLeft < container.scrollWidth - container.clientWidth - 5
+        );
+    };
+
+    useEffect(() => {
+        updateScrollButtons();
+        const container = scrollContainerRef.current;
+        if (container) {
+            container.addEventListener('scroll', updateScrollButtons);
+            window.addEventListener('resize', updateScrollButtons);
+        }
+        return () => {
+            if (container) {
+                container.removeEventListener('scroll', updateScrollButtons);
+            }
+            window.removeEventListener('resize', updateScrollButtons);
         };
+    }, [sortedTags]);
 
-        // Capture pointer for smooth tracking even outside element
-        container.setPointerCapture(e.pointerId);
-    }, []);
+    const scroll = (direction: 'left' | 'right') => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
 
-    const handlePointerUp = useCallback((e: React.PointerEvent) => {
-        if (!scrollContainerRef.current) return;
-
-        dragState.current.isDown = false;
-        setIsDragging(false);
-
-        // Release pointer capture
-        scrollContainerRef.current.releasePointerCapture(e.pointerId);
-    }, []);
-
-    const handlePointerMove = useCallback((e: React.PointerEvent) => {
-        if (!dragState.current.isDown || !scrollContainerRef.current) return;
-
-        const dx = e.clientX - dragState.current.startX;
-
-        // Check if movement exceeds threshold
-        if (Math.abs(dx) > dragState.current.moveThreshold) {
-            dragState.current.hasMoved = true;
-            setIsDragging(true);
-        }
-
-        if (dragState.current.hasMoved) {
-            e.preventDefault();
-            scrollContainerRef.current.scrollLeft = dragState.current.scrollLeft - dx;
-        }
-    }, []);
-
-    // Prevent click on tags when dragging
-    const handleTagClick = useCallback((tagName: string) => {
-        // Only trigger if we didn't drag
-        if (!dragState.current.hasMoved) {
-            onTagSelect(tagName);
-        }
-    }, [onTagSelect]);
+        const scrollAmount = 200;
+        container.scrollBy({
+            left: direction === 'left' ? -scrollAmount : scrollAmount,
+            behavior: 'smooth'
+        });
+    };
 
     if (sortedTags.length === 0) return null;
 
+    const isAllSelected = selectedTags.length === 0;
+
+    const tagVariants = {
+        initial: { opacity: 0, scale: 0.8 },
+        animate: { opacity: 1, scale: 1 },
+        exit: { opacity: 0, scale: 0.8 },
+        tap: { scale: 0.95 }
+    };
+
     return (
-        <div className="relative group/tags">
-            {/* Drag hint indicator */}
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10 pointer-events-none opacity-50 group-hover/tags:opacity-80 transition-opacity">
-                <div className="bg-gradient-to-l from-sage-200 dark:from-forest-800 to-transparent w-12 h-full absolute right-0" />
-                <GripHorizontal size={16} className="text-forest-500 dark:text-sage-400 mr-1" />
-            </div>
+        <div className="relative flex items-center gap-2">
+            {/* Left Scroll Button */}
+            <AnimatePresence>
+                {canScrollLeft && (
+                    <motion.button
+                        initial={{ opacity: 0, x: 10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 10 }}
+                        onClick={() => scroll('left')}
+                        className="hidden md:flex absolute left-0 z-20 h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-forest-800 border-2 border-forest-300 dark:border-forest-600 shadow-lg hover:bg-sage-50 dark:hover:bg-forest-700 hover:border-forest-500 dark:hover:border-sage-400 transition-all"
+                        aria-label="Scroll left"
+                    >
+                        <ChevronLeft size={20} className="text-forest-700 dark:text-sage-200" />
+                    </motion.button>
+                )}
+            </AnimatePresence>
+
+            {/* Left Fade Gradient */}
+            {canScrollLeft && (
+                <div className="absolute left-10 md:left-12 top-0 bottom-0 w-8 bg-gradient-to-r from-white/90 dark:from-[#162c22]/90 to-transparent z-10 pointer-events-none" />
+            )}
+
+            {/* Scroll Container */}
             <div
                 ref={scrollContainerRef}
-                onPointerDown={handlePointerDown}
-                onPointerUp={handlePointerUp}
-                onPointerMove={handlePointerMove}
-                onPointerCancel={handlePointerUp}
-                style={{ touchAction: 'pan-y' }}
-                className={`flex overflow-x-auto pb-2 py-2 -mx-4 px-4 sm:-mx-2 sm:px-2 scrollbar-hide snap-x select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+                className="flex overflow-x-auto py-2 scrollbar-hide scroll-smooth md:mx-12"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-                <div className="flex gap-2 min-w-min pr-8">
-                    {/* ALL Tag */}
-                    <button
-                        onClick={() => selectedTags.length > 0 && handleTagClick('ALL')}
-                        className={`group relative px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 whitespace-nowrap snap-start shrink-0
-                    ${selectedTags.length === 0
-                                ? 'bg-forest-900 dark:bg-lime-500 text-white dark:text-forest-950 border border-forest-900 dark:border-lime-500 shadow-md'
-                                : 'bg-white dark:bg-forest-800 text-forest-900 dark:text-sage-100 border border-forest-400 dark:border-forest-600 hover:border-forest-600 hover:bg-sage-100 dark:hover:bg-forest-700'
-                            }`}
+                <div className="flex gap-2 min-w-min px-1">
+                    {/* ALL Tag Button */}
+                    <motion.button
+                        onClick={() => selectedTags.length > 0 && onTagSelect('ALL')}
+                        variants={tagVariants}
+                        initial="initial"
+                        animate="animate"
+                        whileTap="tap"
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                        className={`
+                            relative px-4 py-2 rounded-full text-sm font-semibold 
+                            transition-colors duration-200 whitespace-nowrap
+                            flex items-center gap-2 border-2 shadow-sm
+                            ${isAllSelected
+                                ? 'bg-forest-900 dark:bg-lime-500 text-white dark:text-forest-950 border-forest-900 dark:border-lime-500'
+                                : 'bg-white dark:bg-forest-800 text-forest-700 dark:text-sage-200 border-forest-300 dark:border-forest-600 hover:border-forest-500 dark:hover:border-sage-400 hover:bg-sage-50 dark:hover:bg-forest-700'
+                            }
+                        `}
                     >
-                        <span className="relative z-10 flex items-center gap-1.5">
-                            <Hash size={12} className={selectedTags.length === 0 ? "text-lime-400 dark:text-forest-950" : "text-forest-500 dark:text-sage-400"} />
-                            All
-                        </span>
-                    </button>
+                        <Hash size={14} className={isAllSelected ? "text-lime-400 dark:text-forest-950" : "text-forest-500 dark:text-sage-400"} />
+                        All
+                    </motion.button>
 
-                    {/* Individual Tags */}
-                    {sortedTags.map(([tagName, stat]) => {
-                        const isSelected = selectedTags.includes(tagName);
-                        const isProjectsTag = tagName === 'Projects';
+                    {/* Individual Tag Buttons */}
+                    <AnimatePresence mode="popLayout">
+                        {sortedTags.map(([tagName, stat]) => {
+                            const isSelected = selectedTags.includes(tagName);
+                            const isProjectsTag = tagName === 'Projects';
 
-                        return (
-                            <button
-                                key={tagName}
-                                onClick={() => handleTagClick(tagName)}
-                                className={`group relative px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 border whitespace-nowrap snap-start shrink-0
-                            ${isSelected
-                                        ? 'bg-forest-900 dark:bg-lime-500 text-white dark:text-forest-950 border-forest-900 dark:border-lime-500 shadow-md'
-                                        : 'bg-white dark:bg-forest-800 text-forest-900 dark:text-sage-100 border-forest-400 dark:border-forest-600 hover:border-forest-600 hover:shadow-sm hover:bg-sage-100 dark:hover:bg-forest-700'
-                                    }
-                            ${isProjectsTag && !isSelected
-                                        ? 'border-lime-500 bg-lime-500/5 dark:bg-lime-500/10 shadow-sm'
-                                        : ''
-                                    }`}
-                            >
-                                <span>{tagName}</span>
-                                {isSelected ? (
-                                    <X size={12} className="text-white/90 dark:text-forest-950" />
-                                ) : (
-                                    <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${isProjectsTag
-                                        ? 'bg-lime-500/20 text-lime-700 dark:text-lime-400'
-                                        : 'bg-forest-900/10 dark:bg-sage-300/10 text-forest-700 dark:text-sage-300'
-                                        }`}>
-                                        {stat.count}
-                                    </span>
-                                )}
-                            </button>
-                        );
-                    })}
+                            return (
+                                <motion.button
+                                    key={tagName}
+                                    onClick={() => onTagSelect(tagName)}
+                                    variants={tagVariants}
+                                    initial="initial"
+                                    animate="animate"
+                                    exit="exit"
+                                    whileHover={{ scale: 1.03 }}
+                                    whileTap="tap"
+                                    layout
+                                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                                    className={`
+                                        relative px-4 py-2 rounded-full text-sm font-semibold
+                                        transition-colors duration-200 whitespace-nowrap
+                                        flex items-center gap-2 border-2 shadow-sm
+                                        ${isSelected
+                                            ? 'bg-forest-900 dark:bg-lime-500 text-white dark:text-forest-950 border-forest-900 dark:border-lime-500'
+                                            : isProjectsTag
+                                                ? 'bg-lime-50 dark:bg-lime-500/10 text-forest-800 dark:text-lime-400 border-lime-500 hover:bg-lime-100 dark:hover:bg-lime-500/20'
+                                                : 'bg-white dark:bg-forest-800 text-forest-700 dark:text-sage-200 border-forest-300 dark:border-forest-600 hover:border-forest-500 dark:hover:border-sage-400 hover:bg-sage-50 dark:hover:bg-forest-700'
+                                        }
+                                    `}
+                                >
+                                    <span>{tagName}</span>
+
+                                    <AnimatePresence mode="wait">
+                                        {isSelected ? (
+                                            <motion.span
+                                                key="x-icon"
+                                                initial={{ opacity: 0, rotate: -90 }}
+                                                animate={{ opacity: 1, rotate: 0 }}
+                                                exit={{ opacity: 0, rotate: 90 }}
+                                                transition={{ duration: 0.15 }}
+                                            >
+                                                <X size={14} className="text-white/90 dark:text-forest-950" />
+                                            </motion.span>
+                                        ) : (
+                                            <motion.span
+                                                key="count-badge"
+                                                initial={{ opacity: 0, scale: 0.5 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                exit={{ opacity: 0, scale: 0.5 }}
+                                                transition={{ duration: 0.15 }}
+                                                className={`
+                                                    text-xs px-1.5 py-0.5 rounded-md font-bold
+                                                    ${isProjectsTag
+                                                        ? 'bg-lime-500/20 text-lime-700 dark:text-lime-400'
+                                                        : 'bg-forest-900/10 dark:bg-sage-300/10 text-forest-600 dark:text-sage-300'
+                                                    }
+                                                `}
+                                            >
+                                                {stat.count}
+                                            </motion.span>
+                                        )}
+                                    </AnimatePresence>
+                                </motion.button>
+                            );
+                        })}
+                    </AnimatePresence>
                 </div>
             </div>
+
+            {/* Right Fade Gradient */}
+            {canScrollRight && (
+                <div className="absolute right-10 md:right-12 top-0 bottom-0 w-8 bg-gradient-to-l from-white/90 dark:from-[#162c22]/90 to-transparent z-10 pointer-events-none" />
+            )}
+
+            {/* Right Scroll Button */}
+            <AnimatePresence>
+                {canScrollRight && (
+                    <motion.button
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -10 }}
+                        onClick={() => scroll('right')}
+                        className="hidden md:flex absolute right-0 z-20 h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-forest-800 border-2 border-forest-300 dark:border-forest-600 shadow-lg hover:bg-sage-50 dark:hover:bg-forest-700 hover:border-forest-500 dark:hover:border-sage-400 transition-all"
+                        aria-label="Scroll right"
+                    >
+                        <ChevronRight size={20} className="text-forest-700 dark:text-sage-200" />
+                    </motion.button>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
-
-
