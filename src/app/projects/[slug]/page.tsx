@@ -75,36 +75,120 @@ export async function generateMetadata({ params }: PageProps) {
     const isExecutiveSummary = slug.includes('executive-summary');
     const projectId = DOC_TO_PROJECT_ID[slug];
 
-    // Client-focused descriptions with metrics
-    const description = isExecutiveSummary
-        ? `Business transformation case study. See how I used n8n, LangGraph, and Next.js to deliver measurable results: ₹300K revenue, 80% automation, 40K+ impressions.`
-        : `Technical deep-dive into production architecture. Self-healing workflows, deterministic state management, Dead-Letter Queues, and deployment strategies.`;
+    // Get parent project for image
+    const project = portfolioData.projects.find(p => p.id === projectId);
+    const projectImage = project?.imageUrl || project?.image || '/Profile/me main.png';
 
-    // Project-specific keywords for high-intent searches
-    const projectKeywords: Record<string, string[]> = {
-        'aviators-training-centre': ['n8n automation case study', 'Next.js SEO results', '₹300K revenue automation', 'aviation SaaS'],
-        'n8n-automation-suite': ['content automation workflow', 'multi-LLM orchestration', 'n8n GPT-4 integration', '74-node workflow'],
-        'n8n-github-backup': ['n8n backup automation', 'GitHub workflow backup', 'self-healing n8n', 'zero-trust credential scrubbing', 'rate limit handling n8n'],
-        'barkat-enterprise': ['React e-commerce India', 'B2B tiles website', 'PDF catalogue integration'],
-        'av-newsstream': ['API key rotation', 'news aggregator architecture', 'rate limit handling'],
-        'foodah': ['React performance optimization', 'custom hooks architecture', 'lazy loading implementation'],
+    // Document-specific descriptions optimized for SEO/AEO/GEO
+    const DESCRIPTIONS: Record<string, string> = {
+        // Executive Summaries - Business transformation focus
+        'aviators-training-centre-executive-summary': 'Case study: How Aman Suryavanshi generated ₹300K+ revenue using n8n automation workflows, Next.js 15, and AI-powered SEO for a flight training business. 50+ organic leads, 12% conversion rate, zero ad spend.',
+        'omni-post-ai-executive-summary': 'Case study: 74-node n8n workflow that reduced manual content work by 80%. Multi-LLM orchestration with GPT-4, automated LinkedIn/Twitter publishing, and production-grade error handling by Aman Suryavanshi.',
+        'n8n-github-backup-executive-summary': 'Case study: Enterprise n8n backup system with 99.9% recovery rate. Dual-stream webhook architecture, zero-trust credential scrubbing, and self-healing retry logic by Aman Suryavanshi.',
+        // Technical Documentation - Architecture focus
+        'aviators-training-centre-technical-documentation': 'Technical deep-dive: Production n8n architecture with Dead-Letter Queues, Firebase real-time triggers, Cal.com integration, and self-healing workflows. By Aman Suryavanshi, AI Workflow Architect.',
+        'omni-post-ai-technical-documentation': 'Technical architecture: Multi-LLM content pipeline using n8n, GPT-4, and Claude. Image processing, platform-specific formatting, OAuth2 API integration. By Aman Suryavanshi.',
+        'n8n-github-backup-technical-documentation': 'Technical guide: Dual-stream n8n backup with webhook orchestration, recursive credential redaction, rate limit compliance (30 req/min), and 422/409 self-healing. By Aman Suryavanshi.',
+        'barkat-enterprise-technical-documentation': 'Technical documentation: React 18 e-commerce platform with PDF catalogue integration, lazy loading, and WebP optimization. Generated 3,000+ viewers and 60+ B2B leads. By Aman Suryavanshi.',
+        'av-newsstream-technical-documentation': 'Technical guide: API key rotation system handling 300+ daily requests. News aggregation from NewsAPI, GNews, YouTube with intelligent caching and failover. By Aman Suryavanshi.',
+        'foodah-technical-documentation': 'Technical deep-dive: React performance optimization achieving 40% load time reduction. Custom hooks, code splitting, shimmer UI, and handling 14,000+ line JSON datasets. By Aman Suryavanshi.',
     };
+
+    // Expanded keywords targeting recruiters, clients, and AI search
+    const KEYWORDS: Record<string, string[]> = {
+        'aviators-training-centre-executive-summary': [
+            'n8n automation case study', 'freelance n8n developer', 'Next.js SEO expert India',
+            '₹300K revenue automation', 'AI workflow architect portfolio', 'hire n8n expert',
+            'production n8n workflows', 'flight training software', 'lead generation automation'
+        ],
+        'omni-post-ai-executive-summary': [
+            'n8n GPT-4 integration', 'content automation workflow', 'multi-LLM orchestration',
+            'social media automation n8n', 'AI content repurposing', '74-node workflow architecture',
+            'hire AI automation engineer', 'LinkedIn automation n8n', 'Twitter automation workflow'
+        ],
+        'n8n-github-backup-executive-summary': [
+            'n8n backup automation', 'GitHub workflow backup', 'self-healing n8n system',
+            'enterprise n8n solution', 'credential scrubbing automation', 'workflow disaster recovery',
+            'n8n production best practices', 'hire n8n consultant', 'rate limit handling n8n'
+        ],
+        'aviators-training-centre-technical-documentation': [
+            'n8n Dead-Letter Queue tutorial', 'Firebase n8n integration', 'production n8n architecture',
+            'self-healing workflow design', 'Next.js Firebase tutorial', 'n8n webhook patterns',
+            'Cal.com automation', 'Airtable CRM automation', 'Telegram notification n8n'
+        ],
+        'omni-post-ai-technical-documentation': [
+            'n8n multi-LLM routing', 'GPT-4 Claude fallback', 'content pipeline architecture',
+            'OAuth2 social media automation', 'n8n image processing', 'AI content distribution',
+            'Notion to social media automation', 'prompt engineering n8n', 'LLM orchestration pattern'
+        ],
+        'n8n-github-backup-technical-documentation': [
+            'n8n webhook loop pattern', 'GitHub API rate limiting', 'credential redaction regex',
+            'dual-stream workflow architecture', 'n8n self-healing pattern', 'SHA conflict resolution',
+            '422 error handling n8n', 'workflow backup strategy', 'n8n DevOps automation'
+        ],
+        'barkat-enterprise-technical-documentation': [
+            'React e-commerce India', 'B2B tiles website development', 'PDF catalogue React',
+            'lazy loading React tutorial', 'WebP image optimization', 'Vite React performance',
+            'EmailJS contact form', 'freelance React developer India', 'product catalogue website'
+        ],
+        'av-newsstream-technical-documentation': [
+            'API key rotation pattern', 'rate limit handling JavaScript', 'news aggregator architecture',
+            'Redux Toolkit tutorial', 'Web Speech API React', 'API caching strategy',
+            'multi-source API aggregation', 'failover API design', 'Node.js API proxy'
+        ],
+        'foodah-technical-documentation': [
+            'React performance optimization', 'custom hooks tutorial', 'code splitting React',
+            'lazy loading best practices', 'Parcel bundler React', 'shimmer UI implementation',
+            'large JSON handling React', 'React.memo optimization', 'intersection observer React'
+        ],
+    };
+
+    const description = DESCRIPTIONS[slug] || (isExecutiveSummary
+        ? `Business transformation case study by Aman Suryavanshi. See measurable results: ₹300K revenue, 80% automation, 40K+ impressions using n8n, LangGraph, and Next.js.`
+        : `Technical architecture deep-dive by Aman Suryavanshi. Production-grade workflows, self-healing systems, and deployment strategies.`);
+
+    const keywords = KEYWORDS[slug] || [
+        'n8n case study', 'AI automation portfolio', 'Aman Suryavanshi',
+        'hire n8n developer', 'freelance automation expert', 'self-healing workflows'
+    ];
 
     return {
         title: `${title} | Aman Suryavanshi`,
         description,
-        keywords: [
-            'n8n case study',
-            'AI automation results',
-            'self-healing workflows',
-            '₹300K revenue impact',
-            ...(projectKeywords[projectId || ''] || ['portfolio', 'case study'])
-        ],
+        keywords,
+        authors: [{ name: 'Aman Suryavanshi', url: 'https://amansuryavanshi.me' }],
+        creator: 'Aman Suryavanshi',
+        alternates: {
+            canonical: `https://amansuryavanshi.me/projects/${slug}`,
+        },
         openGraph: {
             title,
             description,
             type: 'article',
             authors: ['Aman Suryavanshi — AI Workflow Architect'],
+            url: `https://amansuryavanshi.me/projects/${slug}`,
+            siteName: 'Aman Suryavanshi Portfolio',
+            locale: 'en_US',
+            images: [{
+                url: projectImage,
+                width: 1200,
+                height: 630,
+                alt: title,
+            }],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+            creator: '@_AmanSurya',
+            images: [projectImage],
+        },
+        robots: {
+            index: true,
+            follow: true,
+            'max-snippet': -1,
+            'max-image-preview': 'large',
+            'max-video-preview': -1,
         },
     };
 }

@@ -227,6 +227,7 @@ const structuredData = {
         },
         {
             "@type": "FAQPage",
+            "@id": `${SITE_URL}#faq`,
             "mainEntity": [
                 {
                     "@type": "Question",

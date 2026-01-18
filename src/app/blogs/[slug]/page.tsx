@@ -184,7 +184,11 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
     "articleSection": post.articleType || "Technology",
     "keywords": post.tags?.filter(t => t && t.name).map(t => t.name).join(", "),
     "wordCount": post.body ? JSON.stringify(post.body).split(/\s+/).length : undefined,
-    "timeRequired": `PT${readTime}M`
+    "timeRequired": `PT${readTime}M`,
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".prose h1", ".prose h2", ".prose h3", ".prose p:first-of-type", ".prose blockquote"]
+    }
   };
 
   // Fetch related posts

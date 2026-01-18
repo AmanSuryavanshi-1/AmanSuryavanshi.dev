@@ -1,0 +1,62 @@
+# Aman Suryavanshi - AI Workflow Architect & n8n Expert
+
+> Full-Stack Agentic Developer specializing in self-healing n8n automation systems, Multi-LLM Orchestration (GPT-4, Claude, Gemini), and Next.js AI dashboards. Generated ₹300K+ revenue for clients through Website + AI SEO + Automation.
+
+## About
+Aman Suryavanshi is an AI Solutions Architect and Full-Stack Agentic Developer based in India. He builds production-grade n8n automation workflows with self-healing capabilities, Dead-Letter Queues, and 99.9% uptime guarantees. His expertise spans LangGraph/CrewAI multi-agent systems and Next.js AI-powered web applications.
+
+## Services
+- n8n Production Workflow Architecture (Self-healing, DLQ, 99.9% uptime)
+- LangGraph/CrewAI Multi-Agent Systems Development
+- Next.js AI Dashboard Development with Firebase & Sanity CMS
+- Technical SEO/GEO Optimization for Developer Portfolios
+- AI Content Automation (Multi-platform distribution)
+
+## Key Projects
+- /projects/aviators-training-centre: ₹300K revenue case study - n8n + Next.js flight training platform
+- /projects/n8n-automation-suite: 74-node Omni-Post AI content automation workflow
+- /projects/n8n-github-backup: Enterprise workflow backup with 99.9% recovery rate
+- /projects/barkat-enterprise: B2B e-commerce with 3,000+ viewers
+- /projects/av-newsstream: News aggregator with API key rotation
+- /projects/foodah: React performance optimization (40% load time reduction)
+
+## Case Studies (Executive Summaries)
+- /projects/aviators-training-centre-executive-summary: How I generated ₹300K using n8n + Next.js
+- /projects/omni-post-ai-executive-summary: 80% manual work reduction with 74-node workflow
+- /projects/n8n-github-backup-executive-summary: Self-healing backup architecture
+
+## Technical Documentation
+- /projects/aviators-training-centre-technical-documentation: Self-healing n8n architecture
+- /projects/omni-post-ai-technical-documentation: Multi-LLM orchestration with GPT-4
+- /projects/n8n-github-backup-technical-documentation: Dual-stream webhook design
+- /projects/barkat-enterprise-technical-documentation: React e-commerce architecture
+- /projects/av-newsstream-technical-documentation: API key rotation system
+- /projects/foodah-technical-documentation: Custom React hooks for performance
+
+## Blog
+- /blogs: Technical articles on n8n, AI automation, LangGraph, and Next.js development
+
+## Tech Stack
+- Automation: n8n, LangGraph, CrewAI, Zapier
+- AI/LLM: OpenAI GPT-4, Claude, Gemini, LangChain
+- Frontend: Next.js 14/15, React 18, TypeScript, TailwindCSS
+- Backend: Node.js, Express, Firebase, Supabase
+- CMS: Sanity, Notion API
+- DevOps: Vercel, Docker, GitHub Actions
+
+## Contact
+- Website: https://amansuryavanshi.me
+- Email: amansuryavanshias@gmail.com
+- LinkedIn: https://linkedin.com/in/amansuryavanshi-ai
+- Twitter/X: https://twitter.com/_AmanSurya
+- GitHub: https://github.com/AmanSuryavanshi-1
+
+## Hiring
+Looking for an n8n automation expert, AI workflow architect, AI Solutions Engineer or Next.js developer?
+Book a discovery call or view my portfolio at https://amansuryavanshi.me
+
+Available for:
+- Freelance AI automation projects
+- Full-time AI/ML engineering roles
+- n8n workflow consulting
+- Technical content creation partnerships
