@@ -39,14 +39,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // Redirect www to non-www (canonical domain)
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.amansuryavanshi.me' }],
-        destination: 'https://amansuryavanshi.me/:path*',
-        permanent: true,
-      },
-      // Redirect dev domain to main domain (non-www)
+      // NOTE: www/non-www redirects should be configured in Vercel Dashboard
+      // Settings > Domains to avoid redirect loops with hosting provider
+
+      // Redirect dev domain to main domain
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'amansuryavanshi-dev.vercel.app' }],
