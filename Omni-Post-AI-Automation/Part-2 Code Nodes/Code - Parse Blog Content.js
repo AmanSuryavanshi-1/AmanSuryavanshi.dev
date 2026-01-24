@@ -1,7 +1,7 @@
 // ════════════════════════════════════════════════════════════════════════════
-// ROBUST BLOG PARSER V14.0 (DIRECT LOOP ACCESS - PRODUCTION READY)
+// ROBUST BLOG PARSER V16.0 (AGGREGATE DATA FIX - PRODUCTION READY)
 // Parses Blog draft from Notion → Prepares for Sanity CMS API
-// CRITICAL FIX: Accesses image binaries directly from $('Loop to Download Images').all()
+// CRITICAL FIX: Handles Aggregate { json: { data: [...] } } structure
 // ════════════════════════════════════════════════════════════════════════════
 
 try {
@@ -25,54 +25,104 @@ try {
     }
 
     // ═══════════════════════════════════════════════════════════════════════════
-    // 2. GET IMAGE BINARIES DIRECTLY FROM LOOP
-    // CRITICAL: This is the pattern that works - access $('Loop to Download Images').all()
-    // The SplitInBatches node stores ALL processed items, not just the last one
+    // 2. GET IMAGE BINARIES - MULTI-SOURCE FALLBACK CHAIN
+    // Priority: Loop to Download Images (has binaries) → Aggregate metadata → Organize Images
     // ═══════════════════════════════════════════════════════════════════════════
 
     let allCachedImages = [];
     let imageSource = 'none';
+    let aggregateMetadata = []; // Store metadata from Aggregate for reference
 
-    // PRIMARY: Use Loop to Download Images (SplitInBatches stores ALL items)
+    // FIRST: Try to get metadata from Aggregate node (most reliable for metadata)
     try {
-        allCachedImages = $('Loop to Download Images').all() || [];
-        if (allCachedImages.length > 0) {
-            imageSource = 'Loop to Download Images';
-            console.log(`📸 Found ${allCachedImages.length} images from Loop to Download Images`);
+        const aggregateItems = $('Aggregate').all() || [];
+        console.log(`📦 [Metadata] Aggregate node returned ${aggregateItems.length} item(s)`);
 
-            // Log available images for debugging
-            allCachedImages.forEach((img, i) => {
-                const fileName = img.json?.fileName || img.json?.name || 'unknown';
-                const hasBinary = !!img.binary;
-                console.log(`   [${i}] ${fileName} - Binary: ${hasBinary}`);
-            });
+        if (aggregateItems.length > 0) {
+            for (const aggItem of aggregateItems) {
+                // Handle aggregateAllItemData output: { json: { data: [...] } }
+                if (aggItem.json && aggItem.json.data && Array.isArray(aggItem.json.data)) {
+                    console.log(`   → Found nested data array with ${aggItem.json.data.length} items`);
+                    aggregateMetadata = aggItem.json.data;
+                }
+                // Handle case where Aggregate has direct items with binaries
+                else if (aggItem.binary && Object.keys(aggItem.binary).length > 0) {
+                    allCachedImages.push(aggItem);
+                }
+                // Handle case where aggItem.json is directly an array
+                else if (aggItem.json && Array.isArray(aggItem.json)) {
+                    for (const subItem of aggItem.json) {
+                        if (subItem.binary && Object.keys(subItem.binary).length > 0) {
+                            allCachedImages.push(subItem);
+                        } else {
+                            // Store as metadata even without binary
+                            aggregateMetadata.push(subItem);
+                        }
+                    }
+                }
+            }
+
+            if (allCachedImages.length > 0) {
+                imageSource = 'Aggregate node (with binaries)';
+                console.log(`✅ Found ${allCachedImages.length} images with binaries from Aggregate`);
+            } else if (aggregateMetadata.length > 0) {
+                console.log(`📋 Found ${aggregateMetadata.length} metadata entries from Aggregate (no binaries yet)`);
+            }
         }
     } catch (e) {
-        console.log('⚠️ Loop to Download Images not accessible:', e.message);
+        console.log('ℹ️ Aggregate node not accessible:', e.message);
     }
 
-    // FALLBACK: Try Download Image Binary (will only have last item - not ideal)
+    // SOURCE 1: Loop to Download Images (SplitInBatches - has the actual binaries!)
     if (allCachedImages.length === 0) {
         try {
-            allCachedImages = $('Download Image Binary').all() || [];
-            if (allCachedImages.length > 0) {
-                imageSource = 'Download Image Binary (fallback)';
-                console.log(`⚠️ Fallback: ${allCachedImages.length} images from Download Image Binary`);
+            const loopItems = $('Loop to Download Images').all() || [];
+            console.log(`📦 [Source 1] Loop to Download Images returned ${loopItems.length} item(s)`);
+
+            if (loopItems.length > 0) {
+                // Filter to only items with binaries
+                allCachedImages = loopItems.filter(item =>
+                    item.binary && Object.keys(item.binary).length > 0
+                );
+                if (allCachedImages.length > 0) {
+                    imageSource = 'Loop to Download Images';
+                    console.log(`✅ Found ${allCachedImages.length} images with binaries from Loop node`);
+                }
             }
-        } catch (e2) {
-            console.log('⚠️ Download Image Binary not accessible');
+        } catch (e) {
+            console.log('⚠️ Loop to Download Images not accessible:', e.message);
         }
     }
 
-    // FALLBACK: Try to get metadata from Organize Images (no binaries)
-    let availableImagesMetadata = [];
+    // SOURCE 2: Download Image Binary (fallback - will only have last item)
     if (allCachedImages.length === 0) {
+        try {
+            const downloadedItems = $('Download Image Binary').all() || [];
+            console.log(`📦 [Source 2] Download Image Binary returned ${downloadedItems.length} item(s)`);
+
+            if (downloadedItems.length > 0) {
+                allCachedImages = downloadedItems.filter(item =>
+                    item.binary && Object.keys(item.binary).length > 0
+                );
+                if (allCachedImages.length > 0) {
+                    imageSource = 'Download Image Binary (fallback)';
+                    console.log(`⚠️ Fallback: ${allCachedImages.length} images from Download node`);
+                }
+            }
+        } catch (e2) {
+            console.log('⚠️ Download Image Binary not accessible:', e2.message);
+        }
+    }
+
+    // FALLBACK: Use Aggregate metadata or try Organize Images
+    let availableImagesMetadata = aggregateMetadata.length > 0 ? aggregateMetadata : [];
+    if (allCachedImages.length === 0 && availableImagesMetadata.length === 0) {
         try {
             const organizeData = $('Organize Images').first().json;
             availableImagesMetadata = organizeData.availableImages || [];
             if (availableImagesMetadata.length > 0) {
                 imageSource = 'Organize Images metadata (no binaries)';
-                console.log(`📋 Found ${availableImagesMetadata.length} image metadata entries (no binaries)`);
+                console.log(`📋 Found ${availableImagesMetadata.length} image metadata entries from Organize Images`);
             }
         } catch (e) {
             console.log('ℹ️ Organize Images not accessible:', e.message);
@@ -85,6 +135,15 @@ try {
     }
 
     console.log(`📂 Image source: ${imageSource}`);
+
+    // Log available images for debugging
+    if (allCachedImages.length > 0) {
+        allCachedImages.forEach((img, i) => {
+            const fileName = img.json?.fileName || img.json?.name || 'unknown';
+            const hasBinary = !!img.binary;
+            console.log(`   [${i}] ${fileName} - Binary: ${hasBinary}`);
+        });
+    }
 
     // ═══════════════════════════════════════════════════════════════════════════
     // 3. GET SEO FIELDS FROM NOTION (using correct property_shared_* naming)
@@ -138,12 +197,26 @@ try {
 
     // ═══════════════════════════════════════════════════════════════════════════
     // 5. PROCESS BLOCKS - Attach binaries directly from cached images
-    // This is the KEY fix - we attach binaries here, not in a separate node
     // ═══════════════════════════════════════════════════════════════════════════
 
     let outputBlocks = [];
     let imageMarkers = [];
     let textBlockCount = 0;
+
+    // Helper function to extract asset number from filename
+    const extractAssetNumber = (fileName) => {
+        if (!fileName) return null;
+        const patterns = [
+            /asset[-_]?(\d+)/i,
+            /^(\d+)[-_.]/,
+            /[-_](\d+)[-_.]/
+        ];
+        for (const pattern of patterns) {
+            const match = fileName.match(pattern);
+            if (match) return parseInt(match[1], 10);
+        }
+        return null;
+    };
 
     blocks.forEach(block => {
         if (block.type === 'text') {
@@ -156,6 +229,15 @@ try {
             // CRITICAL: Find the matching image with binary data from allCachedImages
             const targetImage = allCachedImages.find(img => {
                 const fileName = img.json?.fileName || img.json?.name || '';
+
+                // Method 1: Check assetNumber in json
+                if (img.json?.assetNumber === block.imageNumber) return true;
+
+                // Method 2: Extract from fileName
+                const extractedNum = extractAssetNumber(fileName);
+                if (extractedNum === block.imageNumber) return true;
+
+                // Method 3: Pattern match
                 const pattern = new RegExp(`asset[-_]?${block.imageNumber}([_\\.-]|$)`, 'i');
                 return pattern.test(fileName);
             });
@@ -233,7 +315,9 @@ try {
             imagesToProcess: imageMarkers.map(num => {
                 const cached = allCachedImages.find(a => {
                     const fileName = a.json?.fileName || '';
-                    return fileName.includes(`asset-${num}`) || fileName.includes(`asset_${num}`);
+                    return fileName.includes(`asset-${num}`) ||
+                        fileName.includes(`asset_${num}`) ||
+                        a.json?.assetNumber === num;
                 });
                 if (cached) {
                     return {
@@ -247,7 +331,7 @@ try {
         }
     };
 
-    console.log(`✅ Blog Parser V14.0: ${outputBlocks.length} blocks (${textBlockCount} text, ${imageMarkers.length} images)`);
+    console.log(`✅ Blog Parser V15.0: ${outputBlocks.length} blocks (${textBlockCount} text, ${imageMarkers.length} images)`);
 
     return [result];
 
@@ -258,8 +342,7 @@ try {
             platform: 'blog',
             error: true,
             skipped: false,
-            message: `[Blog Parse V14.0]: ${error.message}`
+            message: `[Blog Parse V15.0]: ${error.message}`
         }
     }];
 }
-

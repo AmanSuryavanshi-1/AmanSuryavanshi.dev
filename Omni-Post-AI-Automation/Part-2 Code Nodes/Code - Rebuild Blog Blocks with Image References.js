@@ -1,26 +1,10 @@
-// --- FINAL PRODUCTION V12.0 ---
-// DEPLOYMENT-READY, HIGH-PERFORMANCE PARSER
-//
-// AUTHOR: Gemini
-// DATE: 2025-11-08
-//
-// V12.0 CHANGELOG:
-// - CRITICAL FIX (Headings): Rewrote 'detectHeadingLevel'.
-//   - It now correctly handles text with or without a space (e.g., "##Heading" vs "## Heading").
-//   - It now *guarantees* the removal of all hash prefixes from the returned text.
-//
-// - CRITICAL FIX (Lists): Rewrote 'isListItem' and 'cleanListItemText'.
-//   - 'isListItem' is now more robust and correctly identifies list items, even with leading spaces.
-//   - 'cleanListItemText' is updated to perfectly mirror 'isListItem', ensuring the bullet/number
-//     is stripped *before* 'parseInlineFormatting' is called.
-//   - This prevents the 'currentParagraph' bug that was mangling your lists.
-//
-// - KEPT (V11 Fixes):
-//   - The high-performance 'parseInlineFormatting' tokenizer (to prevent timeouts).
-//   - The 'pre-cleaning' step (to fix the '```markdown' wrapper bug).
-// ---
+// ════════════════════════════════════════════════════════════════════════════
+// FINAL PRODUCTION V14.0 - DEPLOYMENT-READY, HIGH-PERFORMANCE PARSER
+// Builds Sanity Portable Text mutation from parsed blog blocks
+// FIXED: Defensive null checks + robust imageMap fallback
+// ════════════════════════════════════════════════════════════════════════════
 
-// === CRITICAL FIX V13.0: UUID Generator for Sanity _key properties ===
+// === UUID Generator for Sanity _key properties ===
 // Sanity Portable Text REQUIRES unique _key on every block and every span
 function generateKey() {
     return 'key_' + Math.random().toString(36).substring(2, 11);
@@ -32,13 +16,38 @@ try {
     // Get the parsed blocks from 'Code - Parse Blog Content'
     const blogData = $('Code - Parse Blog Content').first().json;
 
-    // Get the map of uploaded images
-    let imageMap;
+    // Validate blogData exists
+    if (!blogData || !blogData.blocks) {
+        throw new Error('No parsed blog data found. Ensure Code - Parse Blog Content ran successfully.');
+    }
+
+    // Get the map of uploaded images with multiple fallback sources
+    let imageMap = [];
+
+    // SOURCE 1: Try direct input (from Loop Over Images done output)
     if ($input.all().length > 0 && $input.first().json.marker) {
         imageMap = $input.all();
-    } else {
-        // Fallback if the input is empty (e.g., text-only post)
-        imageMap = $('Code - Build Image Reference Map').all() || [];
+        console.log(`📸 Image map from direct input: ${imageMap.length} items`);
+    }
+
+    // SOURCE 2: Fallback to Code - Build Image Reference Map node
+    if (imageMap.length === 0) {
+        try {
+            imageMap = $('Code - Build Image Reference Map').all() || [];
+            console.log(`📸 Image map from Build Image Reference Map: ${imageMap.length} items`);
+        } catch (e) {
+            console.log('ℹ️ Code - Build Image Reference Map not accessible:', e.message);
+        }
+    }
+
+    // SOURCE 3: If still empty, check for noImages flag (text-only post)
+    if (imageMap.length === 0) {
+        const firstInput = $input.first()?.json || {};
+        if (firstInput.noImages === true || firstInput.skipped === true) {
+            console.log('ℹ️ Text-only post - no images to map');
+        } else {
+            console.warn('⚠️ No image map available - images in content will be skipped');
+        }
     }
 
     console.log('Blog blocks (raw):', blogData.blocks.length, 'Images:', imageMap.length);
@@ -57,7 +66,7 @@ try {
         }
     }
 
-    // --- 3. High-Performance Helper Functions (V12) ---
+    // --- 3. High-Performance Helper Functions ---
 
     const BACKTICK = String.fromCharCode(96);
     const CODE_FENCE = BACKTICK + BACKTICK + BACKTICK;
@@ -85,37 +94,30 @@ try {
         return { language, code };
     }
 
-    // --- (FIX V12.0: LISTS) ---
-    // More robust check for list items. Allows optional leading whitespace.
+    // More robust check for list items
     function isListItem(text) {
         if (!text || typeof text !== 'string') return false;
         const trimmed = text.trim();
-        // Matches '  * item' or '1. item'
-        return /^\s*[*\-]\s+/.test(trimmed) || /^\s*\d+[\.\)]\s+/.test(trimmed);
+        return /^\s*[*\-]\s+/.test(trimmed) || /^\s*\d+[\.\\)]\s+/.test(trimmed);
     }
 
-    // --- (FIX V12.0: LISTS) ---
-    // Mirrors 'isListItem' to perfectly clean the text.
+    // Cleans list item text
     function cleanListItemText(text) {
         if (!text || typeof text !== 'string') return '';
         const trimmed = text.trim();
-        // Replaces '  * item' with 'item'
-        return trimmed.replace(/^\s*[*\-]\s+/, '').replace(/^\s*\d+[\.\)]\s+/, '').trim();
+        return trimmed.replace(/^\s*[*\-]\s+/, '').replace(/^\s*\d+[\.\\)]\s+/, '').trim();
     }
 
     // Detects the list type for Sanity
     function detectListType(text) {
         if (!text || typeof text !== 'string') return null;
         const trimmed = text.trim();
-        if (/^\s*\d+[\.\)]\s+/.test(trimmed)) return 'number';
+        if (/^\s*\d+[\.\\)]\s+/.test(trimmed)) return 'number';
         if (/^\s*[*\-]\s+/.test(trimmed)) return 'bullet';
         return null;
     }
-    // --- (END LIST FIX V12.0) ---
 
-
-    // --- (CRITICAL FIX V13.0: TIMEOUTS + _KEY) ---
-    // High-performance tokenizer with _key on every span (required by Sanity)
+    // High-performance tokenizer with _key on every span
     function parseInlineFormatting(text) {
         if (!text || typeof text !== 'string') {
             return [{ _type: 'span', _key: generateKey(), text: String(text || ''), marks: [] }];
@@ -141,7 +143,7 @@ try {
             if (mark && tokens[i + 1] && tokens[i + 2] === token) {
                 children.push({
                     _type: 'span',
-                    _key: generateKey(),  // CRITICAL: Sanity requires _key
+                    _key: generateKey(),
                     text: tokens[i + 1],
                     marks: [mark]
                 });
@@ -149,7 +151,7 @@ try {
             } else {
                 children.push({
                     _type: 'span',
-                    _key: generateKey(),  // CRITICAL: Sanity requires _key
+                    _key: generateKey(),
                     text: token,
                     marks: []
                 });
@@ -158,10 +160,8 @@ try {
         }
         return children;
     }
-    // --- (END CRITICAL FIX V11.0) ---
 
-
-    // Parses a block of list items (V13.0 - with _key)
+    // Parses a block of list items
     function parseListItems(items) {
         return items.map(item => {
             const cleanText = cleanListItemText(item);
@@ -169,7 +169,7 @@ try {
 
             return {
                 _type: 'block',
-                _key: generateKey(),  // CRITICAL: Sanity requires _key
+                _key: generateKey(),
                 style: 'normal',
                 listItem: listType,
                 level: 1,
@@ -179,25 +179,19 @@ try {
         });
     }
 
-    // --- (FIX V12.0: HEADINGS) ---
-    // More robust heading detection.
-    // Handles '#Heading' and '# Heading' and cleans both.
+    // More robust heading detection
     function detectHeadingLevel(text) {
         if (!text || typeof text !== 'string') return null;
         const trimmed = text.trim();
 
-        // Use 'startsWith' for detection, but 'replace' for cleaning
         if (trimmed.startsWith('####')) return { level: 'h4', text: trimmed.replace(/^####\s*/, '').trim() };
         if (trimmed.startsWith('###')) return { level: 'h3', text: trimmed.replace(/^###\s*/, '').trim() };
         if (trimmed.startsWith('##')) return { level: 'h2', text: trimmed.replace(/^##\s*/, '').trim() };
         if (trimmed.startsWith('#')) return { level: 'h1', text: trimmed.replace(/^#\s*/, '').trim() };
         return null;
     }
-    // --- (END HEADING FIX V12.0) ---
 
-
-    // --- 4. Main Parsing Logic (Unchanged from V11) ---
-    // This logic is now correct because the helper functions it calls are fixed.
+    // --- 4. Main Parsing Logic ---
     const finalBlocks = [];
     const codeBlockPattern = new RegExp('(' + CODE_FENCE + '[\\s\\S]*?' + CODE_FENCE + ')', 'g');
 
@@ -209,16 +203,14 @@ try {
                 if (!part || !part.trim()) continue;
 
                 if (isCodeBlock(part)) {
-                    // This is a fenced code block
                     const parsed = parseCodeBlock(part);
                     finalBlocks.push({
                         _type: 'code',
-                        _key: generateKey(),  // CRITICAL: Sanity requires _key
+                        _key: generateKey(),
                         language: parsed.language,
                         code: parsed.code
                     });
                 } else {
-                    // This is regular paragraph/list/heading text
                     const lines = part.split('\n');
                     let currentParagraph = [];
                     let currentListItems = [];
@@ -227,23 +219,19 @@ try {
                         const line = lines[i];
                         const trimmed = line.trim();
 
-                        if (!trimmed) { // Empty line
-                            // Flush list if one was active
+                        if (!trimmed) {
                             if (currentListItems.length > 0) {
                                 finalBlocks.push(...parseListItems(currentListItems));
                                 currentListItems = [];
                             }
-                            // Flush paragraph if one was active
                             if (currentParagraph.length > 0) {
                                 const paraText = currentParagraph.join(' ').trim();
-                                // Check for '---' horizontal rule
-                                if (paraText && !/^(---|___|\\*\\*\\*)$/.test(paraText)) {
-                                    // CALLS V12 HEADING FIX
+                                if (paraText && !/^(---|___|\*\*\*)$/.test(paraText)) {
                                     const heading = detectHeadingLevel(paraText);
                                     if (heading) {
                                         finalBlocks.push({
                                             _type: 'block',
-                                            _key: generateKey(),  // CRITICAL: Sanity requires _key
+                                            _key: generateKey(),
                                             style: heading.level,
                                             children: parseInlineFormatting(heading.text),
                                             markDefs: []
@@ -251,7 +239,7 @@ try {
                                     } else {
                                         finalBlocks.push({
                                             _type: 'block',
-                                            _key: generateKey(),  // CRITICAL: Sanity requires _key
+                                            _key: generateKey(),
                                             style: 'normal',
                                             children: parseInlineFormatting(paraText),
                                             markDefs: []
@@ -263,13 +251,10 @@ try {
                             continue;
                         }
 
-                        // CALLS V12 LIST FIX
                         if (isListItem(trimmed)) {
-                            // Flush paragraph if switching to list
                             if (currentParagraph.length > 0) {
                                 const paraText = currentParagraph.join(' ').trim();
                                 if (paraText) {
-                                    // CALLS V12 HEADING FIX
                                     const heading = detectHeadingLevel(paraText);
                                     if (heading) {
                                         finalBlocks.push({ _type: 'block', _key: generateKey(), style: heading.level, children: parseInlineFormatting(heading.text), markDefs: [] });
@@ -281,7 +266,6 @@ try {
                             }
                             currentListItems.push(trimmed);
                         } else {
-                            // Flush list if switching to paragraph
                             if (currentListItems.length > 0) {
                                 finalBlocks.push(...parseListItems(currentListItems));
                                 currentListItems = [];
@@ -290,14 +274,13 @@ try {
                         }
                     }
 
-                    // Final flush at end of part
+                    // Final flush
                     if (currentListItems.length > 0) {
                         finalBlocks.push(...parseListItems(currentListItems));
                     }
                     if (currentParagraph.length > 0) {
                         const paraText = currentParagraph.join(' ').trim();
-                        if (paraText && !/^(---|___|\\*\\*\\*)$/.test(paraText)) {
-                            // CALLS V12 HEADING FIX
+                        if (paraText && !/^(---|___|\*\*\*)$/.test(paraText)) {
                             const heading = detectHeadingLevel(paraText);
                             if (heading) {
                                 finalBlocks.push({ _type: 'block', _key: generateKey(), style: heading.level, children: parseInlineFormatting(heading.text), markDefs: [] });
@@ -309,15 +292,13 @@ try {
                 }
             }
         } else if (block.type === 'image') {
-            // This is an image block
             const assetEntry = getAssetForMarker(block.marker);
             if (!assetEntry) {
-                // Don't throw error, just log it.
-                console.warn('Image ' + block.marker + ' was defined in markdown but not found in imageMap');
+                console.warn('⚠️ Image ' + block.marker + ' was defined in markdown but not found in imageMap');
             } else {
                 finalBlocks.push({
                     _type: 'image',
-                    _key: generateKey(),  // CRITICAL: Sanity requires _key
+                    _key: generateKey(),
                     asset: { _type: 'reference', _ref: assetEntry.assetId },
                     alt: assetEntry.alt || 'Blog image',
                     caption: assetEntry.caption || ''
@@ -326,18 +307,17 @@ try {
         }
     }
 
-    // --- 5. Final Mutation Assembly (Unchanged) ---
+    // --- 5. Final Mutation Assembly ---
     const mutation = {
         mutations: [{
             create: {
                 _type: "post",
                 title: blogData.title,
                 slug: { _type: "slug", current: blogData.slug },
-                status: "published", // or "draft"
-                excerpt: blogData.description.slice(0, 160),
-                seoTitle: blogData.title.slice(0, 60),
-                seoDescription: blogData.description.slice(0, 160),
-                // Tags formatted as objects with _key (Sanity requires this)
+                status: "published",
+                excerpt: (blogData.description || '').slice(0, 160),
+                seoTitle: (blogData.title || '').slice(0, 60),
+                seoDescription: (blogData.description || '').slice(0, 160),
                 tags: (blogData.keywords || []).map(tag => ({
                     _key: generateKey(),
                     label: typeof tag === 'string' ? tag : (tag.label || tag),
@@ -352,11 +332,10 @@ try {
         }]
     };
 
-    console.log('Final Sanity blocks generated:', finalBlocks.length);
+    console.log(`✅ Rebuild Blog Blocks V14.0: ${finalBlocks.length} blocks generated`);
     return [{ json: mutation }];
 
 } catch (error) {
     console.error('[CRITICAL: Build PT Mutation]', error);
-    // Return detailed error for easier debugging in n8n
-    return [{ json: { error: true, message: '[Build PT Mutation]: ' + error.message, stack: error.stack } }];
+    return [{ json: { error: true, message: '[Build PT Mutation V14.0]: ' + error.message, stack: error.stack } }];
 }
