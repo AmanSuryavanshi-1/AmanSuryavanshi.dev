@@ -1,4 +1,6 @@
-// CONTENT SELECTION & PROFILE SETUP
+// ════════════════════════════════════════════════════════════════════════════
+// CONTENT SELECTION & PROFILE SETUP (V2 - Updated Feb 2026)
+// ════════════════════════════════════════════════════════════════════════════
 const items = $input.all();
 
 if (!items || items.length === 0) {
@@ -36,24 +38,32 @@ const category = getProperty(item, 'properties.Category.select.name') ||
 const priority = getProperty(item, 'properties.Priority.select.name') ||
     'normal';
 
-// Complete user profile for authentic content
+// ── User Profile (Single Source of Truth) ──────────────────────────────────
+// Keep in sync with GEMINI.md and prompt <role> sections
 const userProfile = {
-    name: 'Aman Surya',
-    role: 'Fresh CS Graduate & AI/ML Enthusiast',
-    focus: 'Building with Next.js/React/n8n, seeking AI PM roles',
-    personality: 'Authentic, curious, growth-minded, detail-oriented',
-    expertise: ['JavaScript', 'React', 'Next.js', 'n8n', 'AI/ML', 'Automation', 'Product Management'],
-    audience: 'Tech community, AI enthusiasts, developers, PM aspirants',
+    name: 'Aman Suryavanshi',
+    role: 'AI Solutions Architect | Full-Stack Agentic Developer',
+    focus: 'Building intelligent multi-agent systems AND the frontend interfaces that let non-technical people control them',
+    personality: 'High-agency, authentic, builder-mindset, detail-oriented',
+    expertise: [
+        'Next.js', 'React', 'TypeScript',
+        'n8n Automation', 'LangGraph', 'Agentic AI',
+        'SEO/AEO/GEO', 'Full-Stack Development'
+    ],
+    audience: 'Tech community, hiring managers, AI enthusiasts, developers, startup founders',
     timezone: 'Asia/Kolkata',
+    location: 'Delhi/NCR, India',
     writing_style: {
-        twitter: 'Casual, engaging, thread-friendly, question-driven, community-focused',
-        linkedin: 'Professional, detailed, story-driven, insight-rich, career-focused'
+        twitter: 'Punchy, confident, thread-friendly, opinionated, no fluff',
+        linkedin: 'Professional, story-driven, results-oriented, high-agency voice',
+        blog: 'Authoritative, technically deep, reference-quality, SEO-optimized'
     },
     content_goals: {
-        primary: 'Build technical credibility for AI PM roles',
-        secondary: 'Help fellow developers learn and grow',
-        engagement: 'Create genuine discussions and valuable connections'
-    }
+        primary: 'Build authority that attracts job offers (target: 15-25L) and freelance clients',
+        secondary: 'Establish thought leadership in agentic AI and automation space',
+        engagement: 'Generate inbound opportunities through demonstrated expertise'
+    },
+    brand_position: 'I build intelligent multi-agent systems AND the frontend interfaces that let non-technical people control them'
 };
 
 const sessionId = `session_${Date.now()}_${(item.id || '').toString().substring(0, 8)}`;

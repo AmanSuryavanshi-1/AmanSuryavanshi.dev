@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════════════════════
-// PROCESS AI STRATEGY (V5 - PRODUCTION HARDENED)
+// PROCESS AI STRATEGY (V6 - Enhanced Validation, Feb 2026)
 // ════════════════════════════════════════════════════════════════════════════
 
 // 1. SAFE INPUT EXTRACTION
@@ -54,7 +54,57 @@ function validateAndSanitize(data) {
 
   const platforms = data.platform_strategies || {};
 
-  // B. Twitter/X Sanitization
+  // B. Source Quality Assessment (V6 Enhancement)
+  // The Strategist now outputs source_quality. Ensure safe defaults.
+  if (!data.source_quality) {
+    data.source_quality = 'moderate'; // Safe default
+    console.log('⚠️ source_quality not found in strategy output. Defaulting to "moderate".');
+  }
+  // Validate it's a known value
+  const validQualities = ['strong', 'moderate', 'thin'];
+  if (!validQualities.includes(data.source_quality)) {
+    console.log(`⚠️ Invalid source_quality "${data.source_quality}". Resetting to "moderate".`);
+    data.source_quality = 'moderate';
+  }
+  // If thin, ensure quality_warning exists
+  if (data.source_quality === 'thin' && !data.quality_warning) {
+    data.quality_warning = 'Source flagged as thin but no quality_warning provided by Strategist.';
+  }
+
+  // C. Narrative Arc Validation (V6 Enhancement)
+  if (!data.narrative_arc) {
+    data.narrative_arc = {
+      formula: 'PAS',
+      the_villain: 'Not identified by strategist',
+      the_epiphany: 'Not identified by strategist',
+      the_transformation: 'Not identified by strategist'
+    };
+    console.log('⚠️ narrative_arc missing. Created safe default.');
+  } else {
+    // Ensure formula field exists (new in V6)
+    if (!data.narrative_arc.formula) {
+      data.narrative_arc.formula = 'PAS'; // Default narrative formula
+    }
+    // Validate formula is a known pattern
+    const validFormulas = ['PAS', 'BAB', 'BUT_THEREFORE'];
+    if (!validFormulas.includes(data.narrative_arc.formula)) {
+      console.log(`⚠️ Unknown narrative formula "${data.narrative_arc.formula}". Keeping as-is.`);
+    }
+  }
+
+  // D. Psychological Triggers Validation (V6 Enhancement)
+  if (!data.psychological_triggers) {
+    data.psychological_triggers = {
+      stop_trigger_type: 'pattern_interrupt',
+      save_trigger: 'Not specified',
+      share_trigger: 'Not specified',
+      authenticity_signal: 'Not specified',
+      emotional_arc: 'curiosity → tension → relief → empowerment'
+    };
+    console.log('⚠️ psychological_triggers missing. Created safe default.');
+  }
+
+  // E. Twitter/X Sanitization
   if (!platforms.twitter) {
     // Auto-fix: Create a minimal valid object so downstream nodes don't crash
     platforms.twitter = {
@@ -66,12 +116,12 @@ function validateAndSanitize(data) {
     if (!Array.isArray(platforms.twitter.hashtags)) platforms.twitter.hashtags = [];
   }
 
-  // C. LinkedIn Validation (We treat this as critical)
+  // F. LinkedIn Validation (We treat this as critical)
   if (!platforms.linkedin) {
     issues.push("Missing 'platform_strategies.linkedin'");
   }
 
-  // D. Image Strategy Safety (Crucial for branching nodes)
+  // G. Image Strategy Safety (Crucial for branching nodes)
   if (!data.image_strategy) {
     // Safe default: No images needed
     data.image_strategy = {
@@ -110,7 +160,9 @@ const masterData = {
   strategy: cleanStrategy,
   _meta: {
     parsedAt: new Date().toISOString(),
-    validatorVersion: "5.1-Hardened"
+    validatorVersion: "6.0-Enhanced",
+    sourceQuality: cleanStrategy.source_quality,
+    narrativeFormula: cleanStrategy.narrative_arc?.formula || 'PAS'
   }
 };
 
