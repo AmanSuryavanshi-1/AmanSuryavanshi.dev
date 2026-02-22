@@ -1,0 +1,101 @@
+{
+    "nodes": [
+        {
+            "parameters": {
+                "promptType": "define",
+                "text": "=<context>\n<profile>\n- primary_focus: {{ $json.personalContext.strategic.futureRoadmap.currentFocus }}\n- target_roles: {{ $json.personalContext.strategic.targetRoles }}\n</profile>\n\n<topic>\n<name>{{ $json.sourceContent.name }}</name>\n<categories>{{ $json.sourceContent.categories }}</categories>\n<summary>{{ $json.contentSummary.summary }}</summary>\n<date>{{ $now }}</date>\n</topic>\n</context>\n\n<task>\nConduct deep real-time research (last 14 days) to validate this topic. Use the Tavily search tool to find specific discussions, news, and technical arguments that make this topic urgent TODAY.\n\nYou MUST make at least 3 separate searches:\n1. Search for recent news/updates about this topic (e.g., \"Next.js 15 updates\", \"n8n latest release\")\n2. Search Reddit (r/webdev, r/selfhosted) and HackerNews for developer pain points and discussions\n3. Search for trending hashtags and engagement patterns for this topic on Twitter and LinkedIn\n\nAfter collecting your research, synthesize it into the required JSON format.\n</task>",
+                "options": {
+                    "systemMessage": "You are a Senior Technical Market Intelligence Analyst. Your job is NOT to write content, but to find the \"Heat\" in the market. You act as the eyes and ears for Aman Suryavanshi, a Build-in-Public founder (Next.js/n8n/AI/no-code/low-code).\n\n<instructions>\n1. **The \"Newsjack\" (Urgency)**\n   - Search for recent software updates or industry news related to the given topic.\n   - Goal: Find ONE specific event that makes this content timely.\n\n2. **The \"Gap Analysis\" (The Void)**\n   - Search Reddit (r/webdev, r/selfhosted) and HackerNews.\n   - What question is everyone asking but getting bad answers for?\n   - Identify \"Contrarian Angles\": common advice that is actually wrong/inefficient.\n\n3. **Technical Vibe Check**\n   - Find 2-3 specific technical keywords trending in this niche RIGHT NOW (e.g., don't just say \"AI\", say \"Agentic Loops\" or \"MCP Servers\").\n\n4. **Platform Intelligence**\n   - Twitter: Find a \"Village\" (group of devs) discussing this. What is their sentiment?\n   - LinkedIn: Find a \"Business Stat\" or \"Cost Argument\".\n   - Blog: Find \"Zero-Volume, High-Intent\" keywords.\n\n5. **Timing**\n   - Provide optimal posting times for Asia/Kolkata (IST).\n</instructions>\n\n<outputformat>\nReturn ONLY valid JSON with this EXACT structure (no markdown fences, no extra text before or after):\n\n{\n  \"market_pulse\": {\n    \"urgency_trigger\": \"The recent event/update that makes this relevant NOW.\",\n    \"community_sentiment\": \"What are devs feeling?\",\n    \"the_gap\": \"The specific unanswered question or bad advice you found.\"\n  },\n  \"twitter\": {\n    \"hashtags\": [\"#SpecificTag1\", \"#SpecificTag2\", \"#SpecificTag3\", \"#SpecificTag4\", \"#SpecificTag5\"],\n    \"optimal_posting_times_ist\": [\"09:00 AM\", \"06:00 PM\"],\n    \"hook_inspiration\": \"A specific angle based on the urgency_trigger.\"\n  },\n  \"linkedin\": {\n    \"hashtags\": [\"#SpecificTag1\", \"#SpecificTag2\", \"#SpecificTag3\", \"#SpecificTag4\", \"#SpecificTag5\"],\n    \"optimal_posting_times_ist\": [\"10:00 AM\", \"02:00 PM\"],\n    \"business_value_stat\": \"A specific data point or cost argument found in research.\"\n  },\n  \"blog\": {\n    \"seo_keywords_primary\": [\n      {\"keyword\": \"main topic\", \"volume\": \"high\"}\n    ],\n    \"seo_keywords_longtail\": [\n      {\"keyword\": \"very specific problem fix\", \"volume\": \"low\"}\n    ],\n    \"competitor_gap\": \"What technical detail is missing in current top articles?\"\n  }\n}\n</outputformat>\n\n<constraints>\n- Research MUST be from the last 14 days.\n- Do NOT return generic advice. If no specific news is found, focus on a specific \"Eternal Struggle\" (e.g., \"Dependency Hell\").\n- Output must be strict JSON ONLY. No markdown fences. No explanation text.\n- You MUST use the Tavily search tool to gather real data before synthesizing.\n</constraints>",
+                    "maxIterations": 10
+                }
+            },
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 3.1,
+            "position": [
+                2192,
+                2640
+            ],
+            "id": "2b5db48a-528f-4356-90dd-00de17c724db",
+            "name": "AI Agent – Research"
+        },
+        {
+            "parameters": {
+                "modelName": "models/gemini-3-flash-preview",
+                "options": {
+                    "maxOutputTokens": 4096,
+                    "temperature": 0.3,
+                    "topP": 0.85
+                }
+            },
+            "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+            "typeVersion": 1,
+            "position": [
+                2336,
+                2816
+            ],
+            "id": "cd07829f-5488-454e-a16c-ace67714a6f3",
+            "name": "Gemini – Research Model1",
+            "credentials": {
+                "googlePalmApi": {
+                    "id": "MXjQ6FyV5UijLXsc",
+                    "name": "PRO Google Gemini(PaLM) Api account "
+                }
+            }
+        },
+        {
+            "parameters": {
+                "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}",
+                "options": {}
+            },
+            "type": "@tavily/n8n-nodes-tavily.tavilyTool",
+            "typeVersion": 1,
+            "position": [
+                2480,
+                2816
+            ],
+            "id": "d02436d6-26ef-4c55-bb7e-38ddd4800191",
+            "name": "Search in Tavily",
+            "credentials": {}
+        }
+    ],
+    "connections": {
+        "AI Agent – Research": {
+            "main": [
+                []
+            ]
+        },
+        "Gemini – Research Model1": {
+            "ai_languageModel": [
+                [
+                    {
+                        "node": "AI Agent – Research",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Search in Tavily": {
+            "ai_tool": [
+                [
+                    {
+                        "node": "AI Agent – Research",
+                        "type": "ai_tool",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "pinData": {
+        "AI Agent – Research": [
+            {
+                "output": "{\n  \"market_pulse\": {\n    \"urgency_trigger\": \"The recent release of n8n v1.0.0 (March 2025) and the introduction of instance-level MCP (Model Context Protocol) support has fundamentally changed the 'Zapier vs n8n' debate from simple cost-saving to a race for 'Agentic Interoperability'.\",\n    \"community_sentiment\": \"Devs are feeling 'subscription fatigue' with Zapier/Make (hitting $200+/mo for basic AI tasks) and are aggressively migrating to self-hosted n8n to gain 'unlimited' execution for AI agent loops.\",\n    \"the_gap\": \"Most advice focuses on 'n8n is cheaper,' but the real gap is 'State Management.' Devs are struggling to decide when to use LangGraph's granular state control vs. n8n's visual orchestration. The missing answer: n8n is the 'Production Glue' while LangGraph is the 'Reasoning Engine'—they are not competitors, but a stack.\"\n  },\n  \"twitter\": {\n    \"hashtags\": [\"#n8n\", \"#AIAgents\", \"#MCP\", \"#SelfHosted\", \"#AgenticWorkflows\"],\n    \"optimal_posting_times_ist\": [\"08:30 AM\", \"09:30 PM\"],\n    \"hook_inspiration\": \"Stop paying the 'Agent Tax' on Zapier. With the new MCP support in n8n, you can now connect your local LLM tools directly to 500+ apps without writing a single line of glue code. Here's why v1.0.0 changes everything for AI Devs.\"\n  },\n  \"linkedin\": {\n    \"hashtags\": [\"#AIAutomation\", \"#CostOptimization\", \"#EnterpriseAI\", \"#LowCode\", \"#DigitalTransformation\"],\n    \"optimal_posting_times_ist\": [\"10:15 AM\", \"04:45 PM\"],\n    \"business_value_stat\": \"Companies migrating AI agentic workflows from Zapier to self-hosted n8n are reporting a 90% reduction in operational 'task costs' while increasing workflow complexity by 4x due to n8n's non-linear branching logic.\"\n  },\n  \"blog\": {\n    \"seo_keywords_primary\": [\n      {\"keyword\": \"n8n vs zapier for ai agents\", \"volume\": \"high\"},\n      {\"keyword\": \"self-hosted ai automation\", \"volume\": \"medium\"}\n    ],\n    \"seo_keywords_longtail\": [\n      {\"keyword\": \"n8n mcp server setup for ai agents\", \"volume\": \"low\"},\n      {\"keyword\": \"langgraph vs n8n for agentic workflows\", \"volume\": \"low\"}\n    ],\n    \"competitor_gap\": \"Current articles miss the 'MCP (Model Context Protocol)' integration. They treat n8n as a standard ETL tool, failing to explain how n8n now acts as a host for MCP servers, allowing agents to 'see' and 'use' tools dynamically.\"\n  }\n}"
+            }
+        ]
+    },
+    "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "2aff0c99a9b9ea9c976d68c5887d32445a6bdc6f59f99592eb5b4c4dbaf3d92e"
+    }
+}
