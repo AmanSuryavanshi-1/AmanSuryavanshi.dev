@@ -95,3 +95,19 @@ scripts/seo-fetch-posts.js
 scripts/seo-update-sanity.js
 Omni-Post-AI-Automation/prompt_analysis.md.resolved
 Omni-Post-AI-Automation/AI-MODEL-NODE-SETTINGS-REFERENCE.md
+Research/Research.md
+.mcp.json
+Omni-Post-AI-Automation/DraftsNotion ATC-04 Claude sonnet 4.6/DevToDraft.md
+Omni-Post-AI-Automation/DraftsNotion ATC-04 Claude sonnet 4.6/HashNodeDraft.md
+Omni-Post-AI-Automation/DraftsNotion ATC-04 Claude sonnet 4.6/ImageTasklist.md
+Omni-Post-AI-Automation/DraftsNotion ATC-04 Claude sonnet 4.6/LinkedinDraft.md
+Omni-Post-AI-Automation/DraftsNotion ATC-04 Claude sonnet 4.6/SanityBlogDraft.md
+Omni-Post-AI-Automation/DraftsNotion ATC-04 Claude sonnet 4.6/TwitterDraft.md
+Omni-Post-AI-Automation/DraftsNotion ATC-04 GEMINI FLASH/DevToDraft_Flash.md
+Omni-Post-AI-Automation/DraftsNotion ATC-04 GEMINI FLASH/HashNodeDraft_Flash.md
+Omni-Post-AI-Automation/DraftsNotion ATC-04 GEMINI FLASH/ImageTasklist_Flash.md
+Omni-Post-AI-Automation/DraftsNotion ATC-04 GEMINI FLASH/LinkedinDraft_Flash.md
+Omni-Post-AI-Automation/DraftsNotion ATC-04 GEMINI FLASH/SanityBlogDraft_Flash.md
+Omni-Post-AI-Automation/DraftsNotion ATC-04 GEMINI FLASH/TwitterDraft_Flash.md
+.gitignore
+.claude/settings.local.json
