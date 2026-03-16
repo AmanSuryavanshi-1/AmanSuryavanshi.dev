@@ -386,6 +386,39 @@ if (seoTagsArray.length > 0) {
     };
 }
 
+// NEW SEO fields for Notion storage
+if (seoData.focus_keyword) {
+    properties["Shared_Focus_Keyword"] = {
+        "rich_text": [{ type: "text", text: { content: String(seoData.focus_keyword).substring(0, 2000) } }]
+    };
+}
+if (seoData.article_type) {
+    properties["Shared_Article_Type"] = {
+        "select": { name: seoData.article_type }
+    };
+}
+if (seoData.quotable_snippet) {
+    properties["Shared_Quotable_Snippet"] = {
+        "rich_text": [{ type: "text", text: { content: String(seoData.quotable_snippet).substring(0, 2000) } }]
+    };
+}
+if (seoData.content_summary) {
+    properties["Shared_Content_Summary"] = {
+        "rich_text": [{ type: "text", text: { content: String(seoData.content_summary).substring(0, 2000) } }]
+    };
+}
+// FAQ items stored as JSON string in Notion (parsed by Part 2)
+if (seoData.faq_items && Array.isArray(seoData.faq_items) && seoData.faq_items.length > 0) {
+    properties["Shared_FAQ_JSON"] = {
+        "rich_text": [{ type: "text", text: { content: JSON.stringify(seoData.faq_items).substring(0, 2000) } }]
+    };
+}
+if (seoData.key_takeaways && Array.isArray(seoData.key_takeaways) && seoData.key_takeaways.length > 0) {
+    properties["Shared_Key_Takeaways"] = {
+        "rich_text": [{ type: "text", text: { content: JSON.stringify(seoData.key_takeaways).substring(0, 2000) } }]
+    };
+}
+
 return {
     json: {
         notionPageId: notionData.id,

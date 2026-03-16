@@ -315,9 +315,27 @@ try {
                 title: blogData.title,
                 slug: { _type: "slug", current: blogData.slug },
                 status: "published",
-                excerpt: (blogData.description || '').slice(0, 160),
-                seoTitle: (blogData.title || '').slice(0, 60),
+                // SEO Core
+                excerpt: (blogData.excerpt || blogData.description || '').slice(0, 160),
+                seoTitle: (blogData.seoTitle || blogData.title || '').slice(0, 60),
+                metaDescription: (blogData.metaDescription || blogData.description || '').slice(0, 160),
                 seoDescription: (blogData.description || '').slice(0, 160),
+                focusKeyword: blogData.focusKeyword || '',
+                canonicalUrl: `https://amansuryavanshi.me/blogs/${blogData.slug}`,
+                articleType: blogData.articleType || 'tutorial',
+                // AI SEO Enhancement
+                primaryKeyword: blogData.focusKeyword || '',
+                secondaryKeywords: blogData.secondaryKeywords || [],
+                quotableSnippet: (blogData.quotableSnippet || '').slice(0, 300),
+                contentSummary: (blogData.contentSummary || '').slice(0, 500),
+                faqItems: (blogData.faqItems || []).map(faq => ({
+                    _key: generateKey(),
+                    question: faq.question,
+                    answer: faq.answer
+                })),
+                keyTakeaways: blogData.keyTakeaways || [],
+                estimatedReadTime: blogData.estimatedReadTime || Math.ceil(finalBlocks.length / 5),
+                // Existing fields
                 tags: (blogData.keywords || []).map(tag => ({
                     _key: generateKey(),
                     label: typeof tag === 'string' ? tag : (tag.label || tag),
@@ -326,7 +344,7 @@ try {
                         : (tag.slug || tag.toLowerCase().replace(/[^a-z0-9]+/g, '-'))
                 })),
                 publishedAt: new Date().toISOString(),
-                viewCount: 0,
+                views: 0,
                 body: finalBlocks
             }
         }]

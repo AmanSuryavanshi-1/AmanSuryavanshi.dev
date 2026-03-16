@@ -82,7 +82,24 @@ async function getPost(slug: string): Promise<Post | null> {
     status,
     seoTitle,
     metaDescription,
-    viewCount
+    viewCount,
+    // SEO & AI fields
+    focusKeyword,
+    articleType,
+    estimatedReadTime,
+    canonicalUrl,
+    publishedAt,
+    primaryKeyword,
+    secondaryKeywords,
+    quotableSnippet,
+    contentSummary,
+    faqItems[]{
+      _key,
+      question,
+      answer
+    },
+    keyTakeaways,
+    aiSeoScore
   }`;
 
   try {
@@ -123,10 +140,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${title} | Aman Suryavanshi`,
     description: description,
-    keywords: post.tags?.filter(t => t && t.name).map(t => t.name).join(', '),
+    keywords: [
+      post.primaryKeyword,
+      ...(post.secondaryKeywords || []),
+      ...(post.tags?.filter(t => t && t.label).map(t => t.label) || [])
+    ].filter(Boolean).join(', '),
     authors: post.author ? [{ name: post.author.name }] : undefined,
     alternates: {
-      canonical: `https://amansuryavanshi.me/blogs/${slug}`,
+      canonical: post.canonicalUrl || `https://amansuryavanshi.me/blogs/${slug}`,
     },
     openGraph: {
       title: title,
@@ -134,7 +155,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: 'article',
       publishedTime: post.publishedAt || post._createdAt,
       authors: post.author ? [post.author.name] : undefined,
-      tags: post.tags?.filter(t => t && t.name).map(t => t.name),
+      tags: post.tags?.filter(t => t && t.label).map(t => t.label),
       images: [openGraphImage],
     },
     twitter: {
@@ -182,13 +203,42 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
       "@id": `https://amansuryavanshi.me/blogs/${post.slug.current}`
     },
     "articleSection": post.articleType || "Technology",
-    "keywords": post.tags?.filter(t => t && t.name).map(t => t.name).join(", "),
+    "keywords": post.tags?.filter(t => t && t.label).map(t => t.label).join(", "),
     "wordCount": post.body ? JSON.stringify(post.body).split(/\s+/).length : undefined,
     "timeRequired": `PT${readTime}M`,
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "about": post.focusKeyword || post.primaryKeyword || undefined,
+    "abstract": post.quotableSnippet || post.contentSummary || undefined,
     "speakable": {
       "@type": "SpeakableSpecification",
       "cssSelector": [".prose h1", ".prose h2", ".prose h3", ".prose p:first-of-type", ".prose blockquote"]
     }
+  };
+
+  // FAQPage JSON-LD for rich snippets
+  const faqJsonLd = post.faqItems && post.faqItems.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": post.faqItems.map((faq: { question: string; answer: string }) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  } : null;
+
+  // BreadcrumbList JSON-LD for SERP display
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://amansuryavanshi.me" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://amansuryavanshi.me/blogs" },
+      { "@type": "ListItem", "position": 3, "name": post.title, "item": `https://amansuryavanshi.me/blogs/${post.slug.current}` }
+    ]
   };
 
   // Fetch related posts
@@ -215,6 +265,18 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* BreadcrumbList JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
+        {/* FAQPage JSON-LD (conditional) */}
+        {faqJsonLd && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
+        )}
         <ReadingProgress />
         {/* ViewTracker - increments view count on page load */}
         <ViewTracker postId={post._id} />
@@ -328,8 +390,50 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                   </div>
                 </div>
 
+                {/* Key Takeaways Section */}
+                {post.keyTakeaways && post.keyTakeaways.length > 0 && (
+                  <div className="mt-8 p-6 bg-lime-50/80 dark:bg-lime-950/20 rounded-2xl border border-lime-200/50 dark:border-lime-800/30">
+                    <h2 className="text-lg font-bold text-forest-900 dark:text-sage-100 mb-4 flex items-center gap-2">
+                      <span className="text-lime-600">&#9679;</span> Key Takeaways
+                    </h2>
+                    <ul className="space-y-2">
+                      {post.keyTakeaways.map((takeaway: string, index: number) => (
+                        <li key={index} className="flex items-start gap-3 text-forest-700 dark:text-sage-300">
+                          <span className="text-lime-500 font-bold mt-0.5 shrink-0">{index + 1}.</span>
+                          <span>{takeaway}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
                 {/* All Tags Section */}
                 {post.tags && <AllTags tags={post.tags} />}
+
+                {/* FAQ Section */}
+                {post.faqItems && post.faqItems.length > 0 && (
+                  <section className="mt-12">
+                    <h2 className="text-2xl font-bold text-forest-900 dark:text-sage-100 mb-6">
+                      Frequently Asked Questions
+                    </h2>
+                    <div className="space-y-3">
+                      {post.faqItems.map((faq, index) => (
+                        <details
+                          key={faq._key || `faq-${index}`}
+                          className="group border border-sage-200 dark:border-forest-800 rounded-xl overflow-hidden bg-white/80 dark:bg-forest-950/80"
+                        >
+                          <summary className="flex items-center justify-between gap-4 p-5 cursor-pointer font-semibold text-forest-900 dark:text-sage-100 hover:bg-sage-50 dark:hover:bg-forest-900/50 transition-colors">
+                            <span>{faq.question}</span>
+                            <span className="text-lime-500 group-open:rotate-45 transition-transform text-xl shrink-0">+</span>
+                          </summary>
+                          <div className="px-5 pb-5 text-forest-700 dark:text-sage-300 leading-relaxed border-t border-sage-100 dark:border-forest-800 pt-4">
+                            {faq.answer}
+                          </div>
+                        </details>
+                      ))}
+                    </div>
+                  </section>
+                )}
 
                 {/* Author Bio Card */}
                 {post.author && (

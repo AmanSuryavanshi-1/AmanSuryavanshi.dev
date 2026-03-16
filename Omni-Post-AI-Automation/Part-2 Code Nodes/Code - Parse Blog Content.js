@@ -169,6 +169,31 @@ try {
     const tagsArray = notionItem.property_shared_tags || [];
     const keywords = Array.isArray(tagsArray) ? tagsArray : [];
 
+    // NEW SEO FIELDS (Part 2)
+    const focusKeyword = notionItem.property_shared_focus_keyword || '';
+    const articleType = notionItem.property_shared_article_type || 'tutorial';
+    const quotableSnippet = notionItem.property_shared_quotable_snippet || '';
+    const contentSummary = notionItem.property_shared_content_summary || '';
+
+    // Parse JSON fields (FAQ and Key Takeaways)
+    let faqItems = [];
+    try {
+        if (notionItem.property_shared_faq_json) {
+            faqItems = JSON.parse(notionItem.property_shared_faq_json);
+        }
+    } catch (e) {
+        console.warn('Failed to parse FAQ JSON:', e.message);
+    }
+
+    let keyTakeaways = [];
+    try {
+        if (notionItem.property_shared_key_takeaways) {
+            keyTakeaways = JSON.parse(notionItem.property_shared_key_takeaways);
+        }
+    } catch (e) {
+        console.warn('Failed to parse Key Takeaways JSON:', e.message);
+    }
+
     console.log(`📋 SEO: title="${title.slice(0, 50)}...", slug="${slug}"`);
 
     // ═══════════════════════════════════════════════════════════════════════════
@@ -301,6 +326,12 @@ try {
             slug,
             description,
             keywords,
+            focusKeyword,
+            articleType,
+            quotableSnippet,
+            contentSummary,
+            faqItems,
+            keyTakeaways,
             blocks: outputBlocks,
             success: true,
             platform: 'blog',
