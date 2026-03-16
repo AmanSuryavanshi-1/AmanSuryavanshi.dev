@@ -1,10 +1,12 @@
 // ════════════════════════════════════════════════════════════════════════════
-// DEV.TO PAYLOAD ARCHITECT (v3.0 - BATTLE-TESTED PRODUCTION)
+// DEV.TO PAYLOAD ARCHITECT (v3.1 - DUAL SOURCE: Gemini Action + AI Agent)
 // Target: "Dev.to Draft"
-// Input: Gemini AI Output JSON with formatted_markdown
+// Input: Gemini AI Output ($json.text) OR AI Agent Output ($json.output)
 // Output: Clean human-readable article
 // 
-// Note: DevTo output often comes wrapped in ```json fences - handled here
+// HANDLES:
+// - Both Gemini Action node output (.text) and AI Agent output (.output)
+// - DevTo output often comes wrapped in ```json fences - handled here
 // ════════════════════════════════════════════════════════════════════════════
 
 const input = $input.first().json;
@@ -122,15 +124,28 @@ function chunkForNotion(text, maxCharsPerChunk = 1900) {
 
 let rawStr = "";
 
-if (input.generated_content) {
+// Priority 0: AI Agent node output ($json.output)
+if (input.output) {
+    rawStr = input.output;
+}
+// Priority 1: Explicit generated_content field
+else if (input.generated_content) {
     rawStr = input.generated_content;
-} else if (input.content?.parts?.[0]?.text) {
+}
+// Priority 2: Standard Gemini API format
+else if (input.content?.parts?.[0]?.text) {
     rawStr = input.content.parts[0].text;
-} else if (input.text) {
+}
+// Priority 3: Gemini Action node text field
+else if (input.text) {
     rawStr = input.text;
-} else if (typeof input === 'string') {
+}
+// Priority 4: Raw string input
+else if (typeof input === 'string') {
     rawStr = input;
-} else {
+}
+// Fallback: stringify the entire input
+else {
     try { rawStr = JSON.stringify(input); } catch (e) { rawStr = ""; }
 }
 

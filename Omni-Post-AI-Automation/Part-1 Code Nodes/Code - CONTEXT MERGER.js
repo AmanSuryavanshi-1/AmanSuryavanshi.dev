@@ -31,45 +31,76 @@ const structure = contentSummary.structure || 'linear';
 const complexity = contentSummary.complexity || 'unknown';
 const fullText = sourceContent.fullText || '';
 
-// Perplexity research block—parse its result
+// Perplexity/Tavily research block—parse its result
 let research = {};
 try {
+    // Check if the input is an array (Perplexity style: choices[0].message.content)
     if (
         Array.isArray(perplexityChoices) &&
         perplexityChoices.length > 0 &&
         typeof perplexityChoices[0] === 'object'
     ) {
         let rawContent = perplexityChoices[0].message?.content ?? '';
-        rawContent = rawContent.replace(/``````/g, '').trim();
+        rawContent = rawContent.replace(/```json/gi, '').replace(/```/g, '').trim();
         if (rawContent) {
             research = JSON.parse(rawContent);
-            console.log('✅ Parsed Perplexity JSON.');
+            console.log('✅ Parsed AI Research JSON from choices array.');
         } else {
-            throw new Error('Empty content in Perplexity choices.');
+            throw new Error('Empty content in AI Research choices.');
         }
-    } else {
-        throw new Error('Perplexity choices incomplete.');
+    }
+    // Check if the input is a direct array of objects containing stringified "output" (Tavily Agent style)
+    else if (
+        Array.isArray(perplexity) &&
+        perplexity.length > 0 &&
+        perplexity[0].output
+    ) {
+        let rawContent = perplexity[0].output;
+        rawContent = rawContent.replace(/```json/gi, '').replace(/```/g, '').trim();
+        research = JSON.parse(rawContent);
+        console.log('✅ Parsed AI Research JSON from direct output field.');
+    }
+    // Check if the input is already a direct object (clean Tavily/Webhook style)
+    else if (
+        typeof perplexity === 'object' &&
+        !Array.isArray(perplexity) &&
+        Object.keys(perplexity).length > 0 &&
+        perplexity.market_pulse // Check for a known key to verify it's the expected object
+    ) {
+        research = perplexity;
+        console.log('✅ AI Research JSON was already parsed correctly.');
+    }
+    else {
+        throw new Error('AI Research output format is unrecognized.');
     }
 } catch (err) {
-    console.warn(`⚠️ Perplexity parsing failed: ${err.message}. Using fallback research.`);
+    console.warn(`⚠️ AI Research parsing failed: ${err.message}. Using fallback research.`);
     research = {
-        authenticHashtags: {
-            twitter: ['#BuildInPublic', `#${primaryCategory}`, '#Automation', '#NoCode', '#n8n'],
-            linkedin: ['#ProcessAutomation', `#${primaryCategory}`, '#SystemsThinking', '#AI'],
+        market_pulse: {
+            urgency_trigger: "No recent updates found. Focus on evergreen automation challenges.",
+            community_sentiment: "Developers are increasingly seeking reliable, scalable alternatives to complex manual workflows.",
+            the_gap: "There is a significant gap in detailed, actionable implementation guides for advanced automation.",
+            sources: []
         },
-        optimalTimesIST: {
-            twitter_primary_ist: "9:00-11:00 am IST",
-            twitter_secondary_ist: "8:30-9:30 pm IST (US/EU overlap)",
-            linkedin_ist: "10:00-12:00 am IST (Tue-Thu)"
+        twitter: {
+            hashtags: ["#BuildInPublic", `#${primaryCategory.replace(/\s+/g, '')}`],
+            optimal_posting_times_ist: ["09:00 AM", "06:00 PM"],
+            hook_inspiration: "Are you still doing [Task] manually? Here's the automated setup that saved me 5 hours this week."
         },
-        authenticHooks: {
-            twitter_example: "Solving a weird API quirk in n8n today—here's the step that finally worked. Anyone else get stuck on webhook reliability?",
-            linkedin_example: "Client automated 50% manual onboarding steps using n8n, saving 10 hours/week. Why did we choose modular flows?"
+        linkedin: {
+            hashtags: ["#ProcessAutomation", `#${primaryCategory.replace(/\s+/g, '')}`, "#Productivity"],
+            optimal_posting_times_ist: ["10:00 AM", "02:00 PM"],
+            business_value_stat: "[UNVERIFIED] Automating this workflow typically saves 10+ hours per week for engineering teams."
         },
-        developerPainPoints: [
-            "Lack of reliable content scheduling tools for Indian time zones",
-            "Complicated OAuth flows between LinkedIn, X and custom APIs"
-        ]
+        blog: {
+            seo_keywords_primary: [
+                { keyword: `${primaryCategory.toLowerCase()} automation guide`, volume: "medium", rationale: "Evergreen search intent" }
+            ],
+            seo_keywords_longtail: [
+                { keyword: `how to automate ${primaryCategory.toLowerCase()} workflows`, volume: "low", rationale: "High intent tutorial search" }
+            ],
+            competitor_gap: "Current articles focus on theory. This post will provide the exact implementation steps."
+        }
     };
 }
 

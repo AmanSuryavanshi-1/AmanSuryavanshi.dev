@@ -1,10 +1,11 @@
 // ════════════════════════════════════════════════════════════════════════════
-// SANITY BLOG PAYLOAD ARCHITECT (v3.0 - BATTLE-TESTED PRODUCTION)
+// SANITY BLOG PAYLOAD ARCHITECT (v3.1 - DUAL SOURCE: Gemini Action + AI Agent)
 // Target: "Sanity Blog Draft" + SEO Metadata
-// Input: Gemini AI Output JSON with formatted_markdown + structured_data.seo
+// Input: Gemini AI Output ($json.text) OR AI Agent Output ($json.output)
 // Output: Clean markdown + SEO fields
 // 
 // HANDLES:
+// - Both Gemini Action node output (.text) and AI Agent output (.output)
 // - Escaped newlines (\\n, \\\\n, etc.)
 // - Truncated AI responses (MAX_TOKENS)
 // - JSON wrapped in markdown fences
@@ -205,23 +206,29 @@ function chunkForNotion(text, maxCharsPerChunk = 1900) {
 
 let rawStr = "";
 
-// Priority order for extraction from Gemini response
-if (input.generated_content) {
+// Priority 0: AI Agent node output ($json.output)
+if (input.output) {
+    rawStr = input.output;
+}
+// Priority 1: Explicit generated_content field
+else if (input.generated_content) {
     rawStr = input.generated_content;
-} else if (input.content?.parts?.[0]?.text) {
-    // Standard Gemini API format
+}
+// Priority 2: Standard Gemini API format
+else if (input.content?.parts?.[0]?.text) {
     rawStr = input.content.parts[0].text;
-} else if (input.text) {
+}
+// Priority 3: Gemini Action node text field
+else if (input.text) {
     rawStr = input.text;
-} else if (typeof input === 'string') {
+}
+// Priority 4: Raw string input
+else if (typeof input === 'string') {
     rawStr = input;
-} else {
-    // Try to stringify if it's an object we can't parse
-    try {
-        rawStr = JSON.stringify(input);
-    } catch (e) {
-        rawStr = "";
-    }
+}
+// Fallback: stringify the entire input
+else {
+    try { rawStr = JSON.stringify(input); } catch (e) { rawStr = ""; }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

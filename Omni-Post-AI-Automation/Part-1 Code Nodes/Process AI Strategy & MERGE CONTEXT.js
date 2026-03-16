@@ -19,7 +19,8 @@ if (Object.keys(originalContext).length === 0) {
 
 // 2. ROBUST JSON PARSING (The "Fence Stripper")
 // AI often wraps output in markdown or adds conversational filler. We strip it all.
-let rawText = geminiRawOutput.text ||
+let rawText = geminiRawOutput.output || // AI Agent outputs to the 'output' key
+  geminiRawOutput.text ||
   geminiRawOutput.content?.parts?.[0]?.text ||
   geminiRawOutput.result || // Some Gemini node versions use .result
   "";
