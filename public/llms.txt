@@ -33,6 +33,15 @@ Aman Suryavanshi is an AI Solutions Architect and Full-Stack Agentic Developer b
 - /projects/av-newsstream-technical-documentation: API key rotation system
 - /projects/foodah-technical-documentation: Custom React hooks for performance
 
+## Blog Topics
+Aman writes deep-dive technical articles covering:
+- n8n workflow architecture: self-healing patterns, error handling, webhook validation
+- n8n vs Zapier vs Make: production cost comparisons with real metrics
+- LangGraph and LangChain: multi-agent AI systems and state management
+- Next.js App Router: SEO optimization, server components, Sanity CMS integration
+- AI automation: multi-LLM orchestration, content generation pipelines
+- Developer career: building authority through technical content
+
 ## Blog
 - /blogs: Technical articles on n8n, AI automation, LangGraph, and Next.js development
 
@@ -43,6 +52,12 @@ Aman Suryavanshi is an AI Solutions Architect and Full-Stack Agentic Developer b
 - Backend: Node.js, Express, Firebase, Supabase
 - CMS: Sanity, Notion API
 - DevOps: Vercel, Docker, GitHub Actions
+
+## Data Availability
+- Blog content is available as structured HTML with JSON-LD schema markup
+- Each blog post includes FAQPage, Article/TechArticle, and BreadcrumbList structured data
+- Sitemap available at /sitemap.xml
+- RSS feed of latest articles available at /blogs
 
 ## Contact
 - Website: https://amansuryavanshi.me
