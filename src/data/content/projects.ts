@@ -10,6 +10,18 @@ const rawProjects = [
         type: "freelance",
         shortDescription: "Production-ready flight training platform combining Next.js 15, AI automation, and enterprise integrations. Generated ₹300,000+ in sales through 50+ organic leads with 80% reduction in manual tasks.",
         description: "A comprehensive aviation training management ecosystem built with Next.js 15, TypeScript, and AI-driven automation. The platform integrates Sanity CMS for dynamic content management, Firebase for real-time analytics, and n8n for intelligent workflow orchestration. Features automated email sequences via Resend, Cal.com meeting scheduling, Airtable CRM integration, and AI-powered SEO scoring achieving 96/100 average optimization. The system handles course registrations, student tracking, instructor management, and automated business intelligence-transforming a traditional flight school into a data-driven operation that maintains 95+ Lighthouse scores across all metrics.",
+        heroImageAlt: "Aviators Training Centre AI dashboard showing flight training KPIs, automated lead capture, and instructor scheduling",
+        seo: {
+            title: "Aviators Training Centre – AI workflow that generated ₹300K+",
+            description: "See how Aman Suryavanshi built a 74-node AI automation stack for Aviators Training Centre to eliminate 80% manual work and convert high-ticket aviation leads.",
+            keywords: [
+                "aviation workflow automation",
+                "AI training platform",
+                "n8n aviation case study",
+                "Aman Suryavanshi portfolio"
+            ],
+            canonicalPath: "/projects/aviators-training-centre"
+        },
         challenge: "Flight training businesses struggle with manual lead tracking, fragmented communication systems, poor online visibility, and inefficient administrative workflows. Traditional websites fail to capture and nurture leads effectively, resulting in lost revenue opportunities and operational bottlenecks that limit business growth and scalability.",
         solution: "Architected a full-stack Next.js platform with TypeScript, combining server-side rendering for SEO dominance, Firebase for real-time data synchronization, and n8n automation workflows for intelligent lead nurturing. Implemented AI-powered content optimization with automated email sequences, calendar integration via Cal.com, Airtable CRM for lead management, and comprehensive analytics dashboards-all while maintaining exceptional performance with 95+ Lighthouse scores. The modular architecture enables independent scaling of content management, analytics, and automation systems.",
         impact: [

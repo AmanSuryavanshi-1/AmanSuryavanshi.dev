@@ -56,8 +56,10 @@ const AboutMe = ({ personalInfo = defaultProps.personalInfo,
   return (
     <main id="about" className="w-full py-8 lg:py-12">
       <article className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-        {/* SEO-optimized H1 (visually hidden but critical for SEO) */}
-        <h1 className="sr-only">Aman Suryavanshi - Solutions Architect & AI Automation Consultant | Expert in N8N Workflow Orchestration, Next.js Development, and Business Process Automation</h1>
+        {/* SEO summary for screen readers / structured data */}
+        <p className="sr-only" aria-live="polite">
+          Aman Suryavanshi - Solutions Architect & AI Automation Consultant | Expert in N8N Workflow Orchestration, Next.js Development, and Business Process Automation.
+        </p>
 
         <section aria-labelledby="about-heading">
           <SectionTitle />

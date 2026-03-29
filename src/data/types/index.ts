@@ -252,6 +252,13 @@ export interface Project {
         alt: string;
         type: 'image' | 'video';
     }[];
+    heroImageAlt?: string;
+    seo?: {
+        title: string;
+        description: string;
+        keywords: string[];
+        canonicalPath?: string;
+    };
 }
 
 export interface ServiceData {
