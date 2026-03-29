@@ -7,7 +7,7 @@
 | **Author** | Aman Suryavanshi |
 | **Document Type** | Executive Summary |
 | **Full Documentation** | [OMNI-POST-AI-TECHNICAL-DOCUMENTATION.md](./OMNI-POST-AI-TECHNICAL-DOCUMENTATION.md) |
-| **Last Updated** | December 27, 2025 |
+| **Last Updated** | March 2026 (v5.0+ Obsidian MCP Powered) |
 
 ---
 
@@ -159,7 +159,31 @@ Phase 2: Platform Writers (Parallel Execution)
 
 ---
 
-### 4. Session-Based Architecture
+### 4. Obsidian MCP Context Engine (v5.0)
+
+**The Problem:** Stale context. Static prompts degrade in quality over time because they don't know what you are actively working on today.
+
+**The Solution:** A local-first Obsidian Model Context Protocol (MCP) bridge.
+The Omni-Post AI agent dynamically queries the Second Brain vault *at runtime* via MCP.
+- Strict scope boxing (only reads `01-Me/CONTEXT.md`, `Projects/`, `Core/`, `Content Gen/`).
+- Prioritized input normalization for determinism.
+- Watchdog script for auto-recovery (`-32001` timeout prevention).
+
+**Result:** Zero-cost, real-time dynamic context that injects live project struggles and metrics into the AI content generation pipeline, eliminating hallucinations.
+
+---
+
+### 5. Open-Source vs Private IP Split
+
+**The Challenge:** Sharing the build-in-public journey without giving away proprietary B2B IP (the heavily engineered workflows and prompts).
+
+**The Solution:** A decoupled architecture:
+- **`AmanSuryavanshi.dev` (Public):** Acts as the "Knowledge Hub". Contains all architectural documentation, executive summaries, and case studies. Proves engineering capability to the world.
+- **`OmniPost-Core` (Private):** Contains the actual n8n `*.json` execution files, Javascript Code Nodes, and Prompt Engineering trees. This is the monetizable SaaS/Agency asset.
+
+---
+
+### 6. Session-Based Architecture
 
 **Why:** Flat file storage caused file mixing, 15% failures, and manual cleanup.
 

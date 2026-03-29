@@ -3,17 +3,23 @@
 > **One idea, three platforms, zero manual work**
 
 **Author**: Aman Suryavanshi  
-**Status**: Production Ready (1000+ executions)  
-**Last Updated**: December 26, 2025  
-**ROI**: $0/month operational cost, 15-20 hours/month saved  
-**Reliability**: 99.7% success rate across 1000+ production executions  
-**Tech Stack**: n8n, Gemini 3 Flash, Perplexity Sonar, Notion API, Twitter/LinkedIn APIs, Sanity CMS
+**Status**: Production Ready (1000+ executions, v5.0+)
+**Last Updated**: March 2026
+**ROI**: $0/month operational cost, 15-20 hours/month saved
+**Reliability**: 99.7% success rate across 1000+ production executions
+**Tech Stack**: n8n, Claude 3.5 Sonnet / Gemini Flash, Obsidian MCP, Notion API, Twitter/LinkedIn APIs, Sanity CMS
 
 ---
 
 ### About This Project
 
 Omni-Post AI is a production-grade automation system built as a "Build in Public" project. It transforms a single idea from Notion into platform-optimized content for Twitter, LinkedIn, and your blog-automatically. This documentation details the complete technical architecture, AI strategy, and real-world challenges solved during development.
+
+**🔒 Intellectual Property & Repository Split (March 2026 Update):**
+To protect proprietary B2B workflows while maintaining a public portfolio, the codebase is split into two environments:
+1. **The Knowledge Hub (Public):** This `AmanSuryavanshi.dev` repository. Contains overarching architectural documentation, case studies, and executive summaries.
+2. **OmniPost-Core (Private):** Contains the execution engine (n8n JSON exports, custom Javascript Code Nodes, and heavily engineered Markdown prompts).
+*Note: Technical references to prompt logic and code nodes below refer to the architecture running in the private Core repository.*
 
 ---
 
