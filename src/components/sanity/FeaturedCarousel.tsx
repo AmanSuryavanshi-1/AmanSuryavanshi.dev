@@ -82,10 +82,10 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ posts }) => {
         if (firstAsset) {
             // Handle external images with direct URLs
             if (firstAsset.isExternal && 'url' in firstAsset.image) {
-                return firstAsset.image.url;
+                return (firstAsset.image as { url: string }).url;
             }
             // Handle Sanity images with asset references
-            return urlFor(firstAsset.image).url();
+            return urlFor(firstAsset.image as any).url();
         }
         return FallbackImageManager.getRandomFallback().path;
     };

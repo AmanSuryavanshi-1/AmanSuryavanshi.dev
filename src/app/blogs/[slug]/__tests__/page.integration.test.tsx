@@ -1,17 +1,15 @@
-/**
- * Integration Tests for Blog Post Page
- * Tests the complete rendering flow including header images, content, and responsive behavior
- */
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import BlogPost from '../page';
 import { client } from '@/sanity/lib/client';
 import type { Post } from '@/sanity/sanity';
 
-// Mock dependencies
+jest.mock('next/link', () => {
+  return ({ href, children, ...props }: { href: string; children: React.ReactNode }) => (
+    <a href={href} {...props}>{children}</a>
+  );
+});
+
 jest.mock('@/sanity/lib/client', () => ({
   client: {
     fetch: jest.fn(),
@@ -19,37 +17,83 @@ jest.mock('@/sanity/lib/client', () => ({
 }));
 
 jest.mock('@/sanity/lib/image', () => ({
-  urlFor: jest.fn((image) => ({
-    url: () => `https://cdn.sanity.io/images/${image?.asset?._ref || 'mock-ref'}`,
+  urlFor: jest.fn(() => ({
+    url: () => 'https://cdn.sanity.io/images/mock-image',
   })),
 }));
 
-jest.mock('@/components/sanity/ViewCounter', () => {
-  return function MockViewCounter({ postId }: { postId: string }) {
-    return <span data-testid="view-counter">{postId}</span>;
-  };
-});
-
-jest.mock('@/components/sanity/ShareButtons', () => {
-  return function MockShareButtons({ title }: { title: string; url: string }) {
-    return <div data-testid="share-buttons">{title}</div>;
-  };
-});
-
-jest.mock('@/components/learn-more-about-me/CTA', () => {
-  return function MockCTA() {
-    return <div data-testid="cta">CTA Section</div>;
-  };
-});
-
-jest.mock('@/lib/blog-logger', () => ({
-  BlogLogger: {
-    logHeaderImageSelection: jest.fn(),
-    logFallbackUsage: jest.fn(),
-    logImageError: jest.fn(),
-    error: jest.fn(),
-  },
+jest.mock('@/components/sanity/calculateReadTime', () => ({
+  calculateReadTime: jest.fn(() => 7),
 }));
+
+jest.mock('@/lib/metadata-utils', () => ({
+  getOpenGraphImage: jest.fn(() => ({ url: 'https://cdn.sanity.io/images/og-image' })),
+  getTwitterCardImage: jest.fn(() => ({ url: 'https://cdn.sanity.io/images/twitter-image' })),
+  getMetadataImageUrl: jest.fn(() => 'https://cdn.sanity.io/images/jsonld-image'),
+}));
+
+jest.mock('@portabletext/react', () => ({
+  PortableText: ({ value }: { value: Array<{ children?: Array<{ text?: string }> }> }) => (
+    <div data-testid="portable-text">
+      {value?.map((block, idx) => (
+        <p key={idx}>{(block.children || []).map((c) => c.text).join(' ')}</p>
+      ))}
+    </div>
+  ),
+}));
+
+jest.mock('@/components/about-page/CTA', () => function MockCTA() {
+  return <div data-testid="global-cta">Global CTA</div>;
+});
+
+jest.mock('@/components/blog/BlogHeaderImage', () => function MockBlogHeaderImage() {
+  return <img alt="Header" src="/header.jpg" />;
+});
+
+jest.mock('@/components/blog/BlogErrorBoundary', () => ({
+  BlogErrorBoundary: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
+
+jest.mock('@/components/blog/ReadingProgress', () => function MockReadingProgress() {
+  return <div data-testid="reading-progress" />;
+});
+
+jest.mock('@/components/blog/TableOfContents', () => function MockToc() {
+  return <div data-testid="toc" />;
+});
+
+jest.mock('@/components/blog/FloatingActions', () => function MockFloatingActions() {
+  return <div data-testid="floating-actions" />;
+});
+
+jest.mock('@/components/blog/MobileActionBar', () => function MockMobileActionBar() {
+  return <div data-testid="mobile-actions" />;
+});
+
+jest.mock('@/components/blog/RelatedPosts', () => function MockRelatedPosts({ posts }: { posts: unknown[] }) {
+  return <div data-testid="related-posts">related-{posts?.length ?? 0}</div>;
+});
+
+jest.mock('@/components/blog/ShareBar', () => function MockShareBar() {
+  return <div>Share this article</div>;
+});
+
+jest.mock('@/components/blog/AllTags', () => function MockAllTags() {
+  return <div data-testid="all-tags" />;
+});
+
+jest.mock('@/components/blog/BlogImageGalleryWrapper', () => ({
+  __esModule: true,
+  default: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
+
+jest.mock('@/components/blog/ScrollIndicator', () => function MockScrollIndicator() {
+  return <div data-testid="scroll-indicator" />;
+});
+
+jest.mock('@/components/blog/ViewTracker', () => function MockViewTracker() {
+  return <div data-testid="view-tracker" />;
+});
 
 jest.mock('next/navigation', () => ({
   notFound: jest.fn(() => {
@@ -59,437 +103,150 @@ jest.mock('next/navigation', () => ({
 
 const mockClient = client as jest.Mocked<typeof client>;
 
-describe('Blog Post Page Integration Tests', () => {
-  const mockPost: Post = {
-    _id: 'post-123',
-    _createdAt: '2024-01-15T10:00:00Z',
-    title: 'Test Blog Post',
-    slug: { current: 'test-blog-post', _type: 'slug' },
-    body: [
-      {
-        _type: 'block',
-        _key: 'block1',
-        children: [
-          {
-            _type: 'span',
-            _key: 'span1',
-            text: 'This is a test paragraph.',
-            marks: [],
-          },
-        ],
-        markDefs: [],
-        style: 'normal',
-      },
-      {
-        _type: 'image',
-        _key: 'img1',
-        asset: {
-          _ref: 'image-content-123',
-          _type: 'reference',
-        },
-        alt: 'Content image',
-      },
-    ],
-    excerpt: 'This is a test excerpt',
-    status: 'published',
-    viewCount: 100,
-    mainImage: {
-      _type: 'image',
-      asset: {
-        _ref: 'image-main-123',
-        _type: 'reference',
-      },
-      alt: 'Main header image',
-    },
-    author: {
-      _id: 'author-1',
-      name: 'John Doe',
-      image: {
-        _type: 'image',
-        asset: {
-          _ref: 'author-image-123',
-          _type: 'reference',
-        },
-      },
-      bio: [
+const basePost: Post = {
+  _id: 'post-1',
+  _type: 'post',
+  _createdAt: '2024-01-15T10:00:00Z',
+  _updatedAt: '2024-02-01T10:00:00Z',
+  title: 'Test Blog Post',
+  slug: { current: 'test-blog-post', _type: 'slug' },
+  excerpt: 'Test excerpt',
+  canonicalUrl: 'https://amansuryavanshi.me/blogs/test-blog-post',
+  body: [
+    {
+      _type: 'block',
+      _key: 'b1',
+      style: 'normal',
+      markDefs: [],
+      children: [
         {
-          _type: 'block',
-          _key: 'bio1',
-          children: [
-            {
-              _type: 'span',
-              _key: 'biospan1',
-              text: 'Author bio',
-              marks: [],
-            },
-          ],
-          markDefs: [],
-          style: 'normal',
+          _key: 'c1',
+          _type: 'span',
+          marks: [],
+          text: 'This is a test paragraph.',
         },
       ],
     },
-    categories: [
-      {
-        _id: 'cat-1',
-        title: 'Technology',
-      },
-    ],
-    tags: ['testing', 'integration'],
-  };
+  ],
+  author: {
+    _id: 'author-1',
+    _type: 'author',
+    name: 'Aman Suryavanshi',
+  },
+  tags: [
+    { _key: 't1', label: 'SEO', slug: 'seo' },
+  ],
+  status: 'published',
+  keyTakeaways: ['Takeaway one'],
+  faqItems: [
+    {
+      _key: 'faq-1',
+      question: 'What is AEO?',
+      answer: 'Answer Engine Optimization improves AI discoverability.',
+    },
+  ],
+  internal_links: [
+    {
+      _key: 'il-1',
+      anchor_text: 'Read the prompt engineering guide',
+      context: 'Deep dive into practical prompt frameworks.',
+      url: '/blogs/prompt-engineering-guide',
+    },
+  ],
+  cta_type: 'portfolio_proof',
+  cta_text: 'See this workflow in production with full architecture breakdown.',
+  primary_category: {
+    title: 'AI Automation',
+    slug: { current: 'ai-automation', _type: 'slug' },
+  },
+  subcategory: 'SEO Systems',
+};
 
+describe('Blog Post Page SEO/AEO integration', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockClient.fetch.mockResolvedValue(mockPost);
-  });
-
-  describe('Complete Header Image Flow', () => {
-    it('should render blog post with mainImage as header', async () => {
-      const params = Promise.resolve({ slug: 'test-blog-post' });
-      const component = await BlogPost({ params });
-      
-      const { container } = render(component);
-
-      // Check that header image is rendered
-      const images = screen.getAllByRole('img');
-      expect(images.length).toBeGreaterThan(0);
-      
-      // Check hero section exists
-      const heroSection = container.querySelector('.relative.h-\\[65vh\\]');
-      expect(heroSection).toBeInTheDocument();
-    });
-
-    it('should use first asset when mainImage is missing', async () => {
-      const postWithoutMainImage = {
-        ...mockPost,
-        mainImage: undefined,
-      };
-      mockClient.fetch.mockResolvedValue(postWithoutMainImage);
-
-      const params = Promise.resolve({ slug: 'test-blog-post' });
-      const component = await BlogPost({ params });
-      
-      const { container } = render(component);
-
-      // Should still render header section
-      const heroSection = container.querySelector('.relative.h-\\[65vh\\]');
-      expect(heroSection).toBeInTheDocument();
-    });
-
-    it('should use fallback when no images available', async () => {
-      const postWithoutImages = {
-        ...mockPost,
-        mainImage: undefined,
-        body: [
-          {
-            _type: 'block',
-            _key: 'block1',
-            children: [
-              {
-                _type: 'span',
-                _key: 'span1',
-                text: 'Text only content',
-                marks: [],
-              },
-            ],
-            markDefs: [],
-            style: 'normal',
-          },
-        ],
-      };
-      mockClient.fetch.mockResolvedValue(postWithoutImages);
-
-      const params = Promise.resolve({ slug: 'test-blog-post' });
-      const component = await BlogPost({ params });
-      
-      const { container } = render(component);
-
-      // Should still render with fallback
-      const heroSection = container.querySelector('.relative.h-\\[65vh\\]');
-      expect(heroSection).toBeInTheDocument();
+    mockClient.fetch.mockImplementation(async (query: string) => {
+      if (query.includes('slug.current == $slug')) return basePost;
+      if (query.includes('count((tags[]->slug.current)')) return [];
+      if (query.includes('_type == "author"')) return basePost.author;
+      return null;
     });
   });
 
-  describe('Heading Consistency', () => {
-    it('should render headings with consistent styling', async () => {
-      const postWithHeadings = {
-        ...mockPost,
-        body: [
-          {
-            _type: 'block',
-            _key: 'h1',
-            children: [
-              {
-                _type: 'span',
-                _key: 'h1span',
-                text: 'Heading 1',
-                marks: [],
-              },
-            ],
-            markDefs: [],
-            style: 'h1',
-          },
-          {
-            _type: 'block',
-            _key: 'h2',
-            children: [
-              {
-                _type: 'span',
-                _key: 'h2span',
-                text: 'Heading 2',
-                marks: [],
-              },
-            ],
-            markDefs: [],
-            style: 'h2',
-          },
-          {
-            _type: 'block',
-            _key: 'h3',
-            children: [
-              {
-                _type: 'span',
-                _key: 'h3span',
-                text: 'Heading 3',
-                marks: [],
-              },
-            ],
-            markDefs: [],
-            style: 'h3',
-          },
-        ],
-      };
-      mockClient.fetch.mockResolvedValue(postWithHeadings);
+  it('renders BlogPosting, BreadcrumbList, and FAQPage JSON-LD', async () => {
+    const component = await BlogPost({ params: Promise.resolve({ slug: 'test-blog-post' }) });
+    const { container } = render(component);
 
-      const params = Promise.resolve({ slug: 'test-blog-post' });
-      const component = await BlogPost({ params });
-      
-      const { container } = render(component);
+    const jsonLdScripts = Array.from(container.querySelectorAll('script[type="application/ld+json"]'))
+      .map((node) => JSON.parse(node.textContent || '{}'));
 
-      // Check that headings are rendered
-      expect(screen.getByText('Heading 1')).toBeInTheDocument();
-      expect(screen.getByText('Heading 2')).toBeInTheDocument();
-      expect(screen.getByText('Heading 3')).toBeInTheDocument();
+    const blogPosting = jsonLdScripts.find((s) => s['@type'] === 'BlogPosting');
+    const breadcrumbList = jsonLdScripts.find((s) => s['@type'] === 'BreadcrumbList');
+    const faqPage = jsonLdScripts.find((s) => s['@type'] === 'FAQPage');
 
-      // Check that headings have proper styling classes
-      const h1 = screen.getByText('Heading 1');
-      expect(h1.className).toContain('text-');
-      expect(h1.className).toContain('font-');
-    });
+    expect(blogPosting).toBeDefined();
+    expect(blogPosting.headline).toBe('Test Blog Post');
+    expect(blogPosting.publisher?.['@type']).toBe('Organization');
+    expect(blogPosting.mainEntityOfPage?.['@id']).toBe('https://amansuryavanshi.me/blogs/test-blog-post');
 
-    it('should render bold text consistently', async () => {
-      const postWithBoldText = {
-        ...mockPost,
-        body: [
-          {
-            _type: 'block',
-            _key: 'block1',
-            children: [
-              {
-                _type: 'span',
-                _key: 'span1',
-                text: 'Normal text ',
-                marks: [],
-              },
-              {
-                _type: 'span',
-                _key: 'span2',
-                text: 'bold text',
-                marks: ['strong'],
-              },
-            ],
-            markDefs: [],
-            style: 'normal',
-          },
-        ],
-      };
-      mockClient.fetch.mockResolvedValue(postWithBoldText);
+    expect(breadcrumbList).toBeDefined();
+    expect(breadcrumbList.itemListElement.map((i: { name: string }) => i.name)).toEqual([
+      'Home',
+      'AI Automation',
+      'SEO Systems',
+      'Test Blog Post',
+    ]);
 
-      const params = Promise.resolve({ slug: 'test-blog-post' });
-      const component = await BlogPost({ params });
-      
-      render(component);
-
-      // Check that bold text is rendered
-      const boldText = screen.getByText('bold text');
-      expect(boldText.tagName).toBe('STRONG');
-      expect(boldText.className).toContain('font-bold');
-    });
+    expect(faqPage).toBeDefined();
+    expect(faqPage.mainEntity[0].name).toBe('What is AEO?');
   });
 
-  describe('Responsive Image Behavior', () => {
-    it('should render content images with responsive sizing', async () => {
-      const params = Promise.resolve({ slug: 'test-blog-post' });
-      const component = await BlogPost({ params });
-      
-      const { container } = render(component);
+  it('renders Related Articles from internal_links with context text', async () => {
+    const component = await BlogPost({ params: Promise.resolve({ slug: 'test-blog-post' }) });
+    render(component);
 
-      // Check that content area has prose classes for responsive typography
-      const proseContainer = container.querySelector('.prose');
-      expect(proseContainer).toBeInTheDocument();
-      expect(proseContainer?.className).toContain('prose-lg');
-    });
+    expect(screen.getByRole('heading', { name: 'Related Articles' })).toBeInTheDocument();
+    expect(screen.getByText('Read the prompt engineering guide')).toBeInTheDocument();
+    expect(screen.getByText('Deep dive into practical prompt frameworks.')).toBeInTheDocument();
 
-    it('should handle multiple images in content', async () => {
-      const postWithMultipleImages = {
-        ...mockPost,
-        body: [
-          {
-            _type: 'image',
-            _key: 'img1',
-            asset: {
-              _ref: 'image-1',
-              _type: 'reference',
-            },
-            alt: 'First image',
-          },
-          {
-            _type: 'block',
-            _key: 'block1',
-            children: [
-              {
-                _type: 'span',
-                _key: 'span1',
-                text: 'Some text',
-                marks: [],
-              },
-            ],
-            markDefs: [],
-            style: 'normal',
-          },
-          {
-            _type: 'image',
-            _key: 'img2',
-            asset: {
-              _ref: 'image-2',
-              _type: 'reference',
-            },
-            alt: 'Second image',
-          },
-        ],
-      };
-      mockClient.fetch.mockResolvedValue(postWithMultipleImages);
-
-      const params = Promise.resolve({ slug: 'test-blog-post' });
-      const component = await BlogPost({ params });
-      
-      render(component);
-
-      // Should render multiple images
-      const images = screen.getAllByRole('img');
-      expect(images.length).toBeGreaterThan(2); // Header + content images + author image
-    });
+    const articleLink = screen.getByRole('link', { name: /Read the prompt engineering guide/i });
+    expect(articleLink).toHaveAttribute('href', '/blogs/prompt-engineering-guide');
   });
 
-  describe('Error Scenarios', () => {
-    it('should handle missing post gracefully', async () => {
-      mockClient.fetch.mockResolvedValue(null);
+  it('renders FAQ questions as h3 headings inside accordion', async () => {
+    const component = await BlogPost({ params: Promise.resolve({ slug: 'test-blog-post' }) });
+    render(component);
 
-      const params = Promise.resolve({ slug: 'non-existent' });
-      
-      // The component should call notFound() which throws an error
-      try {
-        await BlogPost({ params });
-        // If we get here, the test should fail
-        expect(true).toBe(false);
-      } catch (error) {
-        // Expect the error to be thrown
-        expect(error).toBeDefined();
+    const faqQuestions = screen.getAllByRole('heading', { level: 3, name: 'What is AEO?' });
+    expect(faqQuestions.length).toBeGreaterThan(0);
+  });
+
+  it('renders CTA variant when cta_type exists and falls back to global CTA otherwise', async () => {
+    const withVariant = await BlogPost({ params: Promise.resolve({ slug: 'test-blog-post' }) });
+    render(withVariant);
+
+    expect(screen.getByRole('heading', { name: 'See this in production' })).toBeInTheDocument();
+    expect(screen.getByText('See this workflow in production with full architecture breakdown.')).toBeInTheDocument();
+
+    mockClient.fetch.mockImplementation(async (query: string) => {
+      if (query.includes('slug.current == $slug')) {
+        return { ...basePost, cta_type: undefined, cta_text: undefined };
       }
+      if (query.includes('count((tags[]->slug.current)')) return [];
+      return null;
     });
 
-    it('should render post without author', async () => {
-      const postWithoutAuthor = {
-        ...mockPost,
-        author: undefined,
-      };
-      mockClient.fetch.mockResolvedValue(postWithoutAuthor);
+    const withoutVariant = await BlogPost({ params: Promise.resolve({ slug: 'test-blog-post' }) });
+    render(withoutVariant);
 
-      const params = Promise.resolve({ slug: 'test-blog-post' });
-      const component = await BlogPost({ params });
-      
-      const { container } = render(component);
-
-      // Should render without author section
-      expect(screen.queryByText('John Doe')).not.toBeInTheDocument();
-      
-      // But should still render main content
-      const titles = screen.getAllByText('Test Blog Post');
-      expect(titles.length).toBeGreaterThan(0);
-    });
-
-    it('should render post without categories', async () => {
-      const postWithoutCategories = {
-        ...mockPost,
-        categories: undefined,
-      };
-      mockClient.fetch.mockResolvedValue(postWithoutCategories);
-
-      const params = Promise.resolve({ slug: 'test-blog-post' });
-      const component = await BlogPost({ params });
-      
-      render(component);
-
-      // Should render without category badges
-      expect(screen.queryByText('Technology')).not.toBeInTheDocument();
-      
-      // But should still render main content
-      const titles = screen.getAllByText('Test Blog Post');
-      expect(titles.length).toBeGreaterThan(0);
-    });
+    expect(screen.getByTestId('global-cta')).toBeInTheDocument();
   });
 
-  describe('Complete Page Structure', () => {
-    it('should render all major sections', async () => {
-      const params = Promise.resolve({ slug: 'test-blog-post' });
-      const component = await BlogPost({ params });
-      
-      const { container } = render(component);
+  it('uses category/subcategory query-param breadcrumb links', async () => {
+    const component = await BlogPost({ params: Promise.resolve({ slug: 'test-blog-post' }) });
+    render(component);
 
-      // Hero section
-      expect(container.querySelector('.relative.h-\\[65vh\\]')).toBeInTheDocument();
-      
-      // Title (using getAllByText since it appears in multiple places)
-      const titles = screen.getAllByText('Test Blog Post');
-      expect(titles.length).toBeGreaterThan(0);
-      
-      // Author section
-      expect(screen.getByText('John Doe')).toBeInTheDocument();
-      
-      // Content
-      expect(screen.getByText('This is a test paragraph.')).toBeInTheDocument();
-      
-      // Share section
-      expect(screen.getByText('Share this article')).toBeInTheDocument();
-      
-      // CTA
-      expect(screen.getByTestId('cta')).toBeInTheDocument();
-    });
-
-    it('should render metadata elements', async () => {
-      const params = Promise.resolve({ slug: 'test-blog-post' });
-      const component = await BlogPost({ params });
-      
-      render(component);
-
-      // Read time
-      expect(screen.getByText(/min read/)).toBeInTheDocument();
-      
-      // View counter
-      expect(screen.getByTestId('view-counter')).toBeInTheDocument();
-      
-      // Date
-      expect(screen.getByText(/Jan 15, 2024/)).toBeInTheDocument();
-    });
-
-    it('should render categories as badges', async () => {
-      const params = Promise.resolve({ slug: 'test-blog-post' });
-      const component = await BlogPost({ params });
-      
-      render(component);
-
-      const categoryBadge = screen.getByText('Technology');
-      expect(categoryBadge).toBeInTheDocument();
-      expect(categoryBadge.className).toContain('rounded-full');
-    });
+    expect(screen.getByRole('link', { name: 'AI Automation' })).toHaveAttribute('href', '/blogs?category=ai-automation');
+    expect(screen.getByRole('link', { name: 'SEO Systems' })).toHaveAttribute('href', '/blogs?category=ai-automation&sub=seo-systems');
   });
 });

@@ -5,7 +5,7 @@
 import { urlFor } from '@/sanity/lib/image';
 import { FallbackImageManager } from '@/lib/fallback-image-manager';
 import { getFirstAssetFromBody } from '@/lib/asset-extraction';
-import type { Post } from '@/sanity/sanity';
+import type { Post, SanityImage } from '@/sanity/sanity';
 
 /**
  * Get the header image URL for metadata and Open Graph
@@ -15,20 +15,25 @@ import type { Post } from '@/sanity/sanity';
  */
 export function getMetadataImageUrl(post: Post): string {
   try {
-    // Priority 1: Use existing mainImage
+    // Priority 1: Use dedicated social image for metadata if available
+    if (post.socialImage) {
+      return urlFor(post.socialImage).url();
+    }
+
+    // Priority 2: Use existing mainImage
     if (post.mainImage) {
       return urlFor(post.mainImage).url();
     }
 
-    // Priority 2: Use first image from body content
+    // Priority 3: Use first image from body content
     const firstAsset = getFirstAssetFromBody(post.body);
     if (firstAsset) {
       // Handle external images (from n8n) with direct URLs
       if (firstAsset.isExternal && 'url' in firstAsset.image) {
-        return firstAsset.image.url;
+        return (firstAsset.image as { url: string }).url;
       }
       // Handle Sanity images with asset references
-      return urlFor(firstAsset.image).url();
+      return urlFor(firstAsset.image as SanityImage).url();
     }
 
     // Priority 3: Use random fallback image

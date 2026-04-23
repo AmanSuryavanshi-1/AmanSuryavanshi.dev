@@ -218,6 +218,60 @@ export const postType = defineType({
       description: 'Key takeaways for AI SEO',
       of: [{ type: 'string' }]
     }),
+    defineField({
+      name: 'internal_links',
+      title: 'Internal Links',
+      type: 'array',
+      description: 'Related article links generated for internal linking',
+      group: 'seo',
+      of: [{
+        type: 'object',
+        fields: [
+          { name: 'anchor_text', type: 'string', title: 'Anchor Text' },
+          { name: 'context', type: 'text', title: 'Context', rows: 2 },
+          { name: 'url', type: 'string', title: 'URL or Path' }
+        ],
+        preview: {
+          select: { title: 'anchor_text', subtitle: 'url' }
+        }
+      }]
+    }),
+    defineField({
+      name: 'cta_type',
+      title: 'CTA Type',
+      type: 'string',
+      group: 'seo',
+      options: {
+        list: [
+          { title: 'Save for Reference', value: 'save_for_reference' },
+          { title: 'Vote Value Stack', value: 'vote_value_stack' },
+          { title: 'Portfolio Proof', value: 'portfolio_proof' },
+          { title: 'Collaborative', value: 'collaborative' }
+        ],
+        layout: 'dropdown',
+      },
+    }),
+    defineField({
+      name: 'cta_text',
+      title: 'CTA Text',
+      type: 'text',
+      rows: 3,
+      group: 'seo',
+      description: 'Custom CTA copy generated for this post',
+    }),
+    defineField({
+      name: 'primary_category',
+      title: 'Primary Category',
+      type: 'reference',
+      to: { type: 'category' },
+      group: 'meta',
+    }),
+    defineField({
+      name: 'subcategory',
+      title: 'Subcategory',
+      type: 'string',
+      group: 'meta',
+    }),
     // AI SEO Enhancement Fields
     defineField({
       name: 'primaryKeyword',

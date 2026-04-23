@@ -19,7 +19,7 @@ export type FallbackCategory = 'code' | 'dashboard' | 'mobile' | 'server' | 'wor
  */
 export interface FallbackContext {
   title?: string;
-  techStack?: string[];
+  techStack?: readonly string[];
   type?: string;
   projectId?: string;
 }

@@ -55,13 +55,13 @@ const FeaturedPost: React.FC<FeaturedPostProps> = ({ post, isSingle, className =
             // Handle external images with direct URLs
             if (firstAsset.isExternal && 'url' in firstAsset.image) {
                 return {
-                    url: firstAsset.image.url,
+                    url: (firstAsset.image as { url: string }).url,
                     alt: firstAsset.alt || post.title
                 };
             }
             // Handle Sanity images with asset references
             return {
-                url: urlFor(firstAsset.image).url(),
+                url: urlFor(firstAsset.image as any).url(),
                 alt: firstAsset.alt || post.title
             };
         }

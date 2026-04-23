@@ -237,7 +237,7 @@ export interface Project {
         // Simplified structure for automation
     };
     // Used in UI but constructed from techStack strings + IconMap
-    technologies?: Array<{
+    technologies: Array<{
         name: string;
         icon: React.ElementType;
     }>;
@@ -256,7 +256,7 @@ export interface Project {
     seo?: {
         title: string;
         description: string;
-        keywords: string[];
+        keywords: readonly string[];
         canonicalPath?: string;
     };
 }

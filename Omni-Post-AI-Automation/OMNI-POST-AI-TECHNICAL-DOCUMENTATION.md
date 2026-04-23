@@ -21,6 +21,8 @@ To protect proprietary B2B workflows while maintaining a public portfolio, the c
 2. **OmniPost-Core (Private):** Contains the execution engine (n8n JSON exports, custom Javascript Code Nodes, and heavily engineered Markdown prompts).
 *Note: Technical references to prompt logic and code nodes below refer to the architecture running in the private Core repository.*
 
+**Companion Blueprint:** [OMNIPOST-OS-FULL-TECHNICAL-ARCHITECTURE.md](./OMNIPOST-OS-FULL-TECHNICAL-ARCHITECTURE.md)
+
 ---
 
 ## 📋 Table of Contents

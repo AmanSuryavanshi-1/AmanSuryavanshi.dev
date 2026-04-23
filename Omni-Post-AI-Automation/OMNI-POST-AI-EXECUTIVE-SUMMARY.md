@@ -7,6 +7,7 @@
 | **Author** | Aman Suryavanshi |
 | **Document Type** | Executive Summary |
 | **Full Documentation** | [OMNI-POST-AI-TECHNICAL-DOCUMENTATION.md](./OMNI-POST-AI-TECHNICAL-DOCUMENTATION.md) |
+| **Full Architecture Blueprint** | [OMNIPOST-OS-FULL-TECHNICAL-ARCHITECTURE.md](./OMNIPOST-OS-FULL-TECHNICAL-ARCHITECTURE.md) |
 | **Last Updated** | March 2026 (v5.0+ Obsidian MCP Powered) |
 
 ---

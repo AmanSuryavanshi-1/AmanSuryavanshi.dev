@@ -448,7 +448,7 @@ export default function ProjectMediaCarousel({ project, className }: ProjectMedi
                                             <CustomVideoPlayer
                                                 videoId={mediaSlides[lightboxIndex].youtubeId!}
                                                 title={mediaSlides[lightboxIndex].alt}
-                                                poster={mediaSlides[lightboxIndex].type === 'image' ? mediaSlides[lightboxIndex].src : undefined}
+                                                poster={undefined}
                                                 accentColor="#84cc16"
                                                 // Apply 1.0 zoom (no zoom) for Aviators to show subtitles
                                                 // Apply 1.5 zoom for others for clean/sleek look

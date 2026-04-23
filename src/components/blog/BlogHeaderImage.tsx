@@ -52,7 +52,7 @@ function getHeaderImageSource(post: Post): HeaderImageSource {
       if (firstAsset.isExternal && 'url' in firstAsset.image) {
         return {
           type: 'first-asset',
-          url: firstAsset.image.url,
+          url: (firstAsset.image as { url: string }).url,
           alt: firstAsset.alt || post.title
         };
       }
@@ -60,7 +60,7 @@ function getHeaderImageSource(post: Post): HeaderImageSource {
       // Handle Sanity images with asset references
       return {
         type: 'first-asset',
-        url: urlFor(firstAsset.image).url(),
+        url: urlFor(firstAsset.image as any).url(),
         alt: firstAsset.alt || post.title
       };
     }

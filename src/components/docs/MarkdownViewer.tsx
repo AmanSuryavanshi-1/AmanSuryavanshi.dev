@@ -23,17 +23,17 @@ interface MarkdownViewerProps {
  */
 
 // Modern, clean image component with fallback support
-const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key: string]: any }) => {
+const MarkdownImage = ({ src, alt, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => {
     const { registerImage, openGallery, images } = useImageGallery();
     const [imageError, setImageError] = React.useState(false);
     const [fallbackSrc, setFallbackSrc] = React.useState<string | null>(null);
 
-    const isBadge = alt?.toLowerCase().includes('badge') || src?.toLowerCase().includes('badge') || src?.toLowerCase().includes('shield.io');
-    const isMobileScreenshot = alt?.toLowerCase().includes('mobile') || alt?.toLowerCase().includes('phone');
+    const isBadge = String(alt).toLowerCase().includes('badge') || String(src).toLowerCase().includes('badge') || String(src).toLowerCase().includes('shield.io');
+    const isMobileScreenshot = String(alt).toLowerCase().includes('mobile') || String(alt).toLowerCase().includes('phone');
 
     React.useEffect(() => {
         if (src && !isBadge) {
-            registerImage({ src, alt: alt || '' });
+            registerImage({ src: typeof src === 'string' ? src : '', alt: typeof alt === 'string' ? alt : '' });
         }
     }, [src, alt, registerImage, isBadge]);
 
@@ -43,7 +43,7 @@ const MarkdownImage = ({ src, alt, ...props }: { src?: string; alt?: string;[key
         setFallbackSrc(null);
     }, [src]);
 
-    if (!src) return null;
+    if (!src || typeof src !== 'string') return null;
 
     // Determine which source to display
     const displaySrc = imageError && fallbackSrc ? fallbackSrc : src;

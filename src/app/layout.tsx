@@ -122,7 +122,7 @@ const structuredData = {
             image: {
                 "@type": "ImageObject",
                 "@id": `${SITE_URL}#image`,
-                url: "/Images/profile-pic.png",
+                url: `${SITE_URL}/Images/profile-pic.png`,
                 width: 1200,
                 height: 630,
             },
@@ -166,13 +166,28 @@ const structuredData = {
             ],
         },
         {
+            "@type": "Organization",
+            "@id": `${SITE_URL}#organization`,
+            name: SITE_NAME,
+            url: SITE_URL,
+            sameAs: [
+                "https://github.com/AmanSuryavanshi-1",
+                "https://www.linkedin.com/in/amansuryavanshi-ai/",
+                "https://twitter.com/_AmanSurya"
+            ],
+            logo: {
+                "@type": "ImageObject",
+                url: `${SITE_URL}/Profile/PFP-Cricular.webp`
+            }
+        },
+        {
             "@type": "WebSite",
             "@id": `${SITE_URL}#website`,
             url: SITE_URL,
             name: SITE_TITLE,
             description: SITE_DESCRIPTION,
             publisher: {
-                "@id": `${SITE_URL}#person`
+                "@id": `${SITE_URL}#organization`
             },
         },
         {
@@ -186,7 +201,7 @@ const structuredData = {
             },
             areaServed: ["Global", "USA", "UK", "India"],
             priceRange: "₹50,000 - ₹5,00,000",
-            image: "/Images/profile-pic.png",
+            image: `${SITE_URL}/Images/profile-pic.png`,
             serviceType: [
                 "AI Workflow Automation",
                 "n8n Production Deployment",

@@ -73,6 +73,18 @@ export interface FaqItem {
   answer: string;
 }
 
+export interface InternalLinkItem {
+  _key?: string;
+  anchor_text?: string;
+  context?: string;
+  url?: string;
+}
+
+export interface PrimaryCategoryRef {
+  title: string;
+  slug: { current: string; _type: 'slug' };
+}
+
 export interface Post {
   _id: string;
   _type: 'post';
@@ -97,6 +109,11 @@ export interface Post {
   estimatedReadTime?: number;
   faqItems?: FaqItem[];
   keyTakeaways?: string[];
+  internal_links?: InternalLinkItem[];
+  cta_type?: 'save_for_reference' | 'vote_value_stack' | 'portfolio_proof' | 'collaborative';
+  cta_text?: string;
+  primary_category?: PrimaryCategoryRef;
+  subcategory?: string;
   // AI SEO Enhancement Fields
   primaryKeyword?: string;
   secondaryKeywords?: string[];

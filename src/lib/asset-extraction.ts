@@ -67,10 +67,11 @@ export function extractAssetsFromBody(body: PortableTextBlockType[]): ExtractedA
       // Handle externalImage blocks (from n8n automation)
       // @ts-expect-error - externalImage is a custom block type
       if (block._type === 'externalImage' && isValidExternalImage(block)) {
+        const extBlock = block as any;
         extractedAssets.push({
-          image: { url: block.url },
-          alt: block.alt || `External image ${imageIndex + 1}`,
-          caption: block.caption,
+          image: { url: extBlock.url },
+          alt: extBlock.alt || `External image ${imageIndex + 1}`,
+          caption: extBlock.caption,
           index: imageIndex++,
           isExternal: true
         });
@@ -78,15 +79,13 @@ export function extractAssetsFromBody(body: PortableTextBlockType[]): ExtractedA
       }
 
       // CATCH-ALL: Check if ANY block has a direct URL property (handles unknown block types)
-      // @ts-expect-error - checking for any URL-like properties
-      const directUrl = block.url || block.src || block.imageUrl;
+      const anyBlock = block as any;
+      const directUrl = anyBlock.url || anyBlock.src || anyBlock.imageUrl;
       if (directUrl && typeof directUrl === 'string' && (directUrl.startsWith('http://') || directUrl.startsWith('https://'))) {
         extractedAssets.push({
           image: { url: directUrl },
-          // @ts-expect-error - accessing dynamic properties
-          alt: block.alt || `Image ${imageIndex + 1}`,
-          // @ts-expect-error - accessing dynamic properties
-          caption: block.caption,
+          alt: anyBlock.alt || `Image ${imageIndex + 1}`,
+          caption: anyBlock.caption,
           index: imageIndex++,
           isExternal: true
         });

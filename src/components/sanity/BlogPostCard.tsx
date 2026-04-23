@@ -74,13 +74,13 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
             // Handle external images with direct URLs
             if (firstAsset.isExternal && 'url' in firstAsset.image) {
                 return {
-                    url: firstAsset.image.url,
+                    url: (firstAsset.image as { url: string }).url,
                     alt: firstAsset.alt || post.title
                 };
             }
             // Handle Sanity images with asset references
             return {
-                url: urlFor(firstAsset.image).url(),
+                url: urlFor(firstAsset.image as any).url(),
                 alt: firstAsset.alt || post.title
             };
         }
@@ -113,7 +113,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                             <div className="absolute top-2 left-2 z-10 flex gap-1.5 flex-wrap max-w-[90%]">
                                 {prioritizedTags.slice(0, 3).map(tag => (
                                     <span
-                                        key={tag._id}
+                                        key={tag._key}
                                         className="px-3 py-1 text-[10px] font-semibold rounded-full bg-sage-100/95 dark:bg-forest-800/95 text-forest-800 dark:text-lime-400 backdrop-blur-sm border-2 border-forest-600/40 dark:border-lime-500/40 whitespace-nowrap shadow-sm transition-all duration-300 hover:bg-lime-400 hover:text-forest-900 hover:border-lime-500 hover:scale-105 cursor-default"
                                     >
                                         {tag.label}
@@ -187,7 +187,7 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                         <div className="absolute z-10 top-2 right-2 flex gap-1.5 flex-wrap justify-end max-w-[85%]">
                             {prioritizedTags.slice(0, 3).map(tag => (
                                 <span
-                                    key={tag._id}
+                                    key={tag._key}
                                     className="px-3 py-1 text-[10px] font-semibold rounded-full bg-sage-100/95 dark:bg-forest-800/95 text-forest-800 dark:text-lime-400 backdrop-blur-sm border-2 border-forest-600/40 dark:border-lime-500/40 whitespace-nowrap shadow-sm transition-all duration-300 hover:bg-lime-400 hover:text-forest-900 hover:border-lime-500 hover:scale-105 cursor-default"
                                 >
                                     {tag.label}

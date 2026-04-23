@@ -1,9 +1,11 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import { format } from 'date-fns';
 
 import { BiTime, BiLogoLinkedin, BiLogoGithub, BiGlobe } from 'react-icons/bi';
 import { FaXTwitter } from 'react-icons/fa6';
+import { Bookmark, MessageSquare, ExternalLink, Users } from 'lucide-react';
 import { PortableText } from '@portabletext/react';
 import { urlFor } from '@/sanity/lib/image';
 import { calculateReadTime } from '@/components/sanity/calculateReadTime';
@@ -28,10 +30,13 @@ import AllTags from '@/components/blog/AllTags';
 import BlogImageGalleryWrapper from '@/components/blog/BlogImageGalleryWrapper';
 import ScrollIndicator from '@/components/blog/ScrollIndicator';
 import ViewTracker from '@/components/blog/ViewTracker';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 type NextPageProps = {
   params: Promise<{ slug: string }>;
 };
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.amansuryavanshi.me';
 
 async function getPost(slug: string): Promise<Post | null> {
   const query = `*[_type == "post" && slug.current == $slug][0]{
@@ -99,6 +104,19 @@ async function getPost(slug: string): Promise<Post | null> {
       answer
     },
     keyTakeaways,
+    internal_links[]{
+      _key,
+      anchor_text,
+      context,
+      url
+    },
+    cta_type,
+    cta_text,
+    primary_category->{
+      title,
+      slug
+    },
+    subcategory,
     aiSeoScore
   }`;
 
@@ -133,7 +151,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!post) notFound();
 
   const title = post.seoTitle || post.title;
-  const description = post.metaDescription || post.excerpt;
+  const description = post.metaDescription || post.seoDescription || post.excerpt;
   const openGraphImage = getOpenGraphImage(post);
   const twitterCardImage = getTwitterCardImage(post);
 
@@ -147,7 +165,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     ].filter(Boolean).join(', '),
     authors: post.author ? [{ name: post.author.name }] : undefined,
     alternates: {
-      canonical: post.canonicalUrl || `https://amansuryavanshi.me/blogs/${slug}`,
+      canonical: post.canonicalUrl || `${SITE_URL}/blogs/${slug}`,
     },
     openGraph: {
       title: title,
@@ -167,7 +185,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function BlogPost({ params }: NextPageProps): Promise<JSX.Element> {
+export default async function BlogPost({ params }: NextPageProps) {
   const { slug } = await params;
   const post = await getPost(slug);
 
@@ -178,68 +196,136 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
   }
 
   const readTime = calculateReadTime(post.body);
+  const siteUrl = SITE_URL;
+  const canonicalUrl = post.canonicalUrl || `${siteUrl}/blogs/${post.slug.current}`;
+
+  const normalizedSubcategory = post.subcategory?.trim();
+  const primaryCategorySlug = post.primary_category?.slug?.current;
+  const categoryQuery = primaryCategorySlug ? encodeURIComponent(primaryCategorySlug) : '';
+  const subcategoryQuery = normalizedSubcategory
+    ? encodeURIComponent(normalizedSubcategory.toLowerCase().replace(/\s+/g, '-'))
+    : '';
+
+  const breadcrumbItems = post.primary_category
+    ? [
+      {
+        label: post.primary_category.title,
+        href: categoryQuery ? `/blogs?category=${categoryQuery}` : undefined,
+      },
+      ...(normalizedSubcategory
+        ? [{
+          label: normalizedSubcategory,
+          href: categoryQuery ? `/blogs?category=${categoryQuery}&sub=${subcategoryQuery}` : undefined,
+        }]
+        : []),
+      { label: post.title },
+    ]
+    : [
+      { label: 'Blog', href: '/blogs' },
+      { label: post.title },
+    ];
+
+  const breadcrumbPathItems = [
+    { name: 'Home', item: siteUrl },
+    ...breadcrumbItems.map((item, index) => ({
+      name: item.label,
+      item: item.href
+        ? `${siteUrl}${item.href}`
+        : (index === breadcrumbItems.length - 1 ? canonicalUrl : `${siteUrl}/blogs`),
+    })),
+  ];
+
+  const organizationPublisher = {
+    '@type': 'Organization',
+    '@id': `${siteUrl}#organization`,
+    name: 'Aman Suryavanshi',
+    url: siteUrl,
+    sameAs: [
+      'https://www.linkedin.com/in/amansuryavanshi-ai/',
+      'https://twitter.com/_AmanSurya',
+      'https://github.com/AmanSuryavanshi-1',
+    ],
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteUrl}/Profile/PFP-Cricular.webp`,
+    },
+  };
 
   // Generate JSON-LD structured data for SEO
   const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": post.articleType === 'case-study' ? "TechArticle" : "Article",
-    "headline": post.title,
-    "description": post.metaDescription || post.seoDescription || post.excerpt,
-    "author": {
-      "@type": "Person",
-      "name": post.author?.name || "Aman Suryavanshi",
-      "url": "https://amansuryavanshi.me"
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.metaDescription || post.seoDescription || post.excerpt,
+    author: {
+      '@type': 'Person',
+      name: post.author?.name || 'Aman Suryavanshi',
+      url: siteUrl,
     },
-    "datePublished": post.publishedAt || post._createdAt,
-    "dateModified": post._updatedAt || post._createdAt,
-    "image": getMetadataImageUrl(post),
-    "publisher": {
-      "@type": "Person",
-      "name": "Aman Suryavanshi",
-      "url": "https://amansuryavanshi.me"
+    datePublished: post.publishedAt || post._createdAt,
+    dateModified: post._updatedAt || post._createdAt,
+    image: getMetadataImageUrl(post),
+    publisher: organizationPublisher,
+    url: canonicalUrl,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': canonicalUrl,
     },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `https://amansuryavanshi.me/blogs/${post.slug.current}`
+    articleSection: post.articleType || 'Technology',
+    keywords: post.tags?.filter(t => t && t.label).map(t => t.label).join(', '),
+    wordCount: post.body ? JSON.stringify(post.body).split(/\s+/).length : undefined,
+    timeRequired: `PT${readTime}M`,
+    inLanguage: 'en',
+    isAccessibleForFree: true,
+    about: post.focusKeyword || post.primaryKeyword || undefined,
+    abstract: post.quotableSnippet || post.contentSummary || undefined,
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['.prose h1', '.prose h2', '.prose h3', '.prose p:first-of-type', '.prose blockquote'],
     },
-    "articleSection": post.articleType || "Technology",
-    "keywords": post.tags?.filter(t => t && t.label).map(t => t.label).join(", "),
-    "wordCount": post.body ? JSON.stringify(post.body).split(/\s+/).length : undefined,
-    "timeRequired": `PT${readTime}M`,
-    "inLanguage": "en",
-    "isAccessibleForFree": true,
-    "about": post.focusKeyword || post.primaryKeyword || undefined,
-    "abstract": post.quotableSnippet || post.contentSummary || undefined,
-    "speakable": {
-      "@type": "SpeakableSpecification",
-      "cssSelector": [".prose h1", ".prose h2", ".prose h3", ".prose p:first-of-type", ".prose blockquote"]
-    }
   };
 
+  const validFaqItems = (post.faqItems || []).filter((faq) => faq?.question && faq?.answer);
+
   // FAQPage JSON-LD for rich snippets
-  const faqJsonLd = post.faqItems && post.faqItems.length > 0 ? {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": post.faqItems.map((faq: { question: string; answer: string }) => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
+  const faqJsonLd = validFaqItems.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: validFaqItems.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
   } : null;
 
   // BreadcrumbList JSON-LD for SERP display
   const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://amansuryavanshi.me" },
-      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://amansuryavanshi.me/blogs" },
-      { "@type": "ListItem", "position": 3, "name": post.title, "item": `https://amansuryavanshi.me/blogs/${post.slug.current}` }
-    ]
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbPathItems.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.item,
+    })),
   };
+
+  const isSafeInternalUrl = (url: string): boolean => /^https?:\/\//i.test(url) || url.startsWith('/');
+
+  const normalizeInternalUrl = (url: string): string => {
+    if (/^https?:\/\//i.test(url)) return url;
+    return url.startsWith('/') ? url : `/${url}`;
+  };
+
+  const internalLinks = (post.internal_links || [])
+    .filter((link) => link?.anchor_text && link?.url && isSafeInternalUrl(link.url))
+    .map((link) => ({
+      ...link,
+      resolvedUrl: normalizeInternalUrl(link.url as string),
+    }));
 
   // Fetch related posts
   const relatedPostsQuery = `*[_type == "post" && slug.current != $slug && count((tags[]->slug.current)[@ in $tags]) > 0] | order(_createdAt desc)[0...3]{
@@ -254,7 +340,7 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
     "fallbackExcerpt": pt::text(body)[0...160]
   }`;
 
-  const tags = post.tags?.filter(t => t && t.slug)?.map(t => t.slug.current) || [];
+  const tags = post.tags?.filter((t) => t && t.slug).map((t) => t.slug) || [];
   const relatedPosts = await client.fetch(relatedPostsQuery, { slug, tags });
 
   return (
@@ -303,12 +389,7 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
               <div className="container mx-auto max-w-5xl px-4 sm:px-6">
                 {/* Breadcrumbs */}
                 <div className="mb-8 text-sage-200/80 font-medium">
-                  <Breadcrumbs
-                    items={[
-                      { label: 'Blog', href: '/blogs' },
-                      { label: post.title }
-                    ]}
-                  />
+                  <Breadcrumbs items={breadcrumbItems} />
                 </div>
 
                 {/* Tags */}
@@ -407,31 +488,67 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
                   </div>
                 )}
 
+                {/* Internal Links Section */}
+                {internalLinks.length > 0 && (
+                  <section className="mt-10">
+                    <h2 className="text-2xl font-bold text-forest-900 dark:text-sage-100 mb-5">
+                      Related Articles
+                    </h2>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      {internalLinks.map((link, index) => {
+                        const isExternal = /^https?:\/\//i.test(link.resolvedUrl);
+                        const linkLabel = link.anchor_text || 'Explore this related article';
+                        const subtitle = link.context || 'Continue with this related read.';
+
+                        return (
+                          <Link
+                            key={link._key || `internal-link-${index}`}
+                            href={link.resolvedUrl}
+                            target={isExternal ? '_blank' : undefined}
+                            rel={isExternal ? 'noopener noreferrer' : undefined}
+                            className="group rounded-xl border border-sage-200 dark:border-forest-800 bg-white/80 dark:bg-forest-950/80 p-4 transition-all hover:border-lime-400 hover:shadow-md"
+                          >
+                            <div className="flex items-center justify-between gap-3">
+                              <h3 className="font-semibold text-forest-900 dark:text-sage-100 group-hover:text-lime-600 dark:group-hover:text-lime-400 transition-colors">
+                                {linkLabel}
+                              </h3>
+                              <ExternalLink className="h-4 w-4 text-forest-500 dark:text-sage-400" />
+                            </div>
+                            <p className="mt-2 text-sm text-forest-700 dark:text-sage-300 leading-relaxed">
+                              {subtitle}
+                            </p>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </section>
+                )}
+
                 {/* All Tags Section */}
                 {post.tags && <AllTags tags={post.tags} />}
 
                 {/* FAQ Section */}
-                {post.faqItems && post.faqItems.length > 0 && (
+                {validFaqItems.length > 0 && (
                   <section className="mt-12">
                     <h2 className="text-2xl font-bold text-forest-900 dark:text-sage-100 mb-6">
                       Frequently Asked Questions
                     </h2>
-                    <div className="space-y-3">
-                      {post.faqItems.map((faq, index) => (
-                        <details
+                    <Accordion type="single" collapsible className="w-full space-y-3">
+                      {validFaqItems.map((faq, index) => (
+                        <AccordionItem
                           key={faq._key || `faq-${index}`}
-                          className="group border border-sage-200 dark:border-forest-800 rounded-xl overflow-hidden bg-white/80 dark:bg-forest-950/80"
+                          value={faq._key || `faq-${index}`}
+                          className="border border-sage-200 dark:border-forest-800 rounded-xl bg-white/80 dark:bg-forest-950/80 px-4"
                         >
-                          <summary className="flex items-center justify-between gap-4 p-5 cursor-pointer font-semibold text-forest-900 dark:text-sage-100 hover:bg-sage-50 dark:hover:bg-forest-900/50 transition-colors">
-                            <span>{faq.question}</span>
-                            <span className="text-lime-500 group-open:rotate-45 transition-transform text-xl shrink-0">+</span>
-                          </summary>
-                          <div className="px-5 pb-5 text-forest-700 dark:text-sage-300 leading-relaxed border-t border-sage-100 dark:border-forest-800 pt-4">
+                          <AccordionTrigger className="text-left font-semibold text-forest-900 dark:text-sage-100 hover:no-underline">
+                            <h3 className="text-base sm:text-lg">{faq.question}</h3>
+                          </AccordionTrigger>
+                          <AccordionContent className="text-forest-700 dark:text-sage-300 leading-relaxed pb-4">
                             {faq.answer}
-                          </div>
-                        </details>
+                          </AccordionContent>
+                        </AccordionItem>
                       ))}
-                    </div>
+                    </Accordion>
                   </section>
                 )}
 
@@ -508,7 +625,40 @@ export default async function BlogPost({ params }: NextPageProps): Promise<JSX.E
           <RelatedPosts posts={relatedPosts} />
 
           {/* CTA Section */}
-          <CTA />
+          {post.cta_type ? (
+            <section className="mx-auto mt-12 mb-6 max-w-5xl px-4 sm:px-6">
+              <div className="rounded-2xl border border-sage-200/70 dark:border-forest-800 bg-white/85 dark:bg-forest-950/85 p-6 sm:p-8 shadow-sm">
+                <div className="flex items-start gap-4">
+                  {post.cta_type === 'save_for_reference' && <Bookmark className="h-5 w-5 mt-1 text-lime-600" />}
+                  {post.cta_type === 'vote_value_stack' && <MessageSquare className="h-5 w-5 mt-1 text-lime-600" />}
+                  {post.cta_type === 'portfolio_proof' && <ExternalLink className="h-5 w-5 mt-1 text-lime-600" />}
+                  {post.cta_type === 'collaborative' && <Users className="h-5 w-5 mt-1 text-lime-600" />}
+                  <div>
+                    <h2 className="text-xl font-bold text-forest-900 dark:text-sage-100">
+                      {post.cta_type === 'save_for_reference' && 'Bookmark this for later'}
+                      {post.cta_type === 'vote_value_stack' && 'What would you add to this value stack?'}
+                      {post.cta_type === 'portfolio_proof' && 'See this in production'}
+                      {post.cta_type === 'collaborative' && 'Building something similar? Let\'s connect'}
+                    </h2>
+                    <p className="mt-2 text-forest-700 dark:text-sage-300 leading-relaxed">
+                      {post.cta_text || 'If this was useful, share it with your team and save it for your next implementation sprint.'}
+                    </p>
+                    {post.cta_type === 'portfolio_proof' ? (
+                      <a
+                        href="/projects"
+                        className="mt-4 inline-flex items-center gap-2 rounded-lg bg-lime-600 text-white px-4 py-2 font-semibold hover:bg-lime-500 transition-colors"
+                      >
+                        See it in production
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            </section>
+          ) : (
+            <CTA />
+          )}
         </article>
       </BlogErrorBoundary>
     </BlogImageGalleryWrapper>
