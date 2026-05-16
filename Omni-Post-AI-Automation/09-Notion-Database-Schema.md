@@ -24,6 +24,11 @@
 
 ## Overview
 
+![Notion Content Queue](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/notion-social-content-queue.webp)
+
+
+![Notion Database Schema](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-notion-schema.webp)
+
 The **Social Content Queue** database is the backbone of the Omni-Post AI automation system. It manages the entire content lifecycle from ideation to multi-platform publishing. This document provides a complete reference of all properties for use in n8n automations.
 
 **Total Properties:** 31
@@ -498,4 +503,4 @@ When building n8n workflows that interact with this database:
 > **Document Version:** 1.0  
 > **Created:** January 12, 2026  
 > **Maintained by:** Omni-Post AI Automation System  
-> **Related Docs:** [README.md](./README.md) | [Technical Documentation](./OMNI-POST-AI-TECHNICAL-DOCUMENTATION.md)
+> **Related Docs:** [Executive Summary](./01-Executive-Summary.md) | [Architecture & Flow](./02-Architecture-and-Flow.md)

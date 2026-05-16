@@ -2,6 +2,9 @@
 
 ## Architecture
 
+![Obsidian MCP Local Network Topology](https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/obsidian-mcp-network-topology.webp)
+
+
 ```
 YOUR WINDOWS MACHINE (local, free)
 ├── Obsidian App (vault + Local REST API plugin on port 27124)
@@ -175,7 +178,7 @@ YOUR PC (local)
 - n8n on cloud calls `http://<your-tailscale-ip>:3010/mcp`
 
 **Limitation:** Your PC must be on for the Obsidian overlay to work.
-If your PC is off, the overlay fails gracefully and n8n uses Portfolio API only.
+- If your PC is off, the overlay fails gracefully and n8n uses [Portfolio API](./12-Portfolio-API-Reference.md) only.
 
 **Setup steps:**
 1. Get Oracle Cloud Free Tier account
