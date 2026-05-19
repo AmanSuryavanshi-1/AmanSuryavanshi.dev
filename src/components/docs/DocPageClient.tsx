@@ -32,9 +32,11 @@ interface DocPageClientProps {
     project: Project;
     content: string;
     slug: string;
+    multiDocs?: { id: string; title: string }[];
+    currentDocId?: string;
 }
 
-const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug }) => {
+const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, multiDocs, currentDocId }) => {
     const [activeHeading, setActiveHeading] = useState<string>('');
     const [readingTime, setReadingTime] = useState(0);
     const [tocItems, setTocItems] = useState<{ id: string; text: string; level: number }[]>([]);
@@ -301,6 +303,36 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
                                     </div>
                                 </div>
 
+                                {/* Multi-Page Navigation Menu */}
+                                {multiDocs && multiDocs.length > 0 && (
+                                    <div className="bg-white dark:bg-[#162c22] rounded-2xl p-5 border border-forest-100 dark:border-white/10 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+                                        <h4 className="text-xs font-bold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                            <Layers className="w-4 h-4 text-lime-600 dark:text-lime-400" />
+                                            Documentation
+                                        </h4>
+                                        <nav className="flex flex-col gap-1">
+                                            {multiDocs.map((doc) => {
+                                                const isActive = doc.id === currentDocId;
+                                                const cleanTitle = doc.title.replace(/^\d+\.\s*/, '');
+                                                return (
+                                                    <Link
+                                                        key={doc.id}
+                                                        href={`/docs/omnipost/${doc.id}`}
+                                                        className={cn(
+                                                            "text-sm py-2 px-3 rounded-lg transition-all duration-200 line-clamp-1",
+                                                            isActive
+                                                                ? "bg-lime-50 dark:bg-lime-500/10 text-forest-900 dark:text-lime-300 font-medium border border-lime-500/20"
+                                                                : "text-forest-600 dark:text-sage-300 hover:text-forest-900 dark:hover:text-white hover:bg-forest-50 dark:hover:bg-forest-800/50 border border-transparent"
+                                                        )}
+                                                    >
+                                                        {cleanTitle}
+                                                    </Link>
+                                                );
+                                            })}
+                                        </nav>
+                                    </div>
+                                )}
+
                                 {/* Tech Stack - Match homepage badges */}
                                 {/* Tech Stack */}
                                 {project.techStack && project.techStack.length > 0 && (
@@ -358,41 +390,79 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug })
 
                             {/* Footer Navigation */}
                             <div className="mt-8 grid sm:grid-cols-2 gap-4">
-                                <Link
-                                    href="/#projects"
-                                    className="group block p-5 rounded-xl bg-white dark:bg-[#162c22] border border-forest-200/50 dark:border-white/10 hover:border-lime-400 dark:hover:border-lime-500/50 hover:shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all"
-                                >
-                                    <div className="text-xs font-semibold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-1">Previous</div>
-                                    <div className="font-semibold text-forest-900 dark:text-sage-100 flex items-center gap-2 group-hover:text-lime-600 dark:group-hover:text-lime-400">
-                                        <ArrowLeft className="w-4 h-4" /> All Projects
-                                    </div>
-                                </Link>
-
                                 {(() => {
-                                    // Calculate target slug for the alternate documentation
+                                    if (multiDocs && currentDocId) {
+                                        const currentIndex = multiDocs.findIndex(d => d.id === currentDocId);
+                                        const prevDoc = currentIndex > 0 ? multiDocs[currentIndex - 1] : null;
+                                        const nextDoc = currentIndex < multiDocs.length - 1 ? multiDocs[currentIndex + 1] : null;
+
+                                        return (
+                                            <>
+                                                {prevDoc ? (
+                                                    <Link
+                                                        href={`/docs/omnipost/${prevDoc.id}`}
+                                                        className="group block p-5 rounded-xl bg-white dark:bg-[#162c22] border border-forest-200/50 dark:border-white/10 hover:border-lime-400 dark:hover:border-lime-500/50 hover:shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all"
+                                                    >
+                                                        <div className="text-xs font-semibold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-1">Previous</div>
+                                                        <div className="font-semibold text-forest-900 dark:text-sage-100 flex items-center gap-2 group-hover:text-lime-600 dark:group-hover:text-lime-400 line-clamp-1">
+                                                            <ArrowLeft className="w-4 h-4 shrink-0" /> {prevDoc.title.replace(/^\d+\.\s*/, '')}
+                                                        </div>
+                                                    </Link>
+                                                ) : (
+                                                    <div className="hidden sm:block" />
+                                                )}
+
+                                                {nextDoc ? (
+                                                    <Link
+                                                        href={`/docs/omnipost/${nextDoc.id}`}
+                                                        className="group block p-5 rounded-xl bg-white dark:bg-[#162c22] border border-forest-200/50 dark:border-white/10 hover:border-lime-400 dark:hover:border-lime-500/50 hover:shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all text-right"
+                                                    >
+                                                        <div className="text-xs font-semibold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-1">Next</div>
+                                                        <div className="font-semibold text-forest-900 dark:text-sage-100 flex items-center justify-end gap-2 group-hover:text-lime-600 dark:group-hover:text-lime-400 line-clamp-1">
+                                                            {nextDoc.title.replace(/^\d+\.\s*/, '')} <ArrowRight className="w-4 h-4 shrink-0" />
+                                                        </div>
+                                                    </Link>
+                                                ) : (
+                                                    <div className="hidden sm:block" />
+                                                )}
+                                            </>
+                                        );
+                                    }
+
+                                    // Fallback to original layout for single-page documentation like other projects
                                     const targetSlug = isTechnicalDoc
                                         ? slug.replace('technical-documentation', 'executive-summary')
                                         : slug.replace('executive-summary', 'technical-documentation');
 
-                                    // Check if the alternate documentation exists in the project data
                                     const hasAlternateDoc = project.documentation?.some(doc => doc.url.includes(targetSlug));
 
                                     return (
-                                        <Link
-                                            href={hasAlternateDoc ? `/projects/${targetSlug}` : "/#projects"}
-                                            className="group block p-5 rounded-xl bg-white dark:bg-[#162c22] border border-forest-200/50 dark:border-white/10 hover:border-lime-400 dark:hover:border-lime-500/50 hover:shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all text-right"
-                                        >
-                                            <div className="text-xs font-semibold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-1">
-                                                {hasAlternateDoc ? "Related" : "Explore"}
-                                            </div>
-                                            <div className="font-semibold text-forest-900 dark:text-sage-100 flex items-center justify-end gap-2 group-hover:text-lime-600 dark:group-hover:text-lime-400">
-                                                {hasAlternateDoc
-                                                    ? (isTechnicalDoc ? 'Executive Summary' : 'Technical Docs')
-                                                    : 'View More Projects'
-                                                }
-                                                <ArrowRight className="w-4 h-4" />
-                                            </div>
-                                        </Link>
+                                        <>
+                                            <Link
+                                                href="/#projects"
+                                                className="group block p-5 rounded-xl bg-white dark:bg-[#162c22] border border-forest-200/50 dark:border-white/10 hover:border-lime-400 dark:hover:border-lime-500/50 hover:shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all"
+                                            >
+                                                <div className="text-xs font-semibold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-1">Previous</div>
+                                                <div className="font-semibold text-forest-900 dark:text-sage-100 flex items-center gap-2 group-hover:text-lime-600 dark:group-hover:text-lime-400">
+                                                    <ArrowLeft className="w-4 h-4 shrink-0" /> All Projects
+                                                </div>
+                                            </Link>
+                                            <Link
+                                                href={hasAlternateDoc ? `/projects/${targetSlug}` : "/#projects"}
+                                                className="group block p-5 rounded-xl bg-white dark:bg-[#162c22] border border-forest-200/50 dark:border-white/10 hover:border-lime-400 dark:hover:border-lime-500/50 hover:shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all text-right"
+                                            >
+                                                <div className="text-xs font-semibold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-1">
+                                                    {hasAlternateDoc ? "Related" : "Explore"}
+                                                </div>
+                                                <div className="font-semibold text-forest-900 dark:text-sage-100 flex items-center justify-end gap-2 group-hover:text-lime-600 dark:group-hover:text-lime-400">
+                                                    {hasAlternateDoc
+                                                        ? (isTechnicalDoc ? 'Executive Summary' : 'Technical Docs')
+                                                        : 'View More Projects'
+                                                    }
+                                                    <ArrowRight className="w-4 h-4 shrink-0" />
+                                                </div>
+                                            </Link>
+                                        </>
                                     );
                                 })()}
                             </div>

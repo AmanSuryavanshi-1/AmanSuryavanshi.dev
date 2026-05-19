@@ -234,7 +234,7 @@ const rawProjects = [
         technicalOverview: "Built entirely in n8n with a modular node architecture. Leverages OpenAI GPT-4 for intelligent content processing with custom prompt engineering for platform-specific tone and formatting. Integrates Twitter/X API v2 and LinkedIn API via OAuth2 for authenticated publishing. Uses Notion API for content archiving and logging. Implements robust error handling with retry logic, exponential backoff, and fallback mechanisms. Features custom HTTP nodes for data fetching and transformation, and Telegram/Email integrations for real-time notifications.",
         techStack: ["n8n", "OpenAI GPT-4", "Twitter API", "LinkedIn API", "Notion API", "Telegram API", "Node.js", "HTTP/REST", "OAuth2", "Webhooks"],
         badges: ["n8n", "AI", "Automation", "Content", "Build-in-Public", "Open Source", "Workflow", "GPT-4"],
-        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Generation_Workflow.webp",
+        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-l1-macro.webp",
         imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_1_Generation_Workflow",
         liveUrl: "https://n8n.aviatorstrainingcentre.in",
         codeUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/tree/main/Omni-Post-AI-Automation",
@@ -247,7 +247,7 @@ const rawProjects = [
             distribution: "Omnichannel"
         },
         gallery: [
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_1_Generation_Workflow.webp", alt: "Part 1: Generation Workflow", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-l1-macro.webp", alt: "Part 1: Generation Workflow", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2_Distribution_Workflow.webp", alt: "Part 2: Distribution Workflow", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_2_Notion_Database_Schema_FullSize_Screenshot_zoomable.webp", alt: "Notion Database Schema", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_3_Metrics_Dashboard.webp", alt: "Metrics Dashboard", type: "image" },
@@ -256,12 +256,8 @@ const rawProjects = [
         ],
         documentation: [
             {
-                title: "Executive Summary",
-                url: "/projects/omni-post-ai-executive-summary"
-            },
-            {
-                title: "Technical Documentation",
-                url: "/projects/omni-post-ai-technical-documentation"
+                title: "Read Official Documentation",
+                url: "/docs/omnipost/01-executive-summary"
             }
         ]
     },
