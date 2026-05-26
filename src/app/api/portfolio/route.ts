@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
             tagline: portfolioData.hero.tagline,
             socials: {
                 email: portfolioData.about.personalInfo.email,
-                resume: portfolioData.hero.buttons.secondary.href,
+                resume: "/AmanSuryavanshi_Resume_Latest.pdf",
                 portfolio: portfolioData.hero.buttons.primary.href,
             },
         };
