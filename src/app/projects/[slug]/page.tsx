@@ -1,47 +1,44 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
+import fs from 'fs';
+import path from 'path';
 import DocPageClient from '@/components/docs/DocPageClient';
 import { portfolioData } from '@/data/portfolio';
 
-// Map slugs to GitHub raw URLs
-const DOCS_MAP: Record<string, string> = {
-    // Executive Summaries
-    'aviators-training-centre-executive-summary': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/Aviators_Training_Centre/main/docs/aviators-training-centre-executive-summary.md',
-    'omni-post-ai-executive-summary': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/main/Omni-Post-AI-Automation/OMNI-POST-AI-EXECUTIVE-SUMMARY.md',
-    'n8n-github-backup-executive-summary': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/n8n-production-workflows/main/%5BProd%5D%20N8N_GitHub_Backup_V5_Unified/02-EXECUTIVE-SUMMARY.md',
-    // Technical Documentation
-    'aviators-training-centre-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/Aviators_Training_Centre/main/docs/aviators-training-centre-technical-documentation.md',
-    'omni-post-ai-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/main/Omni-Post-AI-Automation/OMNI-POST-AI-TECHNICAL-DOCUMENTATION.md',
-    'n8n-github-backup-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/n8n-production-workflows/main/%5BProd%5D%20N8N_GitHub_Backup_V5_Unified/01-TECHNICAL-DOCUMENTATION.md',
-    // Barkat Enterprise
-    'barkat-enterprise-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/BarkatEnterprise/main/docs/BARKAT-ENTERPRISE-TECHNICAL-DOCUMENTATION.md',
-    // AV News Stream
-    'av-newsstream-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/AV-News-Stream/main/docs/AV-NEWSSTREAM-TECHNICAL-DOCUMENTATION.md',
-    'foodah-technical-documentation': 'https://raw.githubusercontent.com/AmanSuryavanshi-1/Foodah/main/docs/FOODAH-TECHNICAL-DOCUMENTATION.md',
-};
+// List of valid documentation slugs that correspond to local markdown files
+const VALID_DOC_SLUGS = [
+    'aviators-training-centre-executive-summary',
+    'n8n-github-backup-executive-summary',
+    'aviators-training-centre-technical-documentation',
+    'n8n-github-backup-technical-documentation',
+    'barkat-enterprise-technical-documentation',
+    'av-newsstream-technical-documentation',
+    'foodah-technical-documentation',
+    'dental-ai-executive-summary',
+    'dental-ai-technical-documentation',
+];
 
 // Map documentation slugs to Project IDs
 const DOC_TO_PROJECT_ID: Record<string, string> = {
     'aviators-training-centre-executive-summary': 'aviators-training-centre',
     'aviators-training-centre-technical-documentation': 'aviators-training-centre',
-    'omni-post-ai-executive-summary': 'n8n-automation-suite',
-    'omni-post-ai-technical-documentation': 'n8n-automation-suite',
     'n8n-github-backup-executive-summary': 'n8n-github-backup',
     'n8n-github-backup-technical-documentation': 'n8n-github-backup',
     'barkat-enterprise-technical-documentation': 'barkat-enterprise',
     'av-newsstream-technical-documentation': 'av-newsstream',
     'foodah-technical-documentation': 'foodah',
+    'dental-ai-executive-summary': 'dental-ai-automation',
+    'dental-ai-technical-documentation': 'dental-ai-automation',
 };
 
 // Map slugs to readable titles for metadata - Business Transformation framing
 const TITLES_MAP: Record<string, string> = {
     // Executive Summaries → Business Transformation titles
     'aviators-training-centre-executive-summary': 'Aviators: How I Used n8n + Next.js to Generate ₹300K ($3.5K+) in Revenue',
-    'omni-post-ai-executive-summary': 'Omni-Post AI: How I Built a 74-Node Workflow That Reduced Manual Work by 80%',
     'n8n-github-backup-executive-summary': 'GitHub Backup V5: How I Built a Self-Healing n8n System with 99.9% Recovery Rate',
+    'dental-ai-executive-summary': 'Dental AI Automation: How I Built 3 Workflows with Gemini Vision & n8n',
     // Technical Documentation → Architecture deep-dives
     'aviators-training-centre-technical-documentation': 'Aviators Architecture: Self-Healing n8n, Firebase, and Production Workflows',
-    'omni-post-ai-technical-documentation': 'Omni-Post AI Architecture: Multi-LLM Orchestration with n8n and GPT-4',
     'n8n-github-backup-technical-documentation': 'GitHub Backup Architecture: Dual-Stream Webhook Design with Zero-Trust Security',
     'barkat-enterprise-technical-documentation': 'Barkat Enterprise: React E-Commerce with 3,000+ Viewers & 60+ Leads',
     'av-newsstream-technical-documentation': 'AV NewsStream: API Key Rotation System Handling 300+ Requests/Day',
@@ -55,17 +52,22 @@ interface PageProps {
 }
 
 async function getDocContent(slug: string) {
-    const url = DOCS_MAP[slug];
-    if (!url) return null;
+    if (!VALID_DOC_SLUGS.includes(slug)) return null;
 
     try {
-        const res = await fetch(url, { next: { revalidate: 3600 } }); // Cache for 1 hour
-        if (!res.ok) throw new Error('Failed to fetch document');
-        return await res.text();
+        const filePath = path.join(process.cwd(), 'src', 'content', 'projects', `${slug}.md`);
+        const content = fs.readFileSync(filePath, 'utf8');
+        return content;
     } catch (error) {
-        console.error('Error fetching document:', error);
+        console.error('Error reading document locally:', error);
         return null;
     }
+}
+
+export async function generateStaticParams() {
+    return VALID_DOC_SLUGS.map((slug) => ({
+        slug,
+    }));
 }
 
 export async function generateMetadata({ params }: PageProps) {
@@ -85,6 +87,7 @@ export async function generateMetadata({ params }: PageProps) {
         'aviators-training-centre-executive-summary': 'Case study: How Aman Suryavanshi generated ₹300K+ revenue using n8n automation workflows, Next.js 15, and AI-powered SEO for a flight training business. 50+ organic leads, 12% conversion rate, zero ad spend.',
         'omni-post-ai-executive-summary': 'Case study: 74-node n8n workflow that reduced manual content work by 80%. Multi-LLM orchestration with GPT-4, automated LinkedIn/Twitter publishing, and production-grade error handling by Aman Suryavanshi.',
         'n8n-github-backup-executive-summary': 'Case study: Enterprise n8n backup system with 99.9% recovery rate. Dual-stream webhook architecture, zero-trust credential scrubbing, and self-healing retry logic by Aman Suryavanshi.',
+        'dental-ai-executive-summary': 'Case study: AI-powered document automation suite using n8n and Google Gemini Vision 2.0. Solved three operational bottlenecks including thermal invoice OCR and clinic compliance verification by Aman Suryavanshi.',
         // Technical Documentation - Architecture focus
         'aviators-training-centre-technical-documentation': 'Technical deep-dive: Production n8n architecture with Dead-Letter Queues, Firebase real-time triggers, Cal.com integration, and self-healing workflows. By Aman Suryavanshi, AI Workflow Architect.',
         'omni-post-ai-technical-documentation': 'Technical architecture: Multi-LLM content pipeline using n8n, GPT-4, and Claude. Image processing, platform-specific formatting, OAuth2 API integration. By Aman Suryavanshi.',
@@ -273,6 +276,25 @@ const HOWTO_SCHEMAS: Record<string, object> = {
     }
 };
 
+const ARTICLE_SCHEMAS: Record<string, object> = {
+    'aviators-training-centre-executive-summary': {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Aviators: How I Used n8n + Next.js to Generate ₹300K ($3.5K+) in Revenue",
+        "description": "Case study: How Aman Suryavanshi generated ₹300K+ revenue using n8n automation workflows, Next.js 15, and AI-powered SEO for a flight training business. 50+ organic leads, 12% conversion rate, zero ad spend.",
+        "author": { "@type": "Person", "name": "Aman Suryavanshi" },
+        "publisher": { "@type": "Organization", "name": "Aman Suryavanshi Portfolio" }
+    },
+    'n8n-github-backup-executive-summary': {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "GitHub Backup V5: How I Built a Self-Healing n8n System with 99.9% Recovery Rate",
+        "description": "Case study: Enterprise n8n backup system with 99.9% recovery rate. Dual-stream webhook architecture, zero-trust credential scrubbing, and self-healing retry logic by Aman Suryavanshi.",
+        "author": { "@type": "Person", "name": "Aman Suryavanshi" },
+        "publisher": { "@type": "Organization", "name": "Aman Suryavanshi Portfolio" }
+    }
+};
+
 export default async function ProjectDocPage({ params }: PageProps) {
     const { slug } = await params;
     const content = await getDocContent(slug);
@@ -285,7 +307,9 @@ export default async function ProjectDocPage({ params }: PageProps) {
 
     const { technologies, ...serializableProject } = project;
     const isTechnicalDoc = slug.includes('technical-documentation');
+    const isExecutiveSummary = slug.includes('executive-summary');
     const howToSchema = HOWTO_SCHEMAS[slug];
+    const articleSchema = ARTICLE_SCHEMAS[slug];
 
     return (
         <>
@@ -293,6 +317,12 @@ export default async function ProjectDocPage({ params }: PageProps) {
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+                />
+            )}
+            {isExecutiveSummary && articleSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
                 />
             )}
             <DocPageClient project={serializableProject as any} content={content} slug={slug} />

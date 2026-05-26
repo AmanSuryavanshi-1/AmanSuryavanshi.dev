@@ -147,3 +147,6 @@ screenshots/amansuryavanshi_me_desktop.png
 screenshots/amansuryavanshi_me_laptop.png
 screenshots/amansuryavanshi_me_mobile.png
 screenshots/amansuryavanshi_me_tablet.png
+
+# logs
+*.log

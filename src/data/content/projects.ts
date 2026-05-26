@@ -255,10 +255,18 @@ const rawProjects = [
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_5_LLM_Routing.webp", alt: "LLM Routing Architecture", type: "image" }
         ],
         documentation: [
-            {
-                title: "Read Official Documentation",
-                url: "/docs/omnipost/01-executive-summary"
-            }
+            { title: "01. Executive Summary", url: "/docs/omnipost/01-executive-summary" },
+            { title: "02. Architecture and Flow", url: "/docs/omnipost/02-architecture-and-flow" },
+            { title: "03. Prompt Engineering", url: "/docs/omnipost/03-prompt-engineering" },
+            { title: "04. Platform Integrations", url: "/docs/omnipost/04-platform-integrations" },
+            { title: "05. Developer Journal", url: "/docs/omnipost/05-developer-journal" },
+            { title: "06. API and Infrastructure", url: "/docs/omnipost/06-api-and-infrastructure" },
+            { title: "07. Sanity Portfolio Integration Architecture", url: "/docs/omnipost/07-sanity-portfolio-integration-architecture" },
+            { title: "08. Obsidian MCP Setup Guide", url: "/docs/omnipost/08-obsidian-mcp-setup-guide" },
+            { title: "09. Notion Database Schema", url: "/docs/omnipost/09-notion-database-schema" },
+            { title: "10. AI Model Routing and Settings", url: "/docs/omnipost/10-ai-model-routing-and-settings" },
+            { title: "11. LinkedIn Carousel Implementation", url: "/docs/omnipost/11-linkedin-carousel-implementation" },
+            { title: "12. Portfolio API Reference", url: "/docs/omnipost/12-portfolio-api-reference" }
         ]
     },
     {
@@ -390,6 +398,60 @@ const rawProjects = [
         gallery: [
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Ecommerce/E-coomerce.webp", alt: "Homepage", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Ecommerce/Ecommerce-Mobile.webp", alt: "Mobile View", type: "image" }
+        ]
+    },
+    {
+        id: "dental-ai-automation",
+        title: "Dental AI Automation Suite",
+        tagLine: "AI-Powered Document Processing & Verification Workflows",
+        category: "featured",
+        type: "freelance",
+        shortDescription: "A comprehensive AI-powered document automation suite using n8n and Gemini Vision 2.0. Solved three critical bottlenecks: product label generation, clinic compliance verification, and thermal invoice OCR.",
+        description: "Built a comprehensive AI-powered document automation suite for a mid-size dental supplies e-commerce operation, solving three critical operational bottlenecks through intelligent workflow orchestration. The system combines computer vision, OCR, and automated document generation to eliminate manual data entry and streamline inventory management. Three production-grade n8n workflows powered by Google Gemini Vision 2.0 Flash execute specific tasks while maintaining a unified, scalable architecture.",
+        heroImageAlt: "Dental AI Automation Suite Dashboard",
+        seo: {
+            title: "Dental AI Automation Suite – n8n & Gemini Vision Case Study",
+            description: "Case study of an AI-powered document automation suite for a dental e-commerce operation using n8n and Google Gemini Vision 2.0 by Aman Suryavanshi.",
+            keywords: [
+                "n8n automation",
+                "Gemini Vision API",
+                "OCR automation",
+                "document processing AI"
+            ],
+            canonicalPath: "/projects/dental-ai-automation"
+        },
+        challenge: "The operations team was drowning in manual work—generating product labels from spreadsheets, verifying clinic images for compliance, and extracting data from supplier invoices. Each task consumed hours daily and introduced human error into critical business processes. Pink thermal invoices were particularly challenging for traditional OCR.",
+        solution: "Developed three independent n8n workflows using Google Gemini Vision 2.0 Flash. The Label Generator automates PNG barcode creation from Google Sheets. The Clinic Verifier uses computer vision to extract pincodes, coordinates, and person counts from images. The Invoice Extractor leverages specialized prompt engineering and regex to parse challenging pink thermal invoices into structured JSON.",
+        impact: [
+            "Reduced label generation from 5-10 minutes to ~5 seconds per label",
+            "Slashed clinic verification time from 5+ minutes to under 10 seconds",
+            "Automated 90%+ of invoice data entry with 98% PIN extraction accuracy",
+            "Eliminated 100% of manual label creation work"
+        ],
+        technicalOverview: "Modular n8n workflow architecture with self-hosted Docker deployment. Utilizes Google Gemini 2.0 Flash API for high-speed, structured JSON computer vision and OCR. Custom Node.js nodes handle pre-flight validation, HTML-to-Image rendering, and regex-based data cleaning. Implemented fail-safe architectures with validation layers, rate limiting (2-second intervals), and graceful degradation for partial OCR success.",
+        techStack: ["n8n", "Google Gemini Vision", "Node.js", "Google Sheets API", "HTML-to-Image", "Docker", "REST API", "OCR"],
+        badges: ["AI/ML", "n8n", "Freelance", "Computer Vision", "OCR"],
+        imageUrl: "https://img.youtube.com/vi/tbtadaI_mow/maxresdefault.jpg",
+        imageUrlFallback: "https://img.youtube.com/vi/tbtadaI_mow/0.jpg",
+        videoYouTubeId: "tbtadaI_mow",
+        video: "",
+        liveUrl: "",
+        codeUrl: "https://github.com/AmanSuryavanshi-1/Dental-AI-Automation-Suite",
+        blogUrl: "",
+        featured: true,
+        metrics: {
+            speed: "<10s/doc",
+            accuracy: "98%",
+            automation: "90%+"
+        },
+        documentation: [
+            { title: "Executive Summary", url: "/projects/dental-ai-executive-summary" },
+            { title: "Technical Documentation", url: "/projects/dental-ai-technical-documentation" }
+        ],
+        gallery: [
+            { src: "https://img.youtube.com/vi/tbtadaI_mow/maxresdefault.jpg", alt: "Label Generator", type: "image" },
+            { src: "https://img.youtube.com/vi/tlI2jZw_VVA/maxresdefault.jpg", alt: "Clinic Compliance", type: "image" },
+            { src: "https://img.youtube.com/vi/KAO0HJNRlGU/maxresdefault.jpg", alt: "Invoice OCR", type: "image" }
         ]
     }
 ] as const;

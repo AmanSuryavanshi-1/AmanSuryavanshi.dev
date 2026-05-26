@@ -33,10 +33,7 @@ const nextConfig: NextConfig & { eslint?: { ignoreDuringBuilds?: boolean } } = {
     // Temporarily ignore TypeScript errors during build due to React 19 migration
     ignoreBuildErrors: true,
   },
-  eslint: {
-    // Temporarily ignore ESLint errors during build to resolve Vercel deployment issues
-    ignoreDuringBuilds: true,
-  },
+  reactStrictMode: true,
   async redirects() {
     return [
       // NOTE: www/non-www redirects should be configured in Vercel Dashboard

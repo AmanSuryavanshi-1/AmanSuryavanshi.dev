@@ -110,26 +110,39 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 )}
               </Button>
 
-              {/* Executive Summary - only if project has documentation */}
-              {project.documentation?.[0]?.url && (
-                <Link href={project.documentation[0].url}>
-                  <Button className="rounded-full bg-forest-900 dark:bg-lime-500 text-white dark:text-forest-950 hover:bg-forest-800 dark:hover:bg-lime-400 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all" title="Executive Summary">
-                    <BookOpen className="w-4 h-4 sm:mr-2" />
-                    <span className="hidden sm:inline">Summary</span>
-                  </Button>
-                </Link>
-              )}
+              {/* Executive Summary - find by title containing 'summary' or 'executive' */}
+              {(() => {
+                  const summaryDoc = project.documentation?.find(d =>
+                      d.title.toLowerCase().includes('summary') ||
+                      d.title.toLowerCase().includes('executive')
+                  );
+                  return summaryDoc?.url ? (
+                    <Link href={summaryDoc.url}>
+                      <Button className="rounded-full bg-forest-900 dark:bg-lime-500 text-white dark:text-forest-950 hover:bg-forest-800 dark:hover:bg-lime-400 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all" title="Executive Summary">
+                        <BookOpen className="w-4 h-4 sm:mr-2" />
+                        <span className="hidden sm:inline">Summary</span>
+                      </Button>
+                    </Link>
+                  ) : null;
+              })()}
 
-              {/* Technical Docs - only if project has documentation with technical doc entry */}
-              {project.documentation?.[1]?.url && (
-                <Link href={project.documentation[1].url}>
-                  <Button variant="outline" className="rounded-full border-forest-300 dark:border-forest-600 text-forest-700 dark:text-sage-300 hover:bg-forest-50 dark:hover:bg-forest-700 hover:border-forest-400 transition-all" title="Technical Documentation">
-                    <BookOpen className="w-4 h-4 sm:mr-2" />
-                    <span className="hidden xl:inline">Technical Docs</span>
-                    <span className="hidden sm:inline xl:hidden">Docs</span>
-                  </Button>
-                </Link>
-              )}
+              {/* Technical Docs - find by title containing 'technical', 'architecture' or 'documentation' */}
+              {(() => {
+                  const techDoc = project.documentation?.find(d =>
+                      d.title.toLowerCase().includes('technical') ||
+                      d.title.toLowerCase().includes('architecture') ||
+                      (d.title.toLowerCase().includes('documentation') && !d.title.toLowerCase().includes('summary'))
+                  );
+                  return techDoc?.url ? (
+                    <Link href={techDoc.url}>
+                      <Button variant="outline" className="rounded-full border-forest-300 dark:border-forest-600 text-forest-700 dark:text-sage-300 hover:bg-forest-50 dark:hover:bg-forest-700 hover:border-forest-400 transition-all" title="Technical Documentation">
+                        <BookOpen className="w-4 h-4 sm:mr-2" />
+                        <span className="hidden xl:inline">Technical Docs</span>
+                        <span className="hidden sm:inline xl:hidden">Docs</span>
+                      </Button>
+                    </Link>
+                  ) : null;
+              })()}
             </div>
           </div>
         </div>

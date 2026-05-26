@@ -287,10 +287,11 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
                                             </Link>
                                         ) : null;
                                     })()}
-                                    {/* Technical Docs - find by title containing 'technical' or 'documentation' */}
+                                    {/* Technical Docs - find by title containing 'technical', 'architecture' or 'documentation' */}
                                     {(() => {
                                         const techDoc = activeProject.documentation?.find(d =>
                                             d.title.toLowerCase().includes('technical') ||
+                                            d.title.toLowerCase().includes('architecture') ||
                                             (d.title.toLowerCase().includes('documentation') && !d.title.toLowerCase().includes('summary'))
                                         );
                                         return techDoc?.url ? (

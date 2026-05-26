@@ -28,7 +28,7 @@ export const servicesData: ServiceData[] = [
         icon: "Zap",
         image: "/services/self-healing.png",
         relatedProjects: [
-            { title: "Case Study: 74-Node Content Automation", url: "/projects/omni-post-ai-executive-summary" }
+            { title: "Case Study: 74-Node Content Automation", url: "/docs/omnipost/01-executive-summary" }
         ]
     },
     {
