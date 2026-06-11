@@ -49,13 +49,16 @@ graph TD
 
 ### 3. Asset Management
 -   **Next.js Image**: Automatic optimization (format, size) for local assets.
+-   **FallbackImageManager**: Custom class (`src/lib/fallback-image-manager.ts`) and hook (`useFallbackImage.ts`) guaranteeing 100% image availability for external/dynamic markdown content via categorical, contextual, and random programmatic fallbacks.
 -   **JSDelivr CDN**: Serves project screenshots from GitHub repositories for global caching and versioning.
 -   **Sanity CDN**: Hosts blog assets with on-the-fly transformation capabilities.
 
-### 4. Styling System
+### 4. Styling System & Components
 -   **Tailwind CSS**: Utility-first styling for rapid development and low bundle size.
 -   **UI Library**: Custom system based on Radix UI primitives and Shadcn/UI for accessible, headless components.
+-   **Icon Architecture**: Centralized dynamic string-to-React-Icon mapping in `src/data/icons/icon-map.ts` to prevent massive global imports.
 -   **Theming**: Dark mode native support via `next-themes`.
+-   **Markdown Integration**: Uses custom `MarkdownViewer` to map parsed `src/content/projects/` markdown into Tailwind styled components (prose-invert), tightly integrated with `FallbackImageManager` for bulletproof asset rendering.
 
 ## 🤖 Automation Integration
 The "Omni-Post" system connects the portfolio to the creator's productivity workflow.

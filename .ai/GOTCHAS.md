@@ -1,0 +1,4 @@
+# Gotchas
+- **Gotcha 1 - Missing Icons**: If you add a new "techStack" or "badge" to `src/data/content/projects.ts`, it will crash or fail to render unless you manually map the string to an imported react-icon in `src/data/icons/icon-map.ts`.
+- **Gotcha 2 - The Redux Mirage**: A simple `grep` will find many references to Redux Toolkit and `createSlice`. **Do not attempt to use Redux in this Next.js codebase.** These are purely markdown/string descriptions of past past projects like "Foodah" or "AV NewsStream". The Next.js portfolio itself is stateless.
+- **Gotcha 3 - OmniPost Synchronicity**: Updating anything in `public/Project` means you MUST update the vault's `mcp-asset-index.md` as per the `AGENTS.md` rules, otherwise the n8n AI Content pipeline will have broken/missing asset context.
