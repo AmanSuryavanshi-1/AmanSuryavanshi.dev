@@ -52,6 +52,58 @@ const nextConfig: NextConfig & { eslint?: { ignoreDuringBuilds?: boolean } } = {
         destination: '/#contact',
         permanent: true,
       },
+      // Redirect old OmniPost docs
+      {
+        source: '/docs/series/omnipost/:id',
+        destination: '/docs/projects/personal/omnipost/:id',
+        permanent: true,
+      },
+      // Redirect old Flat Documentation URLs
+      {
+        source: '/projects/aviators-training-centre-executive-summary',
+        destination: '/docs/projects/clientele/aviators-training-centre/executive-summary',
+        permanent: true,
+      },
+      {
+        source: '/projects/aviators-training-centre-technical-documentation',
+        destination: '/docs/projects/clientele/aviators-training-centre/technical-documentation',
+        permanent: true,
+      },
+      {
+        source: '/projects/n8n-github-backup-executive-summary',
+        destination: '/docs/projects/personal/n8n-github-backup/executive-summary',
+        permanent: true,
+      },
+      {
+        source: '/projects/n8n-github-backup-technical-documentation',
+        destination: '/docs/projects/personal/n8n-github-backup/technical-documentation',
+        permanent: true,
+      },
+      {
+        source: '/projects/dental-ai-executive-summary',
+        destination: '/docs/projects/clientele/dental-ai-automation/executive-summary',
+        permanent: true,
+      },
+      {
+        source: '/projects/dental-ai-technical-documentation',
+        destination: '/docs/projects/clientele/dental-ai-automation/technical-documentation',
+        permanent: true,
+      },
+      {
+        source: '/projects/barkat-enterprise-technical-documentation',
+        destination: '/docs/projects/clientele/barkat-enterprise/technical-documentation',
+        permanent: true,
+      },
+      {
+        source: '/projects/av-newsstream-technical-documentation',
+        destination: '/docs/projects/personal/av-newsstream/technical-documentation',
+        permanent: true,
+      },
+      {
+        source: '/projects/foodah-technical-documentation',
+        destination: '/docs/projects/personal/foodah/technical-documentation',
+        permanent: true,
+      },
     ];
   },
 };

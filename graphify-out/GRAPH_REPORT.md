@@ -1,16 +1,16 @@
 # Graph Report - AmanSuryavanshi.dev  (2026-06-11)
 
 ## Corpus Check
-- 266 files · ~333,341 words
+- 258 files · ~330,615 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2761 nodes · 3173 edges · 261 communities (236 shown, 25 thin omitted)
+- 2745 nodes · 3162 edges · 267 communities (238 shown, 29 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `913ef35c`
+- Built from commit: `11cff2f4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -259,6 +259,12 @@
 - [[_COMMUNITY_Community 241|Community 241]]
 - [[_COMMUNITY_Community 242|Community 242]]
 - [[_COMMUNITY_Community 243|Community 243]]
+- [[_COMMUNITY_Community 261|Community 261]]
+- [[_COMMUNITY_Community 262|Community 262]]
+- [[_COMMUNITY_Community 263|Community 263]]
+- [[_COMMUNITY_Community 264|Community 264]]
+- [[_COMMUNITY_Community 265|Community 265]]
+- [[_COMMUNITY_Community 266|Community 266]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 40 edges
@@ -273,26 +279,26 @@
 10. `Project` - 17 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `RootLayout()` --calls--> `cn()`  [EXTRACTED]
-  src/app/layout.tsx → src/lib/utils.ts
+- `OmniPostDocPage()` --calls--> `NotFound()`  [INFERRED]
+  src/app/docs/omnipost/[id]/page.tsx → src/app/not-found.tsx
+- `BlogHeaderImageProps` --references--> `Post`  [EXTRACTED]
+  src/components/blog/BlogHeaderImage.tsx → src/sanity/sanity.ts
 - `ResponsiveImage()` --calls--> `urlFor()`  [EXTRACTED]
   src/components/blog/ResponsiveImage.tsx → src/sanity/lib/image.ts
 - `DocPageClientProps` --references--> `Project`  [EXTRACTED]
   src/components/docs/DocPageClient.tsx → src/data/types/index.ts
-- `FeaturedHero()` --calls--> `cn()`  [EXTRACTED]
-  src/components/projects/FeaturedHero.tsx → src/lib/utils.ts
-- `ProjectMediaCarousel()` --calls--> `cn()`  [EXTRACTED]
-  src/components/projects/ProjectMediaCarousel.tsx → src/lib/utils.ts
+- `MarkdownImage()` --calls--> `useImageGallery()`  [EXTRACTED]
+  src/components/docs/MarkdownViewer.tsx → src/context/ImageGalleryContext.tsx
 
-## Communities (261 total, 25 thin omitted)
+## Communities (267 total, 29 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.03
 Nodes (59): public\\Project\\AV-NewsStream\\AV-NewsStream-mobile.webp, public\\Project\\AV-NewsStream\\AV-NewsStream.webp, public\\Project\\AV-NewsStream\\AVNewsStream.webm, public\\Project\\AviatorsTrainingCentre\\AviatorsTrainingCenter_WalkThrough_720p.mp4, public\\Project\\AviatorsTrainingCentre\\www.aviatorstrainingcentre.in_Blog.png, public\\Project\\AviatorsTrainingCentre\\www.aviatorstrainingcentre.in_ DarktMode_FullPage_ScreenShot.jpg, public\\Project\\AviatorsTrainingCentre\\www.aviatorstrainingcentre.in_ LightMode_FullPage_ScreenShot.png, public\\Project\\BarkatEnterprise\\barkat-enterprise-AboutUs.png (+51 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.05
-Nodes (30): NotFound(), ZoomableBlogImage(), GalleryImage, ImageGalleryContext, ImageGalleryContextType, ImageGalleryProvider(), useImageGallery(), DocPageClientProps (+22 more)
+Cohesion: 0.13
+Nodes (9): NotFound(), ARTICLE_SCHEMAS, DOC_TO_PROJECT_ID, getDocContent(), HOWTO_SCHEMAS, PageProps, ProjectDocPage(), TITLES_MAP (+1 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.04
@@ -303,8 +309,8 @@ Cohesion: 0.04
 Nodes (49): dependencies, class-variance-authority, cloudinary, clsx, date-fns, dotenv, @emailjs/browser, emailjs-com (+41 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.06
-Nodes (13): SocialIconMap, metadata, SolidButton(), SolidButtonProps, TransparentButton(), iconMap, portfolioData, PROJECT_ORDER (+5 more)
+Cohesion: 0.10
+Nodes (9): SocialIconMap, metadata, SolidButton(), SolidButtonProps, TransparentButton(), TransparentButtonProps, iconMap, portfolioData (+1 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.04
@@ -319,15 +325,15 @@ Cohesion: 0.05
 Nodes (41): 1. Install prerequisites (already done if Claude Code works), 2. Create the .env config file, 3. Ensure Docker can reach the host, 4. Configure n8n MCP Client Tool node, 5. First test, Architecture, Cloud Migration Guide, Cloud (when you migrate) — add JWT auth (+33 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.07
-Nodes (34): ActionButton(), container, IconMap, item, categories, FilterBar(), FilterBarProps, FilterCategory (+26 more)
+Cohesion: 0.10
+Nodes (21): container, IconMap, item, BentoCard(), BentoCardProps, BentoContent(), BentoContentProps, BentoDescription() (+13 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.05
 Nodes (40): 1. Core Only (Minimal Tokens), 2. Bio Context for AI, 3. All Project Summaries, 4. Featured Projects Full Details, 5. Complete Profile, `about`, Architecture, Available Project IDs (+32 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.08
+Cohesion: 0.07
 Nodes (19): aboutStructuredData, metadata, containerVariants, GitHubCalendar, GithubCalendarComponent(), GitHubRepository, GitHubUser, LatestRepoCard() (+11 more)
 
 ### Community 11 - "Community 11"
@@ -339,16 +345,16 @@ Cohesion: 0.06
 Nodes (33): 🧠 5 Technical Challenges Solved, ✅ Authentic Voice Preservation, code:block1 (📝 Write in Notion → 🤖 AI generates platform-specific content), code:block2 (Notion (Source)), code:block3 (Notion (Approved Content)), code:block4 ("Just built something cool with APIs. Pretty excited about i), code:block5 ("The N x M integration problem is a nightmare. Connecting 10), code:block6 (Omni-Post-AI-Automation/) (+25 more)
 
 ### Community 13 - "Community 13"
-Cohesion: 0.09
-Nodes (18): itemVariants, PreviewCardProps, TransparentButtonProps, LatestRepoCardProps, DEFAULT_CATEGORY_LABELS, ProjectsFilterProps, Button, ButtonProps (+10 more)
+Cohesion: 0.13
+Nodes (13): PROJECT_ORDER, DEFAULT_CATEGORY_LABELS, ProjectsFilter(), ProjectsFilterProps, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel (+5 more)
 
 ### Community 14 - "Community 14"
-Cohesion: 0.10
+Cohesion: 0.09
 Nodes (23): aboutData, experienceData, heroData, servicesData, landingSkillsData, skillsData, socials, workBanner (+15 more)
 
 ### Community 15 - "Community 15"
-Cohesion: 0.09
-Nodes (15): BlockQuoteStyle(), BlockQuoteStyleProps, myTheme, props, dataset, projectId, structure(), authorType (+7 more)
+Cohesion: 0.11
+Nodes (13): BlockQuoteStyle(), BlockQuoteStyleProps, myTheme, props, structure(), authorType, blockContentType, categoryType (+5 more)
 
 ### Community 16 - "Community 16"
 Cohesion: 0.08
@@ -367,12 +373,12 @@ Cohesion: 0.07
 Nodes (27): Adding a Blog Post, Adding a New Project, Adding New Fallback Image Category, Adding New Sanity Content Type, After Adding New Project, Before Deployment, code:typescript (// src/data/portfolio.tsx - Add to rawProjects array), code:typescript (// src/sanity/schemaTypes/newType.ts) (+19 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.11
-Nodes (14): ImpactMetricsProps, ProjectDetailCardProps, TechnicalDeepDiveProps, FeaturedHero(), FeaturedHeroProps, ProjectCardProps, MediaSlide, ProjectMediaCarousel() (+6 more)
+Cohesion: 0.16
+Nodes (10): ProjectDetailCardProps, TechnicalDeepDiveProps, FeaturedHeroProps, ProjectCardProps, ProjectMediaCarouselProps, ProjectSummaryProps, Project, AccordionContent (+2 more)
 
 ### Community 21 - "Community 21"
-Cohesion: 0.11
-Nodes (13): BreadcrumbsProps, FloatingActionsProps, ShareBarProps, ViewTrackerProps, getFirstAssetFromBody(), getMetadataImageAlt(), getMetadataImageUrl(), getOpenGraphImage() (+5 more)
+Cohesion: 0.12
+Nodes (13): BreadcrumbsProps, FloatingActionsProps, ShareBarProps, ViewTrackerProps, urlFor(), getMetadataImageAlt(), getMetadataImageUrl(), getOpenGraphImage() (+5 more)
 
 ### Community 22 - "Community 22"
 Cohesion: 0.08
@@ -395,8 +401,8 @@ Cohesion: 0.09
 Nodes (23): 10. Authentication UI, 1. useOnlineStatus Custom Hook, 2. useRestaurantMenu Custom Hook, 3. useFallbackImage Custom Hook, 4. Swiggy API Integration, 5. Responsive Navbar with Mobile Modal, 6. Cart with Order Summary Calculations, 7. Restaurant Category Accordion (+15 more)
 
 ### Community 27 - "Community 27"
-Cohesion: 0.11
-Nodes (12): getAllRelatedTags(), normalizeTag(), TAG_ALIASES, ActiveFiltersProps, SortOption, ViewMode, BlogPostSkeleton(), EmptyStateProps (+4 more)
+Cohesion: 0.08
+Nodes (15): getAllRelatedTags(), normalizeTag(), TAG_ALIASES, ActiveFiltersProps, SortOption, ViewMode, EmptyStateProps, FilterSortProps (+7 more)
 
 ### Community 28 - "Community 28"
 Cohesion: 0.10
@@ -415,20 +421,20 @@ Cohesion: 0.10
 Nodes (20): 5.10 Future Enhancements, 5.1 The Business Need, 5.2 The Solution: Automatic UTM Tracking, 5.3 Technical Implementation, 5.4 Firebase Data Structure, 5.5 Real-World Examples, 5.6 Supported Traffic Sources, 5.7 Business Impact (+12 more)
 
 ### Community 32 - "Community 32"
-Cohesion: 0.11
-Nodes (18): 1. Hybrid Data Strategy, 2. Rendering Strategy, 3. Asset Management, 4. Styling System, Architectural Decisions (ADR), code:mermaid (graph TD), Edit .ai/ files, then re-run: powershell -File .ai/bin/compile.ps1, Gotchas (+10 more)
+Cohesion: 0.12
+Nodes (8): PreviewCardProps, ImpactMetricsProps, Badge(), BadgeProps, badgeVariants, Button, ButtonProps, buttonVariants
 
 ### Community 33 - "Community 33"
 Cohesion: 0.11
 Nodes (18): 1. Hybrid Data Strategy, 2. Rendering Strategy, 3. Asset Management, 4. Styling System, Architectural Decisions (ADR), code:mermaid (graph TD), Edit .ai/ files, then re-run: powershell -File .ai/bin/compile.ps1, Gotchas (+10 more)
 
 ### Community 34 - "Community 34"
-Cohesion: 0.11
+Cohesion: 0.12
 Nodes (18): 1. Hybrid Data Strategy, 2. Rendering Strategy, 3. Asset Management, 4. Styling System, Architectural Decisions (ADR), code:mermaid (graph TD), Edit .ai/ files, then re-run: powershell -File .ai/bin/compile.ps1, Gotchas (+10 more)
 
 ### Community 35 - "Community 35"
-Cohesion: 0.11
-Nodes (18): 1. Hybrid Data Strategy, 2. Rendering Strategy, 3. Asset Management, 4. Styling System, Architectural Decisions (ADR), code:mermaid (graph TD), Edit .ai/ files, then re-run: powershell -File .ai/bin/compile.ps1, Gotchas (+10 more)
+Cohesion: 0.10
+Nodes (19): 1. Hybrid Data Strategy, 2. Rendering Strategy, 3. Asset Management, 4. Styling System, 4. Styling System & Components, Architectural Decisions (ADR), code:mermaid (graph TD), Edit .ai/ files, then re-run: powershell -File .ai/bin/compile.ps1 (+11 more)
 
 ### Community 36 - "Community 36"
 Cohesion: 0.11
@@ -439,8 +445,8 @@ Cohesion: 0.11
 Nodes (19): devDependencies, eslint, eslint-config-next, @eslint/eslintrc, jest, jest-environment-jsdom, postcss, tailwindcss (+11 more)
 
 ### Community 38 - "Community 38"
-Cohesion: 0.23
-Nodes (13): ZoomableBlogImageProps, builder, urlFor(), BlogPostCard(), extractTextFromBody(), getPrioritizedTags(), TAG_PRIORITY, calculateReadTime() (+5 more)
+Cohesion: 0.18
+Nodes (16): BlogPostCard(), BlogPostCardProps, BlogPostSkeleton(), extractTextFromBody(), getPrioritizedTags(), TAG_PRIORITY, BlogPostsProps, calculateReadTime() (+8 more)
 
 ### Community 39 - "Community 39"
 Cohesion: 0.13
@@ -459,12 +465,12 @@ Cohesion: 0.11
 Nodes (17): 📝 Blog Post Data Flow, code:block1 (┌───────────────────────────────────────────────────────────), code:block2 (┌───────────────────────────────────────────────────────────), code:block3 (┌───────────────────────────────────────────────────────────), code:block4 (┌───────────────────────────────────────────────────────────), code:block5 (┌───────────────────────────────────────────────────────────), code:block6 (┌───────────────────────────────────────────────────────────), code:block7 (┌───────────────────────────────────────────────────────────) (+9 more)
 
 ### Community 43 - "Community 43"
-Cohesion: 0.16
-Nodes (6): UseFallbackImageOptions, UseFallbackImageReturn, FallbackCategory, FallbackContext, FallbackImage, FallbackImageManager
+Cohesion: 0.33
+Nodes (5): UseFallbackImageOptions, UseFallbackImageReturn, FallbackCategory, FallbackContext, FallbackImage
 
 ### Community 44 - "Community 44"
-Cohesion: 0.12
-Nodes (7): geistMono, geistSans, metadata, RootLayout(), structuredData, HeaderSocialProps, ThemeProvider()
+Cohesion: 0.08
+Nodes (23): ActionButton(), itemVariants, geistMono, geistSans, metadata, RootLayout(), structuredData, categories (+15 more)
 
 ### Community 45 - "Community 45"
 Cohesion: 0.21
@@ -475,8 +481,8 @@ Cohesion: 0.12
 Nodes (16): allFiles, asset, cloudinaryMap, ext, filename, fs, glob, isVideo (+8 more)
 
 ### Community 47 - "Community 47"
-Cohesion: 0.13
-Nodes (10): BlogHeaderImageProps, getHeaderImageSource(), HeaderImageSource, RelatedPost, RelatedPostsProps, BlogPostCardProps, BlogPostsProps, FeaturedCarouselProps (+2 more)
+Cohesion: 0.24
+Nodes (5): RelatedPost, RelatedPostsProps, builder, dataset, projectId
 
 ### Community 48 - "Community 48"
 Cohesion: 0.12
@@ -523,8 +529,8 @@ Cohesion: 0.14
 Nodes (13): allFallbacks, base64Part, consoleErrorSpy, decoded, expectedFallbacks, fallback, fallback1, fallback2 (+5 more)
 
 ### Community 59 - "Community 59"
-Cohesion: 0.15
-Nodes (12): 1. Hybrid Data Strategy, 2. Rendering Strategy, 3. Asset Management, 4. Styling System, 🤖 Automation Integration, code:mermaid (graph TD), 🧩 Core Components, 🏗️ High-Level Architecture (+4 more)
+Cohesion: 0.14
+Nodes (13): 1. Hybrid Data Strategy, 2. Rendering Strategy, 3. Asset Management, 4. Styling System, 4. Styling System & Components, 🤖 Automation Integration, code:mermaid (graph TD), 🧩 Core Components (+5 more)
 
 ### Community 60 - "Community 60"
 Cohesion: 0.15
@@ -551,12 +557,12 @@ Cohesion: 0.15
 Nodes (12): ASSETS_JSON_PATH, base, basename, data, fileMap, files, fs, glob (+4 more)
 
 ### Community 66 - "Community 66"
-Cohesion: 0.29
-Nodes (11): BodyAsset, countImagesInBody(), extractAssetsFromBody(), extractCustomBlockImages(), extractNestedImages(), hasImagesInBody(), isValidExternalImage(), isValidImageBlock() (+3 more)
+Cohesion: 0.18
+Nodes (15): BlogHeaderImageProps, getHeaderImageSource(), HeaderImageSource, BodyAsset, countImagesInBody(), extractAssetsFromBody(), extractCustomBlockImages(), extractNestedImages() (+7 more)
 
 ### Community 67 - "Community 67"
-Cohesion: 0.15
-Nodes (4): AutoPlayVideoProps, CodeBlockProps, portableTextComponents, SanityImageWrapperProps
+Cohesion: 0.20
+Nodes (3): AutoPlayVideoProps, CodeBlockProps, portableTextComponents
 
 ### Community 68 - "Community 68"
 Cohesion: 0.17
@@ -628,7 +634,7 @@ Nodes (9): 01. Executive Summary, Business Impact, Business Value, Constraints, 
 
 ### Community 85 - "Community 85"
 Cohesion: 0.20
-Nodes (9): Barkat Enterprise: A Freelance Project for an Enterprise, 📈 Business Impact, Impact Breakdown, 📊 Key Metrics at a Glance, 🏷️ Project Badges, Quantified Results, 🔗 Quick Links, 📋 Table of Contents (+1 more)
+Nodes (9): Barkat Enterprise: A Freelance Project for an Enterprise, Conclusion, Key Achievements, 📊 Key Metrics at a Glance, 🏷️ Project Badges, 🔗 Quick Links, Skills Demonstrated, 📋 Table of Contents (+1 more)
 
 ### Community 86 - "Community 86"
 Cohesion: 0.20
@@ -943,8 +949,8 @@ Cohesion: 0.33
 Nodes (6): 3.1 Google Search Console (GSC) Setup, 3.2 Bing Webmaster Tools Setup, 3.3 Yandex & Baidu (Optional - For Global Reach), code:typescript (verification: {), code:typescript (verification: {), Phase 3: Search Engine Registration (No-Code)
 
 ### Community 164 - "Community 164"
-Cohesion: 0.33
-Nodes (4): FilterSortProps, SortOption, SortOptionConfig, sortOptions
+Cohesion: 0.19
+Nodes (9): ZoomableBlogImage(), ZoomableBlogImageProps, GalleryImage, ImageGalleryContext, ImageGalleryContextType, ImageGalleryProvider(), useImageGallery(), DocPageClientProps (+1 more)
 
 ### Community 165 - "Community 165"
 Cohesion: 0.40
@@ -1143,8 +1149,8 @@ Cohesion: 0.67
 Nodes (3): Future Improvements, Planned Feature Roadmap, Technical Roadmap
 
 ### Community 223 - "Community 223"
-Cohesion: 0.67
-Nodes (3): Conclusion, Key Achievements, Skills Demonstrated
+Cohesion: 0.33
+Nodes (7): generateMetadata(), OmniPostDocPage(), PageProps, generateArticleJsonLd(), getOmniPostDoc(), OmniPostDoc, omniPostDocs
 
 ### Community 224 - "Community 224"
 Cohesion: 0.67
@@ -1162,25 +1168,33 @@ Nodes (3): Desktop Views, Mobile View, Screenshots Gallery
 Cohesion: 0.67
 Nodes (3): Soft Skills, Technical Skills, What I Learned
 
+### Community 262 - "Community 262"
+Cohesion: 0.25
+Nodes (5): generateHeadingId(), MarkdownImage(), MarkdownViewerProps, MermaidDiagram, extractText()
+
+### Community 265 - "Community 265"
+Cohesion: 0.67
+Nodes (3): 📈 Business Impact, Impact Breakdown, Quantified Results
+
 ## Knowledge Gaps
-- **1549 isolated node(s):** `extends`, `@typescript-eslint/no-explicit-any`, `@typescript-eslint/ban-ts-comment`, `@typescript-eslint/no-unused-vars`, `overrides` (+1544 more)
+- **1534 isolated node(s):** `Overview`, `code:mermaid (graph TD)`, `1. Hybrid Data Strategy`, `2. Rendering Strategy`, `3. Asset Management` (+1529 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **25 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **29 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 8` to `Community 1`, `Community 4`, `Community 10`, `Community 44`, `Community 13`, `Community 16`, `Community 20`?**
+- **Why does `cn()` connect `Community 44` to `Community 32`, `Community 164`, `Community 8`, `Community 10`, `Community 13`, `Community 16`, `Community 20`?**
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
+- **Why does `FallbackImageManager` connect `Community 261` to `Community 32`, `Community 66`, `Community 164`, `Community 262`, `Community 39`, `Community 38`, `Community 43`, `Community 44`, `Community 21`, `Community 58`?**
   _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Why does `FallbackImageManager` connect `Community 43` to `Community 1`, `Community 38`, `Community 39`, `Community 13`, `Community 47`, `Community 20`, `Community 21`, `Community 58`?**
-  _High betweenness centrality (0.004) - this node is a cross-community bridge._
-- **Why does `Aviators Training Centre` connect `Community 63` to `Community 96`, `Community 132`, `Community 5`, `Community 133`, `Community 199`, `Community 200`, `Community 111`, `Community 181`, `Community 150`, `Community 151`, `Community 56`, `Community 149`, `Community 31`?**
-  _High betweenness centrality (0.003) - this node is a cross-community bridge._
-- **What connects `extends`, `@typescript-eslint/no-explicit-any`, `@typescript-eslint/ban-ts-comment` to the rest of the system?**
-  _1549 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `portfolioData` connect `Community 4` to `Community 32`, `Community 1`, `Community 264`, `Community 8`, `Community 10`, `Community 13`, `Community 14`, `Community 144`, `Community 223`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
+- **What connects `Overview`, `code:mermaid (graph TD)`, `1. Hybrid Data Strategy` to the rest of the system?**
+  _1534 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.03333333333333333 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.05411764705882353 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.13333333333333333 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
