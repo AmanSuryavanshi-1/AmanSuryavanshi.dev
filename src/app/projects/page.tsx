@@ -14,11 +14,11 @@ const PROJECT_ORDER: Record<string, number> = {
     "aviators-training-centre": 1,
     "n8n-automation-suite": 2,
     "n8n-github-backup": 3,
-    "barkat-enterprise": 4,
-    "av-newsstream": 5,
-    "foodah": 6,
-    "portfolio-website": 7,
-    "ecommerce-platform": 8,
+    "portfolio-website": 4,
+    "barkat-enterprise": 5,
+    "av-newsstream": 100,
+    "foodah": 101,
+    "ecommerce-platform": 102,
 };
 
 export default function ProjectsPage() {
