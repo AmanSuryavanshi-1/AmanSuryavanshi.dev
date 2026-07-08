@@ -9,8 +9,9 @@ export const heroData: HeroData = {
     descriptionHighlight: "₹300K+ Revenue Impact | 80% Task Automation | Production-Grade Systems",
     stats: [
         "₹300K+ Revenue Generated",
-        "80% Manual Work Eliminated",
-        "15+ Production Workflows"
+        "95K+ Portfolio Search Impressions",
+        "100K+ Client Search Impressions",
+        "80% Manual Work Eliminated"
     ],
     buttons: {
         primary: {

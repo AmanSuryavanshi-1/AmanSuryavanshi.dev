@@ -80,7 +80,7 @@ export const aboutData: AboutData = {
                     title: 'How I Used Next.js + SEO to Generate ₹300K',
                     project: 'Aviators Training Centre',
                     year: '2025',
-                    metrics: ['#1 Google', '95+ Lighthouse', '₹300K Revenue'],
+                    metrics: ['#1 Google', '95+ Lighthouse', '100K+ Impressions', '₹300K Revenue'],
                     url: '/projects/aviators-training-centre-executive-summary',
                     color: 'lime',
                 },

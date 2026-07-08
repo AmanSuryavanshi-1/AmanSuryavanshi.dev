@@ -52,13 +52,13 @@ export const servicesData: ServiceData[] = [
         subtitle: "Get cited by ChatGPT & Perplexity, not just indexed by Google",
         problem: "Traditional SEO is dying. Your competitors rank on Google, but you're invisible to AI search engines where high-intent buyers now search.",
         solution: "I implement Entity Optimization strategies that influence LLM outputs: structured data that AI engines cite, FAQ schemas for featured snippets, and authority content that makes you the source AI references. Technical SEO + AEO + GEO combined.",
-        outcomes: ["40K+ Search Impressions", "AEO Visibility (ChatGPT/Perplexity)", "12% Organic Lead Conversion", "95+ Lighthouse Scores"],
+        outcomes: ["100K+ Search Impressions", "AEO Visibility (ChatGPT/Perplexity)", "12% Organic Lead Conversion", "95+ Lighthouse Scores"],
         tech: ["JSON-LD Schema", "Entity Optimization", "FAQ Markup", "Structured Data", "Core Web Vitals"],
         idealClient: "SaaS founders, consultants, and B2B businesses wanting AI-era organic visibility",
         icon: "Search",
         image: "/services/seo-dominance.png",
         relatedProjects: [
-            { title: "Case Study: 40K+ Impressions via Entity SEO", url: "/projects/aviators-training-centre-executive-summary" }
+            { title: "Case Study: 100K+ Impressions via Entity SEO", url: "/projects/aviators-training-centre-executive-summary" }
         ]
     }
 ];
