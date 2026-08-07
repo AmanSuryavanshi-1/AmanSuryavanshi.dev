@@ -34,7 +34,7 @@ export const UserConfirmationTemplate = (name: string, message: string) => `
         </tr>
         <tr>
           <td class="content">
-            <h2 style="margin: 0 0 20px 0; color: #111827; font-size: 20px; font-weight: 600;">Hello \${name},</h2>
+            <h2 style="margin: 0 0 20px 0; color: #111827; font-size: 20px; font-weight: 600;">Hello ${name},</h2>
             <p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px; line-height: 1.6;">
               Thank you for reaching out! I've received your message and appreciate you taking the time to contact me.
             </p>
@@ -45,7 +45,7 @@ export const UserConfirmationTemplate = (name: string, message: string) => `
             <table width="100%">
               <tr>
                 <td style="background-color: #f9fafb; border-left: 4px solid #84cc16; padding: 20px; border-radius: 0 8px 8px 0;">
-                  <p style="margin: 0; color: #374151; font-size: 15px; font-style: italic; line-height: 1.6;">"\${message.replace(/\\n/g, '<br>')}"</p>
+                  <p style="margin: 0; color: #374151; font-size: 15px; font-style: italic; line-height: 1.6;">"${message.replace(/\n/g, '<br>')}"</p>
                 </td>
               </tr>
             </table>
@@ -61,7 +61,7 @@ export const UserConfirmationTemplate = (name: string, message: string) => `
         </tr>
         <tr>
           <td class="footer">
-            <p style="margin: 0 0 12px 0; color: #9ca3af; font-size: 12px;">&copy; \${new Date().getFullYear()} Aman Suryavanshi. All rights reserved.</p>
+            <p style="margin: 0 0 12px 0; color: #9ca3af; font-size: 12px;">&copy; ${new Date().getFullYear()} Aman Suryavanshi. All rights reserved.</p>
             <p style="margin: 0; font-size: 12px;">
               <a href="https://github.com/AmanSuryavanshi-1" style="color: #84cc16; text-decoration: none; margin: 0 8px;">GitHub</a>
               <span style="color: #4b5563;">|</span>
@@ -76,9 +76,9 @@ export const UserConfirmationTemplate = (name: string, message: string) => `
   </center>
 </body>
 </html>
-\`;
+`;
 
-export const AdminNotificationTemplate = (name: string, email: string, message: string) => \`
+export const AdminNotificationTemplate = (name: string, email: string, message: string) => `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -120,8 +120,8 @@ export const AdminNotificationTemplate = (name: string, email: string, message: 
               </tr>
               <tr>
                 <td style="background-color: #f9fafb; padding: 15px; border-radius: 6px; border: 1px solid #e5e7eb;">
-                  <p style="margin: 0 0 5px 0; color: #111827; font-size: 16px; font-weight: 600;">\${name}</p>
-                  <a href="mailto:\${email}" style="color: #064e3b; text-decoration: none; font-size: 15px;">\${email}</a>
+                  <p style="margin: 0 0 5px 0; color: #111827; font-size: 16px; font-weight: 600;">${name}</p>
+                  <a href="mailto:${email}" style="color: #064e3b; text-decoration: none; font-size: 15px;">${email}</a>
                 </td>
               </tr>
             </table>
@@ -134,7 +134,7 @@ export const AdminNotificationTemplate = (name: string, email: string, message: 
               </tr>
               <tr>
                 <td style="background-color: #f9fafb; padding: 20px; border-radius: 6px; border: 1px solid #e5e7eb;">
-                  <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">\${message}</p>
+                  <p style="margin: 0; color: #374151; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">${message}</p>
                 </td>
               </tr>
             </table>
@@ -142,10 +142,10 @@ export const AdminNotificationTemplate = (name: string, email: string, message: 
             <table width="100%" style="border-top: 1px solid #e5e7eb; padding-top: 25px;">
               <tr>
                 <td align="left" valign="middle">
-                  <p style="margin: 0; color: #9ca3af; font-size: 13px;">Received: \${new Date().toLocaleString()}</p>
+                  <p style="margin: 0; color: #9ca3af; font-size: 13px;">Received: ${new Date().toLocaleString()}</p>
                 </td>
                 <td align="right" valign="middle">
-                  <a href="mailto:\${email}" style="background-color: #064e3b; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: 600; display: inline-block;">Reply Now</a>
+                  <a href="mailto:${email}" style="background-color: #064e3b; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: 600; display: inline-block;">Reply Now</a>
                 </td>
               </tr>
             </table>
@@ -156,4 +156,4 @@ export const AdminNotificationTemplate = (name: string, email: string, message: 
   </center>
 </body>
 </html>
-\`;
+`;
