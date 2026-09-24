@@ -25,9 +25,9 @@ const geistMono = localFont({
 
 // Site Constants
 const SITE_NAME = "Aman Suryavanshi";
-const SITE_TITLE = "Aman Suryavanshi | AI Workflow Architect & Systems Builder";
-const SITE_DESCRIPTION = "I build self-healing AI systems that drive revenue. ₹300K+ generated, 80% manual work eliminated. n8n automation, LangGraph agents, Next.js dashboards. Book a discovery call for your system audit.";
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.amansuryavanshi.me";
+const SITE_TITLE = "Aman Suryavanshi | AI Workflow & Automation Engineer | Technical Solutions Engineer";
+const SITE_DESCRIPTION = "AI Workflow & Automation Engineer and Technical Solutions Engineer in Bengaluru & Delhi NCR (Open to Remote). Architecting Next.js 15/16 web apps, self-healing 122-node n8n automations, FastMCP knowledge bridges, and programmatic SEO platforms generating ₹300K+ revenue.";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi.me";
 
 export const metadata: Metadata = {
     metadataBase: new URL(SITE_URL),
@@ -37,30 +37,36 @@ export const metadata: Metadata = {
     },
     description: SITE_DESCRIPTION,
     keywords: [
-        // ELITE AUTHORITY: High-Ticket Intent
-        "AI Agent Developer for SaaS",
-        "n8n Automation Expert for Agencies",
-        "Next.js AI Dashboard Architect",
-        "Freelance AI Engineer",
-        "Hire n8n Expert",
-        // TECHNICAL SPECIALTIES (KnowsAbout)
-        "Agentic Workflows",
-        "Deterministic Automation",
-        "Multi-LLM Orchestration",
-        "Self-Healing Workflows",
-        "RAG Pipeline Architecture",
-        "LangGraph Developer",
-        "Vector Database Integration",
-        // OUTCOMES
-        "Reduce Operational Costs with AI",
-        "Automate Revenue Operations",
-        "Enterprise Process Automation",
-        // STACK
-        "Next.js App Router",
-        "TypeScript",
-        "OpenAI GPT-4 Integration",
-        "Anthropic Claude API",
-        "Google Gemini API"
+        // TARGET ROLES (P0, P1, P2)
+        "AI Workflow Engineer",
+        "AI Automation Engineer",
+        "Technical Solutions Engineer",
+        "Associate Solutions Engineer",
+        "Full-Stack Growth Engineer",
+        "Programmatic SEO Engineer",
+        // CORE TECHNICAL SPECIALTIES
+        "Next.js 15 Developer",
+        "Next.js 16 App Router",
+        "n8n Automation Expert",
+        "Self-Healing n8n Workflows",
+        "Dead-Letter Queue Architecture",
+        "FastMCP Knowledge Bridge",
+        "Headless Notion CMS Defense",
+        "Python AsyncIO EventLoop",
+        "httpx Cookie Jar Architecture",
+        "Playwright Automation",
+        // PROVEN OUTCOMES & RECEIPTS
+        "₹300K Revenue Case Study",
+        "110K Search Impressions",
+        "notebooklm-py PR 276",
+        "Aviators Training Centre",
+        "OmniPost Core",
+        "Vivek OnPoint Platform",
+        // LOCATIONS
+        "AI Engineer Bengaluru",
+        "Technical Solutions Engineer Delhi NCR",
+        "Remote AI Workflow Engineer",
+        "AI Internship India"
     ],
     authors: [{ name: SITE_NAME, url: SITE_URL }],
     creator: SITE_NAME,
@@ -71,10 +77,11 @@ export const metadata: Metadata = {
         siteName: SITE_NAME,
         images: [
             {
-                url: "/Profile/me main.png",
+                url: "/og-image.png",
                 width: 1200,
                 height: 630,
-                alt: "Aman Suryavanshi - AI Automation Engineer Portfolio",
+                alt: "Aman Suryavanshi - AI Workflow & Solutions Engineer",
+                type: "image/png",
             },
         ],
         locale: "en_US",
@@ -85,7 +92,7 @@ export const metadata: Metadata = {
         title: SITE_TITLE,
         description: SITE_DESCRIPTION,
         creator: "@_AmanSurya",
-        images: ["/Images/profile-pic.png"],
+        images: ["/og-image.png"],
     },
     robots: {
         index: true,
@@ -110,7 +117,7 @@ export const metadata: Metadata = {
     manifest: '/manifest.json',
 };
 
-// Structured data for enhanced SEO
+// Structured data for enhanced SEO / AEO / GEO
 const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -126,38 +133,44 @@ const structuredData = {
                 width: 1200,
                 height: 630,
             },
-            description: SITE_DESCRIPTION,
-            jobTitle: "AI Workflow Architect & Systems Builder",
+            description: "Aman Suryavanshi is an AI Workflow & Automation Engineer and Associate Technical Solutions Engineer based in Delhi NCR and Bengaluru (available for Remote, Hybrid, and In-Office roles). He architects production Next.js 15/16 web applications, 122-node self-healing n8n systems with Dead-Letter Queues, FastMCP knowledge gateways, and programmatic SEO platforms generating verified commercial revenue.",
+            jobTitle: "AI Workflow & Automation Engineer | Technical Solutions Engineer",
             worksFor: {
                 "@type": "Organization",
-                "name": "Freelance"
+                "name": "Independent Contractor & Solutions Engineer"
+            },
+            address: {
+                "@type": "PostalAddress",
+                "addressLocality": "Bengaluru & Delhi NCR",
+                "addressCountry": "IN"
             },
             knowsAbout: [
                 {
                     "@type": "Thing",
-                    "name": "Agentic Workflows",
-                    "description": "Designing autonomous AI agent systems using LangGraph"
+                    "name": "Autonomous Workflow Orchestration",
+                    "description": "Designing deterministic, self-healing 122-node pipelines in n8n with Dead-Letter Queues"
                 },
                 {
                     "@type": "Thing",
-                    "name": "Deterministic Automation",
-                    "description": "Building reliable, state-managed workflows in n8n"
+                    "name": "FastMCP Knowledge Gateways",
+                    "description": "Streaming living codebase and Second Brain context via Model Context Protocol (:3010)"
                 },
                 {
                     "@type": "Thing",
-                    "name": "Multi-LLM Orchestration",
-                    "description": "Routing tasks to optimal models (GPT-4o, Claude 3.5 Sonnet, Gemini)"
+                    "name": "Next.js 15 & 16 App Router Systems",
+                    "description": "Full-stack architectures, Server Components, and sub-second Vercel edge deployments"
                 },
                 {
                     "@type": "Thing",
-                    "name": "n8n Production Architecture",
-                    "description": "Self-hosted, high-scale n8n deployments with self-healing capabilities"
+                    "name": "Core Open-Source Architecture",
+                    "description": "Author of Merged Core PR #276 (+1,483 lines) in notebooklm-py (16.5k★) fixing cookie jars & Windows asyncio"
                 },
-                "RAG Systems",
-                "Next.js AI Dashboards",
-                "Dead-Letter Queue Architecture",
-                "TypeScript",
-                "Revenue Operations Automation"
+                "Programmatic SEO (pSEO)",
+                "Headless Notion CMS 11-Layer Defense",
+                "Python & Asyncio",
+                "Upstash Redis Rate Limiting",
+                "Multi-LLM Routing (GPT-4o, Claude 3.5 Sonnet, Gemini 2.5)",
+                "Playwright Headless Graphics Compilation"
             ],
             sameAs: [
                 "https://github.com/AmanSuryavanshi-1",
@@ -191,50 +204,59 @@ const structuredData = {
             },
         },
         {
+            "@type": "ProfilePage",
+            "@id": `${SITE_URL}#profile`,
+            url: SITE_URL,
+            name: `${SITE_NAME} Professional Engineering Profile`,
+            mainEntity: {
+                "@id": `${SITE_URL}#person`
+            }
+        },
+        {
             "@type": "ProfessionalService",
             "@id": `${SITE_URL}#service`,
-            name: "Aman Suryavanshi — AI Workflow Architecture",
-            description: "Production-grade AI automation systems: self-healing n8n workflows, LangGraph agent pipelines, and Next.js control dashboards. Specializing in systems that generate revenue and reduce manual work.",
+            name: "Aman Suryavanshi — AI Workflow & Solutions Engineering",
+            description: "Production-grade AI automation systems, self-healing n8n workflows (122 nodes, DLQ), FastMCP knowledge gateways, Next.js 15/16 platforms, and programmatic SEO architectures.",
             url: SITE_URL,
             provider: {
                 "@id": `${SITE_URL}#person`
             },
-            areaServed: ["Global", "USA", "UK", "India"],
-            priceRange: "₹50,000 - ₹5,00,000",
-            image: `${SITE_URL}/Images/profile-pic.png`,
+            areaServed: ["Bengaluru", "Delhi NCR", "India", "USA", "Remote"],
+            priceRange: "₹50,000 - ₹5,00,000 / $60,000 - $100,000",
+            image: `${SITE_URL}/og-image.png`,
             serviceType: [
-                "AI Workflow Automation",
-                "n8n Production Deployment",
-                "LangGraph Agent Development",
-                "Next.js Dashboard Development",
-                "SEO/AEO/GEO Optimization"
+                "AI Workflow & Automation Engineering",
+                "Technical Solutions Engineering (TSE)",
+                "Programmatic SEO & Organic Growth Systems",
+                "Self-Healing n8n Orchestration (122 nodes, DLQ)",
+                "Next.js 15/16 Full-Stack Control Dashboards"
             ],
             hasOfferCatalog: {
                 "@type": "OfferCatalog",
-                name: "AI Automation Services",
+                name: "Engineering & Solutions Offerings",
                 itemListElement: [
                     {
                         "@type": "Offer",
                         itemOffered: {
                             "@type": "Service",
-                            name: "Autonomous Revenue Operations",
-                            description: "LangGraph-powered lead research, CRM enrichment, and outreach automation"
+                            name: "Autonomous Revenue Operations & SDR Pipelines",
+                            description: "LangGraph and n8n autonomous lead research, CRM enrichment, and verified outreach"
                         }
                     },
                     {
                         "@type": "Offer",
                         itemOffered: {
                             "@type": "Service",
-                            name: "Self-Healing Business Automation",
-                            description: "Complex n8n workflows with DLQ, retry logic, and health monitoring"
+                            name: "Self-Healing Business Automation (122-Node n8n)",
+                            description: "Enterprise workflows with Dead-Letter Queues, retry backoff, and FastMCP knowledge bridges"
                         }
                     },
                     {
                         "@type": "Offer",
                         itemOffered: {
                             "@type": "Service",
-                            name: "AI-Powered SaaS Architecture",
-                            description: "Next.js + AI Agent backends for scalable SaaS applications"
+                            name: "Programmatic SEO & High-Performance Next.js Platforms",
+                            description: "Sub-2s page speed, 95+ Lighthouse, 110K+ GSC impressions, and AEO/GEO dominance"
                         }
                     }
                 ]
@@ -246,29 +268,57 @@ const structuredData = {
             "mainEntity": [
                 {
                     "@type": "Question",
-                    "name": "How to hire an n8n automation expert?",
+                    "name": "Who is Aman Suryavanshi?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Look for engineers who specialize in 'deterministic automation' and 'self-healing workflows' rather than just connecting APIs. My service includes a full architecture audit, custom n8n node development, and guaranteed error handling protocols to ensure 99.9% uptime."
+                        "text": "Aman Suryavanshi is an AI Workflow & Automation Engineer and Associate Technical Solutions Engineer based in Delhi NCR and Bengaluru (available for Remote, Hybrid, and In-Office roles). He architects production-grade Next.js 15/16 web applications, 122-node self-healing n8n automation systems with Dead-Letter Queues, FastMCP knowledge gateways, and programmatic SEO platforms that generate verified commercial revenue."
                     }
                 },
                 {
                     "@type": "Question",
-                    "name": "What is an AI Workflow Architect?",
+                    "name": "What are Aman Suryavanshi's core receipts and technical achievements?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "An AI Workflow Architect doesn't just write prompts; they build the infrastructure (RAG, Vector DBs, n8n orchestrators) that makes AI agents reliable in production. I combine Next.js full-stack skills with advanced agent frameworks like LangGraph to build complete business systems."
+                        "text": "Aman's four flagship receipts include: (1) Aviators Training Centre: Next.js 15 + pSEO platform generating ₹300,000+ ($3.5K+) revenue, 110K+ GSC impressions, and 95+ Lighthouse score. (2) Vivek-OnPoint Platform: Next.js 16 + Headless Notion CMS (8 relational DBs) with an 11-Layer Defense System eliminating API limits. (3) notebooklm-py (16.5k★): Merged Core PR #276 (+1,483 / -353 lines) fixing short-lived auth cookie drops on cross-domain 302 redirects and Windows asyncio event loop policy. (4) OmniPost-Core: 122-node self-healing n8n engine connected to an Obsidian Second Brain via FastMCP (:3010)."
                     }
                 },
                 {
                     "@type": "Question",
-                    "name": "Cost of building custom AI agents?",
+                    "name": "What target roles and compensation tiers is Aman Suryavanshi open to?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Professional AI agent development typically ranges from ₹75,000 to ₹5,00,000 depending on complexity (e.g., single-task bot vs. multi-agent orchestration). My pricing is value-based, focusing on the revenue generated or hours saved by the system."
+                        "text": "Aman is targeting: Primary [P0] AI Workflow & Automation Engineer (₹6L–₹14L LPA / ₹50k–₹1.2L/mo); Secondary [P1] Associate Technical Solutions Engineer (TSE) (₹7.5L–₹18L LPA / $60k–$100k Remote); Tertiary [P2] Full-Stack Growth & pSEO Engineer (₹6L–₹15L LPA / ₹50k–₹1.25L/mo); and Wedge high-paying remote AI internships (≥₹50k/mo net). He is available for in-office/hybrid in Bengaluru (HSR, Koramangala, Indiranagar), Delhi NCR (Cyber City, Noida), and Remote."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How does Aman ensure 99.9% uptime in automation systems?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "By designing deterministic workflows rather than naive API scripts. He implements Dead-Letter Queues (DLQ) for failed payload retention, exponential backoff with jitter, semaphore throttling (such as 0.67 req/s for rate-sensitive APIs), version-controlled static emergency bypass snapshots, and closed-loop alert webhooks."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is Aman Suryavanshi's experience with open source and Google NotebookLM?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Aman authored and merged Core PR #276 (+1,483 / -353 lines) in notebooklm-py (16.5k+ stars on GitHub), resolving silent authentication cookie dropouts on cross-domain redirects to accounts.google.com via an httpx cookie jar, atomic token storage (tempfile + chmod 0o600), and fixing Windows ProactorEventLoop policies."
                     }
                 }
             ]
+        },
+        {
+            "@type": "SoftwareSourceCode",
+            "@id": `${SITE_URL}#notebooklm-py-pr276`,
+            name: "notebooklm-py PR #276: Core Auth Cookie Jar & Windows Asyncio Fix",
+            programmingLanguage: "Python",
+            runtimePlatform: "Python 3.10+, Windows, Linux, macOS",
+            codeRepository: "https://github.com/tomaarsen/notebooklm-py/pull/276",
+            author: {
+                "@id": `${SITE_URL}#person`
+            },
+            description: "Merged core architectural pull request in Google NotebookLM's leading Python library (16.5k stars), implementing domain-preserving cookie jars and resolving Windows asyncio ProactorEventLoop policies."
         }
     ]
 };

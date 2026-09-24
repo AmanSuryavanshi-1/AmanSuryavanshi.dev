@@ -13,7 +13,8 @@ import {
 
 import {
     // React Icons SI
-    SiRedux, SiTailwindcss, SiPostcss, SiNetlify, SiDaisyui, SiVite, SiMui, SiTypescript, SiNextdotjs, SiShadcnui, SiFramer, SiIcon, SiFirebase, SiSanity, SiN8N, SiOpenai, SiAirtable, SiTelegram, SiPostgresql, SiNginx, SiDigitalocean, SiGreensock
+    SiRedux, SiTailwindcss, SiPostcss, SiNetlify, SiDaisyui, SiVite, SiMui, SiTypescript, SiNextdotjs, SiShadcnui, SiFramer, SiIcon, SiFirebase, SiSanity, SiN8N, SiOpenai, SiAirtable, SiTelegram, SiPostgresql, SiNginx, SiDigitalocean, SiGreensock,
+    SiPython, SiNotion, SiRedis, SiFastapi
 } from 'react-icons/si';
 
 import { MdEmail, MdViewInAr } from 'react-icons/md';
@@ -154,6 +155,22 @@ export const TechIconMap: Record<string, React.ElementType> = {
     "PDF": MdViewInAr,
     "Utility": PenTool,
     "Text Processing": FaPencilRuler,
+    "Python": SiPython,
+    "FastMCP": Cpu,
+    "FastAPI": SiFastapi,
+    "Notion": SiNotion,
+    "Notion API": SiNotion,
+    "Upstash Redis": SiRedis,
+    "Redis": SiRedis,
+    "asyncio": Zap,
+    "httpx": Globe,
+    "Playwright": Monitor,
+    "pytest": CheckCircle,
+    "Zod": Lock,
+    "Next.js 16": SiNextdotjs,
+    "Claude 3.5 Sonnet": Brain,
+    "Gemini 2.5 Flash": Zap,
+    "GPT-4o": SiOpenai,
 
     // Socials
     "FaXTwitter": FaXTwitter,

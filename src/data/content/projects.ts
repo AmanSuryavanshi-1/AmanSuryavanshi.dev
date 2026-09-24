@@ -5,10 +5,10 @@ const rawProjects = [
     {
         id: "aviators-training-centre",
         title: "Aviators Training Centre",
-        tagLine: "AI-Powered Aviation Training & Business Management Platform",
+        tagLine: "High-Performance Next.js 15 Platform + 74-Node n8n Lead Automation",
         category: "featured",
         type: "freelance",
-        shortDescription: "Production-ready flight training platform combining Next.js 15, AI automation, and enterprise integrations. Generated ₹300,000+ in sales through 50+ organic leads with 80% reduction in manual tasks.",
+        shortDescription: "Production-ready flight training platform combining Next.js 15, programmatic SEO, and 74-node n8n workflow automation. Generated ₹300,000+ in sales through 50+ organic leads with 110K+ Google Search Console impressions and 95+ Lighthouse scores.",
         description: "A comprehensive aviation training management ecosystem built with Next.js 15, TypeScript, and AI-driven automation. The platform integrates Sanity CMS for dynamic content management, Firebase for real-time analytics, and n8n for intelligent workflow orchestration. Features automated email sequences via Resend, Cal.com meeting scheduling, Airtable CRM integration, and AI-powered SEO scoring achieving 96/100 average optimization. The system handles course registrations, student tracking, instructor management, and automated business intelligence-transforming a traditional flight school into a data-driven operation that maintains 95+ Lighthouse scores across all metrics.",
         heroImageAlt: "Aviators Training Centre AI dashboard showing flight training KPIs, automated lead capture, and instructor scheduling",
         seo: {
@@ -28,7 +28,7 @@ const rawProjects = [
             "Generated ₹300,000+ in direct sales from automated lead pipeline",
             "50+ organic leads captured through #1 Google rankings for niche aviation queries",
             "80% reduction in manual CRM and administrative tasks through n8n automation",
-            "100K+ Google Search impressions with 260+ organic clicks demonstrating SEO dominance",
+            "110K+ Google Search Console impressions demonstrating organic SEO dominance",
             "95+ Lighthouse performance score across all pages with sub-2 second load times",
             "96/100 average SEO optimization score with AI-powered recommendations",
             "6,000+ total project views demonstrating strong market validation"
@@ -46,11 +46,11 @@ const rawProjects = [
         featured: true,
         metrics: {
             revenue: "₹300,000+",
+            impressions: "110,000+",
             leads: "50+",
             automation: "80%",
             lighthouse: "95+",
-            seo: "96/100",
-            views: "6,000+"
+            seo: "96/100"
         },
         documentation: [
             {
@@ -71,6 +71,104 @@ const rawProjects = [
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-19%20Mobile%20Homepage.webp", alt: "Mobile Homepage View", type: "image" },
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-20%20AvaitorsTrainingCenter_LighthouseScores.webp", alt: "Lighthouse Performance Scores", type: "image" }
         ]
+    },
+    {
+        id: "vivek-onpoint-platform",
+        title: "Vivek OnPoint Creator Platform",
+        tagLine: "Next.js 16 + Headless Notion CMS (8 Relational DBs) & 11-Layer Defense System",
+        category: "featured",
+        type: "client",
+        shortDescription: "Static-first educational platform for financial creator Vivek OnPoint. Integrates 8 relational Notion databases with an 11-layer defense system: semaphore throttling (0.67 req/s), jittered exponential backoff, static emergency bypass snapshots, draft leakage guards, and edge rate limiting with Upstash Redis.",
+        description: "An enterprise-grade creator platform built on Next.js 16 App Router and Tailwind CSS v4, utilizing Notion as a headless CMS across 8 relational databases (Sources, Bookshelf, FAQ, Newsletter, Sponsors, Corrections). To eliminate Notion API rate limits and draft leaks, architected an 11-Layer Notion CMS Defense: 0.67 req/s Semaphore Throttler, jittered exponential backoff for transient 429/5xx errors, emergency bypass mode serving version-controlled static fallback snapshots, post-Zod draft leakage validation, and ISR freshness health probes (/api/health/isr-freshness). Enforces strict compliance guardrails (SEBI educational boundaries, ASCI sponsor disclosures, DPDP minimal consent).",
+        heroImageAlt: "Vivek OnPoint Creator Hub Architecture and Notion CMS Dashboard",
+        seo: {
+            title: "Vivek OnPoint Platform – Next.js 16 & 11-Layer Notion CMS Case Study",
+            description: "How Aman Suryavanshi engineered a static-first Next.js 16 platform with 8 relational Notion databases and an 11-layer defense system against API limits.",
+            keywords: [
+                "Next.js 16 App Router",
+                "Headless Notion CMS",
+                "11-Layer Defense System",
+                "Upstash Redis Rate Limiting",
+                "Aman Suryavanshi portfolio"
+            ],
+            canonicalPath: "/projects/vivek-onpoint-platform"
+        },
+        challenge: "Creator platforms relying on Notion as a headless CMS face severe API bottlenecks: strict 3 req/s rate limits causing build crashes, accidental leakage of draft content, empty page rendering during outages, and compliance violations when displaying financial educational content without strict disclosure boundaries.",
+        solution: "Engineered an 11-Layer Notion CMS Defense System with a semaphore throttler (0.67 req/s), AWS-style jittered backoff, and static emergency bypass snapshots. Coupled with Upstash Redis edge rate limiting, strict Zod schema validation, and edge middleware that normalizes tracking parameters to avoid CDN cache fragmentation.",
+        impact: [
+            "100% build reliability with 0 Notion API 429 rate-limit breaches across all deployments",
+            "Zero content loss via emergency static fallback snapshots during Notion downtime",
+            "99.9% uptime with sub-second page loads powered by Vercel edge caching",
+            "Full SEBI / ASCI / DPDP compliance enforced through server-side validation rules",
+            "Seamless headless authoring workflow for 8 relational databases"
+        ],
+        technicalOverview: "Next.js 16 App Router application styled with Tailwind CSS v4 and OKLCH color tokens. Integrates the Notion JavaScript SDK with custom throttling wrappers. Edge rate limiting is powered by @upstash/ratelimit on Upstash Redis. Runtime schema validation is enforced via Zod v3. Features automated ISR caching with freshness health probes (/api/health/isr-freshness) and edge middleware for cache-key normalization.",
+        techStack: ["Next.js 16", "Notion API", "TypeScript", "Tailwind CSS", "Upstash Redis", "Zod", "Vercel", "Docker", "Node.js"],
+        badges: ["Next.js 16", "Notion CMS", "TypeScript", "Redis", "Security", "Production", "Client", "Full-Stack"],
+        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-v2-architecture.webp",
+        imageUrlFallback: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-v2-architecture.webp",
+        videoYouTubeId: "",
+        video: "",
+        liveUrl: "https://vivekonpoint.com",
+        codeUrl: "https://github.com/AmanSuryavanshi-1/Vivek-OnPoint-Web",
+        blogUrl: null,
+        featured: true,
+        metrics: {
+            databases: "8 Notion DBs",
+            defenseLayers: "11 Layers",
+            rateLimit: "0.67 req/s",
+            uptime: "99.9%",
+            buildReliability: "100%"
+        }
+    },
+    {
+        id: "notebooklm-py-pr276",
+        title: "notebooklm-py (16.5k★) — Core Auth & Asyncio Architecture PR #276",
+        tagLine: "Merged Core Architecture PR (+1,483 / -353 Lines) in Google NotebookLM Python Client",
+        category: "featured",
+        type: "open-source",
+        shortDescription: "Engineered domain-preserving httpx cookie jar architecture resolving silent auth drops on cross-domain 302-redirects to accounts.google.com when short-lived tokens expire. Implemented atomic token storage (tempfile + chmod 0o600) and resolved Windows asyncio ProactorEventLoop policies.",
+        description: "Google's NotebookLM web interface relies on short-lived authentication cookies (~10 minutes) that redirect to accounts.google.com upon expiry. In notebooklm-py (the leading community Python API with 16.5k+ stars), the existing client passed raw Cookie headers that were silently dropped by httpx upon cross-domain redirects, causing catastrophic session termination. Aman architected and merged Core PR #276 (+1,483 / -353 lines): created a domain-preserving httpx cookie jar constructor (build_cookie_jar), introduced the DomainCookieMap type, wired atomic cookie persistence (save_cookies_to_storage using tempfile and chmod 0o600), and fixed Windows asyncio event loop policy mismatches.",
+        heroImageAlt: "notebooklm-py Core Architecture PR #276 GitHub Merge and Cookie Jar Architecture",
+        seo: {
+            title: "notebooklm-py PR #276 – Core Auth & Windows Asyncio Fix Case Study",
+            description: "How Aman Suryavanshi re-architected auth cookie management and Windows asyncio loops in the 16.5k-star notebooklm-py open-source library.",
+            keywords: [
+                "notebooklm-py PR 276",
+                "httpx cookie jar",
+                "Windows asyncio ProactorEventLoop",
+                "open source contribution",
+                "Aman Suryavanshi portfolio"
+            ],
+            canonicalPath: "/projects/notebooklm-py-pr276"
+        },
+        challenge: "When Google auth cookies expire every 10 minutes, API requests receive a 302 redirect to accounts.google.com. Standard HTTP clients strip raw 'Cookie' request headers on cross-domain redirects for security reasons, instantly killing long-running CLI sessions. On Windows, default asyncio event loop policies caused fatal Subprocess/RPC transport crashes during cookie retrieval.",
+        solution: "Engineered an authoritative httpx.Cookies jar implementation that binds cookies to specific domains (allowing cross-domain redirect preservation). Built atomic storage synchronization using temporary files and 0o600 file permissions to ensure multi-process CLI safety. Resolved Windows ProactorEventLoop policy handling.",
+        impact: [
+            "Merged into core repository of notebooklm-py (16.5k+ GitHub stars)",
+            "+1,483 lines added, -353 lines refactored across 8 core architecture files",
+            "Eliminated 100% of session dropouts on 10-minute token expiration cycles",
+            "Restored full Windows compatibility across all async CLI commands",
+            "Enforced atomic file locking to prevent storage_state corruption across parallel jobs"
+        ],
+        technicalOverview: "Python 3.10+ async architecture utilizing httpx, asyncio, and Playwright for headless token harvesting. Implements custom cookie normalization logic, domain mapping, atomic file writing with os.replace, and automated unit test suites using pytest and pytest-asyncio.",
+        techStack: ["Python", "asyncio", "httpx", "Playwright", "pytest", "GitHub Actions"],
+        badges: ["Open Source", "Python", "AsyncIO", "Auth Architecture", "16.5k★", "Production"],
+        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/obsidian-mcp-network-topology.webp",
+        imageUrlFallback: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/obsidian-mcp-network-topology.webp",
+        videoYouTubeId: "",
+        video: "",
+        liveUrl: "https://github.com/tomaarsen/notebooklm-py/pull/276",
+        codeUrl: "https://github.com/AmanSuryavanshi-1/notebooklm-py/commit/5c3f325391eef248b94b885972e032212be009ca",
+        blogUrl: null,
+        featured: true,
+        metrics: {
+            githubStars: "16.5k+",
+            codeDiff: "+1,483 / -353",
+            sessionDrops: "0%",
+            platform: "Python / Asyncio",
+            testsPassing: "100%"
+        }
     },
     {
         id: "barkat-enterprise",
@@ -216,24 +314,24 @@ const rawProjects = [
     },
     {
         id: "n8n-automation-suite",
-        title: "Omni-Post AI Automation",
-        tagLine: "One-Click Multi-Platform Content Repurposing & AI-Powered Social Distribution",
+        title: "OmniPost-Core: Autonomous Multi-Platform Content Engine",
+        tagLine: "122-Node n8n Workflow Engine + FastMCP (:3010) Second Brain Knowledge Bridge",
         category: "featured",
         type: "automation",
-        shortDescription: "A fully automated, AI-driven workflow (orchestrated in n8n) that ingests long-form content (blog/article/YouTube/video/Notion), intelligently summarizes and repurposes it for multiple social channels, and publishes on LinkedIn and Twitter/X-all in a single click, with analytics, error recovery, and audit trail. Purpose-built for build-in-public founders, creators, and marketers who want to go viral and compound their audience with minimal friction.",
-        description: "A fully automated, AI-driven workflow (orchestrated in n8n) that ingests long-form content (blog/article/YouTube/video/Notion), intelligently summarizes and repurposes it for multiple social channels, and publishes on LinkedIn and Twitter/X-all in a single click, with analytics, error recovery, and audit trail. Purpose-built for build-in-public founders, creators, and marketers who want to go viral and compound their audience with minimal friction. Core Features include: Multi-Source Content Support (Markdown, Notion, YouTube, Web), AI-Powered Repurposing using GPT-4 for platform-native posts (Twitter threads, LinkedIn articles), Automated Distribution via OAuth2 APIs with error recovery, Single-Click Workflow execution, and Advanced Logging & Analytics in Notion/Google Sheets. The system is developer-ready with open-sourced workflows, modular nodes, and robust fallback logic.",
-        challenge: "Build-in-public founders and creators struggle to maintain consistent, high-quality presence across multiple platforms (LinkedIn, Twitter/X) while focusing on building. Manual repurposing is time-consuming, error-prone, and often leads to burnout. Existing tools lack deep customization for 'voice' and specific formatting needs of each platform, resulting in generic, low-engagement content.",
-        solution: "Engineered a comprehensive Omni-Post AI Automation workflow in n8n that acts as a personal content team. It ingests content from any source, uses prompt-tuned GPT-4 to generate platform-native posts, and handles distribution via official APIs. Features include intelligent error handling, rate limit management, and a centralized dashboard for analytics. The system preserves the creator's unique voice while maximizing reach through strategic formatting and timing.",
+        shortDescription: "Production-grade multi-agent content distribution system orchestrating 122 n8n nodes. Connects local Obsidian Second Brain via FastMCP (:3010) and Google NotebookLM via FastAPI (:3012). Features a 5-layer anti-slop linter, 300 DPI Playwright carousel compiler, and multi-platform publishing across 7+ networks.",
+        description: "A production-grade, multi-agent content distribution operating system designed to eliminate 100% of repetitive formatting, context extraction, and manual cross-posting overhead. Pulls living project context from a local Obsidian Second Brain via FastMCP (:3010), consults a zero-token NotebookLM research oracle via FastAPI (:3012), formats platform-native copy through an adversarial 5-Layer Slop Linter (banning 39 AI tells), compiles 300 DPI multi-slide carousels using headless Playwright, and autonomously publishes across 7+ distribution networks (LinkedIn, Twitter/X, Threads, Sanity, Dev.to, Hashnode, Reddit) on a $0/month operational budget.",
+        challenge: "Build-in-public founders and creators struggle to maintain consistent, high-quality presence across multiple platforms while writing deep technical code. Manual cross-posting is time-consuming and error-prone, while conventional tools output generic, low-engagement AI slop that lacks deep code context and fails platform-specific formatting constraints.",
+        solution: "Engineered a 122-node dual-workflow engine in n8n (Part 1 Generation Engine + Part 2 Distribution Router). Implemented FastMCP (:3010) streaming gateway to inject verified project telemetry from Obsidian, an adversarial 5-layer slop linter in JavaScript/Node.js, headless Playwright carousel generation, and robust Dead-Letter Queues with retry backoff.",
         impact: [
-            "Used daily to power a build-in-public content flywheel with zero manual copy-pasting",
-            "Contributed to 6,000+ total views and dozens of direct inbound leads/sales",
-            "Frictionless, omnichannel distribution with single-click execution",
-            "Helps creators break out of single-platform silos and build cross-network reputation",
-            "Fully open-sourced workflow for community use and customization"
+            "122 n8n nodes orchestrated with zero-loss Dead-Letter Queue (DLQ) retry architecture",
+            "Eliminated 100% of manual social copy-pasting across 7+ distribution channels",
+            "FastMCP (:3010) live context bridge ground prompts in real code—zero AI hallucinations",
+            "300 DPI Playwright automated carousel generation for high-engagement LinkedIn slide decks",
+            "Contributed to 6,000+ total views and direct inbound lead conversions with $0/mo tool costs"
         ],
-        technicalOverview: "Built entirely in n8n with a modular node architecture. Leverages OpenAI GPT-4 for intelligent content processing with custom prompt engineering for platform-specific tone and formatting. Integrates Twitter/X API v2 and LinkedIn API via OAuth2 for authenticated publishing. Uses Notion API for content archiving and logging. Implements robust error handling with retry logic, exponential backoff, and fallback mechanisms. Features custom HTTP nodes for data fetching and transformation, and Telegram/Email integrations for real-time notifications.",
-        techStack: ["n8n", "OpenAI GPT-4", "Twitter API", "LinkedIn API", "Notion API", "Telegram API", "Node.js", "HTTP/REST", "OAuth2", "Webhooks"],
-        badges: ["n8n", "AI", "Automation", "Content", "Build-in-Public", "Open Source", "Workflow", "GPT-4"],
+        technicalOverview: "Dual-stream n8n v1.x architecture combining multi-LLM routing (Gemini 2.5 Flash, GPT-4o, Claude 3.5 Sonnet) with custom Node.js code nodes for regex sanitization. FastMCP gateway running on Python FastMCP (:3010) streams Markdown notes from Obsidian. FastAPI bridge (:3012) queries Google NotebookLM. Playwright + Jinja2 scripts compile JSON specifications into 2160x2700 4:5 PNG carousels. Uses OAuth2 and REST APIs for publishing with automatic rate-limit cooldowns.",
+        techStack: ["n8n", "FastMCP", "FastAPI", "Python", "Playwright", "Docker", "GPT-4o", "Claude 3.5 Sonnet", "Gemini 2.5 Flash", "Twitter API", "LinkedIn API", "Notion API", "Node.js"],
+        badges: ["n8n", "AI/Automation", "FastMCP", "Open Source", "Playwright", "Production", "Multi-Agent"],
         imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-l1-macro.webp",
         imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_1_Generation_Workflow",
         liveUrl: "https://n8n.aviatorstrainingcentre.in",
@@ -241,10 +339,11 @@ const rawProjects = [
         blogUrl: "https://www.amansuryavanshi.me/blogs/n8n-automation",
         featured: true,
         metrics: {
-            views: "6,000+",
-            leads: "Dozens",
-            friction: "Zero",
-            distribution: "Omnichannel"
+            workflows: "122 Nodes",
+            platforms: "7+ Networks",
+            bridge: "FastMCP :3010",
+            cost: "$0/month",
+            views: "6,000+"
         },
         gallery: [
             { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-l1-macro.webp", alt: "Part 1: Generation Workflow", type: "image" },

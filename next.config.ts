@@ -46,6 +46,12 @@ const nextConfig: NextConfig & { eslint?: { ignoreDuringBuilds?: boolean } } = {
         destination: 'https://amansuryavanshi.me/:path*',
         permanent: true,
       },
+      // Redirect singular /blog to plural /blogs (supporting Notion formula canonicals)
+      {
+        source: '/blog/:slug*',
+        destination: '/blogs/:slug*',
+        permanent: true,
+      },
       // Redirect old /contact URL to homepage contact section
       {
         source: '/contact',

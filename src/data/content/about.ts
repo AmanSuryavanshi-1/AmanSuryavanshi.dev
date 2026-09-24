@@ -2,52 +2,52 @@ import { AboutData } from '../types';
 
 export const aboutData: AboutData = {
     hero: {
-        badge: "Available for new projects",
-        title: "Full-Stack Agentic Developer",
-        subtitle: "Production n8n Architect • LangGraph Orchestrator • Next.js Systems Builder",
-        pitch: "\"I build intelligent multi-agent systems AND the frontend interfaces that let non-technical people control them—end-to-end.\"",
+        badge: "Open to Hybrid/In-Office (Bengaluru, Delhi NCR) & Remote",
+        title: "AI Workflow & Automation Engineer",
+        subtitle: "Technical Solutions Engineer • Next.js 15/16 • 122-Node n8n Workflows • FastMCP",
+        pitch: "\"I architect self-healing AI automations, programmatic SEO platforms, and resilient API integrations that drive verifiable revenue and zero-defect operations.\"",
         skills: [
-            { icon: "Workflow", label: "Production n8n" },
-            { icon: "Brain", label: "Multi-LLM Orchestration" },
-            { icon: "Layers", label: "LangGraph Agents" },
-            { icon: "Rocket", label: "Next.js Systems" },
+            { icon: "Workflow", label: "122-Node n8n Workflows" },
+            { icon: "Brain", label: "FastMCP & LangGraph" },
+            { icon: "Rocket", label: "Next.js 15/16 App Router" },
+            { icon: "Layers", label: "Core PR #276 Contributor" },
         ]
     },
     bentoGrid: {
-        badge: "The Expert-Builder Profile",
-        title: "Building Intelligent Systems End-to-End",
+        badge: "The Technical Solutions Profile",
+        title: "Building Resilient AI & Full-Stack Systems End-to-End",
         origins: {
             title: "Engineering Origins",
-            subtitle: "ECE → AI",
-            description: "Electronics & Communication background shaped my systems thinking—building digital nervous systems that connect, adapt, and self-correct.",
+            subtitle: "ECE → AI & Systems",
+            description: "Electronics & Communication background shaped my deterministic systems thinking—building digital nervous systems that connect, adapt, and self-correct with zero data loss.",
             icon: "GraduationCap"
         },
         tStack: {
             title: "The T-Shaped Stack",
-            subtitle: "My Unfair Advantage",
-            descriptionPart1: "Most AI developers build the brain but not the body.",
-            descriptionPart2: "I do both.",
-            highlight: "I do both.",
+            subtitle: "My Competitive Edge",
+            descriptionPart1: "Most AI builders script prompts but cannot engineer production infrastructure.",
+            descriptionPart2: "I engineer the workflows, the API bridges, and the full-stack control plane.",
+            highlight: "I engineer the entire ecosystem.",
             icon: "Layers",
             layers: [
                 {
-                    label: 'Multi-Agent Orchestration',
-                    detail: 'LangGraph + CrewAI + n8n AI Agents',
+                    label: 'Workflow & Agent Orchestration',
+                    detail: '122-Node n8n, FastMCP (:3010), LangGraph, DLQs',
                     type: 'depth'
                 },
                 {
-                    label: 'Frontend Excellence',
-                    detail: 'Next.js 15, 95+ Lighthouse',
+                    label: 'Full-Stack Performance',
+                    detail: 'Next.js 15/16, Tailwind CSS, 95+ Lighthouse',
                     type: 'breadth'
                 },
                 {
-                    label: 'Workflow Automation',
-                    detail: '74-node production n8n',
+                    label: 'Resilient CMS & API Defense',
+                    detail: 'Notion API (8 DBs), 11 Defense Layers, Upstash Redis',
                     type: 'breadth'
                 },
                 {
-                    label: 'Technical SEO/GEO',
-                    detail: '#1 Rankings, AI Search',
+                    label: 'Programmatic SEO & GEO',
+                    detail: '110K+ Impressions, #1 Google Rankings, llms.txt',
                     type: 'breadth'
                 },
             ]
@@ -73,23 +73,39 @@ export const aboutData: AboutData = {
         },
         proofOfWork: {
             title: "Proof of Work",
-            subtitle: "Business Transformations, Not Just Projects",
+            subtitle: "Business Transformations & Core Receipts",
             icon: "Code2",
             items: [
                 {
-                    title: 'How I Used Next.js + SEO to Generate ₹300K',
+                    title: 'Next.js 15 + pSEO & 74-Node n8n Lead Funnel',
                     project: 'Aviators Training Centre',
                     year: '2025',
-                    metrics: ['#1 Google', '95+ Lighthouse', '100K+ Impressions', '₹300K Revenue'],
+                    metrics: ['#1 Google', '95+ Lighthouse', '110K+ Impressions', '₹300K Revenue'],
                     url: '/projects/aviators-training-centre-executive-summary',
                     color: 'lime',
                 },
                 {
-                    title: 'How I Built a 74-Node Self-Healing Pipeline',
-                    project: 'Omni-Post AI',
+                    title: 'Next.js 16 + Headless Notion CMS 11-Layer Defense',
+                    project: 'Vivek OnPoint Platform',
                     year: '2025',
-                    metrics: ['80% Time Saved', '99.7% Reliable', '8+ Platforms'],
-                    url: '/projects/omni-post-ai-automation',
+                    metrics: ['8 Notion DBs', '0.67 req/s Limit', '99.9% Uptime', 'Zero Content Loss'],
+                    url: '/projects#vivek-onpoint-platform',
+                    color: 'blue',
+                },
+                {
+                    title: 'notebooklm-py (16.5k★) Core Architecture PR #276',
+                    project: 'Google NotebookLM Client',
+                    year: '2025',
+                    metrics: ['16.5k+ Stars', '+1,483 / -353 Lines', '100% Asyncio Fix', 'Merged'],
+                    url: 'https://github.com/tomaarsen/notebooklm-py/pull/276',
+                    color: 'purple',
+                },
+                {
+                    title: '122-Node n8n Engine + FastMCP (:3010) Knowledge Bridge',
+                    project: 'OmniPost-Core',
+                    year: '2025',
+                    metrics: ['122 Nodes', 'FastMCP :3010', 'Playwright 300 DPI', '$0/mo Stack'],
+                    url: '/projects#n8n-automation-suite',
                     color: 'amber',
                 },
             ]

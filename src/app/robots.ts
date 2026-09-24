@@ -11,8 +11,18 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ['/private/', '/api/admin/', '/drafts/'],
             },
             {
-                userAgent: ['GPTBot', 'PerplexityBot', 'ClaudeBot', 'CCBot', 'Google-InspectionTool'],
-                allow: ['/', '/projects/', '/blogs/'],
+                userAgent: [
+                    'GPTBot',
+                    'PerplexityBot',
+                    'ClaudeBot',
+                    'CCBot',
+                    'Google-Extended',
+                    'Amazonbot',
+                    'FacebookBot',
+                    'Bytespider',
+                    'Google-InspectionTool'
+                ],
+                allow: ['/', '/projects/', '/blogs/', '/docs/', '/llms.txt', '/llms-full.txt'],
             },
         ],
         sitemap: `${baseUrl}/sitemap.xml`,

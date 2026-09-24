@@ -10,10 +10,13 @@ import { TransparentButton } from "@/components/transparent-button";
 // Custom project order priority - same as /projects page
 const PROJECT_ORDER: Record<string, number> = {
     "aviators-training-centre": 1,
-    "n8n-automation-suite": 2,
-    "n8n-github-backup": 3,
-    "portfolio-website": 4,
-    "barkat-enterprise": 5,
+    "vivek-onpoint-platform": 2,
+    "notebooklm-py-pr276": 3,
+    "n8n-automation-suite": 4,
+    "n8n-github-backup": 5,
+    "dental-ai-automation": 6,
+    "barkat-enterprise": 7,
+    "portfolio-website": 8,
     "av-newsstream": 100,
     "foodah": 101,
     "ecommerce-platform": 102,

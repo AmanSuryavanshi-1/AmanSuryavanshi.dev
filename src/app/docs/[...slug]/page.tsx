@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     const { meta } = doc;
     const project = portfolioData.projects.find(p => p.id === meta.projectId);
-    const projectImage = project?.imageUrl || project?.image || '/Profile/me main.png';
+    const projectImage = project?.imageUrl || project?.image || '/og-image.png';
 
     return {
         title: `${meta.title} | Aman Suryavanshi`,

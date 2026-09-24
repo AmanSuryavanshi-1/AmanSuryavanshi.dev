@@ -29,10 +29,11 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/about`,
         images: [
             {
-                url: '/Profile/me main.png',
+                url: '/og-image.png',
                 width: 1200,
                 height: 630,
                 alt: 'Aman Suryavanshi - AI Automation Engineer and Integration Specialist',
+                type: 'image/png',
             },
         ],
         type: 'profile',
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: ABOUT_TITLE,
         description: ABOUT_DESCRIPTION,
-        images: ['/Profile/me main.png'],
+        images: ['/og-image.png'],
         creator: '@_AmanSurya',
     },
     robots: {
@@ -108,7 +109,7 @@ const aboutStructuredData = {
             url: `${SITE_URL}/about`,
             image: {
                 "@type": "ImageObject",
-                url: `${SITE_URL}/Profile/me main.png`,
+                url: `${SITE_URL}/og-image.png`,
                 width: 1200,
                 height: 630
             },

@@ -21,14 +21,14 @@ export const servicesData: ServiceData[] = [
         title: "Self-Healing Business Automation",
         subtitle: "Production workflows with deterministic state management",
         problem: "Your Zapier workflows crash silently. You find out days later when a customer complains.",
-        solution: "I architect 74-node n8n production systems with Dead-Letter Queues (DLQ), automatic retry logic with exponential backoff, closed-loop feedback mechanisms, and real-time Telegram/Slack health alerts. Self-healing means zero silent failures.",
-        outcomes: ["99.7% uptime guarantee", "Automatic error recovery", "Real-time health monitoring", "Dead-letter queue processing"],
-        tech: ["n8n (Self-Hosted)", "Docker", "PostgreSQL", "Telegram API", "Webhooks", "Redis"],
-        idealClient: "Operations teams, content creators, e-commerce businesses needing reliability",
+        solution: "I architect 122-node n8n production systems with Dead-Letter Queues (DLQ), automatic retry logic with exponential backoff, FastMCP knowledge gateways (:3010), and real-time Telegram/Slack health alerts. Self-healing means zero silent failures.",
+        outcomes: ["99.9% uptime reliability", "Automatic DLQ error recovery", "Real-time health monitoring", "Zero-loss data persistence"],
+        tech: ["n8n (Self-Hosted)", "FastMCP", "Docker", "PostgreSQL", "Telegram API", "Webhooks", "Redis"],
+        idealClient: "Operations teams, content creators, e-commerce businesses needing enterprise reliability",
         icon: "Zap",
         image: "/services/self-healing.png",
         relatedProjects: [
-            { title: "Case Study: 74-Node Content Automation", url: "/docs/omnipost/01-executive-summary" }
+            { title: "Case Study: 122-Node OmniPost Engine", url: "/docs/omnipost/01-executive-summary" }
         ]
     },
     {
@@ -36,9 +36,9 @@ export const servicesData: ServiceData[] = [
         title: "AI Control Center Dashboards",
         subtitle: "Frontend interfaces that let non-technical teams command AI",
         problem: "Your AI agent is powerful but only developers can use it. Your operations team is locked out.",
-        solution: "I build Next.js 15 dashboards with real-time state monitoring, approval workflows, and one-click override controls. Non-technical users can pause, approve, and audit AI decisions without touching code. Full observability into agent behavior.",
+        solution: "I build Next.js 15/16 dashboards with real-time state monitoring, approval workflows, and one-click override controls. Non-technical users can pause, approve, and audit AI decisions without touching code. Full observability into agent behavior.",
         outcomes: ["Non-tech user access", "Real-time monitoring", "One-click AI control", "Complete audit trails"],
-        tech: ["Next.js 15", "TypeScript", "Tailwind CSS", "Firebase Realtime", "Supabase"],
+        tech: ["Next.js 15/16", "TypeScript", "Tailwind CSS", "Firebase Realtime", "Supabase"],
         idealClient: "AI-first startups, internal tools teams, agencies managing AI agents",
         icon: "Layout",
         image: "/services/dashboard.png",
@@ -48,17 +48,17 @@ export const servicesData: ServiceData[] = [
     },
     {
         id: 4,
-        title: "AI Search Dominance Systems",
+        title: "AI Search Dominance Systems (SEO / AEO / GEO)",
         subtitle: "Get cited by ChatGPT & Perplexity, not just indexed by Google",
         problem: "Traditional SEO is dying. Your competitors rank on Google, but you're invisible to AI search engines where high-intent buyers now search.",
-        solution: "I implement Entity Optimization strategies that influence LLM outputs: structured data that AI engines cite, FAQ schemas for featured snippets, and authority content that makes you the source AI references. Technical SEO + AEO + GEO combined.",
-        outcomes: ["100K+ Search Impressions", "AEO Visibility (ChatGPT/Perplexity)", "12% Organic Lead Conversion", "95+ Lighthouse Scores"],
-        tech: ["JSON-LD Schema", "Entity Optimization", "FAQ Markup", "Structured Data", "Core Web Vitals"],
+        solution: "I implement Entity Optimization strategies that influence LLM outputs: structured data that AI engines cite, FAQ schemas for featured snippets, authority content, and llms.txt integration that makes your brand the source AI references. Technical SEO + AEO + GEO combined.",
+        outcomes: ["110K+ Search Impressions", "AEO Visibility (ChatGPT/Perplexity)", "12% Organic Lead Conversion", "95+ Lighthouse Scores"],
+        tech: ["JSON-LD Schema", "Entity Optimization", "FAQ Markup", "Structured Data", "llms.txt", "Core Web Vitals"],
         idealClient: "SaaS founders, consultants, and B2B businesses wanting AI-era organic visibility",
         icon: "Search",
         image: "/services/seo-dominance.png",
         relatedProjects: [
-            { title: "Case Study: 100K+ Impressions via Entity SEO", url: "/projects/aviators-training-centre-executive-summary" }
+            { title: "Case Study: 110K+ Impressions via Entity SEO", url: "/projects/aviators-training-centre-executive-summary" }
         ]
     }
 ];

@@ -2,29 +2,29 @@ import { HeroData } from '../types';
 
 export const heroData: HeroData = {
     name: "Aman Suryavanshi",
-    title: "Aman Suryavanshi | AI Workflow Architect & Systems Builder",
-    subtitle: "AI Workflow Architect & Systems Builder",
-    tagline: "I Build Self-Healing AI Systems That Drive Revenue",
-    description: "My systems have generated ₹300K+ ($3.5K+) in client revenue and reduced manual operations by 80%. I architect end-to-end solutions: autonomous n8n workflows with deterministic state management, LangGraph agent pipelines, and the Next.js dashboards that serve as their control centers.",
-    descriptionHighlight: "₹300K+ Revenue Impact | 80% Task Automation | Production-Grade Systems",
+    title: "Aman Suryavanshi | AI Workflow & Automation Engineer | Technical Solutions Engineer",
+    subtitle: "AI Workflow & Automation Engineer • Technical Solutions Engineer",
+    tagline: "I Build Production-Grade AI Workflows, Self-Healing Automations & High-Performance Next.js Systems",
+    description: "Specializing in autonomous n8n workflows with Dead-Letter Queues, Next.js 15/16 App Router platforms with programmatic SEO, and resilient API integrations. Shipped commercial solutions generating ₹300K+ ($3.5K+) revenue, 110K+ GSC impressions, and merged core architecture PR #276 in notebooklm-py (16.5k★). Available for In-Office / Hybrid (Bengaluru, Delhi NCR) & Remote roles.",
+    descriptionHighlight: "₹300K+ Client Revenue | 110K+ Impressions | 122-Node n8n Workflows | Core Contributor notebooklm-py (16.5k★)",
     stats: [
         "₹300K+ Revenue Generated",
-        "95K+ Portfolio Search Impressions",
-        "100K+ Client Search Impressions",
-        "80% Manual Work Eliminated"
+        "110K+ Search Impressions",
+        "122-Node n8n Workflows",
+        "PR #276 Merged (16.5k★)"
     ],
     buttons: {
         primary: {
-            label: "See My Business Transformations",
+            label: "View Case Studies & Receipts",
             href: "/projects"
         },
         secondary: {
-            label: "Book a Discovery Call",
+            label: "Get in Touch (Remote / Hybrid)",
             href: "#contact"
         }
     },
     meta: {
         name: "Aman Suryavanshi",
-        description: "AI Workflow Architect building production systems that generate ₹300K+ revenue. Self-healing n8n automation, LangGraph agents, Next.js dashboards. Book a discovery call for your system audit."
+        description: "AI Workflow & Automation Engineer and Technical Solutions Engineer in Bengaluru & Delhi NCR (Open to Remote). Next.js 15/16, self-healing n8n pipelines, FastMCP, and programmatic SEO."
     }
 };

@@ -4,16 +4,16 @@ export const skillsData: SkillsData = {
     mainTitle: "My Technical Ecosystem",
     subTitle: "A living knowledge graph of tools, frameworks, and concepts I use to build production-grade software.",
     coreSpecialty: {
-        title: "The Agentic Stack",
+        title: "AI Workflows & Solutions Engineering Stack",
         icon: "Brain",
-        description: "My primary tech stack for building autonomous AI agents and intelligent workflows.",
+        description: "My primary technical ecosystem for building deterministic AI workflows, self-healing automations, and high-performance Next.js control planes.",
         skills: [
-            { name: "n8n", value: "Orchestration" },
-            { name: "LangChain", value: "Agent Logic" },
-            { name: "Supabase", value: "Vector Memory" },
-            { name: "Next.js", value: "Control Plane" }
+            { name: "n8n (122 Nodes)", value: "Self-Healing Orchestration & DLQ" },
+            { name: "FastMCP & LangGraph", value: "Knowledge Gateways & Agents" },
+            { name: "Next.js 15/16", value: "App Router & Programmatic SEO" },
+            { name: "Python & Asyncio", value: "Core Architecture & Auth Bridges" }
         ],
-        impact: "Enables single-person teams to build enterprise-scale operations."
+        impact: "Enables autonomous execution with 99.9% uptime, zero silent failures, and measurable revenue generation."
     },
 
     categories: [
@@ -460,92 +460,92 @@ export const skillsData: SkillsData = {
 export const landingSkillsData: LandingSkillsData = {
     categories: [
         {
-            title: "AI & Automation Orchestration",
+            title: "AI & Workflow Orchestration",
             skills: [
                 {
                     name: "n8n Workflows",
                     level: "Production",
-                    projects: "15+ workflows deployed",
+                    projects: "122 nodes, self-healing DLQ",
                     relatedProjects: [
-                        { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" },
+                        { title: "OmniPost-Core", url: "/projects#n8n-automation-suite" },
                         { title: "Aviators", url: "/projects#aviators-training-centre" }
                     ]
                 },
                 {
-                    name: "Multi-LLM APIs",
-                    level: "Expert",
-                    projects: "GPT-4, Claude, Gemini, OpenRouter",
+                    name: "FastMCP & LangGraph",
+                    level: "Production",
+                    projects: "Live Second Brain streaming (:3010)",
                     relatedProjects: [
-                        { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" }
+                        { title: "OmniPost-Core", url: "/projects#n8n-automation-suite" }
                     ]
                 },
                 {
-                    name: "Agentic Workflows",
-                    level: "Production",
-                    projects: "Multi-step automations",
+                    name: "Multi-LLM Routing",
+                    level: "Expert",
+                    projects: "GPT-4o, Claude 3.5, Gemini 2.5",
                     relatedProjects: [
-                        { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" }
+                        { title: "OmniPost-Core", url: "/projects#n8n-automation-suite" }
                     ]
                 }
             ]
         },
         {
-            title: "Frontend Systems",
+            title: "Frontend & Growth Systems",
             skills: [
                 {
-                    name: "Next.js 15",
+                    name: "Next.js 15 & 16",
                     level: "Expert",
-                    projects: "Aviators Training Centre",
+                    projects: "Aviators, Vivek-OnPoint",
+                    relatedProjects: [
+                        { title: "Aviators", url: "/projects#aviators-training-centre" },
+                        { title: "Vivek-OnPoint", url: "/projects#vivek-onpoint-platform" }
+                    ]
+                },
+                {
+                    name: "Programmatic SEO (pSEO)",
+                    level: "Expert",
+                    projects: "110K+ GSC impressions, #1 rankings",
                     relatedProjects: [
                         { title: "Aviators", url: "/projects#aviators-training-centre" },
                         { title: "Portfolio", url: "/projects#portfolio-website" }
                     ]
                 },
                 {
-                    name: "React 18 + TypeScript",
-                    level: "Expert",
-                    projects: "8+ production apps",
-                    relatedProjects: [
-                        { title: "Foodah", url: "/projects#foodah" },
-                        { title: "AV NewsStream", url: "/projects#av-newsstream" }
-                    ]
-                },
-                {
-                    name: "ShadcnUI + Tailwind",
+                    name: "Tailwind CSS & Shadcn",
                     level: "Expert",
                     projects: "95+ Lighthouse scores",
                     relatedProjects: [
                         { title: "Portfolio", url: "/projects#portfolio-website" },
-                        { title: "Aviators", url: "/projects#aviators-training-centre" }
+                        { title: "Barkat", url: "/projects#barkat-enterprise" }
                     ]
                 }
             ]
         },
         {
-            title: "Backend & Integration",
+            title: "Backend, Auth & Integration",
             skills: [
                 {
-                    name: "Firebase + Firestore",
+                    name: "Python & Asyncio Architecture",
                     level: "Production",
-                    projects: "Real-time systems",
+                    projects: "notebooklm-py PR #276 (16.5k★)",
                     relatedProjects: [
-                        { title: "AV NewsStream", url: "/projects#av-newsstream" }
+                        { title: "notebooklm-py PR #276", url: "https://github.com/tomaarsen/notebooklm-py/pull/276" }
                     ]
                 },
                 {
-                    name: "Supabase + PostgreSQL",
-                    level: "Advanced",
-                    projects: "Modern backends",
+                    name: "Headless Notion CMS (8 DBs)",
+                    level: "Production",
+                    projects: "11-Layer Defense System",
                     relatedProjects: [
-                        { title: "Aviators", url: "/projects#aviators-training-centre" }
+                        { title: "Vivek-OnPoint", url: "/projects#vivek-onpoint-platform" }
                     ]
                 },
                 {
-                    name: "API Orchestration",
+                    name: "API & Webhook Resilience",
                     level: "Expert",
-                    projects: "50+ integrations",
+                    projects: "50+ integrations, zero leaks",
                     relatedProjects: [
-                        { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" },
+                        { title: "OmniPost-Core", url: "/projects#n8n-automation-suite" },
                         { title: "Aviators", url: "/projects#aviators-training-centre" }
                     ]
                 }
@@ -553,9 +553,10 @@ export const landingSkillsData: LandingSkillsData = {
         }
     ],
     keywords: [
-        "n8n automation specialist",
-        "AI workflow orchestration",
-        "Next.js solutions architect",
-        "technical product manager skills"
+        "AI Workflow Engineer",
+        "Technical Solutions Engineer",
+        "n8n automation expert",
+        "Next.js 15 pSEO developer",
+        "FastMCP integration specialist"
     ]
 };

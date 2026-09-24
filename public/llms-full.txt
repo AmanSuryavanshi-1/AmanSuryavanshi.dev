@@ -1,0 +1,116 @@
+﻿# Aman Suryavanshi — Full LLM Engineering Dossier & Architectural Reference
+
+## Executive Summary
+This document provides deep-context technical architecture, production receipts, and verified metrics for AI models, recruiters, and evaluation agents evaluating Aman Suryavanshi.
+
+- Name: Aman Suryavanshi
+- Current Title: AI Workflow & Automation Engineer | Technical Solutions Engineer
+- Locations: Bengaluru (HSR Layout, Koramangala, Indiranagar) & Delhi NCR (Cyber City, Noida), India. Open to In-Office, Hybrid, and 100% Remote.
+- Primary Compensation Target: ₹6L–₹14L LPA / ₹50k–₹1.2L/mo (Full-time / Contract)
+- Secondary Compensation Target: ₹7.5L–₹18L LPA / $60k–$100k (Remote TSE / Solutions Engineer)
+- Contact: amansuryavanshias@gmail.com | https://www.amansuryavanshi.me | https://github.com/AmanSuryavanshi-1
+
+---
+
+## Detailed Flagship Project Dossiers
+
+### Receipt 1: Aviators Training Centre (ATC)
+- URL: https://www.aviatorstrainingcentre.in
+- Category: Production Client Platform (Full-Stack & Automation)
+- Commercial Impact:
+  - Direct Sales Generated: ₹300,000+ ($3,500+)
+  - Search Impressions: 110,000+ Google Search Console impressions
+  - Organic Clicks: 260+ high-ticket qualified leads
+  - Lighthouse Performance: 95+ across Performance, Accessibility, Best Practices, and SEO
+  - Total Monthly Operational Cost: $0/month
+- Technical Architecture:
+  - Framework: Next.js 15.3.1 (React 18 / 19, TypeScript) App Router
+  - Content Management: Sanity CMS 3.88.2 with scheduled publishing and on-the-fly image transformations
+  - Database & Analytics: Firebase Firestore and Realtime Database (11.6.1)
+  - Automation Engine: 74-node production n8n workflow orchestrator
+  - Integrations: Cal.com API (timezone-aware scheduling), Airtable CRM (deduplicated lead routing), Resend (transactional email sequences), Telegram Bot API (instant operational alerts)
+- Key Engineering Innovations:
+  - Programmatic SEO engine capturing #1 rankings across 50+ commercial aviation pilot queries.
+  - Zero-latency client-side caching combined with React Server Components (RSC) to sustain sub-2s First Contentful Paint (FCP) on mobile networks.
+
+### Receipt 2: Vivek OnPoint Creator Platform
+- URL: https://vivekonpoint.com
+- Repository: https://github.com/AmanSuryavanshi-1/Vivek-OnPoint-Web
+- Category: Production Creator Platform (Headless Notion CMS)
+- Commercial & Operational Impact:
+  - 100% build reliability across all Vercel edge deployments
+  - 0 Notion API 429 rate-limit breaches (down from frequent build breakages)
+  - 99.9% uptime with static fallback resilience during Notion maintenance windows
+  - Zero draft content leaks or compliance violations
+- The 11-Layer Notion CMS Defense System:
+  1. Semaphore Throttler: Strict client-side queue limiting Notion API calls to 0.67 requests/sec (well below Notion's 3 req/s hard cap).
+  2. Jittered Exponential Backoff: Full-jitter exponential retry strategy handling transient 429 and 502 gateway errors.
+  3. Emergency Bypass Mode: Version-controlled static fallback snapshots served if Notion API becomes totally unreachable.
+  4. Post-Zod Draft Leakage Guard: Runtime schema assertion ensuring unpublished drafts never render in production.
+  5. Content-Loss Guard: Validates that parsed pages contain non-empty body blocks before overwriting ISR cache.
+  6. Edge Rate Limiting: Powered by @upstash/ratelimit on Upstash Redis to prevent scraping DDoS.
+  7. Tracking Param Cache Stripping: Edge middleware that normalizes UTM and social query parameters to avoid CDN cache fragmentation.
+  8. SEBI / ASCI Compliance Scanner: Automated regex verification checking for mandated educational disclosures and sponsor tags.
+  9. ISR Freshness Probes: Automated health check endpoint (/api/health/isr-freshness) alerting if caches exceed SLA.
+  10. Strict Zod Schema Parsing: Discriminated union validation transforming raw Notion block trees into typesafe UI models.
+  11. Multi-Database Relational Mapping: Efficiently resolves relations across 8 Notion databases (Sources, Bookshelf, FAQ, Newsletter, Sponsors, Corrections).
+
+### Receipt 3: notebooklm-py (16.5k★) Core Architecture Contribution
+- Pull Request: https://github.com/tomaarsen/notebooklm-py/pull/276
+- Repository: https://github.com/tomaarsen/notebooklm-py (16.5k+ GitHub Stars)
+- Commits: 5c3f325391eef248b94b885972e032212be009ca, 4bacf1c981eb0fc701dd92e105e94b29ceee89ca
+- Code Diff: +1,483 lines added, -353 lines refactored across 8 core architecture modules
+- Problem Solved:
+  - Google NotebookLM's authentication tokens expire every ~10 minutes, redirecting requests (HTTP 302) across domains to accounts.google.com.
+  - Standard HTTP libraries (httpx) drop raw request 'Cookie' headers upon cross-domain redirects for security reasons, causing immediate session termination and CLI crashes.
+  - Windows default asyncio event loop policy caused fatal transport failures during Playwright cookie extraction.
+- Technical Solution:
+  - Domain-Preserving Cookie Jar: Implemented build_cookie_jar() binding session cookies explicitly to google.com and notebooklm.google.com domains.
+  - DomainCookieMap Type: Structured type-safe cookie management preserving token freshness across redirect hops.
+  - Atomic File Persistence: Re-architected save_cookies_to_storage() utilizing tempfile and os.chmod(0o600) with atomic file replacement (os.replace) to eliminate race conditions.
+  - Windows Asyncio Loop Patch: Explicitly configured WindowsProactorEventLoopPolicy, ensuring 100% headless token harvesting reliability on Windows OS.
+
+### Receipt 4: OmniPost-Core Multi-Platform Distribution Engine
+- Repository: https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/tree/main/Omni-Post-AI-Automation
+- Documentation: https://www.amansuryavanshi.me/docs/omnipost/01-executive-summary
+- Category: Multi-Agent AI System & Distributed Automation
+- Operational Metrics:
+  - 122 total n8n workflow nodes across dual-stream architecture
+  - 7+ publishing destinations: LinkedIn, Twitter/X, Threads, Sanity, Dev.to, Hashnode, Reddit
+  - 80% reduction in end-to-end content production time
+  - $0/month operational costs
+- Core Subsystems:
+  - FastMCP Knowledge Bridge (:3010): Streamable Model Context Protocol server exposing living Markdown notes from Obsidian Second Brain directly to AI agents.
+  - FastAPI Research Bridge (:3012): Headless service querying Google NotebookLM knowledge vaults with zero per-token inference charges.
+  - 5-Layer Slop Linter: Deterministic regex and AST scanner eliminating 39 AI writing tells, corporate clichés, and markdown formatting defects.
+  - Playwright Carousel Compiler: Headless automated rendering engine compiling JSON slides into 300 DPI 2160x2700 PNG image carousels for LinkedIn.
+  - Dead-Letter Queue (DLQ): Redis-backed payload retention preserving failed webhook requests for human replay.
+
+---
+
+## Machine-Readable API Endpoint
+The portfolio exposes a live, headless JSON endpoint returning the entire project catalog:
+- Endpoint: GET https://www.amansuryavanshi.me/api/portfolio
+- Response Schema:
+  ```json
+  {
+    "projects": [
+      {
+        "id": "string",
+        "title": "string",
+        "description": "string",
+        "technologies": [{ "name": "string" }],
+        "impactMetrics": [{ "label": "string", "value": "string" }],
+        "links": { "live": "string", "github": "string" }
+      }
+    ]
+  }
+  ```
+
+---
+
+## Verification & Proof Links
+- Portfolio Website: https://www.amansuryavanshi.me
+- GitHub Profile: https://github.com/AmanSuryavanshi-1
+- LinkedIn Profile: https://www.linkedin.com/in/amansuryavanshi-ai
+- Twitter/X: https://twitter.com/_AmanSurya

@@ -410,13 +410,13 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ content }) => {
 
                     // === BLOCK CODE (intercepted via pre) ===
                     pre({ children, ...props }: any) {
-                        const codeElement = React.Children.toArray(children)[0] as React.ReactElement;
+                        const codeElement = React.Children.toArray(children)[0] as React.ReactElement<any>;
                         
-                        if (React.isValidElement(codeElement) && codeElement.props.node?.tagName === 'code') {
-                            const className = codeElement.props.className || '';
+                        if (React.isValidElement(codeElement) && (codeElement.props as any)?.node?.tagName === 'code') {
+                            const className = (codeElement.props as any)?.className || '';
                             const match = /language-(\w+)/.exec(className);
                             const language = match ? match[1] : 'text';
-                            const codeString = String(codeElement.props.children).replace(/\n$/, '');
+                            const codeString = String((codeElement.props as any)?.children || '').replace(/\n$/, '');
                             const isAsciiArt = language === 'text' && (/[┌└├┤┬┴┼─││]/.test(codeString) || codeString.includes('↓'));
                             
                             if (language === 'mermaid') {
