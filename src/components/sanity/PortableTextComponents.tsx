@@ -120,7 +120,45 @@ export const portableTextComponents: PortableTextComponents = {
       );
     },
     h3: ({ children }) => {
-      const id = generateSlug(extractText(children));
+      const rawText = extractText(children);
+      
+      // Defensive guard against glued/overlong headings (e.g. AI-generated FAQs or merged paragraphs)
+      if (rawText.length > 85) {
+        let splitIdx = -1;
+        const qMatch = rawText.match(/\?\s+/);
+        if (qMatch && qMatch.index !== undefined && qMatch.index > 10 && qMatch.index < 120) {
+          splitIdx = qMatch.index + 1; // include the '?'
+        } else {
+          const colonMatch = rawText.match(/:\s+/);
+          if (colonMatch && colonMatch.index !== undefined && colonMatch.index > 10 && colonMatch.index < 80) {
+            splitIdx = colonMatch.index + 1;
+          } else {
+            const gluedMatch = rawText.slice(0, 100).match(/([a-z])([A-Z])/);
+            if (gluedMatch && gluedMatch.index !== undefined && gluedMatch.index > 15) {
+              splitIdx = gluedMatch.index + 1;
+            }
+          }
+        }
+
+        if (splitIdx > 0) {
+          const headingPart = rawText.slice(0, splitIdx).trim();
+          const prosePart = rawText.slice(splitIdx).trim();
+          const id = generateSlug(headingPart);
+          return (
+            <div className="mt-8 mb-4">
+              <h3 id={id} className="text-[clamp(1.125rem,2vw,1.375rem)] font-serif font-semibold tracking-tight text-forest-800 dark:text-sage-100 mb-3 leading-[1.25] scroll-mt-32 flex items-start gap-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-lime-500/70 shrink-0 mt-2" />
+                <span className="flex-1">{headingPart}</span>
+              </h3>
+              <p className="my-3 text-base md:text-lg leading-relaxed text-forest-700 dark:text-sage-200 font-sans">
+                {prosePart}
+              </p>
+            </div>
+          );
+        }
+      }
+
+      const id = generateSlug(rawText);
       return (
         <h3 id={id} className="text-[clamp(1.125rem,2vw,1.375rem)] font-serif font-semibold tracking-tight text-forest-800 dark:text-sage-100 mt-8 mb-3 leading-[1.25] scroll-mt-32 flex items-start gap-2.5">
           <span className="w-1.5 h-1.5 rounded-full bg-lime-500/70 shrink-0 mt-2" />
@@ -297,6 +335,59 @@ export const portableTextComponents: PortableTextComponents = {
             </div>
           </blockquote>
         );
+      }
+
+      // Markdown Table Fallback in normal paragraph (prevents unparsed markdown table text)
+      if (text.startsWith('|') && (text.includes('| ---') || text.includes('|:---') || text.includes('| |'))) {
+        const rawLines = text.split('\n').map(l => l.trim()).filter(Boolean);
+        let lines = rawLines;
+        if (rawLines.length === 1 && text.includes('| |')) {
+          lines = text.split(/\s*\|\s*\|\s*/).map(segment => {
+            let seg = segment.trim();
+            if (!seg.startsWith('|')) seg = '| ' + seg;
+            if (!seg.endsWith('|')) seg = seg + ' |';
+            return seg;
+          });
+        }
+        
+        const validRows: string[][] = [];
+        for (const line of lines) {
+          if (/^\s*\|(\s*:?-+:?\s*\|)+\s*$/.test(line)) continue; // skip delimiter row
+          const cells = line.split('|').slice(1, -1).map(c => c.trim().replace(/\*\*/g, ''));
+          if (cells.length > 0 && cells.some(c => c.length > 0)) {
+            validRows.push(cells);
+          }
+        }
+
+        if (validRows.length >= 2) {
+          const [headerCells, ...bodyRows] = validRows;
+          return (
+            <div className="w-full overflow-x-auto my-10 rounded-xl border border-forest-100 dark:border-forest-700 shadow-lg bg-white dark:bg-[#162c22]">
+              <table className="w-full text-left border-collapse min-w-[600px]">
+                <thead className="bg-forest-50 dark:bg-forest-900 border-b border-forest-200 dark:border-forest-800">
+                  <tr>
+                    {headerCells.map((cell, i) => (
+                      <th key={i} className="px-6 py-4 font-bold uppercase tracking-wider text-xs text-forest-600 dark:text-sage-300">
+                        {cell}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-forest-100 dark:divide-forest-800">
+                  {bodyRows.map((row, rIdx) => (
+                    <tr key={rIdx} className="hover:bg-forest-50/50 dark:hover:bg-forest-800/30 transition-colors">
+                      {row.map((cell, cIdx) => (
+                        <td key={cIdx} className="px-6 py-4 text-forest-700 dark:text-sage-300 text-sm whitespace-pre-wrap">
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        }
       }
 
       // Default paragraph - optimized for readability  
