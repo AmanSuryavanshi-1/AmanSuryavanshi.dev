@@ -6,19 +6,23 @@ import { X, RotateCcw } from 'lucide-react';
 interface ActiveFiltersProps {
     searchQuery: string;
     selectedTags: string[];
+    selectedSeries?: string | null;
     onClearSearch: () => void;
     onRemoveTag: (tag: string) => void;
+    onRemoveSeries?: () => void;
     onResetAll: () => void;
 }
 
 export default function ActiveFilters({
     searchQuery,
     selectedTags,
+    selectedSeries,
     onClearSearch,
     onRemoveTag,
+    onRemoveSeries,
     onResetAll
 }: ActiveFiltersProps) {
-    if (!searchQuery && selectedTags.length === 0) return null;
+    if (!searchQuery && selectedTags.length === 0 && !selectedSeries) return null;
 
     return (
         <div className="flex flex-wrap items-center gap-2 pt-4 animate-in fade-in slide-in-from-top-2 duration-300">
@@ -33,6 +37,18 @@ export default function ActiveFilters({
                     className="group flex items-center gap-1.5 px-3 py-1 rounded-full bg-lime-100 text-forest-900 text-xs font-medium border border-lime-200 hover:bg-lime-200 transition-colors"
                 >
                     <span>Search: &quot;{searchQuery}&quot;</span>
+                    <X size={12} className="text-forest-500 group-hover:text-forest-900" />
+                </button>
+            )}
+
+            {/* Series Chip */}
+            {selectedSeries && (
+                <button
+                    onClick={onRemoveSeries}
+                    className="group flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-100 text-forest-900 text-xs font-medium border border-sage-300 hover:bg-sage-200 transition-colors"
+                    title="Remove series filter"
+                >
+                    <span>Series: &quot;{selectedSeries}&quot;</span>
                     <X size={12} className="text-forest-500 group-hover:text-forest-900" />
                 </button>
             )}

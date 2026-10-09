@@ -137,6 +137,23 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                                 <span>•</span>
                                 <span>{format(new Date(post._createdAt), 'MMM dd, yyyy')}</span>
                             </div>
+                            {post.series && (
+                                <div className="mb-1.5 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-lime-100/90 dark:bg-lime-950/50 text-forest-800 dark:text-lime-300 border border-lime-300/60 dark:border-lime-700/50 w-fit">
+                                    <span className="truncate max-w-[180px]">{post.series}</span>
+                                    {post.series_part != null && post.series_part > 0 && (
+                                        <>
+                                            <span className="opacity-50">•</span>
+                                            <span>Part {post.series_part}</span>
+                                        </>
+                                    )}
+                                    {post.pillar_post && (
+                                        <>
+                                            <span className="opacity-50">•</span>
+                                            <span className="uppercase text-[9px] tracking-wider font-bold">Pillar</span>
+                                        </>
+                                    )}
+                                </div>
+                            )}
                             <h3 className="text-base md:text-lg font-serif font-semibold text-forest-900 dark:text-sage-100 group-hover:text-lime-500 dark:group-hover:text-lime-400 transition-colors duration-300 mb-2 line-clamp-1">
                                 {post.title}
                             </h3>
@@ -202,6 +219,23 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, priority = false, vie
                     )}
                 </div>
                 <div className="p-4 sm:p-5 py-6 sm:py-7 flex flex-col flex-grow">
+                    {post.series && (
+                        <div className="mb-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-semibold bg-lime-100/90 dark:bg-lime-950/50 text-forest-800 dark:text-lime-300 border border-lime-300/60 dark:border-lime-700/50 w-fit">
+                            <span className="truncate max-w-[180px] sm:max-w-[220px]">{post.series}</span>
+                            {post.series_part != null && post.series_part > 0 && (
+                                <>
+                                    <span className="opacity-50">•</span>
+                                    <span>Part {post.series_part}</span>
+                                </>
+                            )}
+                            {post.pillar_post && (
+                                <>
+                                    <span className="opacity-50">•</span>
+                                    <span className="uppercase text-[9px] tracking-wider font-bold">Pillar</span>
+                                </>
+                            )}
+                        </div>
+                    )}
                     <h3 className="text-base md:text-lg font-serif font-semibold text-forest-900 dark:text-sage-100 group-hover:text-lime-500 dark:group-hover:text-lime-400 transition-colors duration-300 mb-2 line-clamp-1">
                         {post.title}
                     </h3>

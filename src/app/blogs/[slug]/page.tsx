@@ -25,6 +25,8 @@ import TableOfContents from '@/components/blog/TableOfContents';
 import FloatingActions from '@/components/blog/FloatingActions';
 import MobileActionBar from '@/components/blog/MobileActionBar';
 import RelatedPosts from '@/components/blog/RelatedPosts';
+import SeriesSyllabus from '@/components/blog/SeriesSyllabus';
+import SeriesNav from '@/components/blog/SeriesNav';
 import ShareBar from '@/components/blog/ShareBar';
 import AllTags from '@/components/blog/AllTags';
 import BlogImageGalleryWrapper from '@/components/blog/BlogImageGalleryWrapper';
@@ -117,6 +119,16 @@ async function getPost(slug: string): Promise<Post | null> {
       slug
     },
     subcategory,
+    series,
+    series_part,
+    pillar_post,
+    "seriesPosts": *[_type == "post" && defined(series) && series == ^.series && defined(slug.current) && status == "published"] | order(series_part asc) {
+      _id,
+      title,
+      slug,
+      series_part,
+      pillar_post
+    },
     aiSeoScore
   }`;
 
@@ -206,7 +218,7 @@ export default async function BlogPost({ params }: NextPageProps) {
     ? encodeURIComponent(normalizedSubcategory.toLowerCase().replace(/\s+/g, '-'))
     : '';
 
-  const breadcrumbItems = post.primary_category
+  const baseCategoryBreadcrumbs = post.primary_category
     ? [
       {
         label: post.primary_category.title,
@@ -218,21 +230,35 @@ export default async function BlogPost({ params }: NextPageProps) {
           href: categoryQuery ? `/blogs?category=${categoryQuery}&sub=${subcategoryQuery}` : undefined,
         }]
         : []),
-      { label: post.title },
     ]
     : [
       { label: 'Blog', href: '/blogs' },
-      { label: post.title },
     ];
+
+  const breadcrumbItems: Array<{ label: string; href?: string }> = [
+    ...baseCategoryBreadcrumbs,
+    ...(post.series ? [{ label: post.series, href: `/blogs?series=${encodeURIComponent(post.series)}` }] : []),
+    { label: post.title },
+  ];
 
   const breadcrumbPathItems = [
     { name: 'Home', item: siteUrl },
-    ...breadcrumbItems.map((item, index) => ({
-      name: item.label,
-      item: item.href
-        ? `${siteUrl}${item.href}`
-        : (index === breadcrumbItems.length - 1 ? canonicalUrl : `${siteUrl}/blogs`),
-    })),
+    ...breadcrumbItems.map((item, index) => {
+      let resolvedItemUrl: string;
+      if (item.href) {
+        resolvedItemUrl = `${siteUrl}${item.href}`;
+      } else if (index === breadcrumbItems.length - 1) {
+        resolvedItemUrl = canonicalUrl;
+      } else if (post.series && item.label === post.series) {
+        resolvedItemUrl = `${siteUrl}/blogs?series=${encodeURIComponent(post.series)}`;
+      } else {
+        resolvedItemUrl = `${siteUrl}/blogs`;
+      }
+      return {
+        name: item.label,
+        item: resolvedItemUrl,
+      };
+    }),
   ];
 
   const organizationPublisher = {
@@ -459,6 +485,18 @@ export default async function BlogPost({ params }: NextPageProps) {
 
               {/* Center: Content */}
               <div className="lg:col-span-7 xl:col-span-7">
+                {/* Series Syllabus Accordion */}
+                {post.series && post.seriesPosts && post.seriesPosts.length > 1 && (
+                  <div className="mb-8">
+                    <SeriesSyllabus
+                      series={post.series}
+                      currentSlug={post.slug.current}
+                      currentPart={post.series_part}
+                      seriesPosts={post.seriesPosts}
+                    />
+                  </div>
+                )}
+
                 {/* Clean content container for reading comfort */}
                 <div className="bg-white/90 dark:bg-forest-950/90 rounded-2xl p-6 md:p-8 lg:p-10 shadow-sm border border-sage-100/50 dark:border-forest-800/50">
                   <div className="prose prose-lg max-w-none
@@ -601,6 +639,18 @@ export default async function BlogPost({ params }: NextPageProps) {
                   postId={post._id}
                   initialLikes={post.likes || 0}
                 />
+
+                {/* Series Navigation (Previous / Next Part) */}
+                {post.series && post.seriesPosts && post.seriesPosts.length > 1 && (
+                  <div className="mt-8 mb-4">
+                    <SeriesNav
+                      series={post.series}
+                      currentSlug={post.slug.current}
+                      currentPart={post.series_part}
+                      seriesPosts={post.seriesPosts}
+                    />
+                  </div>
+                )}
 
                 {/* Related Posts */}
 

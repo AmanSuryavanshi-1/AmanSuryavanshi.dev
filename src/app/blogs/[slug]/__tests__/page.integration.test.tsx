@@ -249,4 +249,145 @@ describe('Blog Post Page SEO/AEO integration', () => {
     expect(screen.getByRole('link', { name: 'AI Automation' })).toHaveAttribute('href', '/blogs?category=ai-automation');
     expect(screen.getByRole('link', { name: 'SEO Systems' })).toHaveAttribute('href', '/blogs?category=ai-automation&sub=seo-systems');
   });
+
+  it('renders SeriesSyllabus and SeriesNav when post belongs to a multi-part series', async () => {
+    const seriesPost: Post = {
+      ...basePost,
+      series: 'AI Agent Architecture',
+      series_part: 1,
+      seriesPosts: [
+        {
+          _id: 'post-1',
+          title: 'Part 1: Overview',
+          slug: { current: 'test-blog-post', _type: 'slug' },
+          series_part: 1,
+        },
+        {
+          _id: 'post-2',
+          title: 'Part 2: LangGraph Implementation',
+          slug: { current: 'part-2-langgraph', _type: 'slug' },
+          series_part: 2,
+          pillar_post: true,
+        },
+      ],
+    };
+
+    mockClient.fetch.mockImplementation(async (query: string) => {
+      if (query.includes('slug.current == $slug')) return seriesPost;
+      if (query.includes('count((tags[]->slug.current)')) return [];
+      if (query.includes('_type == "author"')) return seriesPost.author;
+      return null;
+    });
+
+    const component = await BlogPost({ params: Promise.resolve({ slug: 'test-blog-post' }) });
+    render(component);
+
+    expect(screen.getByTestId('series-syllabus')).toBeInTheDocument();
+    expect(screen.getByText('Part 1 of 2')).toBeInTheDocument();
+    expect(screen.getByText('Current Part')).toBeInTheDocument();
+    expect(screen.getByText('Pillar')).toBeInTheDocument();
+    expect(screen.getByTestId('series-nav')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Next Part/i })).toHaveAttribute('href', '/blogs/part-2-langgraph');
+  });
+
+  it('does not render SeriesSyllabus or SeriesNav for single-part series or posts without series', async () => {
+    const singlePartPost: Post = {
+      ...basePost,
+      series: 'Solo Masterclass',
+      series_part: 1,
+      seriesPosts: [
+        {
+          _id: 'post-1',
+          title: 'Solo Masterclass Post',
+          slug: { current: 'test-blog-post', _type: 'slug' },
+          series_part: 1,
+        },
+      ],
+    };
+
+    mockClient.fetch.mockImplementation(async (query: string) => {
+      if (query.includes('slug.current == $slug')) return singlePartPost;
+      if (query.includes('count((tags[]->slug.current)')) return [];
+      return null;
+    });
+
+    const component = await BlogPost({ params: Promise.resolve({ slug: 'test-blog-post' }) });
+    render(component);
+
+    expect(screen.queryByTestId('series-syllabus')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('series-nav')).not.toBeInTheDocument();
+  });
+
+  it('includes series in breadcrumbs and breadcrumb JSON-LD when series exists', async () => {
+    const postWithSeries: Post = {
+      ...basePost,
+      series: 'AI Agent Architecture',
+      series_part: 1,
+    };
+
+    mockClient.fetch.mockImplementation(async (query: string) => {
+      if (query.includes('slug.current == $slug')) return postWithSeries;
+      if (query.includes('count((tags[]->slug.current)')) return [];
+      return null;
+    });
+
+    const component = await BlogPost({ params: Promise.resolve({ slug: 'test-blog-post' }) });
+    const { container } = render(component);
+
+    expect(screen.getByRole('link', { name: 'AI Agent Architecture' })).toHaveAttribute(
+      'href',
+      '/blogs?series=AI%20Agent%20Architecture'
+    );
+
+    const jsonLdScripts = Array.from(container.querySelectorAll('script[type="application/ld+json"]'))
+      .map((node) => JSON.parse(node.textContent || '{}'));
+    const breadcrumbList = jsonLdScripts.find((s) => s['@type'] === 'BreadcrumbList');
+    expect(breadcrumbList).toBeDefined();
+    expect(breadcrumbList.itemListElement.map((i: { name: string }) => i.name)).toEqual([
+      'Home',
+      'AI Automation',
+      'SEO Systems',
+      'AI Agent Architecture',
+      'Test Blog Post',
+    ]);
+    const seriesItem = breadcrumbList.itemListElement.find(
+      (i: { name: string }) => i.name === 'AI Agent Architecture'
+    );
+    expect(seriesItem.item).toBe('https://test.example.com/blogs?series=AI%20Agent%20Architecture');
+  });
+
+  it('normalizes series_part: 0 or undefined to 1-indexed part positions without rendering Part 0', async () => {
+    const postWithZeroPart: Post = {
+      ...basePost,
+      series: 'Enterprise Automation with n8n',
+      series_part: 0,
+      seriesPosts: [
+        {
+          _id: 'post-1',
+          title: 'Part 1: Telegram to n8n Architecture',
+          slug: { current: 'test-blog-post', _type: 'slug' },
+          series_part: 0,
+        },
+        {
+          _id: 'post-2',
+          title: 'Part 2: Production Lead Automation',
+          slug: { current: 'part-2-lead-automation', _type: 'slug' },
+          series_part: 0,
+        },
+      ],
+    };
+
+    mockClient.fetch.mockImplementation(async (query: string) => {
+      if (query.includes('slug.current == $slug')) return postWithZeroPart;
+      if (query.includes('count((tags[]->slug.current)')) return [];
+      return null;
+    });
+
+    const component = await BlogPost({ params: Promise.resolve({ slug: 'test-blog-post' }) });
+    render(component);
+
+    expect(screen.getByTestId('series-syllabus')).toBeInTheDocument();
+    expect(screen.getByText('Part 1 of 2')).toBeInTheDocument();
+    expect(screen.queryByText(/Part 0/i)).not.toBeInTheDocument();
+  });
 });

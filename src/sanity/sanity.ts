@@ -85,6 +85,14 @@ export interface PrimaryCategoryRef {
   slug: { current: string; _type: 'slug' };
 }
 
+export interface SeriesPostSibling {
+  _id: string;
+  title: string;
+  slug: { current: string; _type: 'slug' };
+  series_part?: number;
+  pillar_post?: boolean;
+}
+
 export interface Post {
   _id: string;
   _type: 'post';
@@ -114,6 +122,11 @@ export interface Post {
   cta_text?: string;
   primary_category?: PrimaryCategoryRef;
   subcategory?: string;
+  // Series Fields
+  series?: string;
+  series_part?: number;
+  pillar_post?: boolean;
+  seriesPosts?: SeriesPostSibling[];
   // AI SEO Enhancement Fields
   primaryKeyword?: string;
   secondaryKeywords?: string[];

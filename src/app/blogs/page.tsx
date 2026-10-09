@@ -1,6 +1,6 @@
 import Banner from '@/components/sanity/Banner'
 import BlogList from '@/components/sanity/BlogList'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import { Metadata } from 'next'
 
@@ -26,11 +26,21 @@ export const metadata: Metadata = {
   }
 }
 
-const page = () => {
+interface PageProps {
+  searchParams?: Promise<{ series?: string | string[] }>;
+}
+
+const page = async ({ searchParams }: PageProps) => {
+  const resolvedParams = searchParams ? await searchParams : undefined;
+  const rawSeries = resolvedParams?.series;
+  const initialSeries = Array.isArray(rawSeries) ? rawSeries[0] : rawSeries;
+
   return (
-    <div >
+    <div>
       <Banner />
-      <BlogList />
+      <Suspense fallback={null}>
+        <BlogList initialSeries={initialSeries} />
+      </Suspense>
     </div>
   )
 }

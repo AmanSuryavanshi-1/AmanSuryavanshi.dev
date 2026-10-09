@@ -272,6 +272,28 @@ export const postType = defineType({
       type: 'string',
       group: 'meta',
     }),
+    defineField({
+      name: 'series',
+      title: 'Series Name',
+      type: 'string',
+      description: 'The series this post belongs to (e.g. "Building Production AI Agents")',
+      group: 'meta',
+    }),
+    defineField({
+      name: 'series_part',
+      title: 'Series Part #',
+      type: 'number',
+      description: 'The episode or part number in the series (e.g. 1, 2, 3...)',
+      group: 'meta',
+    }),
+    defineField({
+      name: 'pillar_post',
+      title: 'Pillar / Cornerstone Post',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Mark true if this is the comprehensive index or cornerstone post for the series',
+      group: 'meta',
+    }),
     // AI SEO Enhancement Fields
     defineField({
       name: 'primaryKeyword',

@@ -50,6 +50,9 @@ const POSTS_QUERY = `*[ _type == "post" && defined(slug.current) && status == "p
     "slug": coalesce(slug, @->slug.current),
     "color": @->color
   },
+  series,
+  series_part,
+  pillar_post,
   status
 }`;
 
@@ -76,7 +79,11 @@ const DEFAULT_AUTHOR_QUERY = `*[_type == "author" && name == "Aman Suryavanshi"]
 type SortOption = 'latest' | 'oldest' | 'popular';
 type ViewMode = 'grid' | 'list';
 
-export default function BlogList() {
+interface BlogListProps {
+  initialSeries?: string;
+}
+
+export default function BlogList({ initialSeries }: BlogListProps = {}) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [allSanityTags, setAllSanityTags] = useState<Tag[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -85,10 +92,23 @@ export default function BlogList() {
   // Filter & Sort State
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedSeries, setSelectedSeries] = useState<string | null>(initialSeries || null);
   const [sortBy, setSortBy] = useState<SortOption>('latest');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 9;
+
+  useEffect(() => {
+    if (initialSeries) {
+      setSelectedSeries(initialSeries);
+    } else if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const seriesParam = params.get('series');
+      if (seriesParam) {
+        setSelectedSeries(seriesParam);
+      }
+    }
+  }, [initialSeries]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -180,9 +200,13 @@ export default function BlogList() {
           });
         });
 
-      return matchesSearch && matchesTags;
+      // Series filtering
+      const matchesSeries = !selectedSeries ||
+        post.series?.trim().toLowerCase() === selectedSeries.trim().toLowerCase();
+
+      return matchesSeries && matchesSearch && matchesTags;
     });
-  }, [posts, searchQuery, selectedTags]);
+  }, [posts, searchQuery, selectedTags, selectedSeries]);
 
   // Sort Logic
   const sortedPosts = useMemo(() => {
@@ -204,7 +228,7 @@ export default function BlogList() {
   // Reset page on filter change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery, selectedTags, sortBy]);
+  }, [searchQuery, selectedTags, selectedSeries, sortBy]);
 
   const handleTagSelect = (tag: string) => {
     if (tag === 'ALL') {
@@ -219,6 +243,7 @@ export default function BlogList() {
   const handleClearFilters = () => {
     setSearchQuery('');
     setSelectedTags([]);
+    setSelectedSeries(null);
     setSortBy('latest');
     setCurrentPage(1);
   };
@@ -326,8 +351,10 @@ export default function BlogList() {
             <ActiveFilters
               searchQuery={searchQuery}
               selectedTags={selectedTags}
+              selectedSeries={selectedSeries}
               onClearSearch={() => setSearchQuery('')}
               onRemoveTag={(tag: string) => handleTagSelect(tag)}
+              onRemoveSeries={() => setSelectedSeries(null)}
               onResetAll={handleClearFilters}
             />
           </div>
