@@ -3,6 +3,69 @@ import { getIcon } from '../icons/icon-map';
 
 const rawProjects = [
     {
+        id: "agent-reliability-harness",
+        title: "Agent Reliability Harness & SRE Proving Ground",
+        tagLine: "Enterprise AI Agent SRE: Bounded LangGraph StateGraphs, AST Ingestion & MicroVM Hardware Sandboxes",
+        category: "featured",
+        type: "open-source",
+        shortDescription: "Production-grade reliability harness for autonomous multi-agent systems and enterprise RAG pipelines. Features AST layout-aware document chunking, full-jitter exponential backoff, LangGraph HITL interrupt checkpoints, and microVM hardware sandboxing with eBPF egress firewalls. 25/25 automated tests green in 0.58s in a <100MB distroless container.",
+        description: "Autonomous agentic systems in production face severe failure modes: unconstrained ReAct loops, token-burning conversational ping-pong, pgvector RAM cliffs, unshielded task cancellations, and Docker socket escape vulnerabilities. Aman engineered the Agent Reliability Harness—a zero-slop production testing ground and runtime architecture. Features: (1) Discrete Ingestion FSM with full-jitter backoff and a 3-state Dead Letter Queue Circuit Breaker, (2) IBM Docling AST chunker preserving financial and statutory tables atomically with contextual breadcrumb trails, (3) True Hybrid RRF Search (k=60) combining pgvector HNSW with BM25 sparse retrieval and ONNX Cross-Encoder reranking, (4) Anthropic 4-breakpoint prompt caching saving >75% in API costs, (5) Bounded LangGraph StateGraphs with PostgresSaver WAL checkpoints and wire-safe token reducers, and (6) E2B/Firecracker microVM hardware execution sandboxes with eBPF egress firewalls blocking cloud metadata exfiltration (169.254.169.254).",
+        heroImageAlt: "Agent Reliability Harness C4 Architecture, LangGraph StateGraph, and Distributed Tracing Dashboard",
+        seo: {
+            title: "Agent Reliability Harness – Production AI Agent SRE & Ingestion Proving Ground",
+            description: "See how Aman Suryavanshi engineered an enterprise reliability harness for LangGraph agents, AST layout-aware RAG, and microVM sandboxing with 25/25 automated tests green.",
+            keywords: [
+                "AI Agent SRE",
+                "LangGraph StateGraph",
+                "Agent Reliability Harness",
+                "RAG AST Chunking",
+                "Prompt Caching FinOps",
+                "Aman Suryavanshi portfolio"
+            ],
+            canonicalPath: "/projects/agent-reliability-harness"
+        },
+        challenge: "Autonomous agentic systems and enterprise RAG pipelines deployed in mission-critical environments face catastrophic failure modes: blind character chunking destroys regulatory financial tables, unconstrained agent loops burn millions of tokens in polite chit-chat, vector database HNSW indexes trigger 90x latency spikes when exceeding RAM, and untrusted tool execution risks cloud credential theft via instance metadata endpoints.",
+        solution: "Architected a comprehensive 6-pillar SRE harness in Python 3.12: AST layout-aware document parsing with atomic table serialization and hierarchical breadcrumb injection; 3-state Dead Letter Queue circuit breakers with full-jitter exponential backoff; True Hybrid Reciprocal Rank Fusion (k=60) with ONNX Cross-Encoder reranking; Anthropic 4-breakpoint prompt caching with dynamic token cost modeling; bounded LangGraph StateGraphs with PostgresSaver WAL checkpoints and atomic tool-pairing reducers; and microVM hardware virtualization (Firecracker/E2B) with eBPF egress firewalls dropping packets to AWS metadata and private VPC subnets. Enforced by 25/25 automated PyTest suites in 0.58s packaged in a <100MB distroless non-root container.",
+        impact: [
+            "25 / 25 automated tests passing 100% green in 0.58s across ingestion, retrieval, state, and telemetry",
+            "78.5% LLM API cost reduction via Anthropic 4-breakpoint prompt caching with 6x faster TTFT",
+            "Zero table fragmentation on complex statutory circulars via AST layout-aware chunking",
+            "Zero duplicate financial side-effects during container crash recovery via deterministic idempotency keys",
+            "100% cloud credential theft prevention via eBPF egress drop rules on 169.254.169.254",
+            "<100MB multi-stage distroless non-root Docker container (UID 65532) with Kubernetes health probes"
+        ],
+        technicalOverview: "Built on Python 3.12 with async architecture. Ingestion leverages IBM Docling and LlamaParse for AST layout extraction. State management uses LangGraph StateGraphs with PostgresSaver checkpointer, recursion_limit=25, and wire-safe token reducers. Retrieval combines PostgreSQL 16 pgvector HNSW indexing (M=16, ef_construction=64) with BM25 sparse keyword search fused via Reciprocal Rank Fusion (k=60) and reranked using bge-reranker-base in ONNX Runtime INT8. Telemetry implements OpenTelemetry distributed tracing with W3C traceparent context propagation across async boundaries and regex PII sanitization. Containerized using gcr.io/distroless/python3-debian12:nonroot with /healthz liveness and /readyz readiness probes handling graceful connection draining.",
+        techStack: ["Python 3.12", "LangGraph", "PostgreSQL 16", "pgvector", "OpenTelemetry", "Docker", "PyTest", "FastAPI", "HTTPX", "ONNX Runtime", "Pydantic v2", "Redis", "eBPF", "Linux cgroups v2"],
+        badges: ["AI Agent SRE", "LangGraph", "Python 3.12", "pgvector", "OpenTelemetry", "Docker", "Production", "Open-Source", "FinOps", "Distributed Systems"],
+        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-13%20Homepage%20Screenshot.webp",
+        imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768016/aviators-training-centre/docs-assets/ASSET-13_Homepage_Screenshot.png",
+        videoYouTubeId: "",
+        video: "",
+        liveUrl: "https://www.amansuryavanshi.me/projects/agent-reliability-harness",
+        codeUrl: "https://github.com/AmanSuryavanshi-1/agent-reliability-harness",
+        blogUrl: "https://www.amansuryavanshi.me/blogs/agent-reliability-harness",
+        featured: true,
+        metrics: {
+            tests: "25/25 Green",
+            runtime: "0.58s",
+            savings: ">75%",
+            container: "<100MB",
+            latency: "<5ms",
+            coverage: "100%"
+        },
+        documentation: [
+            {
+                title: "C4 Architecture & ADRs",
+                url: "https://github.com/AmanSuryavanshi-1/agent-reliability-harness/blob/main/README.md"
+            },
+            {
+                title: "Automated Test Suite",
+                url: "https://github.com/AmanSuryavanshi-1/agent-reliability-harness/tree/main/tests"
+            }
+        ],
+        gallery: []
+    },
+    {
         id: "aviators-training-centre",
         title: "Aviators Training Centre",
         tagLine: "High-Performance Next.js 15 Platform + 74-Node n8n Lead Automation",
