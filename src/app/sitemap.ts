@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next';
 import { portfolioData } from '@/data/portfolio';
+import { getAllDocs } from '@/lib/docs-engine';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://amansuryavanshi.me';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://amansuryavanshi.com';
 
     // Static pages
     const routes = [
@@ -26,6 +27,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
     }));
 
+    // Dynamic Documentation pages
+    let docsEntries: MetadataRoute.Sitemap = [];
+    try {
+        const docs = getAllDocs();
+        docsEntries = docs.map((doc) => ({
+            url: `${baseUrl}/docs/${doc.slug.join('/')}`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly' as const,
+            priority: 0.8,
+        }));
+    } catch (error) {
+        console.error("Failed to generate docs routes for sitemap:", error);
+    }
+
     // Dynamic Blog pages from Sanity
     const postsQuery = `*[_type == "post" && defined(slug.current) && status == "published"] {
         "slug": slug.current,
@@ -42,15 +57,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         // eslint-disable-next-line @typescript-eslint/no-require-imports
         const { client } = require('@/sanity/lib/client');
         const posts = await client.fetch(postsQuery);
-        blogs = posts.map((post: any) => ({
-            url: `${baseUrl}/blogs/${post.slug}`,
-            lastModified: new Date(post._updatedAt),
-            changeFrequency: 'weekly' as const,
-            priority: 0.7,
-        }));
+        blogs = posts
+            .map((post: any) => {
+                const slug = typeof post.slug === 'string' ? post.slug : post.slug?.current;
+                if (!slug) return null;
+                return {
+                    url: `${baseUrl}/blogs/${slug}`,
+                    lastModified: new Date(post._updatedAt),
+                    changeFrequency: 'weekly' as const,
+                    priority: 0.7,
+                };
+            })
+            .filter(Boolean);
     } catch (error) {
         console.error("Failed to fetch blog posts for sitemap:", error);
     }
 
-    return [...routes, ...projects, ...blogs];
+    return [...routes, ...projects, ...docsEntries, ...blogs];
 }

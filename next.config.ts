@@ -26,6 +26,14 @@ const nextConfig: NextConfig & { eslint?: { ignoreDuringBuilds?: boolean } } = {
       {
         protocol: 'https',
         hostname: 'img.youtube.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'amansuryavanshi.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.amansuryavanshi.com',
       }
     ],
   },
@@ -43,7 +51,20 @@ const nextConfig: NextConfig & { eslint?: { ignoreDuringBuilds?: boolean } } = {
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'amansuryavanshi-dev.vercel.app' }],
-        destination: 'https://amansuryavanshi.me/:path*',
+        destination: 'https://amansuryavanshi.com/:path*',
+        permanent: true,
+      },
+      // Redirect legacy apex and www domain to canonical apex domain
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'amansuryavanshi.me' }],
+        destination: 'https://amansuryavanshi.com/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.amansuryavanshi.me' }],
+        destination: 'https://amansuryavanshi.com/:path*',
         permanent: true,
       },
       // Redirect singular /blog to plural /blogs (supporting Notion formula canonicals)
@@ -62,6 +83,27 @@ const nextConfig: NextConfig & { eslint?: { ignoreDuringBuilds?: boolean } } = {
       {
         source: '/docs/series/omnipost/:id',
         destination: '/docs/projects/personal/omnipost/:id',
+        permanent: true,
+      },
+      // Historical 404 Route Normalization
+      {
+        source: '/docs/omnipost/01-executive-summary',
+        destination: '/docs/projects/personal/omnipost/01-executive-summary',
+        permanent: true,
+      },
+      {
+        source: '/projects/omni-post-ai-executive-summary',
+        destination: '/docs/projects/personal/omnipost/01-executive-summary',
+        permanent: true,
+      },
+      {
+        source: '/projects/omni-post-ai-technical-documentation',
+        destination: '/docs/projects/personal/omnipost/02-architecture-and-flow',
+        permanent: true,
+      },
+      {
+        source: '/docs/projects/personal/omnipost/02-technical-architecture',
+        destination: '/docs/projects/personal/omnipost/02-architecture-and-flow',
         permanent: true,
       },
       // Redirect old Flat Documentation URLs

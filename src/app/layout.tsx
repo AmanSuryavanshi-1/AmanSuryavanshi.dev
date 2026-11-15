@@ -27,7 +27,7 @@ const geistMono = localFont({
 const SITE_NAME = "Aman Suryavanshi";
 const SITE_TITLE = "Aman Suryavanshi | AI Workflow & Automation Engineer | Technical Solutions Engineer";
 const SITE_DESCRIPTION = "AI Workflow & Automation Engineer and Technical Solutions Engineer in Bengaluru & Delhi NCR (Open to Remote). Architecting Next.js 15/16 web apps, self-healing 122-node n8n automations, FastMCP knowledge bridges, and programmatic SEO platforms generating ₹300K+ revenue.";
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi.me";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi.com";
 
 export const metadata: Metadata = {
     metadataBase: new URL(SITE_URL),

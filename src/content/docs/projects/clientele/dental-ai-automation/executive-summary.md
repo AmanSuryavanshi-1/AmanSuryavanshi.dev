@@ -178,4 +178,4 @@ Built a comprehensive AI-powered document automation suite for a mid-size dental
 ---
 
 **Built by Aman Suryavanshi** — AI Solutions Architect & Full-Stack Automation Developer  
-Portfolio: [amansuryavanshi.me](https://amansuryavanshi.me) | GitHub: [@AmanSuryavanshi-1](https://github.com/AmanSuryavanshi-1)
+Portfolio: [amansuryavanshi.com](https://amansuryavanshi.com) | GitHub: [@AmanSuryavanshi-1](https://github.com/AmanSuryavanshi-1)

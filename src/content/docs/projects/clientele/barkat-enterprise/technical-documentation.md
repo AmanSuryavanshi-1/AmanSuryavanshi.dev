@@ -30,7 +30,7 @@ videoUrl: https://youtu.be/jBLsJyNLVcA
 videoEmbed: https://www.youtube.com/embed/jBLsJyNLVcA
 liveUrl: https://barkat-enterprise.vercel.app/
 codeUrl: https://github.com/AmanSuryavanshi-1/BarkatEnterprise
-blogUrl: https://www.amansuryavanshi.me/blogs/a-freelance-project-for-an-enterprise
+blogUrl: https://amansuryavanshi.com/blogs/a-freelance-project-for-an-enterprise
 imageUrl: https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/BarkatEnterprise/Enterprise.webp
 metrics:
   viewers: 3,000+
@@ -83,7 +83,7 @@ In this documentation, we'll provide a deep dive into the technologies used, the
 |----------|------|
 | 🌐 **Live Application** | [barkat-enterprise.vercel.app](https://barkat-enterprise.vercel.app) |
 | 💻 **Source Code** | [GitHub Repository](https://github.com/AmanSuryavanshi-1/BarkatEnterprise) |
-| 📝 **Blog Post** | [Project Case Study](https://www.amansuryavanshi.me/blogs/a-freelance-project-for-an-enterprise) |
+| 📝 **Blog Post** | [Project Case Study](https://amansuryavanshi.com/blogs/a-freelance-project-for-an-enterprise) |
 | 🎬 **Video Demo** | [YouTube Walkthrough](https://youtu.be/jBLsJyNLVcA?si=lJD-UdtayphOBRlH) |
 
 ---
@@ -645,9 +645,9 @@ Yes, the architecture supports enterprise scaling:
 
 <div align="center">
 
-**Built with ❤️ by [Aman Suryavanshi](https://www.amansuryavanshi.me)**
+**Built with ❤️ by [Aman Suryavanshi](https://amansuryavanshi.com)**
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-amansuryavanshi.me-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://www.amansuryavanshi.me)
+[![Portfolio](https://img.shields.io/badge/Portfolio-amansuryavanshi.com-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://amansuryavanshi.com)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/amansuryavanshi-ai/)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AmanSuryavanshi-1)
 

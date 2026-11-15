@@ -309,7 +309,7 @@ npm run lint
 
 - **Local Dev**: http://localhost:3000
 - **Sanity Studio**: http://localhost:3000/studio
-- **Production**: https://amansuryavanshi.me
+- **Production**: https://amansuryavanshi.com
 - **Sanity Dashboard**: https://manage.sanity.io
 - **Vercel Dashboard**: https://vercel.com/dashboard
 - **GitHub Repo**: https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev

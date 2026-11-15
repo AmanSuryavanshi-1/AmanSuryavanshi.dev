@@ -33,7 +33,7 @@ If the Obsidian MCP fails to respond, the AI Strategist agents seamlessly fall b
 ## Base URL
 
 ```
-https://www.amansuryavanshi.me/api/portfolio
+https://amansuryavanshi.com/api/portfolio
 ```
 
 ---
@@ -83,7 +83,7 @@ Returns the specific service offerings (e.g., AI Automation, Custom Web Apps) in
 **HTTP Request Node Configuration:**
 ```
 Method: GET
-URL: https://www.amansuryavanshi.me/api/portfolio?sections=about,skills,experience,services,projects
+URL: https://amansuryavanshi.com/api/portfolio?sections=about,skills,experience,services,projects
 ```
 
 **Context Merge Logic in n8n:**

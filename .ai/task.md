@@ -2,7 +2,7 @@
 
 > **Document Path:** `.ai/task.md`  
 > **Target Production Codebase:** `A:\_Coding_Notes_Projects_IMP_\MAJOR PROJECTS\AmanSuryavanshi.dev`  
-> **Production URL:** `https://www.amansuryavanshi.me`  
+> **Production URL:** `https://amansuryavanshi.com`  
 > **Author & Systems Architect:** Aman Suryavanshi  
 > **Status:** Active / In-Progress  
 > **Execution Engine:** `/plan-verify-execute` + `/deep-research-team` + `/portfolio-docs-sync`  
@@ -12,7 +12,7 @@
 
 ## 🧭 Executive Summary & Core Objective
 
-This master task ledger compiles all architectural discussions, strategic decisions, forensic codebase audits, and backlog items for `AmanSuryavanshi.dev` (`amansuryavanshi.me`). 
+This master task ledger compiles all architectural discussions, strategic decisions, forensic codebase audits, and backlog items for `AmanSuryavanshi.dev` (`amansuryavanshi.com`).
 
 The primary objective is to elevate the portfolio from a standard full-stack developer portfolio into an **Elite Production AI Workflow & Systems Engineering Showcase**, demonstrating verifiable business receipts, autonomous agent architectures, zero-defect system integrations, and multi-engine search visibility (**SEO / AEO / GEO**).
 

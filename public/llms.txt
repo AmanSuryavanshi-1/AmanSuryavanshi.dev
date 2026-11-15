@@ -19,8 +19,8 @@ Aman Suryavanshi is an AI Workflow & Automation Engineer and Associate Technical
 - **Impact:** ₹300,000+ ($3.5K+) direct sales revenue, 110,000+ Google Search Console impressions, 50+ organic leads, 95+ Lighthouse performance score.
 - **Tech Stack:** Next.js 15, TypeScript, Sanity CMS, Firebase Firestore, 74-node n8n CRM orchestration, Resend, Cal.com API, Airtable.
 - **Live URL:** https://www.aviatorstrainingcentre.in
-- **Case Study:** https://www.amansuryavanshi.me/projects/aviators-training-centre-executive-summary
-- **Technical Specs:** https://www.amansuryavanshi.me/projects/aviators-training-centre-technical-documentation
+- **Case Study:** https://amansuryavanshi.com/docs/projects/clientele/aviators-training-centre/executive-summary
+- **Technical Specs:** https://amansuryavanshi.com/docs/projects/clientele/aviators-training-centre/technical-documentation
 
 ### 2. Vivek OnPoint Creator Platform
 - **Role:** Lead Full-Stack Architect
@@ -29,7 +29,7 @@ Aman Suryavanshi is an AI Workflow & Automation Engineer and Associate Technical
 - **11-Layer Defense System:** 0.67 req/s Semaphore Throttler, jittered exponential backoff, static emergency bypass snapshots, draft leakage guards, and Upstash Redis edge rate limiting.
 - **Live URL:** https://vivekonpoint.com
 - **Code Repository:** https://github.com/AmanSuryavanshi-1/Vivek-OnPoint-Web
-- **Case Study:** https://www.amansuryavanshi.me/projects#vivek-onpoint-platform
+- **Case Study:** https://amansuryavanshi.com/projects#vivek-onpoint-platform
 
 ### 3. notebooklm-py (16.5k★) — Core Architecture PR #276
 - **Role:** Core Open-Source Contributor
@@ -43,7 +43,7 @@ Aman Suryavanshi is an AI Workflow & Automation Engineer and Associate Technical
 - **Impact:** 122 n8n nodes orchestrated with zero-loss Dead-Letter Queue (DLQ) retry architecture, 100% elimination of manual cross-posting, 300 DPI automated LinkedIn carousels, $0/month operational costs.
 - **Technical Stack:** 122-Node n8n workflows, FastMCP (:3010) streaming gateway indexing Obsidian Second Brain, FastAPI bridge (:3012) connecting Google NotebookLM, 5-layer adversarial anti-slop linter, headless Playwright carousel compiler.
 - **Code Repository:** https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/tree/main/Omni-Post-AI-Automation
-- **Documentation:** https://www.amansuryavanshi.me/docs/omnipost/01-executive-summary
+- **Documentation:** https://amansuryavanshi.com/docs/projects/personal/omnipost/01-executive-summary
 
 ## Core Technical Competencies
 - **Workflow & Automation:** n8n (122 Nodes, Self-Hosted, DLQs), FastMCP (:3010), LangGraph, CrewAI, Webhooks, OAuth2.
@@ -53,12 +53,12 @@ Aman Suryavanshi is an AI Workflow & Automation Engineer and Associate Technical
 
 ## Additional Documentation & Full Dossier
 For complete technical diagrams, schemas, and architectural breakdowns, inspect the full dossier:
-- Full LLM Specification: https://www.amansuryavanshi.me/llms-full.txt
-- Complete Portfolio Index: https://www.amansuryavanshi.me/projects
-- Machine-Readable Portfolio API: https://www.amansuryavanshi.me/api/portfolio
+- Full LLM Specification: https://amansuryavanshi.com/llms-full.txt
+- Complete Portfolio Index: https://amansuryavanshi.com/projects
+- Machine-Readable Portfolio API: https://amansuryavanshi.com/api/portfolio
 
 ## Contact & Direct Channels
-- **Portfolio:** https://www.amansuryavanshi.me
+- **Portfolio:** https://amansuryavanshi.com
 - **Email:** amansuryavanshias@gmail.com
 - **LinkedIn:** https://www.linkedin.com/in/amansuryavanshi-ai/
 - **GitHub:** https://github.com/AmanSuryavanshi-1

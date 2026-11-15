@@ -383,6 +383,6 @@ The platform achieved 95+ Lighthouse score, 99.7% automation reliability, and es
 
 ---
 
-**Contact:** [amansurya.work@gmail.com] | **Portfolio:** [https://amansuryavanshi-dev.vercel.app/] | **GitHub:** [https://github.com/AmanSuryavanshi-1]
+**Contact:** [amansurya.work@gmail.com] | **Portfolio:** [https://amansuryavanshi.com/] | **GitHub:** [https://github.com/AmanSuryavanshi-1]
 
 *Last Updated: January 12, 2026*

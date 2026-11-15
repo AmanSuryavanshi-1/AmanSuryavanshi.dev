@@ -38,7 +38,7 @@ type NextPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.amansuryavanshi.me';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://amansuryavanshi.com';
 
 async function getPost(slug: string): Promise<Post | null> {
   const query = `*[_type == "post" && slug.current == $slug][0]{
@@ -617,7 +617,7 @@ export default async function BlogPost({ params }: NextPageProps) {
                             <a href="https://github.com/AmanSuryavanshi-1" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors p-1.5 hover:bg-sage-100 dark:hover:bg-forest-800 rounded-lg">
                               <BiLogoGithub size={20} />
                             </a>
-                            <a href="https://amansuryavanshi.me" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors p-1.5 hover:bg-sage-100 dark:hover:bg-forest-800 rounded-lg">
+                            <a href="https://amansuryavanshi.com" target="_blank" rel="noopener noreferrer" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors p-1.5 hover:bg-sage-100 dark:hover:bg-forest-800 rounded-lg">
                               <BiGlobe size={20} />
                             </a>
                           </div>

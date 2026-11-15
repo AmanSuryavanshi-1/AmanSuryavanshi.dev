@@ -41,7 +41,7 @@ export function getMetadataImageUrl(post: Post): string {
     const fallbackImages = FallbackImageManager.getAllFallbacks();
     if (fallbackImages.length > 0) {
       // Use absolute URL for Open Graph
-      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://amansuryavanshi.com';
       return `${baseUrl}${fallbackImages[0].path}`;
     }
 

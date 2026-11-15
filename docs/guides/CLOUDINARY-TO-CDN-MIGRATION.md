@@ -345,7 +345,7 @@ See `src/components/ui/YouTubeEmbed.tsx` or `ProjectMediaCarousel.tsx` for imple
 ---
 
 **Author**: Aman Suryavanshi  
-**Portfolio**: [amansuryavanshi.me](https://amansuryavanshi.me)  
+**Portfolio**: [amansuryavanshi.com](https://amansuryavanshi.com)  
 **GitHub**: [@AmanSuryavanshi-1](https://github.com/AmanSuryavanshi-1)
 
 *Last Updated: December 2024*

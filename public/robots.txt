@@ -5,4 +5,4 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /blogs?*
 
-Sitemap: https://amansuryavanshi.me/sitemap.xml
+Sitemap: https://amansuryavanshi.com/sitemap.xml

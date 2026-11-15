@@ -74,7 +74,7 @@ export async function POST(req: Request) {
     // 3. Send Emails
     // Admin Notification
     const adminEmail = await resend.emails.send({
-      from: 'Portfolio Contact <noreply@amansuryavanshi.me>',
+      from: 'Portfolio Contact <contact@amansuryavanshi.com>',
       to: 'amansurya.work@gmail.com',
       subject: `New Contact Form Submission from ${from_name}`,
       html: AdminNotificationTemplate(from_name, reply_to, message),
@@ -88,7 +88,7 @@ export async function POST(req: Request) {
 
     // User Confirmation
     const userEmail = await resend.emails.send({
-      from: 'Aman Suryavanshi <noreply@amansuryavanshi.me>',
+      from: 'Aman Suryavanshi <contact@amansuryavanshi.com>',
       to: reply_to,
       subject: 'Thank you for reaching out!',
       html: UserConfirmationTemplate(from_name, message),

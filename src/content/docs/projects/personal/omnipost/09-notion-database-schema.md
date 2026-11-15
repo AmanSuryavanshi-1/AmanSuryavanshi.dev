@@ -206,7 +206,7 @@ The **Social Content Queue** database is the backbone of the Omni-Post AI automa
 | **Type** | URL / Formula |
 | **Description** | The canonical URL pointing to the primary blog version. Used to prevent duplicate content issues across platforms. |
 | **Format** | Full URL to the primary blog post |
-| **Example Values** | `https://amansuryavanshi.me/blog/nextjs-n8n-automation-revenue-case-study` |
+| **Example Values** | `https://amansuryavanshi.com/blogs/nextjs-n8n-automation-revenue-case-study` |
 
 ---
 

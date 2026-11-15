@@ -1021,9 +1021,9 @@ This project showcases the ability to build scalable, maintainable applications 
 
 <div align="center">
 
-**Built with ☕ and 💙 by [Aman Suryavanshi](https://www.amansuryavanshi.me)**
+**Built with ☕ and 💙 by [Aman Suryavanshi](https://amansuryavanshi.com)**
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-amansuryavanshi.me-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://www.amansuryavanshi.me)
+[![Portfolio](https://img.shields.io/badge/Portfolio-amansuryavanshi.com-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://amansuryavanshi.com)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/amansuryavanshi-ai/)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AmanSuryavanshi-1)
 

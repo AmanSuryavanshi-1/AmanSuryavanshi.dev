@@ -27,7 +27,7 @@ export const UserConfirmationTemplate = (name: string, message: string) => `
       <table class="main" width="100%">
         <tr>
           <td class="header">
-            <img src="https://amansuryavanshi.me/Profile/PFP-Cricular.webp" alt="Aman Suryavanshi" width="70" height="70" style="border-radius: 50%; border: 3px solid #84cc16; margin-bottom: 15px;">
+            <img src="https://amansuryavanshi.com/Profile/PFP-Cricular.webp" alt="Aman Suryavanshi" width="70" height="70" style="border-radius: 50%; border: 3px solid #84cc16; margin-bottom: 15px;">
             <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">Aman Suryavanshi</h1>
             <p style="margin: 8px 0 0 0; color: #84cc16; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">AI Automation & Full Stack Developer</p>
           </td>
@@ -53,7 +53,7 @@ export const UserConfirmationTemplate = (name: string, message: string) => `
             <table width="100%" style="margin-top: 35px;">
               <tr>
                 <td align="center">
-                  <a href="https://amansuryavanshi.me" style="background-color: #064e3b; color: #ffffff; text-decoration: none; padding: 14px 28px; border-radius: 6px; font-size: 16px; font-weight: 600; display: inline-block;">Visit Portfolio</a>
+                  <a href="https://amansuryavanshi.com" style="background-color: #064e3b; color: #ffffff; text-decoration: none; padding: 14px 28px; border-radius: 6px; font-size: 16px; font-weight: 600; display: inline-block;">Visit Portfolio</a>
                 </td>
               </tr>
             </table>

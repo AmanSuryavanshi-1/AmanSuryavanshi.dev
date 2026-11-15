@@ -10,7 +10,7 @@ import FeaturedProjectsSection from '@/components/home/FeaturedProjectsSection'
 import Contact from '@/components/contact'
 import MySkills from '@/components/skills/MySkills'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://amansuryavanshi.me';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://amansuryavanshi.com';
 
 export const metadata: Metadata = {
   alternates: {

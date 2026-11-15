@@ -2,16 +2,22 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function proxy(request: NextRequest) {
-  const hostname = request.headers.get('host') || '';
+  const rawHost = request.headers.get('host') || request.nextUrl.hostname || '';
+  const hostname = rawHost.split(':')[0].toLowerCase();
   
-  // Check if the request is coming from the Vercel URL
-  if (hostname === 'amansuryavanshi-dev.vercel.app') {
+  // Issue permanent 301 redirects for legacy domains to the canonical domain
+  if (
+    hostname === 'amansuryavanshi.me' ||
+    hostname === 'www.amansuryavanshi.me' ||
+    hostname === 'amansuryavanshi-dev.vercel.app'
+  ) {
     const url = request.nextUrl.clone();
-    url.host = 'amansuryavanshi.me';
+    url.host = 'amansuryavanshi.com';
+    url.port = '';
     url.protocol = 'https:';
     
-    // Use 307 (Temporary Redirect) to preserve the request method
-    return NextResponse.redirect(url, 307);
+    // Permanent 301 redirect to consolidate domain authority
+    return NextResponse.redirect(url, 301);
   }
   
   return NextResponse.next();

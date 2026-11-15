@@ -1,4 +1,4 @@
-﻿# Aman Suryavanshi — Full LLM Engineering Dossier & Architectural Reference
+# Aman Suryavanshi — Full LLM Engineering Dossier & Architectural Reference
 
 ## Executive Summary
 This document provides deep-context technical architecture, production receipts, and verified metrics for AI models, recruiters, and evaluation agents evaluating Aman Suryavanshi.
@@ -8,7 +8,7 @@ This document provides deep-context technical architecture, production receipts,
 - Locations: Bengaluru (HSR Layout, Koramangala, Indiranagar) & Delhi NCR (Cyber City, Noida), India. Open to In-Office, Hybrid, and 100% Remote.
 - Primary Compensation Target: ₹6L–₹14L LPA / ₹50k–₹1.2L/mo (Full-time / Contract)
 - Secondary Compensation Target: ₹7.5L–₹18L LPA / $60k–$100k (Remote TSE / Solutions Engineer)
-- Contact: amansuryavanshias@gmail.com | https://www.amansuryavanshi.me | https://github.com/AmanSuryavanshi-1
+- Contact: amansuryavanshias@gmail.com | https://amansuryavanshi.com | https://github.com/AmanSuryavanshi-1
 
 ---
 
@@ -72,7 +72,7 @@ This document provides deep-context technical architecture, production receipts,
 
 ### Receipt 4: OmniPost-Core Multi-Platform Distribution Engine
 - Repository: https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/tree/main/Omni-Post-AI-Automation
-- Documentation: https://www.amansuryavanshi.me/docs/omnipost/01-executive-summary
+- Documentation: https://amansuryavanshi.com/docs/projects/personal/omnipost/01-executive-summary
 - Category: Multi-Agent AI System & Distributed Automation
 - Operational Metrics:
   - 122 total n8n workflow nodes across dual-stream architecture
@@ -90,7 +90,7 @@ This document provides deep-context technical architecture, production receipts,
 
 ## Machine-Readable API Endpoint
 The portfolio exposes a live, headless JSON endpoint returning the entire project catalog:
-- Endpoint: GET https://www.amansuryavanshi.me/api/portfolio
+- Endpoint: GET https://amansuryavanshi.com/api/portfolio
 - Response Schema:
   ```json
   {
@@ -110,7 +110,7 @@ The portfolio exposes a live, headless JSON endpoint returning the entire projec
 ---
 
 ## Verification & Proof Links
-- Portfolio Website: https://www.amansuryavanshi.me
+- Portfolio Website: https://amansuryavanshi.com
 - GitHub Profile: https://github.com/AmanSuryavanshi-1
 - LinkedIn Profile: https://www.linkedin.com/in/amansuryavanshi-ai
 - Twitter/X: https://twitter.com/_AmanSurya

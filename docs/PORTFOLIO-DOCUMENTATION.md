@@ -521,7 +521,7 @@ NEXT_PUBLIC_SANITY_DATASET=production
 NEXT_PUBLIC_SANITY_API_WRITE_TOKEN=skXXX...  # For view counts
 
 # Site
-NEXT_PUBLIC_SITE_URL=https://amansuryavanshi.me
+NEXT_PUBLIC_SITE_URL=https://amansuryavanshi.com
 
 # Email (Resend)
 RESEND_API_KEY=re_XXXXX...

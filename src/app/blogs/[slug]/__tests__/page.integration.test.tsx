@@ -111,7 +111,7 @@ const basePost: Post = {
   title: 'Test Blog Post',
   slug: { current: 'test-blog-post', _type: 'slug' },
   excerpt: 'Test excerpt',
-  canonicalUrl: 'https://amansuryavanshi.me/blogs/test-blog-post',
+  canonicalUrl: 'https://amansuryavanshi.com/blogs/test-blog-post',
   body: [
     {
       _type: 'block',
@@ -187,7 +187,7 @@ describe('Blog Post Page SEO/AEO integration', () => {
     expect(blogPosting).toBeDefined();
     expect(blogPosting.headline).toBe('Test Blog Post');
     expect(blogPosting.publisher?.['@type']).toBe('Organization');
-    expect(blogPosting.mainEntityOfPage?.['@id']).toBe('https://amansuryavanshi.me/blogs/test-blog-post');
+    expect(blogPosting.mainEntityOfPage?.['@id']).toBe('https://amansuryavanshi.com/blogs/test-blog-post');
 
     expect(breadcrumbList).toBeDefined();
     expect(breadcrumbList.itemListElement.map((i: { name: string }) => i.name)).toEqual([

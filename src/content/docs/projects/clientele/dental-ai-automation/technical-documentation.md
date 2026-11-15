@@ -642,7 +642,7 @@ Dental-AI-Automation-Suite/
 
 ### Support & Questions
 For implementation questions or collaboration inquiries, reach out via:
-- Portfolio: [amansuryavanshi.me](https://amansuryavanshi.me)
+- Portfolio: [amansuryavanshi.com](https://amansuryavanshi.com)
 - GitHub: [@AmanSuryavanshi-1](https://github.com/AmanSuryavanshi-1)
 - LinkedIn: [Aman Suryavanshi](https://linkedin.com/in/aman-suryavanshi)
 

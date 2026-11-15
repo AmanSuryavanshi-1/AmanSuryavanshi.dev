@@ -36,17 +36,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title: `${meta.title} | Aman Suryavanshi`,
         description: meta.seoDescription,
         keywords: meta.keywords || ['Aman Suryavanshi', 'Documentation', 'Portfolio'],
-        authors: [{ name: 'Aman Suryavanshi', url: 'https://amansuryavanshi.me' }],
+        authors: [{ name: 'Aman Suryavanshi', url: 'https://amansuryavanshi.com' }],
         creator: 'Aman Suryavanshi',
         alternates: {
-            canonical: `https://amansuryavanshi.me/docs/${slug.join('/')}`,
+            canonical: `https://amansuryavanshi.com/docs/${slug.join('/')}`,
         },
         openGraph: {
             title: meta.title,
             description: meta.seoDescription,
             type: 'article',
             authors: ['Aman Suryavanshi — AI Workflow Architect'],
-            url: `https://amansuryavanshi.me/docs/${slug.join('/')}`,
+            url: `https://amansuryavanshi.com/docs/${slug.join('/')}`,
             siteName: 'Aman Suryavanshi Portfolio',
             locale: 'en_US',
             images: [{
@@ -98,18 +98,18 @@ export default async function DocsPage({ params }: PageProps) {
         "name": meta.title,
         "headline": meta.title,
         "description": meta.seoDescription,
-        "author": { "@type": "Person", "name": "Aman Suryavanshi", "url": "https://amansuryavanshi.me" },
+        "author": { "@type": "Person", "name": "Aman Suryavanshi", "url": "https://amansuryavanshi.com" },
         "publisher": { 
             "@type": "Organization", 
             "name": "Aman Suryavanshi Portfolio",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://amansuryavanshi.me/Profile/Logo.webp"
+                "url": "https://amansuryavanshi.com/Profile/Logo.webp"
             }
         },
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": `https://amansuryavanshi.me/docs/${slug.join('/')}`
+            "@id": `https://amansuryavanshi.com/docs/${slug.join('/')}`
         }
     };
 

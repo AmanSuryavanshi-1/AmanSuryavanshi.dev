@@ -826,4 +826,4 @@ Step-by-step setup instructions, configuration details, and deployment best prac
 **Document Version**: V1.0  
 **Last Updated**: January 2026  
 **Author**: Aman Suryavanshi  
-**Portfolio**: [amansuryavanshi.me](https://www.amansuryavanshi.me/)
+**Portfolio**: [amansuryavanshi.com](https://amansuryavanshi.com/)

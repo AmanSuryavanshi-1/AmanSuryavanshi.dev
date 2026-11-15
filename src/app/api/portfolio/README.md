@@ -8,7 +8,7 @@
 ## Base URL
 
 ```
-https://www.amansuryavanshi.me/api/portfolio
+https://amansuryavanshi.com/api/portfolio
 ```
 
 ---
@@ -200,7 +200,7 @@ GET /api/portfolio?sections=skills,experience,services,about,projects
 **HTTP Request Node:**
 ```
 Method: GET
-URL: https://www.amansuryavanshi.me/api/portfolio?sections=about,skills
+URL: https://amansuryavanshi.com/api/portfolio?sections=about,skills
 ```
 
 **Access in Code Node:**

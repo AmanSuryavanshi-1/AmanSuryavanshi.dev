@@ -3,7 +3,7 @@
 
 > **A modern, full-stack portfolio website with integrated blog and AI-powered content automation**
 
-**Live Site**: [amansuryavanshi.me](https://amansuryavanshi-dev.vercel.app/)  
+**Live Site**: [amansuryavanshi.com](https://amansuryavanshi.com/)  
 **Author**: Aman Suryavanshi  
 **Tech Stack**: Next.js 15, TypeScript, Sanity CMS, Tailwind CSS, n8n Automation
 
@@ -397,7 +397,7 @@ npm run test:coverage    # Generate coverage report
 
 ## 🔗 Links
 
-- **Portfolio**: [amansuryavanshi-dev.vercel.app](https://amansuryavanshi-dev.vercel.app/)
+- **Portfolio**: [amansuryavanshi.com](https://amansuryavanshi.com/)
 - **GitHub**: [github.com/AmanSuryavanshi-1](https://github.com/AmanSuryavanshi-1)
 - **LinkedIn**: [linkedin.com/in/amansuryavanshi-ai](https://www.linkedin.com/in/amansuryavanshi-ai/)
 - **Twitter**: [@_AmanSurya](https://x.com/_AmanSurya)

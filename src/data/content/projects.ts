@@ -41,9 +41,9 @@ const rawProjects = [
         imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768016/aviators-training-centre/docs-assets/ASSET-13_Homepage_Screenshot.png",
         videoYouTubeId: "",
         video: "",
-        liveUrl: "https://www.amansuryavanshi.me/projects/agent-reliability-harness",
+        liveUrl: "https://amansuryavanshi.com/projects/agent-reliability-harness",
         codeUrl: "https://github.com/AmanSuryavanshi-1/agent-reliability-harness",
-        blogUrl: "https://www.amansuryavanshi.me/blogs/agent-reliability-harness",
+        blogUrl: "https://amansuryavanshi.com/blogs/agent-reliability-harness",
         featured: true,
         metrics: {
             tests: "25/25 Green",
@@ -105,7 +105,7 @@ const rawProjects = [
         video: "",
         liveUrl: "https://www.aviatorstrainingcentre.in",
         codeUrl: "https://github.com/AmanSuryavanshi-1/Aviators_Training_Centre",
-        blogUrl: "https://www.amansuryavanshi.me/blogs/aviators-training-centre",
+        blogUrl: "https://amansuryavanshi.com/blogs/aviators-training-centre",
         featured: true,
         metrics: {
             revenue: "₹300,000+",
@@ -260,7 +260,7 @@ const rawProjects = [
         video: "https://youtu.be/jBLsJyNLVcA?si=lJD-UdtayphOBRlH",
         liveUrl: "https://barkat-enterprise-copy.vercel.app/",
         codeUrl: "https://github.com/AmanSuryavanshi-1/BarkatEnterprise",
-        blogUrl: "https://www.amansuryavanshi.me/blogs/a-freelance-project-for-an-enterprise",
+        blogUrl: "https://amansuryavanshi.com/blogs/a-freelance-project-for-an-enterprise",
         featured: false,
         metrics: {
             viewers: "3,000+",
@@ -311,7 +311,7 @@ const rawProjects = [
         video: "https://youtu.be/IkFf7UnI2U4?si=q6VRi0EjbrmBhnZM",
         liveUrl: "https://avnews.vercel.app",
         codeUrl: "https://github.com/AmanSuryavanshi-1/AV-News-Stream",
-        blogUrl: "https://www.amansuryavanshi.me/blogs/av-news-stream",
+        blogUrl: "https://amansuryavanshi.com/blogs/av-news-stream",
         featured: false,
         metrics: {
             apiReduction: "90%",
@@ -357,7 +357,7 @@ const rawProjects = [
         video: "https://youtu.be/GwJz9MRstuU?si=zzajq4uzGzrCnssT",
         liveUrl: "https://foodah.vercel.app",
         codeUrl: "https://github.com/AmanSuryavanshi-1/Foodah",
-        blogUrl: "https://www.amansuryavanshi.me/blogs/foodah",
+        blogUrl: "https://amansuryavanshi.com/blogs/foodah",
         featured: false,
         metrics: {
             loadReduction: "40%",
@@ -399,7 +399,7 @@ const rawProjects = [
         imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_1_Generation_Workflow",
         liveUrl: "https://n8n.aviatorstrainingcentre.in",
         codeUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/tree/main/Omni-Post-AI-Automation",
-        blogUrl: "https://www.amansuryavanshi.me/blogs/n8n-automation",
+        blogUrl: "https://amansuryavanshi.com/blogs/n8n-automation",
         featured: true,
         metrics: {
             workflows: "122 Nodes",
@@ -457,7 +457,7 @@ const rawProjects = [
         imageUrlFallback: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/N8N-GithubBackup/v5_dual_stream_architecture.webp",
         liveUrl: "https://github.com/AmanSuryavanshi-1/n8n-production-workflows",
         codeUrl: "https://github.com/AmanSuryavanshi-1/n8n-production-workflows/tree/main/%5BProd%5D%20N8N_GitHub_Backup_V5_Unified",
-        blogUrl: "https://www.amansuryavanshi.me/blogs/n8n-automation",
+        blogUrl: "https://amansuryavanshi.com/blogs/n8n-automation",
         featured: true,
         metrics: {
             recovery: "99.9%",
@@ -510,9 +510,9 @@ const rawProjects = [
         badges: ["Next.js", "TypeScript", "Sanity", "Blog", "SEO", "Automation", "Personal", "Portfolio", "MDX"],
         imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/Portfolio/amansuryavanshi-dev.vercel.app_Header.webp",
         imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Portfolio/amansuryavanshi-dev_vercel_app_Header",
-        liveUrl: "https://www.amansuryavanshi.me",
+        liveUrl: "https://amansuryavanshi.com",
         codeUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev",
-        blogUrl: "https://www.amansuryavanshi.me/blogs",
+        blogUrl: "https://amansuryavanshi.com/blogs",
         featured: false,
         metrics: {
             views: "6,000+",

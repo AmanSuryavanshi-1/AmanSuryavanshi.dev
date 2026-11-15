@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi.me";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi.com";
 
 export const metadata: Metadata = {
     title: "Projects | Aman Suryavanshi",

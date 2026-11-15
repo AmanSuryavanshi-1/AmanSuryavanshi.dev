@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     'Aman Suryavanshi blog'
   ],
   alternates: {
-    canonical: 'https://amansuryavanshi.me/blogs',
+    canonical: 'https://amansuryavanshi.com/blogs',
   },
   openGraph: {
     title: 'Technical Blog | Aman Suryavanshi',
