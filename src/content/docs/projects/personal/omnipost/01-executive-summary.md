@@ -1,4 +1,4 @@
----
+﻿---
 title: 01. Executive Summary
 seoDescription: >-
   Discover Aman Suryavanshi's OmniPost AI: A revolutionary Agentic AI system
@@ -9,7 +9,7 @@ keywords:
   - Next.js
   - Agentic AI
   - OmniPost
-projectId: n8n-automation-suite
+projectId: omnipost-core
 type: series
 schemaType: TechArticle
 ---

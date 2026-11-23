@@ -1,4 +1,4 @@
----
+﻿---
 title: 07. Sanity Portfolio Integration Architecture
 seoDescription: >-
   Mastering headless CMS integration: How OmniPost AI syncs Agentic AI-generated
@@ -9,7 +9,7 @@ keywords:
   - Next.js
   - Agentic AI
   - OmniPost
-projectId: n8n-automation-suite
+projectId: omnipost-core
 type: series
 schemaType: TechArticle
 ---

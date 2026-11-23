@@ -1,4 +1,4 @@
----
+﻿---
 title: 02. Architecture and Flow
 seoDescription: >-
   Explore the high-level architecture of OmniPost AI. Learn how n8n workflows
@@ -9,7 +9,7 @@ keywords:
   - Next.js
   - Agentic AI
   - OmniPost
-projectId: n8n-automation-suite
+projectId: omnipost-core
 type: series
 schemaType: TechArticle
 ---

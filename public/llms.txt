@@ -19,31 +19,29 @@ Aman Suryavanshi is an AI Workflow & Automation Engineer and Associate Technical
 - **Impact:** ₹300,000+ ($3.5K+) direct sales revenue, 110,000+ Google Search Console impressions, 50+ organic leads, 95+ Lighthouse performance score.
 - **Tech Stack:** Next.js 15, TypeScript, Sanity CMS, Firebase Firestore, 74-node n8n CRM orchestration, Resend, Cal.com API, Airtable.
 - **Live URL:** https://www.aviatorstrainingcentre.in
-- **Case Study:** https://amansuryavanshi.com/docs/projects/clientele/aviators-training-centre/executive-summary
-- **Technical Specs:** https://amansuryavanshi.com/docs/projects/clientele/aviators-training-centre/technical-documentation
+- **Case Study:** https://amansuryavanshi.com/docs/aviators-training-centre/executive-summary
+- **Technical Specs:** https://amansuryavanshi.com/docs/aviators-training-centre/technical-documentation
 
-### 2. Vivek OnPoint Creator Platform
+### 2. MacroPulse Creator Platform (1M+ Follower Creator Scale)
 - **Role:** Lead Full-Stack Architect
 - **Impact:** 100% build reliability, 0 rate-limit violations across deployments, 99.9% uptime, zero content loss via emergency static bypass snapshots.
-- **Architecture:** Next.js 16 App Router + Headless Notion CMS across 8 relational databases (Sources, Bookshelf, FAQ, Newsletter, Sponsors, Corrections).
+- **Architecture:** Next.js 16 App Router + Headless Notion CMS across 8 relational databases (Sources, Bookshelf, FAQ, Newsletter, Sponsors, Corrections, Claims, Reels) engineered for a 1M+ follower financial & macro creator ecosystem.
 - **11-Layer Defense System:** 0.67 req/s Semaphore Throttler, jittered exponential backoff, static emergency bypass snapshots, draft leakage guards, and Upstash Redis edge rate limiting.
-- **Live URL:** https://vivekonpoint.com
-- **Code Repository:** https://github.com/AmanSuryavanshi-1/Vivek-OnPoint-Web
-- **Case Study:** https://amansuryavanshi.com/projects#vivek-onpoint-platform
+- **Case Study:** https://amansuryavanshi.com/docs/creator-intelligence-platform/executive-summary
+- **Technical Specs:** https://amansuryavanshi.com/docs/creator-intelligence-platform/technical-documentation
 
 ### 3. notebooklm-py (16.5k★) — Core Architecture PR #276
 - **Role:** Core Open-Source Contributor
 - **Impact:** Merged into core repository (+1,483 / -353 lines) in Google NotebookLM's leading Python API (16.5k+ GitHub stars).
 - **Technical Contribution:** Authored domain-preserving `httpx.Cookies` cookie jar architecture (`build_cookie_jar`), `DomainCookieMap`, atomic storage persistence (`tempfile` + `chmod 0o600`), and resolved Windows asyncio `ProactorEventLoop` policies preventing subprocess/RPC transport crashes.
-- **Pull Request:** https://github.com/tomaarsen/notebooklm-py/pull/276
+- **Pull Request:** https://github.com/teng-lin/notebooklm-py/pull/276
 - **Commit Receipt:** https://github.com/AmanSuryavanshi-1/notebooklm-py/commit/5c3f325391eef248b94b885972e032212be009ca
 
 ### 4. OmniPost-Core: Autonomous Content Engine
 - **Role:** Systems & Automation Architect
 - **Impact:** 122 n8n nodes orchestrated with zero-loss Dead-Letter Queue (DLQ) retry architecture, 100% elimination of manual cross-posting, 300 DPI automated LinkedIn carousels, $0/month operational costs.
 - **Technical Stack:** 122-Node n8n workflows, FastMCP (:3010) streaming gateway indexing Obsidian Second Brain, FastAPI bridge (:3012) connecting Google NotebookLM, 5-layer adversarial anti-slop linter, headless Playwright carousel compiler.
-- **Code Repository:** https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/tree/main/Omni-Post-AI-Automation
-- **Documentation:** https://amansuryavanshi.com/docs/projects/personal/omnipost/01-executive-summary
+- **Documentation:** https://amansuryavanshi.com/docs/omnipost/01-executive-summary
 
 ## Core Technical Competencies
 - **Workflow & Automation:** n8n (122 Nodes, Self-Hosted, DLQs), FastMCP (:3010), LangGraph, CrewAI, Webhooks, OAuth2.

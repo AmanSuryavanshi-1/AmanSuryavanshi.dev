@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import Link from "next/link";
+import { Home, FolderOpen, ChevronRight } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
 import ProjectCard from "@/components/projects/ProjectCard";
 import ProjectsFilter from "@/components/projects/ProjectsFilter";
@@ -12,9 +14,9 @@ import Lightbox from "@/components/ui/Lightbox";
 // Custom project order priority
 const PROJECT_ORDER: Record<string, number> = {
     "aviators-training-centre": 1,
-    "vivek-onpoint-platform": 2,
-    "notebooklm-py-pr276": 3,
-    "n8n-automation-suite": 4,
+    "omnipost-core": 2,
+    "creator-intelligence-platform": 3,
+    "notebooklm-py-pr276": 4,
     "n8n-github-backup": 5,
     "dental-ai-automation": 6,
     "barkat-enterprise": 7,
@@ -93,6 +95,27 @@ export default function ProjectsPage() {
             <Lightbox />
             <main className="min-h-screen bg-[#D3E6BB] dark:bg-[#0a1f15] text-forest-900 dark:text-sage-100 pt-24 pb-20 transition-colors duration-300">
                 <div className="container mx-auto px-4">
+
+                    {/* Visual Breadcrumbs */}
+                    <div className="mb-6 flex justify-center sm:justify-start">
+                        <nav aria-label="Breadcrumb">
+                            <ol className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-forest-700 dark:text-sage-300 bg-white/50 dark:bg-[#162c22]/80 backdrop-blur-md px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-forest-100/50 dark:border-white/10 shadow-sm dark:shadow-black/20">
+                                <li className="inline-flex items-center">
+                                    <Link href="/" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors flex items-center gap-1 group">
+                                        <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:scale-110 transition-transform" aria-hidden="true" />
+                                        <span className="sr-only">Home</span>
+                                    </Link>
+                                </li>
+                                <li className="inline-flex items-center gap-1.5 sm:gap-2" aria-current="page">
+                                    <ChevronRight className="w-3.5 h-3.5 text-forest-300 dark:text-sage-500" aria-hidden="true" />
+                                    <span className="text-forest-900 dark:text-sage-100 font-semibold flex items-center gap-1.5">
+                                        <FolderOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-lime-600 dark:text-lime-400 shrink-0" aria-hidden="true" />
+                                        <span>Projects</span>
+                                    </span>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
 
                     {/* Page Header */}
                     <div className="text-center mb-16 space-y-4">

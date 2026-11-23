@@ -1,4 +1,4 @@
----
+﻿---
 title: 06. API and Infrastructure
 seoDescription: >-
   Robust serverless Next.js API & infrastructure powering OmniPost AI. Learn how
@@ -9,7 +9,7 @@ keywords:
   - Next.js
   - Agentic AI
   - OmniPost
-projectId: n8n-automation-suite
+projectId: omnipost-core
 type: series
 schemaType: TechArticle
 ---

@@ -1,4 +1,4 @@
----
+﻿---
 title: 04. Platform Integrations
 seoDescription: >-
   Seamless multi-platform integrations in OmniPost AI. Discover how n8n
@@ -10,7 +10,7 @@ keywords:
   - Next.js
   - Agentic AI
   - OmniPost
-projectId: n8n-automation-suite
+projectId: omnipost-core
 type: series
 schemaType: TechArticle
 ---

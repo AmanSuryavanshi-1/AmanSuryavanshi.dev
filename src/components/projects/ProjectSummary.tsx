@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Project } from "@/data/portfolio";
 import { ArrowUpRight, Code2, Lightbulb, Rocket, Target, Layers, Zap, FileJson } from "lucide-react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface ProjectSummaryProps {
     project: Project;
@@ -135,14 +136,14 @@ export default function ProjectSummary({ project }: ProjectSummaryProps) {
 
                         {/* Project Gallery (Placeholder for Carousel) */}
                         <div className="bg-white p-4 rounded-[2rem] border border-forest-100 shadow-sm overflow-hidden">
-                            <div className="relative w-full aspect-video rounded-3xl overflow-hidden">
+                            <div className="relative w-full aspect-video rounded-3xl overflow-hidden bg-forest-950">
                                 <Image
                                     src={project.imageUrl || project.image || "/placeholder.png"}
                                     alt={`${project.title} Gallery`}
                                     fill
                                     className="object-cover hover:scale-105 transition-transform duration-700"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-forest-900/50 to-transparent flex items-end p-8">
+                                <div className="absolute inset-0 z-20 bg-gradient-to-t from-forest-900/50 to-transparent flex items-end p-8 pointer-events-none">
                                     <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full text-sm font-medium">
                                         Project Gallery
                                     </div>

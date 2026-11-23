@@ -2222,6 +2222,6 @@ This project showcases full-stack development expertise, automation mastery, and
 
 ---
 
-**Contact:** [amansurya.work@gmail.com] | **Portfolio:** [https://amansuryavanshi.com/] | **GitHub:** [https://github.com/AmanSuryavanshi-1]
+**Contact:** [amansurya.work@gmail.com](mailto:amansurya.work@gmail.com) | **Portfolio:** [https://amansuryavanshi.com/](https://amansuryavanshi.com/) | **GitHub:** [https://github.com/AmanSuryavanshi-1](https://github.com/AmanSuryavanshi-1)
 
 *Last Updated: January 12, 2026*

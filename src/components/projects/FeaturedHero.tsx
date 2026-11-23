@@ -279,12 +279,12 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
                                             d.title.toLowerCase().includes('executive')
                                         );
                                         return summaryDoc?.url ? (
-                                            <Link href={summaryDoc.url}>
-                                                <Button className="h-8 sm:h-9 lg:h-10 px-2 sm:px-3 lg:px-4 rounded-full bg-white text-forest-900 font-semibold shadow-lg transition-all hover:bg-forest-100 hover:text-forest-950 hover:scale-105 hover:shadow-xl text-[10px] sm:text-xs lg:text-sm" title="Executive Summary">
+                                            <Button asChild className="h-8 sm:h-9 lg:h-10 px-2 sm:px-3 lg:px-4 rounded-full bg-white text-forest-900 font-semibold shadow-lg transition-all hover:bg-forest-100 hover:text-forest-950 hover:scale-105 hover:shadow-xl text-[10px] sm:text-xs lg:text-sm" title="Executive Summary">
+                                                <Link href={summaryDoc.url}>
                                                     <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1 lg:mr-1.5" />
                                                     <span className="hidden sm:inline">Summary</span>
-                                                </Button>
-                                            </Link>
+                                                </Link>
+                                            </Button>
                                         ) : null;
                                     })()}
                                     {/* Technical Docs - find by title containing 'technical', 'architecture' or 'documentation' */}
@@ -295,26 +295,30 @@ export default function FeaturedHero({ projects, activeIndex, virtualIndex, onVi
                                             (d.title.toLowerCase().includes('documentation') && !d.title.toLowerCase().includes('summary'))
                                         );
                                         return techDoc?.url ? (
-                                            <Link href={techDoc.url}>
-                                                <Button variant="outline" className="h-8 sm:h-9 lg:h-10 px-2 sm:px-3 lg:px-4 rounded-full border-white/50 bg-white/10 text-white hover:bg-white hover:text-forest-900 font-medium backdrop-blur-md shadow-lg transition-all hover:scale-105 text-[10px] sm:text-xs lg:text-sm" title="Technical Documentation">
+                                            <Button asChild variant="outline" className="h-8 sm:h-9 lg:h-10 px-2 sm:px-3 lg:px-4 rounded-full border-white/50 bg-white/10 text-white hover:bg-white hover:text-forest-900 font-medium backdrop-blur-md shadow-lg transition-all hover:scale-105 text-[10px] sm:text-xs lg:text-sm" title="Technical Documentation">
+                                                <Link href={techDoc.url}>
                                                     <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1 lg:mr-1.5" />
                                                     <span className="hidden xl:inline">Technical Docs</span>
                                                     <span className="hidden sm:inline xl:hidden">Docs</span>
-                                                </Button>
-                                            </Link>
+                                                </Link>
+                                            </Button>
                                         ) : null;
                                     })()}
                                     {/* Icon buttons - Live & GitHub */}
-                                    <Link href={activeProject.links.live} target="_blank">
-                                        <Button variant="outline" className="h-8 w-8 sm:h-9 sm:w-9 lg:h-10 lg:w-10 rounded-full border-white/40 bg-white/10 hover:bg-white hover:text-forest-900 text-white backdrop-blur-md transition-all hover:scale-110 p-0">
-                                            <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                    {Boolean(activeProject.links.live) && (
+                                        <Button asChild variant="outline" className="h-8 w-8 sm:h-9 sm:w-9 lg:h-10 lg:w-10 rounded-full border-white/40 bg-white/10 hover:bg-white hover:text-forest-900 text-white backdrop-blur-md transition-all hover:scale-110 p-0">
+                                            <Link href={activeProject.links.live!} target="_blank">
+                                                <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                            </Link>
                                         </Button>
-                                    </Link>
-                                    <Link href={activeProject.links.github} target="_blank">
-                                        <Button variant="outline" className="h-8 w-8 sm:h-9 sm:w-9 lg:h-10 lg:w-10 rounded-full border-white/40 bg-white/10 hover:bg-white hover:text-forest-900 text-white backdrop-blur-md transition-all hover:scale-110 p-0">
-                                            <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                    )}
+                                    {Boolean(activeProject.links.github) && (
+                                        <Button asChild variant="outline" className="h-8 w-8 sm:h-9 sm:w-9 lg:h-10 lg:w-10 rounded-full border-white/40 bg-white/10 hover:bg-white hover:text-forest-900 text-white backdrop-blur-md transition-all hover:scale-110 p-0">
+                                            <Link href={activeProject.links.github!} target="_blank">
+                                                <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                                            </Link>
                                         </Button>
-                                    </Link>
+                                    )}
                                 </div>
 
                                 {/* Navigation - Compact pill */}

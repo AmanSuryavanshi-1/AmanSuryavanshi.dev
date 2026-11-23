@@ -1,9 +1,10 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { getAllDocs, getDocBySlug, getDocsByProjectId } from '@/lib/docs-engine';
+import { getAllDocs, getCanonicalDocSlug, getDocBySlug, getDocsByProjectId } from '@/lib/docs-engine';
 import { portfolioData } from '@/data/portfolio';
 import DocPageClient from '@/components/docs/DocPageClient';
 import { Metadata } from 'next';
+import { buildDocBreadcrumbJsonLd, SITE_URL } from '@/lib/breadcrumb-utils';
 
 interface PageProps {
     params: Promise<{
@@ -13,9 +14,27 @@ interface PageProps {
 
 export async function generateStaticParams() {
     const docs = getAllDocs();
-    return docs.map((doc) => ({
-        slug: doc.slug,
-    }));
+    const params: { slug: string[] }[] = [];
+
+    docs.forEach(doc => {
+        // Physical full slug (e.g. ['projects', 'clientele', 'aviators-training-centre', 'executive-summary'])
+        params.push({ slug: doc.slug });
+
+        // Short clean slug (e.g. ['aviators-training-centre', 'executive-summary'])
+        const projectSlug = doc.meta.projectId || (doc.slug.length >= 2 ? doc.slug[doc.slug.length - 2] : '');
+        const docSlug = doc.slug[doc.slug.length - 1];
+        if (projectSlug && docSlug) {
+            params.push({ slug: [projectSlug, docSlug] });
+        }
+    });
+
+    const seen = new Set<string>();
+    return params.filter(p => {
+        const key = p.slug.join('/');
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+    });
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -29,6 +48,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
 
     const { meta } = doc;
+    const canonicalSlug = getCanonicalDocSlug(doc);
+    const canonicalUrl = `${SITE_URL}/docs/${canonicalSlug.join('/')}`;
     const project = portfolioData.projects.find(p => p.id === meta.projectId);
     const projectImage = project?.imageUrl || project?.image || '/og-image.png';
 
@@ -36,17 +57,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title: `${meta.title} | Aman Suryavanshi`,
         description: meta.seoDescription,
         keywords: meta.keywords || ['Aman Suryavanshi', 'Documentation', 'Portfolio'],
-        authors: [{ name: 'Aman Suryavanshi', url: 'https://amansuryavanshi.com' }],
+        authors: [{ name: 'Aman Suryavanshi', url: SITE_URL }],
         creator: 'Aman Suryavanshi',
         alternates: {
-            canonical: `https://amansuryavanshi.com/docs/${slug.join('/')}`,
+            canonical: canonicalUrl,
         },
         openGraph: {
             title: meta.title,
             description: meta.seoDescription,
             type: 'article',
             authors: ['Aman Suryavanshi — AI Workflow Architect'],
-            url: `https://amansuryavanshi.com/docs/${slug.join('/')}`,
+            url: canonicalUrl,
             siteName: 'Aman Suryavanshi Portfolio',
             locale: 'en_US',
             images: [{
@@ -89,44 +110,72 @@ export default async function DocsPage({ params }: PageProps) {
         return <div>Project not found for document</div>;
     }
 
-    const { technologies, ...serializableProject } = project;
+    const { technologies: _technologies, ...serializableProject } = project;
+
+    const canonicalSlug = getCanonicalDocSlug(doc);
+    const canonicalUrl = `${SITE_URL}/docs/${canonicalSlug.join('/')}`;
+    const projectShortTitle = serializableProject.title.split(':')[0].trim();
+    const docCleanTitle = meta.title.replace(/^\d+\.\s*/, '');
+    const isTechnicalDoc = slug.join('-').includes('technical') || meta.title.toLowerCase().includes('technical');
+    const docCategory = meta.type === 'series'
+        ? 'Series Documentation'
+        : (isTechnicalDoc || meta.type === 'technical-documentation')
+            ? 'Technical Documentation'
+            : 'Executive Summary';
 
     // Build the specific JSON-LD schemas
-    const jsonLd: any = {
+    const jsonLd: Record<string, unknown> = {
         "@context": "https://schema.org",
         "@type": meta.schemaType || 'Article',
         "name": meta.title,
         "headline": meta.title,
         "description": meta.seoDescription,
-        "author": { "@type": "Person", "name": "Aman Suryavanshi", "url": "https://amansuryavanshi.com" },
+        "author": { "@type": "Person", "name": "Aman Suryavanshi", "url": SITE_URL },
         "publisher": { 
             "@type": "Organization", 
             "name": "Aman Suryavanshi Portfolio",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://amansuryavanshi.com/Profile/Logo.webp"
+                "url": `${SITE_URL}/Profile/Logo.webp`
             }
         },
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": `https://amansuryavanshi.com/docs/${slug.join('/')}`
+            "@id": canonicalUrl
         }
     };
 
-    // If it's a series like OmniPost, we need to pass `multiDocs` for the sidebar.
-    let multiDocs: { id: string; title: string }[] | undefined;
-    if (meta.type === 'series') {
-        const seriesDocs = getDocsByProjectId(meta.projectId);
-        multiDocs = seriesDocs.map(d => ({
-            id: d.slug[d.slug.length - 1], // Just the final filename segment like "01-executive-summary"
-            title: d.meta.title
-        }));
+    // Google Search Central compliant BreadcrumbList schema (1-indexed, canonical URLs, no fragment #)
+    const breadcrumbJsonLd = buildDocBreadcrumbJsonLd({
+        projectShortTitle,
+        docTitle: meta.title,
+        slug: canonicalSlug
+    });
+
+    // Populate multiDocs for all projects with multiple documentation files
+    const projectDocs = getDocsByProjectId(meta.projectId);
+    let multiDocs: { id: string; title: string; href: string }[] | undefined;
+    if (projectDocs.length > 1) {
+        multiDocs = projectDocs.map(d => {
+            let label = d.meta.title;
+            if (d.meta.type === 'series') {
+                label = d.meta.title.replace(/^\d+\.\s*/, '');
+            } else if (d.slug[d.slug.length - 1].includes('technical') || d.meta.type === 'technical-documentation') {
+                label = 'Technical Documentation';
+            } else if (d.slug[d.slug.length - 1].includes('executive') || d.meta.type === 'executive-summary') {
+                label = 'Executive Summary';
+            }
+            return {
+                id: d.slug[d.slug.length - 1],
+                title: label,
+                href: `/docs/${getCanonicalDocSlug(d).join('/')}`
+            };
+        });
     }
 
-    // Overwrite the title and tagline for series docs (like OmniPost) so the header renders nicely
-    const displayProject = {
+    // Keep project.title as the genuine project entity; use meta.seoDescription for series tagline
+    const displayProject: Omit<typeof project, 'technologies'> = {
         ...serializableProject,
-        title: meta.type === 'series' ? meta.title : serializableProject.title,
         tagLine: meta.type === 'series' ? meta.seoDescription : serializableProject.tagLine
     };
 
@@ -134,14 +183,23 @@ export default async function DocsPage({ params }: PageProps) {
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, '\\u003c') }}
             />
             <DocPageClient 
-                project={displayProject as any} 
+                project={displayProject} 
                 content={content} 
                 slug={slug.join('-')} 
                 multiDocs={multiDocs}
                 currentDocId={slug[slug.length - 1]}
+                docTitle={meta.title}
+                docCleanTitle={docCleanTitle}
+                projectShortTitle={projectShortTitle}
+                docCategory={docCategory}
+                docType={meta.type}
             />
         </>
     );

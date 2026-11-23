@@ -29,24 +29,41 @@ import CustomVideoPlayer from '@/components/ui/CustomVideoPlayer';
 import { cn } from '@/lib/utils';
 
 interface DocPageClientProps {
-    project: Project;
+    project: Omit<Project, 'technologies'>;
     content: string;
     slug: string;
-    multiDocs?: { id: string; title: string }[];
+    multiDocs?: { id: string; title: string; href?: string }[];
     currentDocId?: string;
+    docTitle?: string;
+    docCleanTitle?: string;
+    projectShortTitle?: string;
+    docCategory?: string;
+    docType?: string;
 }
 
-const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, multiDocs, currentDocId }) => {
+const DocPageClient: React.FC<DocPageClientProps> = ({ 
+    project, 
+    content, 
+    slug, 
+    multiDocs, 
+    currentDocId,
+    docTitle,
+    docCleanTitle,
+    projectShortTitle,
+    docCategory,
+    docType: docTypeProp
+}) => {
     const [activeHeading, setActiveHeading] = useState<string>('');
     const [readingTime, setReadingTime] = useState(0);
     const [tocItems, setTocItems] = useState<{ id: string; text: string; level: number }[]>([]);
     const [isMobileTocOpen, setIsMobileTocOpen] = useState(false);
     const [headerImage, setHeaderImage] = useState<string | null>(null);
 
-    // Determine doc type
-    const isTechnicalDoc = slug.includes('technical');
-    const docType = isTechnicalDoc ? 'Technical Documentation' : 'Executive Summary';
-    const DocIcon = isTechnicalDoc ? Activity : FileText;
+    // Determine doc type & semantic icons
+    const isTechnicalDoc = slug.includes('technical') || (docTitle && docTitle.toLowerCase().includes('technical'));
+    const isSeries = docTypeProp === 'series' || (multiDocs && multiDocs.length > 0);
+    const displayDocType = docCategory || (isSeries ? 'Series Documentation' : (isTechnicalDoc ? 'Technical Documentation' : 'Executive Summary'));
+    const DocIcon = isSeries ? Layers : (isTechnicalDoc ? Activity : FileText);
 
     // Extract first image from markdown content for header background
     // Priority: 1. project.imageUrl (from portfolio.tsx) 
@@ -106,10 +123,11 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
 
     // Generate TOC with delay for DOM readiness
     useEffect(() => {
+        let observer: IntersectionObserver | null = null;
+
         const timer = setTimeout(() => {
             const contentContainer = document.querySelector('.markdown-content');
             if (!contentContainer) {
-                console.warn('TOC: markdown-content container not found');
                 return;
             }
 
@@ -130,10 +148,9 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
             });
 
             setTocItems(items);
-            console.log('TOC: Generated', items.length, 'items from existing headings');
 
             // Scroll spy
-            const observer = new IntersectionObserver(
+            observer = new IntersectionObserver(
                 (entries) => {
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {
@@ -144,16 +161,17 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                 { rootMargin: '-100px 0px -60% 0px' }
             );
 
-            headings.forEach((h) => observer.observe(h));
-            return () => observer.disconnect();
+            headings.forEach((h) => observer?.observe(h));
         }, 500); // Delay for DOM readiness
 
-        return () => clearTimeout(timer);
+        return () => {
+            clearTimeout(timer);
+            observer?.disconnect();
+        };
     }, [content]);
 
 
     const scrollToHeading = (id: string) => {
-        console.log('TOC: Scrolling to', id);
         const element = document.getElementById(id);
         if (element) {
             const offset = 100;
@@ -164,8 +182,6 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
             });
             setActiveHeading(id);
             setIsMobileTocOpen(false);
-        } else {
-            console.warn('TOC: Element not found for id', id);
         }
     };
 
@@ -175,28 +191,39 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
             <Lightbox />
             {/* Main Section - Matches BlogList: bg-sage-50 */}
             <section className="py-12 sm:py-16 bg-[#D3E6BB] dark:bg-[#0a1f15] min-h-screen transition-colors duration-300">
-                <div className="container mx-auto px-2 sm:px-4 lg:px-6">
+                <div className="max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
 
-                    {/* Breadcrumb - Enhanced with icons and glass effect */}
-                    <div className="mb-8">
-                        <div className="inline-flex items-center gap-2 text-sm text-forest-700 dark:text-sage-300 bg-white/50 dark:bg-[#162c22]/80 backdrop-blur-md px-4 py-2 rounded-full border border-forest-100/50 dark:border-white/10 shadow-sm dark:shadow-black/20">
-                            <Link href="/" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors flex items-center gap-1 group">
-                                <Home className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                            </Link>
-                            <ChevronRight className="w-3.5 h-3.5 text-forest-300 dark:text-sage-500" />
-                            <Link href="/#projects" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors flex items-center gap-1 font-medium">
-                                <FolderOpen className="w-4 h-4" />
-                                <span>Projects</span>
-                            </Link>
-                            <ChevronRight className="w-3.5 h-3.5 text-forest-300 dark:text-sage-500" />
-                            <span className="text-forest-900 dark:text-sage-100 font-semibold truncate max-w-[200px]">{project.title}</span>
-                            <ChevronRight className="w-3.5 h-3.5 text-forest-300 dark:text-sage-500" />
-                            <span className="text-forest-600 dark:text-sage-400 flex items-center gap-1.5">
-                                <DocIcon className="w-4 h-4 text-lime-600 dark:text-lime-400" />
-                                {docType}
-                            </span>
-                        </div>
-                    </div>
+                    {/* Breadcrumb - Semantic W3C WAI-ARIA pattern & WCAG 2.2 AA */}
+                    <nav aria-label="Breadcrumb" className="mb-8">
+                        <ol className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-forest-700 dark:text-sage-300 bg-white/50 dark:bg-[#162c22]/80 backdrop-blur-md px-3 sm:px-4 py-2 rounded-full border border-forest-100/50 dark:border-white/10 shadow-sm dark:shadow-black/20">
+                            <li className="inline-flex items-center">
+                                <Link href="/" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors flex items-center gap-1 group">
+                                    <Home className="w-4 h-4 group-hover:scale-110 transition-transform" aria-hidden="true" />
+                                    <span className="sr-only">Home</span>
+                                </Link>
+                            </li>
+                            <li className="inline-flex items-center gap-1.5 sm:gap-2">
+                                <ChevronRight className="w-3.5 h-3.5 text-forest-300 dark:text-sage-500" aria-hidden="true" />
+                                <Link href="/projects" className="hover:text-lime-600 dark:hover:text-lime-400 transition-colors flex items-center gap-1 font-medium">
+                                    <FolderOpen className="w-4 h-4" aria-hidden="true" />
+                                    <span>Projects</span>
+                                </Link>
+                            </li>
+                            <li className="inline-flex items-center gap-1.5 sm:gap-2">
+                                <ChevronRight className="w-3.5 h-3.5 text-forest-300 dark:text-sage-500" aria-hidden="true" />
+                                <Link href={`/projects#${project.id}`} className="text-forest-800 dark:text-sage-200 hover:text-lime-600 dark:hover:text-lime-400 transition-colors font-medium truncate max-w-[140px] sm:max-w-[200px]">
+                                    {projectShortTitle || project.title.split(':')[0].trim()}
+                                </Link>
+                            </li>
+                            <li className="inline-flex items-center gap-1.5 sm:gap-2" aria-current="page">
+                                <ChevronRight className="w-3.5 h-3.5 text-forest-300 dark:text-sage-500" aria-hidden="true" />
+                                <span className="text-forest-900 dark:text-sage-100 font-semibold flex items-center gap-1.5 truncate max-w-[160px] sm:max-w-[260px]">
+                                    <DocIcon className="w-4 h-4 text-lime-600 dark:text-lime-400 shrink-0" aria-hidden="true" />
+                                    <span className="truncate">{docCleanTitle || docTitle || displayDocType}</span>
+                                </span>
+                            </li>
+                        </ol>
+                    </nav>
 
                     {/* Header Section - Premium Hero Design */}
                     <div className="mb-8 relative overflow-hidden rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(34,58,34,0.15)] group">
@@ -229,11 +256,11 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                             {/* Top Meta Badges */}
                             <div className="flex flex-wrap items-center gap-3 mb-6">
                                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-lime-500/10 border border-lime-500/20 text-lime-300 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
-                                    <DocIcon className="w-3.5 h-3.5" />
-                                    {docType}
+                                    <DocIcon className="w-3.5 h-3.5" aria-hidden="true" />
+                                    {displayDocType}
                                 </span>
                                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white/80 text-xs font-medium backdrop-blur-md">
-                                    <Clock className="w-3.5 h-3.5" />
+                                    <Clock className="w-3.5 h-3.5" aria-hidden="true" />
                                     {readingTime} min read
                                 </span>
                             </div>
@@ -242,7 +269,7 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                             <div className="max-w-4xl space-y-4">
                                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-white leading-[1.1] tracking-tight drop-shadow-sm">
                                     <span className="bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
-                                        {project.title}
+                                        {isSeries ? (docTitle || project.title) : project.title}
                                     </span>
                                 </h1>
                                 <p className="text-base sm:text-lg lg:text-xl text-forest-100/90 font-light leading-relaxed max-w-2xl border-l-2 border-lime-500/50 pl-4">
@@ -263,7 +290,7 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                                     </a>
                                 )}
                                 <Link
-                                    href="/#projects"
+                                    href="/projects"
                                     className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-medium text-sm sm:text-base rounded-full transition-all backdrop-blur-md border border-white/10 hover:border-white/20"
                                 >
                                     <ArrowLeft className="w-4 h-4" /> Back to Projects
@@ -272,58 +299,35 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                         </motion.div>
                     </div>
 
-                    {/* Main Grid Layout - Refined percentages for wider content using FR units */}
-                    <div className="lg:grid lg:grid-cols-[20fr_60fr_20fr] lg:gap-6">
+                    {/* Main Grid Layout - Refined percentages for wider content with optimal column widths */}
+                    <div className="lg:grid lg:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[280px_minmax(0,1fr)_250px] lg:gap-6 xl:gap-8">
 
-                        {/* LEFT SIDEBAR - Document Meta */}
+                        {/* LEFT SIDEBAR - Document Navigation & Tech Stack */}
                         <aside className="hidden lg:block">
-                            <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto space-y-6">
+                            <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto space-y-5 custom-scrollbar dark-scrollbar pr-1">
 
-                                {/* Document Info Card */}
-                                <div className="bg-white dark:bg-[#162c22] rounded-2xl p-5 border border-forest-100 dark:border-white/10 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] sticky-card">
-                                    <div className="flex items-center gap-3 mb-5">
-                                        <div className="w-10 h-10 rounded-xl bg-forest-50 dark:bg-lime-500/10 flex items-center justify-center text-forest-900 dark:text-lime-400 shrink-0">
-                                            <DocIcon className="w-5 h-5 text-lime-600 dark:text-lime-400" />
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-bold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-0.5">Document Type</p>
-                                            <p className="text-sm font-bold text-forest-900 dark:text-sage-100 leading-tight">{docType}</p>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-3 pt-4 border-t border-forest-100 dark:border-forest-600">
-                                        <div className="flex items-center gap-3 text-sm text-forest-600 dark:text-sage-300 bg-forest-50/50 dark:bg-forest-800/50 p-2.5 rounded-lg">
-                                            <Clock className="w-4 h-4 text-lime-600 dark:text-lime-400" />
-                                            <span><strong>{readingTime} min</strong> read time</span>
-                                        </div>
-                                        <div className="flex items-center gap-3 text-sm text-forest-600 dark:text-sage-300 bg-forest-50/50 dark:bg-forest-800/50 p-2.5 rounded-lg">
-                                            <Calendar className="w-4 h-4 text-lime-600 dark:text-lime-400" />
-                                            <span>Updated <strong>Dec 2025</strong></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Multi-Page Navigation Menu */}
-                                {multiDocs && multiDocs.length > 0 && (
-                                    <div className="bg-white dark:bg-[#162c22] rounded-2xl p-5 border border-forest-100 dark:border-white/10 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+                                {/* Multi-Page Navigation Menu (Primary when multiple docs exist) */}
+                                {multiDocs && multiDocs.length > 0 ? (
+                                    <div className="bg-white dark:bg-[#162c22] rounded-2xl p-4 sm:p-5 border border-forest-100 dark:border-white/10 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
                                         <h4 className="text-xs font-bold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-3 flex items-center gap-2">
                                             <Layers className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                                             Documentation
                                         </h4>
-                                        <nav className="flex flex-col gap-1">
+                                        <nav className="flex flex-col gap-1.5">
                                             {multiDocs.map((doc) => {
                                                 const isActive = doc.id === currentDocId;
                                                 const cleanTitle = doc.title.replace(/^\d+\.\s*/, '');
                                                 return (
                                                     <Link
                                                         key={doc.id}
-                                                        href={`/docs/omnipost/${doc.id}`}
+                                                        href={doc.href || `/docs/${project.id}/${doc.id}`}
                                                         className={cn(
-                                                            "text-sm py-2 px-3 rounded-lg transition-all duration-200 line-clamp-1",
+                                                            "text-xs sm:text-sm py-2 px-3 rounded-xl transition-all duration-200 line-clamp-2 leading-snug border-l-2",
                                                             isActive
-                                                                ? "bg-lime-50 dark:bg-lime-500/10 text-forest-900 dark:text-lime-300 font-medium border border-lime-500/20"
-                                                                : "text-forest-600 dark:text-sage-300 hover:text-forest-900 dark:hover:text-white hover:bg-forest-50 dark:hover:bg-forest-800/50 border border-transparent"
+                                                                ? "border-l-lime-500 bg-lime-50 dark:bg-lime-500/15 text-forest-900 dark:text-lime-300 font-semibold shadow-sm"
+                                                                : "border-l-transparent text-forest-600 dark:text-sage-300 hover:text-forest-900 dark:hover:text-white hover:bg-forest-50 dark:hover:bg-forest-800/50"
                                                         )}
+                                                        title={cleanTitle}
                                                     >
                                                         {cleanTitle}
                                                     </Link>
@@ -331,12 +335,35 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                                             })}
                                         </nav>
                                     </div>
+                                ) : (
+                                    /* Single Doc Meta Card (Fallback only when no multi-doc navigation exists) */
+                                    <div className="bg-white dark:bg-[#162c22] rounded-2xl p-5 border border-forest-100 dark:border-white/10 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+                                        <div className="flex items-center gap-3 mb-5">
+                                            <div className="w-10 h-10 rounded-xl bg-forest-50 dark:bg-lime-500/10 flex items-center justify-center text-forest-900 dark:text-lime-400 shrink-0">
+                                                <DocIcon className="w-5 h-5 text-lime-600 dark:text-lime-400" aria-hidden="true" />
+                                            </div>
+                                            <div>
+                                                <p className="text-[10px] font-bold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-0.5">Document Type</p>
+                                                <p className="text-sm font-bold text-forest-900 dark:text-sage-100 leading-tight">{displayDocType}</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-3 pt-4 border-t border-forest-100 dark:border-forest-600">
+                                            <div className="flex items-center gap-3 text-sm text-forest-600 dark:text-sage-300 bg-forest-50/50 dark:bg-forest-800/50 p-2.5 rounded-lg">
+                                                <Clock className="w-4 h-4 text-lime-600 dark:text-lime-400" />
+                                                <span><strong>{readingTime} min</strong> read time</span>
+                                            </div>
+                                            <div className="flex items-center gap-3 text-sm text-forest-600 dark:text-sage-300 bg-forest-50/50 dark:bg-forest-800/50 p-2.5 rounded-lg">
+                                                <Calendar className="w-4 h-4 text-lime-600 dark:text-lime-400" />
+                                                <span>Status <strong>Production</strong></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 )}
 
-                                {/* Tech Stack - Match homepage badges */}
                                 {/* Tech Stack */}
                                 {project.techStack && project.techStack.length > 0 && (
-                                    <div className="bg-white dark:bg-[#162c22] rounded-2xl p-5 border border-forest-100 dark:border-white/10 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+                                    <div className="bg-white dark:bg-[#162c22] rounded-2xl p-4 sm:p-5 border border-forest-100 dark:border-white/10 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
                                         <h4 className="text-xs font-bold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-3 flex items-center gap-2">
                                             <Code2 className="w-4 h-4 text-lime-600 dark:text-lime-400" />
                                             Core Technologies
@@ -383,8 +410,8 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                                 </div>
                             )}
 
-                            {/* Content Card - Clean white background */}
-                            <div className="bg-white dark:bg-[#162c22] rounded-3xl p-8 sm:p-12 border border-forest-100 dark:border-white/10 shadow-[0_5px_30px_-10px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] markdown-content overflow-x-hidden min-h-[500px]">
+                            {/* Content Card - Clean white background with refined padding for comfortable reading */}
+                            <div className="bg-white dark:bg-[#162c22] rounded-3xl p-6 sm:p-8 lg:p-10 border border-forest-100 dark:border-white/10 shadow-[0_5px_30px_-10px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] markdown-content overflow-x-hidden min-h-[500px]">
                                 <MarkdownViewer content={content} />
                             </div>
 
@@ -400,7 +427,7 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                                             <>
                                                 {prevDoc ? (
                                                     <Link
-                                                        href={`/docs/omnipost/${prevDoc.id}`}
+                                                        href={prevDoc.href || `/docs/${project.id}/${prevDoc.id}`}
                                                         className="group block p-5 rounded-xl bg-white dark:bg-[#162c22] border border-forest-200/50 dark:border-white/10 hover:border-lime-400 dark:hover:border-lime-500/50 hover:shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all"
                                                     >
                                                         <div className="text-xs font-semibold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-1">Previous</div>
@@ -414,7 +441,7 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
 
                                                 {nextDoc ? (
                                                     <Link
-                                                        href={`/docs/omnipost/${nextDoc.id}`}
+                                                        href={nextDoc.href || `/docs/${project.id}/${nextDoc.id}`}
                                                         className="group block p-5 rounded-xl bg-white dark:bg-[#162c22] border border-forest-200/50 dark:border-white/10 hover:border-lime-400 dark:hover:border-lime-500/50 hover:shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all text-right"
                                                     >
                                                         <div className="text-xs font-semibold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-1">Next</div>
@@ -430,16 +457,16 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                                     }
 
                                     // Fallback to original layout for single-page documentation like other projects
-                                    const targetSlug = isTechnicalDoc
-                                        ? slug.replace('technical-documentation', 'executive-summary')
-                                        : slug.replace('executive-summary', 'technical-documentation');
-
-                                    const hasAlternateDoc = project.documentation?.some(doc => doc.url.includes(targetSlug));
+                                    const alternateDoc = project.documentation?.find(d =>
+                                        isTechnicalDoc
+                                            ? (d.title.toLowerCase().includes('summary') || d.title.toLowerCase().includes('executive'))
+                                            : (d.title.toLowerCase().includes('technical') || d.title.toLowerCase().includes('architecture') || (d.title.toLowerCase().includes('documentation') && !d.title.toLowerCase().includes('summary')))
+                                    );
 
                                     return (
                                         <>
                                             <Link
-                                                href="/#projects"
+                                                href="/projects"
                                                 className="group block p-5 rounded-xl bg-white dark:bg-[#162c22] border border-forest-200/50 dark:border-white/10 hover:border-lime-400 dark:hover:border-lime-500/50 hover:shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all"
                                             >
                                                 <div className="text-xs font-semibold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-1">Previous</div>
@@ -448,14 +475,14 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                                                 </div>
                                             </Link>
                                             <Link
-                                                href={hasAlternateDoc ? `/projects/${targetSlug}` : "/#projects"}
+                                                href={alternateDoc?.url || "/projects"}
                                                 className="group block p-5 rounded-xl bg-white dark:bg-[#162c22] border border-forest-200/50 dark:border-white/10 hover:border-lime-400 dark:hover:border-lime-500/50 hover:shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all text-right"
                                             >
                                                 <div className="text-xs font-semibold text-forest-500 dark:text-sage-400 uppercase tracking-wider mb-1">
-                                                    {hasAlternateDoc ? "Related" : "Explore"}
+                                                    {alternateDoc ? "Related" : "Explore"}
                                                 </div>
                                                 <div className="font-semibold text-forest-900 dark:text-sage-100 flex items-center justify-end gap-2 group-hover:text-lime-600 dark:group-hover:text-lime-400">
-                                                    {hasAlternateDoc
+                                                    {alternateDoc
                                                         ? (isTechnicalDoc ? 'Executive Summary' : 'Technical Docs')
                                                         : 'View More Projects'
                                                     }
@@ -469,7 +496,7 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                         </article>
 
                         {/* RIGHT SIDEBAR - Table of Contents */}
-                        <aside className="hidden lg:block">
+                        <aside className="hidden xl:block">
                             <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto">
                                 <div className="bg-white dark:bg-[#162c22] rounded-2xl p-6 border border-forest-100 dark:border-white/10 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
                                     <h5 className="text-xs font-bold text-forest-900 dark:text-sage-100 uppercase tracking-wider mb-4 flex items-center gap-2 px-2">
@@ -505,7 +532,7 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                 </div>
 
                 {/* Mobile TOC Button - Matches website button style */}
-                <div className="lg:hidden fixed bottom-6 right-6 z-40">
+                <div className="xl:hidden fixed bottom-6 right-6 z-40">
                     <button
                         onClick={() => setIsMobileTocOpen(!isMobileTocOpen)}
                         className="bg-forest-900 text-white p-4 rounded-full shadow-xl hover:bg-forest-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-forest-900"
@@ -522,7 +549,7 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="fixed inset-0 bg-black/30 z-40 lg:hidden backdrop-blur-sm"
+                                className="fixed inset-0 bg-black/30 z-40 xl:hidden backdrop-blur-sm"
                                 onClick={() => setIsMobileTocOpen(false)}
                             />
                             <motion.div
@@ -530,7 +557,7 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                                 animate={{ y: 0 }}
                                 exit={{ y: '100%' }}
                                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                                className="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 lg:hidden max-h-[75vh] overflow-hidden flex flex-col shadow-2xl border-t border-forest-200"
+                                className="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-50 xl:hidden max-h-[75vh] overflow-hidden flex flex-col shadow-2xl border-t border-forest-200"
                             >
                                 <div className="flex items-center justify-between p-4 border-b border-forest-100">
                                     <span className="font-semibold text-forest-900 flex items-center gap-2">
@@ -543,22 +570,52 @@ const DocPageClient: React.FC<DocPageClientProps> = ({ project, content, slug, m
                                         <X className="w-5 h-5" />
                                     </button>
                                 </div>
-                                <div className="overflow-y-auto p-4 space-y-1">
-                                    {tocItems.map((item) => (
-                                        <button
-                                            key={item.id}
-                                            onClick={() => scrollToHeading(item.id)}
-                                            className={`
-                                                block w-full text-left py-3 px-4 rounded-xl text-sm transition-all
-                                                ${item.level === 2 ? 'pl-6' : item.level === 3 ? 'pl-8' : ''}
-                                                ${activeHeading === item.id
-                                                    ? 'bg-forest-900 text-white font-medium'
-                                                    : 'text-forest-600 hover:bg-forest-50'}
-                                            `}
-                                        >
-                                            {item.text}
-                                        </button>
-                                    ))}
+                                <div className="overflow-y-auto p-4 space-y-4">
+                                    {multiDocs && multiDocs.length > 0 && (
+                                        <div className="pb-3 border-b border-forest-100">
+                                            <p className="text-[11px] font-bold text-forest-500 uppercase tracking-wider px-2 mb-2 flex items-center gap-1.5">
+                                                <Layers className="w-3.5 h-3.5 text-lime-600" /> Documentation
+                                            </p>
+                                            <div className="space-y-1">
+                                                {multiDocs.map((doc) => {
+                                                    const isActive = doc.id === currentDocId;
+                                                    const cleanTitle = doc.title.replace(/^\d+\.\s*/, '');
+                                                    return (
+                                                        <Link
+                                                            key={doc.id}
+                                                            href={doc.href || `/docs/${project.id}/${doc.id}`}
+                                                            onClick={() => setIsMobileTocOpen(false)}
+                                                            className={cn(
+                                                                "block py-2.5 px-3 rounded-xl text-sm transition-all",
+                                                                isActive
+                                                                    ? "bg-lime-50 text-forest-900 font-semibold border-l-2 border-l-lime-500"
+                                                                    : "text-forest-600 hover:bg-forest-50"
+                                                            )}
+                                                        >
+                                                            {cleanTitle}
+                                                        </Link>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div className="space-y-1">
+                                        {tocItems.map((item) => (
+                                            <button
+                                                key={item.id}
+                                                onClick={() => scrollToHeading(item.id)}
+                                                className={`
+                                                    block w-full text-left py-3 px-4 rounded-xl text-sm transition-all
+                                                    ${item.level === 2 ? 'pl-6' : item.level === 3 ? 'pl-8' : ''}
+                                                    ${activeHeading === item.id
+                                                        ? 'bg-forest-900 text-white font-medium'
+                                                        : 'text-forest-600 hover:bg-forest-50'}
+                                                `}
+                                            >
+                                                {item.text}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
                             </motion.div>
                         </>

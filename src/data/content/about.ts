@@ -81,15 +81,15 @@ export const aboutData: AboutData = {
                     project: 'Aviators Training Centre',
                     year: '2025',
                     metrics: ['#1 Google', '95+ Lighthouse', '110K+ Impressions', '₹300K Revenue'],
-                    url: '/projects/aviators-training-centre-executive-summary',
+                    url: '/docs/aviators-training-centre/executive-summary',
                     color: 'lime',
                 },
                 {
                     title: 'Next.js 16 + Headless Notion CMS 11-Layer Defense',
-                    project: 'Vivek OnPoint Platform',
+                    project: 'MacroPulse Creator Platform (1M+ Creator Scale)',
                     year: '2025',
                     metrics: ['8 Notion DBs', '0.67 req/s Limit', '99.9% Uptime', 'Zero Content Loss'],
-                    url: '/projects#vivek-onpoint-platform',
+                    url: '/projects#creator-intelligence-platform',
                     color: 'blue',
                 },
                 {
@@ -97,7 +97,7 @@ export const aboutData: AboutData = {
                     project: 'Google NotebookLM Client',
                     year: '2025',
                     metrics: ['16.5k+ Stars', '+1,483 / -353 Lines', '100% Asyncio Fix', 'Merged'],
-                    url: 'https://github.com/tomaarsen/notebooklm-py/pull/276',
+                    url: 'https://github.com/teng-lin/notebooklm-py/pull/276',
                     color: 'purple',
                 },
                 {
@@ -105,7 +105,7 @@ export const aboutData: AboutData = {
                     project: 'OmniPost-Core',
                     year: '2025',
                     metrics: ['122 Nodes', 'FastMCP :3010', 'Playwright 300 DPI', '$0/mo Stack'],
-                    url: '/projects#n8n-automation-suite',
+                    url: '/projects#omnipost-core',
                     color: 'amber',
                 },
             ]

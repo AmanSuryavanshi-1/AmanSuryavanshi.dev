@@ -166,12 +166,12 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
                                     d.title.toLowerCase().includes('executive')
                                 );
                                 return summaryDoc?.url ? (
-                                    <Link href={summaryDoc.url}>
-                                        <Button className="bg-lime-500 hover:bg-lime-400 text-forest-950 font-bold rounded-full px-2.5 sm:px-5 text-xs sm:text-sm whitespace-nowrap" title="Executive Summary">
+                                    <Button asChild className="bg-lime-500 hover:bg-lime-400 text-forest-950 font-bold rounded-full px-2.5 sm:px-5 text-xs sm:text-sm whitespace-nowrap" title="Executive Summary">
+                                        <Link href={summaryDoc.url}>
                                             <FileText className="w-4 h-4 sm:mr-1.5" />
                                             <span className="hidden sm:inline">Summary</span>
-                                        </Button>
-                                    </Link>
+                                        </Link>
+                                    </Button>
                                 ) : null;
                             })()}
                             {/* Technical Docs - find by title containing 'technical', 'architecture' or 'documentation' */}
@@ -182,26 +182,30 @@ function FeaturedCard({ project, index }: { project: Project; index: number }) {
                                     (d.title.toLowerCase().includes('documentation') && !d.title.toLowerCase().includes('summary'))
                                 );
                                 return techDoc?.url ? (
-                                    <Link href={techDoc.url}>
-                                        <Button variant="outline" className="border-sage-100/50 text-sage-100 hover:bg-sage-100/10 rounded-full px-2.5 sm:px-5 text-xs sm:text-sm whitespace-nowrap" title="Technical Documentation">
+                                    <Button asChild variant="outline" className="border-sage-100/50 text-sage-100 hover:bg-sage-100/10 rounded-full px-2.5 sm:px-5 text-xs sm:text-sm whitespace-nowrap" title="Technical Documentation">
+                                        <Link href={techDoc.url}>
                                             <BookOpen className="w-4 h-4 sm:mr-1.5" />
                                             <span className="hidden xl:inline">Technical Docs</span>
                                             <span className="hidden sm:inline xl:hidden">Docs</span>
-                                        </Button>
-                                    </Link>
+                                        </Link>
+                                    </Button>
                                 ) : null;
                             })()}
                             <div className="flex gap-1.5 sm:gap-2">
-                                <Link href={project.links.live} target="_blank">
-                                    <Button size="icon" variant="outline" className="rounded-full border-forest-600 bg-forest-950/30 hover:bg-lime-500 hover:text-forest-950 hover:border-lime-500 transition-colors w-8 h-8 sm:w-10 sm:h-10">
-                                        <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
+                                {Boolean(project.links.live) && (
+                                    <Button asChild size="icon" variant="outline" className="rounded-full border-forest-600 bg-forest-950/30 hover:bg-lime-500 hover:text-forest-950 hover:border-lime-500 transition-colors w-8 h-8 sm:w-10 sm:h-10">
+                                        <Link href={project.links.live!} target="_blank">
+                                            <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
+                                        </Link>
                                     </Button>
-                                </Link>
-                                <Link href={project.links.github} target="_blank">
-                                    <Button size="icon" variant="outline" className="rounded-full border-forest-600 bg-forest-950/30 hover:bg-lime-500 hover:text-forest-950 hover:border-lime-500 transition-colors w-8 h-8 sm:w-10 sm:h-10">
-                                        <Github className="w-4 h-4 sm:w-5 sm:h-5" />
+                                )}
+                                {Boolean(project.links.github) && (
+                                    <Button asChild size="icon" variant="outline" className="rounded-full border-forest-600 bg-forest-950/30 hover:bg-lime-500 hover:text-forest-950 hover:border-lime-500 transition-colors w-8 h-8 sm:w-10 sm:h-10">
+                                        <Link href={project.links.github!} target="_blank">
+                                            <Github className="w-4 h-4 sm:w-5 sm:h-5" />
+                                        </Link>
                                     </Button>
-                                </Link>
+                                )}
                             </div>
                         </div>
                     </div>

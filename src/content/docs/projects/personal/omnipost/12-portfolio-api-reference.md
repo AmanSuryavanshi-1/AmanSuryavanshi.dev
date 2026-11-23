@@ -1,4 +1,4 @@
----
+﻿---
 title: 12. Portfolio API Reference
 seoDescription: >-
   Complete API reference for Aman Suryavanshi's OmniPost Next.js system. Secure
@@ -9,7 +9,7 @@ keywords:
   - Next.js
   - Agentic AI
   - OmniPost
-projectId: n8n-automation-suite
+projectId: omnipost-core
 type: series
 schemaType: TechArticle
 ---

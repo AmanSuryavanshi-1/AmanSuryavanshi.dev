@@ -1,4 +1,4 @@
----
+﻿---
 title: 05. Developer Journal
 seoDescription: >-
   Aman Suryavanshi's technical diary on building OmniPost AI. Insights into
@@ -9,7 +9,7 @@ keywords:
   - Next.js
   - Agentic AI
   - OmniPost
-projectId: n8n-automation-suite
+projectId: omnipost-core
 type: series
 schemaType: TechArticle
 ---

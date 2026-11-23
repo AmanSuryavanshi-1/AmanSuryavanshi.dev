@@ -67,7 +67,32 @@ export function getDocBySlug(slugPath: string[]): Doc | null {
   const docs = getAllDocs();
   const targetSlug = slugPath.join('/');
   
-  return docs.find(doc => doc.slug.join('/') === targetSlug) || null;
+  // 1. Direct exact match on physical slug path
+  const directMatch = docs.find(doc => doc.slug.join('/') === targetSlug);
+  if (directMatch) return directMatch;
+
+  // 2. Short clean URL resolution (strictly 2 segments: [projectSlug, docSlug])
+  if (slugPath.length === 2) {
+    const projectKey = slugPath[0].toLowerCase();
+    const docKey = slugPath[1].toLowerCase();
+
+    const matched = docs.find(doc => {
+      const docProject = (doc.meta.projectId || (doc.slug.length >= 2 ? doc.slug[doc.slug.length - 2] : '')).toLowerCase();
+      const docFile = doc.slug[doc.slug.length - 1].toLowerCase();
+      const docFolder = doc.slug.length >= 2 ? doc.slug[doc.slug.length - 2].toLowerCase() : '';
+      return (docProject === projectKey || docFolder === projectKey) && docFile === docKey;
+    });
+    if (matched) return matched;
+  }
+
+  return null;
+}
+
+export function getCanonicalDocSlug(doc: Doc): string[] {
+  if (doc.slug.length >= 2) {
+    return [doc.slug[doc.slug.length - 2], doc.slug[doc.slug.length - 1]];
+  }
+  return doc.slug;
 }
 
 export function getDocsByProjectId(projectId: string): Doc[] {

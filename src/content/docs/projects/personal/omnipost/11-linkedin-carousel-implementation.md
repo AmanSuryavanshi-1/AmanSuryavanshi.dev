@@ -1,4 +1,4 @@
----
+﻿---
 title: 11. LinkedIn Carousel Implementation
 seoDescription: >-
   Automating visual B2B content: How OmniPost AI and n8n dynamically generate
@@ -9,7 +9,7 @@ keywords:
   - Next.js
   - Agentic AI
   - OmniPost
-projectId: n8n-automation-suite
+projectId: omnipost-core
 type: series
 schemaType: TechArticle
 ---

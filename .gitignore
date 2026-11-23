@@ -163,3 +163,14 @@ opencode.json
 graphify-out/*
 !graphify-out/graph.json
 !graphify-out/GRAPH_REPORT.md
+
+# Ephemeral scratch scripts, test JSON dumps & browser automation
+scripts/*.py
+scripts/*_results.json
+scripts/*extracted*.json
+scripts/broken_*.json
+.scratch/
+scripts/scratch/
+
+# AI session plans
+.ai/plans/

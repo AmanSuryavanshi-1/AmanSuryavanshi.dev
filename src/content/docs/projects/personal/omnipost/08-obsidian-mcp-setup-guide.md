@@ -1,4 +1,4 @@
----
+﻿---
 title: 08. Obsidian MCP Setup Guide
 seoDescription: >-
   Connect Second Brains to Agentic AI: The complete Model Context Protocol (MCP)
@@ -9,7 +9,7 @@ keywords:
   - Next.js
   - Agentic AI
   - OmniPost
-projectId: n8n-automation-suite
+projectId: omnipost-core
 type: series
 schemaType: TechArticle
 ---

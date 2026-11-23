@@ -30,7 +30,7 @@ export const skillsData: SkillsData = {
                             label: "n8n (Self-Hosted)",
                             value: "Complex execution pipelines, Error handling, Custom nodes",
                             projectTitle: "Omni-Post AI",
-                            projectUrl: "/projects#n8n-automation-suite"
+                            projectUrl: "/projects#omnipost-core"
                         },
                         {
                             label: "Webhooks & API Integ",
@@ -42,7 +42,7 @@ export const skillsData: SkillsData = {
                             label: "Supabase (Postgres + Vector)",
                             value: "Database memory for AI agents, vector features",
                             projectTitle: "Job Matching Automation",
-                            projectUrl: "/projects#n8n-automation-suite"
+                            projectUrl: "/projects#omnipost-core"
                         },
                         {
                             label: "Sanity CMS",
@@ -59,7 +59,7 @@ export const skillsData: SkillsData = {
                             label: "Docker",
                             value: "Containerized n8n, PGVector, self-hosting",
                             projectTitle: "Personal Efficiency Agent",
-                            projectUrl: "/projects#n8n-automation-suite"
+                            projectUrl: "/projects#omnipost-core"
                         },
                         {
                             label: "Vercel & Netlify",
@@ -71,7 +71,7 @@ export const skillsData: SkillsData = {
                             label: "Cloudflare Workers & Hono",
                             value: "Edge compute, Cloudflare Tunnel for secure local exposure",
                             projectTitle: "Edge Experiments",
-                            projectUrl: "/projects#n8n-automation-suite"
+                            projectUrl: "/projects#omnipost-core"
                         },
                         {
                             label: "Git & GitHub",
@@ -97,19 +97,19 @@ export const skillsData: SkillsData = {
                             label: "LangChain",
                             value: "Chains, Agents, Memory",
                             projectTitle: "RAG Assistant",
-                            projectUrl: "/projects#n8n-automation-suite"
+                            projectUrl: "/projects#omnipost-core"
                         },
                         {
                             label: "Groq",
                             value: "High-speed inference integration",
                             projectTitle: "Omni-Post AI",
-                            projectUrl: "/projects#n8n-automation-suite"
+                            projectUrl: "/projects#omnipost-core"
                         },
                         {
                             label: "SerpApi",
                             value: "Real-time search data integration",
                             projectTitle: "Job Scrapers",
-                            projectUrl: "/projects#n8n-automation-suite"
+                            projectUrl: "/projects#omnipost-core"
                         }
                     ]
                 },
@@ -166,7 +166,7 @@ export const skillsData: SkillsData = {
                             label: "QuillJS & Excalidraw",
                             value: "Rich text editors & visual tools",
                             projectTitle: "AI Notion Clone",
-                            projectUrl: "/projects#n8n-automation-suite"
+                            projectUrl: "/projects#omnipost-core"
                         },
                         {
                             label: "Markdown & Portable Text",
@@ -235,14 +235,14 @@ export const skillsData: SkillsData = {
                             label: "Twitter/X API",
                             value: "v1.1 & v2, OAuth1.0a/OAuth2, media uploads, threading",
                             relatedProjects: [
-                                { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" }
+                                { title: "Omni-Post AI", url: "/projects#omnipost-core" }
                             ]
                         },
                         {
                             label: "LinkedIn API",
                             value: "Multi-image galleries, content distribution",
                             relatedProjects: [
-                                { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" }
+                                { title: "Omni-Post AI", url: "/projects#omnipost-core" }
                             ]
                         },
                         {
@@ -261,7 +261,7 @@ export const skillsData: SkillsData = {
                             label: "Notion, Airtable, Google Drive",
                             value: "Content management, database integration",
                             relatedProjects: [
-                                { title: "Omni-Post AI", url: "/projects#n8n-automation-suite" },
+                                { title: "Omni-Post AI", url: "/projects#omnipost-core" },
                                 { title: "Aviators", url: "/projects#aviators-training-centre" }
                             ]
                         },
@@ -343,7 +343,7 @@ export const skillsData: SkillsData = {
                             label: "Build-in-Public",
                             value: "Authentic storytelling, content repurposing, multi-platform distribution",
                             projectTitle: "Omni-Post AI",
-                            projectUrl: "/projects#n8n-automation-suite"
+                            projectUrl: "/projects#omnipost-core"
                         }
                     ]
                 }
@@ -467,7 +467,7 @@ export const landingSkillsData: LandingSkillsData = {
                     level: "Production",
                     projects: "122 nodes, self-healing DLQ",
                     relatedProjects: [
-                        { title: "OmniPost-Core", url: "/projects#n8n-automation-suite" },
+                        { title: "OmniPost-Core", url: "/projects#omnipost-core" },
                         { title: "Aviators", url: "/projects#aviators-training-centre" }
                     ]
                 },
@@ -476,7 +476,7 @@ export const landingSkillsData: LandingSkillsData = {
                     level: "Production",
                     projects: "Live Second Brain streaming (:3010)",
                     relatedProjects: [
-                        { title: "OmniPost-Core", url: "/projects#n8n-automation-suite" }
+                        { title: "OmniPost-Core", url: "/projects#omnipost-core" }
                     ]
                 },
                 {
@@ -484,7 +484,7 @@ export const landingSkillsData: LandingSkillsData = {
                     level: "Expert",
                     projects: "GPT-4o, Claude 3.5, Gemini 2.5",
                     relatedProjects: [
-                        { title: "OmniPost-Core", url: "/projects#n8n-automation-suite" }
+                        { title: "OmniPost-Core", url: "/projects#omnipost-core" }
                     ]
                 }
             ]
@@ -495,10 +495,10 @@ export const landingSkillsData: LandingSkillsData = {
                 {
                     name: "Next.js 15 & 16",
                     level: "Expert",
-                    projects: "Aviators, Vivek-OnPoint",
+                    projects: "Aviators, MacroPulse Creator Platform",
                     relatedProjects: [
                         { title: "Aviators", url: "/projects#aviators-training-centre" },
-                        { title: "Vivek-OnPoint", url: "/projects#vivek-onpoint-platform" }
+                        { title: "MacroPulse", url: "/projects#creator-intelligence-platform" }
                     ]
                 },
                 {
@@ -529,7 +529,7 @@ export const landingSkillsData: LandingSkillsData = {
                     level: "Production",
                     projects: "notebooklm-py PR #276 (16.5k★)",
                     relatedProjects: [
-                        { title: "notebooklm-py PR #276", url: "https://github.com/tomaarsen/notebooklm-py/pull/276" }
+                        { title: "notebooklm-py PR #276", url: "https://github.com/teng-lin/notebooklm-py/pull/276" }
                     ]
                 },
                 {
@@ -537,7 +537,7 @@ export const landingSkillsData: LandingSkillsData = {
                     level: "Production",
                     projects: "11-Layer Defense System",
                     relatedProjects: [
-                        { title: "Vivek-OnPoint", url: "/projects#vivek-onpoint-platform" }
+                        { title: "MacroPulse", url: "/projects#creator-intelligence-platform" }
                     ]
                 },
                 {
@@ -545,7 +545,7 @@ export const landingSkillsData: LandingSkillsData = {
                     level: "Expert",
                     projects: "50+ integrations, zero leaks",
                     relatedProjects: [
-                        { title: "OmniPost-Core", url: "/projects#n8n-automation-suite" },
+                        { title: "OmniPost-Core", url: "/projects#omnipost-core" },
                         { title: "Aviators", url: "/projects#aviators-training-centre" }
                     ]
                 }

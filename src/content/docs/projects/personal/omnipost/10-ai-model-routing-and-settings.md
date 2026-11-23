@@ -1,4 +1,4 @@
----
+﻿---
 title: 10. AI Model Routing and Settings
 seoDescription: >-
   Optimizing LLM costs and performance in OmniPost AI. Learn intelligent AI
@@ -9,7 +9,7 @@ keywords:
   - Next.js
   - Agentic AI
   - OmniPost
-projectId: n8n-automation-suite
+projectId: omnipost-core
 type: series
 schemaType: TechArticle
 ---

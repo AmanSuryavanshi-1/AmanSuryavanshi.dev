@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig & { eslint?: { ignoreDuringBuilds?: boolean } } = {
   images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
       {
         protocol: 'https',
@@ -79,77 +82,154 @@ const nextConfig: NextConfig & { eslint?: { ignoreDuringBuilds?: boolean } } = {
         destination: '/#contact',
         permanent: true,
       },
-      // Redirect old OmniPost docs
+      // Fallback for truncated docs paths
+      {
+        source: '/docs/projects',
+        destination: '/projects',
+        permanent: true,
+      },
+      {
+        source: '/docs',
+        destination: '/projects',
+        permanent: true,
+      },
+      // Canonicalize legacy 4-segment physical docs paths to clean 2-segment URLs
+      {
+        source: '/docs/projects/clientele/:project/:doc*',
+        destination: '/docs/:project/:doc*',
+        permanent: true,
+      },
+      {
+        source: '/docs/projects/personal/:project/:doc*',
+        destination: '/docs/:project/:doc*',
+        permanent: true,
+      },
+      // Anonymized & alias redirects for creator intelligence platform & omnipost
+      {
+        source: '/docs/vivek-onpoint-platform/:doc*',
+        destination: '/docs/creator-intelligence-platform/:doc*',
+        permanent: true,
+      },
+      {
+        source: '/docs/omnipost-core/:doc*',
+        destination: '/docs/omnipost/:doc*',
+        permanent: true,
+      },
+      {
+        source: '/projects/omnipost/:slug*',
+        destination: '/docs/omnipost/:slug*',
+        permanent: true,
+      },
       {
         source: '/docs/series/omnipost/:id',
-        destination: '/docs/projects/personal/omnipost/:id',
+        destination: '/docs/omnipost/:id',
         permanent: true,
       },
       // Historical 404 Route Normalization
       {
-        source: '/docs/omnipost/01-executive-summary',
-        destination: '/docs/projects/personal/omnipost/01-executive-summary',
+        source: '/projects/aviators-training-centre',
+        destination: '/docs/aviators-training-centre/executive-summary',
         permanent: true,
       },
       {
+        source: '/projects/omnipost-core',
+        destination: '/docs/omnipost/01-executive-summary',
+        permanent: true,
+      },
+      {
+        source: '/projects/dental-ai-automation',
+        destination: '/docs/dental-ai-automation/executive-summary',
+        permanent: true,
+      },
+      {
+        source: '/projects/n8n-github-backup',
+        destination: '/docs/n8n-github-backup/executive-summary',
+        permanent: true,
+      },
+      {
+        source: '/projects/barkat-enterprise',
+        destination: '/docs/barkat-enterprise/technical-documentation',
+        permanent: true,
+      },
+      {
+        source: '/projects/av-newsstream',
+        destination: '/docs/av-newsstream/technical-documentation',
+        permanent: true,
+      },
+      {
+        source: '/projects/foodah',
+        destination: '/docs/foodah/technical-documentation',
+        permanent: true,
+      },
+      {
+        source: '/projects/vivek-onpoint-platform',
+        destination: '/projects#creator-intelligence-platform',
+        permanent: true,
+      },
+      {
+        source: '/projects/notebooklm-py-pr276',
+        destination: 'https://github.com/teng-lin/notebooklm-py/pull/276',
+        permanent: false,
+      },
+      {
         source: '/projects/omni-post-ai-executive-summary',
-        destination: '/docs/projects/personal/omnipost/01-executive-summary',
+        destination: '/docs/omnipost/01-executive-summary',
         permanent: true,
       },
       {
         source: '/projects/omni-post-ai-technical-documentation',
-        destination: '/docs/projects/personal/omnipost/02-architecture-and-flow',
+        destination: '/docs/omnipost/02-architecture-and-flow',
         permanent: true,
       },
       {
-        source: '/docs/projects/personal/omnipost/02-technical-architecture',
-        destination: '/docs/projects/personal/omnipost/02-architecture-and-flow',
+        source: '/docs/omnipost/02-technical-architecture',
+        destination: '/docs/omnipost/02-architecture-and-flow',
         permanent: true,
       },
       // Redirect old Flat Documentation URLs
       {
         source: '/projects/aviators-training-centre-executive-summary',
-        destination: '/docs/projects/clientele/aviators-training-centre/executive-summary',
+        destination: '/docs/aviators-training-centre/executive-summary',
         permanent: true,
       },
       {
         source: '/projects/aviators-training-centre-technical-documentation',
-        destination: '/docs/projects/clientele/aviators-training-centre/technical-documentation',
+        destination: '/docs/aviators-training-centre/technical-documentation',
         permanent: true,
       },
       {
         source: '/projects/n8n-github-backup-executive-summary',
-        destination: '/docs/projects/personal/n8n-github-backup/executive-summary',
+        destination: '/docs/n8n-github-backup/executive-summary',
         permanent: true,
       },
       {
         source: '/projects/n8n-github-backup-technical-documentation',
-        destination: '/docs/projects/personal/n8n-github-backup/technical-documentation',
+        destination: '/docs/n8n-github-backup/technical-documentation',
         permanent: true,
       },
       {
         source: '/projects/dental-ai-executive-summary',
-        destination: '/docs/projects/clientele/dental-ai-automation/executive-summary',
+        destination: '/docs/dental-ai-automation/executive-summary',
         permanent: true,
       },
       {
         source: '/projects/dental-ai-technical-documentation',
-        destination: '/docs/projects/clientele/dental-ai-automation/technical-documentation',
+        destination: '/docs/dental-ai-automation/technical-documentation',
         permanent: true,
       },
       {
         source: '/projects/barkat-enterprise-technical-documentation',
-        destination: '/docs/projects/clientele/barkat-enterprise/technical-documentation',
+        destination: '/docs/barkat-enterprise/technical-documentation',
         permanent: true,
       },
       {
         source: '/projects/av-newsstream-technical-documentation',
-        destination: '/docs/projects/personal/av-newsstream/technical-documentation',
+        destination: '/docs/av-newsstream/technical-documentation',
         permanent: true,
       },
       {
         source: '/projects/foodah-technical-documentation',
-        destination: '/docs/projects/personal/foodah/technical-documentation',
+        destination: '/docs/foodah/technical-documentation',
         permanent: true,
       },
     ];

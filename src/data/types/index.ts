@@ -221,8 +221,8 @@ export interface Project {
     techStack: readonly string[];
     badges: readonly string[];
     imageUrl: string;
-    liveUrl: string;
-    codeUrl: string;
+    liveUrl: string | null;
+    codeUrl: string | null;
     blogUrl?: string | null;
     featured: boolean;
     metrics?: Record<string, string>;
@@ -232,8 +232,8 @@ export interface Project {
     video?: string;
     videoYouTubeId?: string; // YouTube video ID for embed
     links: {
-        live: string;
-        github: string;
+        live: string | null;
+        github: string | null;
         // Simplified structure for automation
     };
     // Used in UI but constructed from techStack strings + IconMap

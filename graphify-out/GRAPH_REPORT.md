@@ -1,16 +1,16 @@
-# Graph Report - AmanSuryavanshi.dev  (2026-06-11)
+# Graph Report - AmanSuryavanshi.dev  (2026-11-22)
 
 ## Corpus Check
-- 258 files · ~330,615 words
+- 473 files · ~584,899 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2745 nodes · 3162 edges · 267 communities (238 shown, 29 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.8)
+- 4333 nodes · 4576 edges · 571 communities (544 shown, 27 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 5 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `11cff2f4`
+- Built from commit: `e4a4fec6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -265,39 +265,173 @@
 - [[_COMMUNITY_Community 264|Community 264]]
 - [[_COMMUNITY_Community 265|Community 265]]
 - [[_COMMUNITY_Community 266|Community 266]]
+- [[_COMMUNITY_Community 267|Community 267]]
+- [[_COMMUNITY_Community 268|Community 268]]
+- [[_COMMUNITY_Community 269|Community 269]]
+- [[_COMMUNITY_Community 270|Community 270]]
+- [[_COMMUNITY_Community 271|Community 271]]
+- [[_COMMUNITY_Community 272|Community 272]]
+- [[_COMMUNITY_Community 273|Community 273]]
+- [[_COMMUNITY_Community 274|Community 274]]
+- [[_COMMUNITY_Community 275|Community 275]]
+- [[_COMMUNITY_Community 276|Community 276]]
+- [[_COMMUNITY_Community 277|Community 277]]
+- [[_COMMUNITY_Community 278|Community 278]]
+- [[_COMMUNITY_Community 279|Community 279]]
+- [[_COMMUNITY_Community 280|Community 280]]
+- [[_COMMUNITY_Community 281|Community 281]]
+- [[_COMMUNITY_Community 282|Community 282]]
+- [[_COMMUNITY_Community 283|Community 283]]
+- [[_COMMUNITY_Community 284|Community 284]]
+- [[_COMMUNITY_Community 285|Community 285]]
+- [[_COMMUNITY_Community 286|Community 286]]
+- [[_COMMUNITY_Community 287|Community 287]]
+- [[_COMMUNITY_Community 288|Community 288]]
+- [[_COMMUNITY_Community 289|Community 289]]
+- [[_COMMUNITY_Community 290|Community 290]]
+- [[_COMMUNITY_Community 291|Community 291]]
+- [[_COMMUNITY_Community 292|Community 292]]
+- [[_COMMUNITY_Community 293|Community 293]]
+- [[_COMMUNITY_Community 294|Community 294]]
+- [[_COMMUNITY_Community 295|Community 295]]
+- [[_COMMUNITY_Community 296|Community 296]]
+- [[_COMMUNITY_Community 297|Community 297]]
+- [[_COMMUNITY_Community 298|Community 298]]
+- [[_COMMUNITY_Community 299|Community 299]]
+- [[_COMMUNITY_Community 300|Community 300]]
+- [[_COMMUNITY_Community 301|Community 301]]
+- [[_COMMUNITY_Community 302|Community 302]]
+- [[_COMMUNITY_Community 303|Community 303]]
+- [[_COMMUNITY_Community 304|Community 304]]
+- [[_COMMUNITY_Community 305|Community 305]]
+- [[_COMMUNITY_Community 306|Community 306]]
+- [[_COMMUNITY_Community 307|Community 307]]
+- [[_COMMUNITY_Community 308|Community 308]]
+- [[_COMMUNITY_Community 309|Community 309]]
+- [[_COMMUNITY_Community 310|Community 310]]
+- [[_COMMUNITY_Community 311|Community 311]]
+- [[_COMMUNITY_Community 312|Community 312]]
+- [[_COMMUNITY_Community 313|Community 313]]
+- [[_COMMUNITY_Community 314|Community 314]]
+- [[_COMMUNITY_Community 315|Community 315]]
+- [[_COMMUNITY_Community 316|Community 316]]
+- [[_COMMUNITY_Community 317|Community 317]]
+- [[_COMMUNITY_Community 318|Community 318]]
+- [[_COMMUNITY_Community 319|Community 319]]
+- [[_COMMUNITY_Community 320|Community 320]]
+- [[_COMMUNITY_Community 321|Community 321]]
+- [[_COMMUNITY_Community 322|Community 322]]
+- [[_COMMUNITY_Community 323|Community 323]]
+- [[_COMMUNITY_Community 324|Community 324]]
+- [[_COMMUNITY_Community 325|Community 325]]
+- [[_COMMUNITY_Community 326|Community 326]]
+- [[_COMMUNITY_Community 327|Community 327]]
+- [[_COMMUNITY_Community 328|Community 328]]
+- [[_COMMUNITY_Community 329|Community 329]]
+- [[_COMMUNITY_Community 330|Community 330]]
+- [[_COMMUNITY_Community 331|Community 331]]
+- [[_COMMUNITY_Community 332|Community 332]]
+- [[_COMMUNITY_Community 333|Community 333]]
+- [[_COMMUNITY_Community 334|Community 334]]
+- [[_COMMUNITY_Community 335|Community 335]]
+- [[_COMMUNITY_Community 336|Community 336]]
+- [[_COMMUNITY_Community 337|Community 337]]
+- [[_COMMUNITY_Community 338|Community 338]]
+- [[_COMMUNITY_Community 339|Community 339]]
+- [[_COMMUNITY_Community 340|Community 340]]
+- [[_COMMUNITY_Community 341|Community 341]]
+- [[_COMMUNITY_Community 342|Community 342]]
+- [[_COMMUNITY_Community 343|Community 343]]
+- [[_COMMUNITY_Community 344|Community 344]]
+- [[_COMMUNITY_Community 345|Community 345]]
+- [[_COMMUNITY_Community 346|Community 346]]
+- [[_COMMUNITY_Community 347|Community 347]]
+- [[_COMMUNITY_Community 348|Community 348]]
+- [[_COMMUNITY_Community 349|Community 349]]
+- [[_COMMUNITY_Community 350|Community 350]]
+- [[_COMMUNITY_Community 351|Community 351]]
+- [[_COMMUNITY_Community 352|Community 352]]
+- [[_COMMUNITY_Community 353|Community 353]]
+- [[_COMMUNITY_Community 354|Community 354]]
+- [[_COMMUNITY_Community 355|Community 355]]
+- [[_COMMUNITY_Community 356|Community 356]]
+- [[_COMMUNITY_Community 357|Community 357]]
+- [[_COMMUNITY_Community 358|Community 358]]
+- [[_COMMUNITY_Community 359|Community 359]]
+- [[_COMMUNITY_Community 360|Community 360]]
+- [[_COMMUNITY_Community 361|Community 361]]
+- [[_COMMUNITY_Community 362|Community 362]]
+- [[_COMMUNITY_Community 363|Community 363]]
+- [[_COMMUNITY_Community 364|Community 364]]
+- [[_COMMUNITY_Community 365|Community 365]]
+- [[_COMMUNITY_Community 366|Community 366]]
+- [[_COMMUNITY_Community 367|Community 367]]
+- [[_COMMUNITY_Community 368|Community 368]]
+- [[_COMMUNITY_Community 369|Community 369]]
+- [[_COMMUNITY_Community 370|Community 370]]
+- [[_COMMUNITY_Community 371|Community 371]]
+- [[_COMMUNITY_Community 372|Community 372]]
+- [[_COMMUNITY_Community 373|Community 373]]
+- [[_COMMUNITY_Community 374|Community 374]]
+- [[_COMMUNITY_Community 375|Community 375]]
+- [[_COMMUNITY_Community 376|Community 376]]
+- [[_COMMUNITY_Community 377|Community 377]]
+- [[_COMMUNITY_Community 378|Community 378]]
+- [[_COMMUNITY_Community 379|Community 379]]
+- [[_COMMUNITY_Community 380|Community 380]]
+- [[_COMMUNITY_Community 381|Community 381]]
+- [[_COMMUNITY_Community 382|Community 382]]
+- [[_COMMUNITY_Community 383|Community 383]]
+- [[_COMMUNITY_Community 384|Community 384]]
+- [[_COMMUNITY_Community 385|Community 385]]
+- [[_COMMUNITY_Community 386|Community 386]]
+- [[_COMMUNITY_Community 387|Community 387]]
+- [[_COMMUNITY_Community 388|Community 388]]
+- [[_COMMUNITY_Community 389|Community 389]]
+- [[_COMMUNITY_Community 390|Community 390]]
+- [[_COMMUNITY_Community 391|Community 391]]
+- [[_COMMUNITY_Community 392|Community 392]]
+- [[_COMMUNITY_Community 393|Community 393]]
+- [[_COMMUNITY_Community 394|Community 394]]
+- [[_COMMUNITY_Community 395|Community 395]]
+- [[_COMMUNITY_Community 396|Community 396]]
+- [[_COMMUNITY_Community 397|Community 397]]
+- [[_COMMUNITY_Community 398|Community 398]]
+- [[_COMMUNITY_Community 399|Community 399]]
+- [[_COMMUNITY_Community 400|Community 400]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `cn()` - 40 edges
+1. `cn()` - 45 edges
 2. `FallbackImageManager` - 23 edges
-3. `portfolioData` - 21 edges
+3. `portfolioData` - 22 edges
 4. `Post` - 21 edges
 5. `AV NewsStream: Real-Time Multi-Source News Aggregator` - 20 edges
 6. `Foodah: Live Restaurant Discovery Platform` - 20 edges
-7. `urlFor()` - 19 edges
-8. `Aviators Training Centre` - 19 edges
-9. `Barkat Enterprise: A Freelance Project for an Enterprise` - 19 edges
-10. `Project` - 17 edges
+7. `AV NewsStream: Real-Time Multi-Source News Aggregator` - 20 edges
+8. `Foodah: Live Restaurant Discovery Platform` - 20 edges
+9. `urlFor()` - 19 edges
+10. `Aviators Training Centre` - 19 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `RootLayout()` --calls--> `cn()`  [EXTRACTED]
+  src/app/layout.tsx → src/lib/utils.ts
+- `DocsPage()` --calls--> `NotFound()`  [INFERRED]
+  src/app/docs/[...slug]/page.tsx → src/app/not-found.tsx
 - `OmniPostDocPage()` --calls--> `NotFound()`  [INFERRED]
   src/app/docs/omnipost/[id]/page.tsx → src/app/not-found.tsx
-- `BlogHeaderImageProps` --references--> `Post`  [EXTRACTED]
-  src/components/blog/BlogHeaderImage.tsx → src/sanity/sanity.ts
-- `ResponsiveImage()` --calls--> `urlFor()`  [EXTRACTED]
-  src/components/blog/ResponsiveImage.tsx → src/sanity/lib/image.ts
-- `DocPageClientProps` --references--> `Project`  [EXTRACTED]
-  src/components/docs/DocPageClient.tsx → src/data/types/index.ts
-- `MarkdownImage()` --calls--> `useImageGallery()`  [EXTRACTED]
-  src/components/docs/MarkdownViewer.tsx → src/context/ImageGalleryContext.tsx
+- `ActionButton()` --calls--> `cn()`  [EXTRACTED]
+  src/components/about/ActionButtons.tsx → src/lib/utils.ts
+- `SeriesNav()` --calls--> `cn()`  [EXTRACTED]
+  src/components/blog/SeriesNav.tsx → src/lib/utils.ts
 
-## Communities (267 total, 29 thin omitted)
+## Communities (571 total, 27 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.03
 Nodes (59): public\\Project\\AV-NewsStream\\AV-NewsStream-mobile.webp, public\\Project\\AV-NewsStream\\AV-NewsStream.webp, public\\Project\\AV-NewsStream\\AVNewsStream.webm, public\\Project\\AviatorsTrainingCentre\\AviatorsTrainingCenter_WalkThrough_720p.mp4, public\\Project\\AviatorsTrainingCentre\\www.aviatorstrainingcentre.in_Blog.png, public\\Project\\AviatorsTrainingCentre\\www.aviatorstrainingcentre.in_ DarktMode_FullPage_ScreenShot.jpg, public\\Project\\AviatorsTrainingCentre\\www.aviatorstrainingcentre.in_ LightMode_FullPage_ScreenShot.png, public\\Project\\BarkatEnterprise\\barkat-enterprise-AboutUs.png (+51 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.13
+Cohesion: 0.14
 Nodes (9): NotFound(), ARTICLE_SCHEMAS, DOC_TO_PROJECT_ID, getDocContent(), HOWTO_SCHEMAS, PageProps, ProjectDocPage(), TITLES_MAP (+1 more)
 
 ### Community 2 - "Community 2"
@@ -306,7 +440,7 @@ Nodes (48): 1. GitHub Repository for Images, 2. jsDelivr CDN URLs, 3. YouTube Em
 
 ### Community 3 - "Community 3"
 Cohesion: 0.04
-Nodes (49): dependencies, class-variance-authority, cloudinary, clsx, date-fns, dotenv, @emailjs/browser, emailjs-com (+41 more)
+Nodes (50): dependencies, class-variance-authority, cloudinary, clsx, date-fns, dotenv, @emailjs/browser, emailjs-com (+42 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.10
@@ -325,16 +459,16 @@ Cohesion: 0.05
 Nodes (41): 1. Install prerequisites (already done if Claude Code works), 2. Create the .env config file, 3. Ensure Docker can reach the host, 4. Configure n8n MCP Client Tool node, 5. First test, Architecture, Cloud Migration Guide, Cloud (when you migrate) — add JWT auth (+33 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.10
-Nodes (21): container, IconMap, item, BentoCard(), BentoCardProps, BentoContent(), BentoContentProps, BentoDescription() (+13 more)
+Cohesion: 0.09
+Nodes (28): container, IconMap, item, categories, FilterBar(), FilterBarProps, FilterCategory, cn() (+20 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.05
 Nodes (40): 1. Core Only (Minimal Tokens), 2. Bio Context for AI, 3. All Project Summaries, 4. Featured Projects Full Details, 5. Complete Profile, `about`, Architecture, Available Project IDs (+32 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.07
-Nodes (19): aboutStructuredData, metadata, containerVariants, GitHubCalendar, GithubCalendarComponent(), GitHubRepository, GitHubUser, LatestRepoCard() (+11 more)
+Cohesion: 0.10
+Nodes (18): containerVariants, GitHubCalendar, GithubCalendarComponent(), GitHubRepository, GitHubUser, LatestRepoCard(), LatestRepoCardProps, ProfileCard() (+10 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.06
@@ -345,12 +479,12 @@ Cohesion: 0.06
 Nodes (33): 🧠 5 Technical Challenges Solved, ✅ Authentic Voice Preservation, code:block1 (📝 Write in Notion → 🤖 AI generates platform-specific content), code:block2 (Notion (Source)), code:block3 (Notion (Approved Content)), code:block4 ("Just built something cool with APIs. Pretty excited about i), code:block5 ("The N x M integration problem is a nightmare. Connecting 10), code:block6 (Omni-Post-AI-Automation/) (+25 more)
 
 ### Community 13 - "Community 13"
-Cohesion: 0.13
-Nodes (13): PROJECT_ORDER, DEFAULT_CATEGORY_LABELS, ProjectsFilter(), ProjectsFilterProps, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel (+5 more)
+Cohesion: 0.16
+Nodes (12): DEFAULT_CATEGORY_LABELS, ProjectsFilter(), ProjectsFilterProps, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuRadioItem (+4 more)
 
 ### Community 14 - "Community 14"
-Cohesion: 0.09
-Nodes (23): aboutData, experienceData, heroData, servicesData, landingSkillsData, skillsData, socials, workBanner (+15 more)
+Cohesion: 0.07
+Nodes (30): ContentCard(), aboutData, experienceData, heroData, projectsData, rawProjects, servicesData, landingSkillsData (+22 more)
 
 ### Community 15 - "Community 15"
 Cohesion: 0.11
@@ -373,12 +507,12 @@ Cohesion: 0.07
 Nodes (27): Adding a Blog Post, Adding a New Project, Adding New Fallback Image Category, Adding New Sanity Content Type, After Adding New Project, Before Deployment, code:typescript (// src/data/portfolio.tsx - Add to rawProjects array), code:typescript (// src/sanity/schemaTypes/newType.ts) (+19 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.16
-Nodes (10): ProjectDetailCardProps, TechnicalDeepDiveProps, FeaturedHeroProps, ProjectCardProps, ProjectMediaCarouselProps, ProjectSummaryProps, Project, AccordionContent (+2 more)
+Cohesion: 0.10
+Nodes (19): SeriesNav(), SeriesNavProps, SeriesSyllabus(), SeriesSyllabusProps, TechnicalDeepDiveProps, ProjectCardProps, MediaSlide, ProjectMediaCarousel() (+11 more)
 
 ### Community 21 - "Community 21"
-Cohesion: 0.12
-Nodes (13): BreadcrumbsProps, FloatingActionsProps, ShareBarProps, ViewTrackerProps, urlFor(), getMetadataImageAlt(), getMetadataImageUrl(), getOpenGraphImage() (+5 more)
+Cohesion: 0.09
+Nodes (15): BreadcrumbsProps, FloatingActionsProps, MobileActionBarProps, ShareBarProps, TableOfContentsProps, TOCItem, ViewTrackerProps, getMetadataImageAlt() (+7 more)
 
 ### Community 22 - "Community 22"
 Cohesion: 0.08
@@ -389,8 +523,8 @@ Cohesion: 0.08
 Nodes (23): Automated Fixes, code:javascript (// Extract project IDs and check for:), code:markdown (## SEO Analysis Checklist), code:block3 (You are an SEO/AEO/GEO expert analyzing developer portfolio ), code:markdown (## Project SEO Audit Report), code:bash (# Check for projects without documentation), code:block6 (/project-seo-audit), Example Run (+15 more)
 
 ### Community 24 - "Community 24"
-Cohesion: 0.10
-Nodes (16): RequestError, SanityError, client, writeClient, ViewCounterProps, articleLink, basePost, blogPosting (+8 more)
+Cohesion: 0.07
+Nodes (23): PreviewCardProps, RequestError, SanityError, client, writeClient, ViewCounterProps, articleLink, basePost (+15 more)
 
 ### Community 25 - "Community 25"
 Cohesion: 0.09
@@ -402,7 +536,7 @@ Nodes (23): 10. Authentication UI, 1. useOnlineStatus Custom Hook, 2. useRestaur
 
 ### Community 27 - "Community 27"
 Cohesion: 0.08
-Nodes (15): getAllRelatedTags(), normalizeTag(), TAG_ALIASES, ActiveFiltersProps, SortOption, ViewMode, EmptyStateProps, FilterSortProps (+7 more)
+Nodes (17): getAllRelatedTags(), normalizeTag(), TAG_ALIASES, ActiveFiltersProps, BlogListProps, SortOption, ViewMode, BlogPostSkeleton() (+9 more)
 
 ### Community 28 - "Community 28"
 Cohesion: 0.10
@@ -421,8 +555,8 @@ Cohesion: 0.10
 Nodes (20): 5.10 Future Enhancements, 5.1 The Business Need, 5.2 The Solution: Automatic UTM Tracking, 5.3 Technical Implementation, 5.4 Firebase Data Structure, 5.5 Real-World Examples, 5.6 Supported Traffic Sources, 5.7 Business Impact (+12 more)
 
 ### Community 32 - "Community 32"
-Cohesion: 0.12
-Nodes (8): PreviewCardProps, ImpactMetricsProps, Badge(), BadgeProps, badgeVariants, Button, ButtonProps, buttonVariants
+Cohesion: 0.10
+Nodes (12): ActionButton(), itemVariants, ImpactMetricsProps, ProjectDetailCardProps, FeaturedHero(), FeaturedHeroProps, Badge(), BadgeProps (+4 more)
 
 ### Community 33 - "Community 33"
 Cohesion: 0.11
@@ -445,12 +579,12 @@ Cohesion: 0.11
 Nodes (19): devDependencies, eslint, eslint-config-next, @eslint/eslintrc, jest, jest-environment-jsdom, postcss, tailwindcss (+11 more)
 
 ### Community 38 - "Community 38"
-Cohesion: 0.18
-Nodes (16): BlogPostCard(), BlogPostCardProps, BlogPostSkeleton(), extractTextFromBody(), getPrioritizedTags(), TAG_PRIORITY, BlogPostsProps, calculateReadTime() (+8 more)
+Cohesion: 0.15
+Nodes (23): BodyAsset, countImagesInBody(), extractAssetsFromBody(), extractCustomBlockImages(), extractNestedImages(), getFirstAssetFromBody(), hasImagesInBody(), isValidExternalImage() (+15 more)
 
 ### Community 39 - "Community 39"
-Cohesion: 0.13
-Nodes (13): AllTagsProps, ResponsiveImage(), ResponsiveImageProps, ExtractedAsset, Author, Category, FaqItem, InlineTag (+5 more)
+Cohesion: 0.11
+Nodes (15): AllTagsProps, BlogHeaderImageProps, HeaderImageSource, BlogPostCardProps, BlogPostsProps, FeaturedPostProps, Author, Category (+7 more)
 
 ### Community 40 - "Community 40"
 Cohesion: 0.11
@@ -465,12 +599,12 @@ Cohesion: 0.11
 Nodes (17): 📝 Blog Post Data Flow, code:block1 (┌───────────────────────────────────────────────────────────), code:block2 (┌───────────────────────────────────────────────────────────), code:block3 (┌───────────────────────────────────────────────────────────), code:block4 (┌───────────────────────────────────────────────────────────), code:block5 (┌───────────────────────────────────────────────────────────), code:block6 (┌───────────────────────────────────────────────────────────), code:block7 (┌───────────────────────────────────────────────────────────) (+9 more)
 
 ### Community 43 - "Community 43"
-Cohesion: 0.33
-Nodes (5): UseFallbackImageOptions, UseFallbackImageReturn, FallbackCategory, FallbackContext, FallbackImage
+Cohesion: 0.04
+Nodes (45): 3.10 What Each n8n Workflow Does (Detailed), 3.1 Why Automation Was Needed (The Manual Chaos), 3.2 n8n Architecture Overview, 3.3 The 3 Production Workflows, 3.4 Website Contact Form to n8n Automation Flow, 3.6 WhatsApp AI System (Discontinued - Alternative in Development), 3.7 n8n Validation & Deployment Status, 3.7 What Worked & What Didn't (+37 more)
 
 ### Community 44 - "Community 44"
-Cohesion: 0.08
-Nodes (23): ActionButton(), itemVariants, geistMono, geistSans, metadata, RootLayout(), structuredData, categories (+15 more)
+Cohesion: 0.14
+Nodes (7): geistMono, geistSans, metadata, RootLayout(), structuredData, HeaderSocialProps, ThemeProvider()
 
 ### Community 45 - "Community 45"
 Cohesion: 0.21
@@ -481,8 +615,8 @@ Cohesion: 0.12
 Nodes (16): allFiles, asset, cloudinaryMap, ext, filename, fs, glob, isVideo (+8 more)
 
 ### Community 47 - "Community 47"
-Cohesion: 0.24
-Nodes (5): RelatedPost, RelatedPostsProps, builder, dataset, projectId
+Cohesion: 0.14
+Nodes (11): getHeaderImageSource(), RelatedPost, RelatedPostsProps, ResponsiveImage(), ResponsiveImageProps, ExtractedAsset, builder, urlFor() (+3 more)
 
 ### Community 48 - "Community 48"
 Cohesion: 0.12
@@ -557,12 +691,12 @@ Cohesion: 0.15
 Nodes (12): ASSETS_JSON_PATH, base, basename, data, fileMap, files, fs, glob (+4 more)
 
 ### Community 66 - "Community 66"
-Cohesion: 0.18
-Nodes (15): BlogHeaderImageProps, getHeaderImageSource(), HeaderImageSource, BodyAsset, countImagesInBody(), extractAssetsFromBody(), extractCustomBlockImages(), extractNestedImages() (+7 more)
+Cohesion: 0.04
+Nodes (44): 1. **Team Collaboration**, 2. **Disaster Recovery**, 3. **Audit Trail**, 4. **Portfolio Showcase**, 5. **Knowledge Base**, **Architecture Overview: Two Streams, One File**, code:block1 (ORCHESTRATION LAYER (Manager)), code:block2 (Time 0:00    → Manager fetches 50 active workflows) (+36 more)
 
 ### Community 67 - "Community 67"
-Cohesion: 0.20
-Nodes (3): AutoPlayVideoProps, CodeBlockProps, portableTextComponents
+Cohesion: 0.13
+Nodes (6): generateHeadingId(), AutoPlayVideoProps, CodeBlockProps, extractText(), portableTextComponents, SanityImageWrapperProps
 
 ### Community 68 - "Community 68"
 Cohesion: 0.17
@@ -634,7 +768,7 @@ Nodes (9): 01. Executive Summary, Business Impact, Business Value, Constraints, 
 
 ### Community 85 - "Community 85"
 Cohesion: 0.20
-Nodes (9): Barkat Enterprise: A Freelance Project for an Enterprise, Conclusion, Key Achievements, 📊 Key Metrics at a Glance, 🏷️ Project Badges, 🔗 Quick Links, Skills Demonstrated, 📋 Table of Contents (+1 more)
+Nodes (9): Barkat Enterprise: A Freelance Project for an Enterprise, Desktop Views, 📊 Key Metrics at a Glance, Mobile View, 🏷️ Project Badges, 🔗 Quick Links, 📸 Screenshots Gallery, 📋 Table of Contents (+1 more)
 
 ### Community 86 - "Community 86"
 Cohesion: 0.20
@@ -805,8 +939,8 @@ Cohesion: 0.29
 Nodes (7): 1. Fallback Image System, 2. Image Gallery Context, 3. Markdown Viewer, 4. YouTube Embed, code:typescript (FallbackImageManager {), code:typescript (ImageGalleryProvider {), Core Systems
 
 ### Community 128 - "Community 128"
-Cohesion: 0.33
-Nodes (5): ContentCard(), projectsData, rawProjects, getIcon(), TechIconMap
+Cohesion: 0.05
+Nodes (41): 1. Install prerequisites (already done if Claude Code works), 2. Create the .env config file, 3. Ensure Docker can reach the host, 4. Configure n8n MCP Client Tool node, 5. First test, Architecture, Cloud Migration Guide, Cloud (when you migrate) — add JWT auth (+33 more)
 
 ### Community 129 - "Community 129"
 Cohesion: 0.29
@@ -853,8 +987,8 @@ Cohesion: 0.48
 Nodes (6): blogEnhancements, createTagIfNotExists(), deleteDuplicatePosts(), getRandomColor(), run(), updatePost()
 
 ### Community 140 - "Community 140"
-Cohesion: 0.29
-Nodes (3): MobileActionBarProps, TableOfContentsProps, TOCItem
+Cohesion: 0.06
+Nodes (32): 10. Risks & Open Questions, 11. Production Readiness & Observability, 12. Change Log, 1.1 Problem Statement, 1.2 Success Metrics (Measurable), 1.3 Out of Scope, 1. Generalizing `DocPageClient.tsx` Navigation, 1. Problem & Goal (+24 more)
 
 ### Community 141 - "Community 141"
 Cohesion: 0.33
@@ -869,8 +1003,8 @@ Cohesion: 0.33
 Nodes (6): Design Decisions, Why Custom YouTube Embed?, Why GitHub Raw URLs for Documentation?, Why JSDelivr CDN for Images?, Why `portfolio.tsx` Instead of CMS for Projects?, Why Sanity for Blog Only?
 
 ### Community 144 - "Community 144"
-Cohesion: 0.40
-Nodes (3): IconMap, MotionButton(), MotionButtonProps
+Cohesion: 0.11
+Nodes (5): aboutStructuredData, IconMap, metadata, MotionButton(), MotionButtonProps
 
 ### Community 145 - "Community 145"
 Cohesion: 0.33
@@ -949,8 +1083,8 @@ Cohesion: 0.33
 Nodes (6): 3.1 Google Search Console (GSC) Setup, 3.2 Bing Webmaster Tools Setup, 3.3 Yandex & Baidu (Optional - For Global Reach), code:typescript (verification: {), code:typescript (verification: {), Phase 3: Search Engine Registration (No-Code)
 
 ### Community 164 - "Community 164"
-Cohesion: 0.19
-Nodes (9): ZoomableBlogImage(), ZoomableBlogImageProps, GalleryImage, ImageGalleryContext, ImageGalleryContextType, ImageGalleryProvider(), useImageGallery(), DocPageClientProps (+1 more)
+Cohesion: 0.08
+Nodes (19): ZoomableBlogImage(), ZoomableBlogImageProps, GalleryImage, ImageGalleryContext, ImageGalleryContextType, ImageGalleryProvider(), useImageGallery(), DocPageClientProps (+11 more)
 
 ### Community 165 - "Community 165"
 Cohesion: 0.40
@@ -1141,8 +1275,8 @@ Cohesion: 0.67
 Nodes (3): 🔮 Future Improvements, Priority Roadmap, Technical Debt
 
 ### Community 221 - "Community 221"
-Cohesion: 0.67
-Nodes (3): Desktop Views, Mobile View, 📸 Screenshots Gallery
+Cohesion: 0.06
+Nodes (30): 10. Pre-Mortem & Risk Analysis (Gary Klein), 11. Verification Gate Criteria, 12. Appendices & References, 1. Problem & Goal, 2.5. Codebase Intelligence & Context References (Cole Medin R-PIV), 2. Requirements & Acceptance Criteria, 3. Architecture & Design, 4. Tech Stack & Dependencies (+22 more)
 
 ### Community 222 - "Community 222"
 Cohesion: 0.67
@@ -1168,33 +1302,577 @@ Nodes (3): Desktop Views, Mobile View, Screenshots Gallery
 Cohesion: 0.67
 Nodes (3): Soft Skills, Technical Skills, What I Learned
 
+### Community 233 - "Community 233"
+Cohesion: 0.12
+Nodes (16): buildProjectsBreadcrumbJsonLd(), DocBreadcrumbParams, SITE_URL, breadcrumbJsonLd, metadata, creatorDocs, creatorExecutive, docBreadcrumbJsonLd (+8 more)
+
+### Community 236 - "Community 236"
+Cohesion: 0.40
+Nodes (4): config, proxy(), request, response
+
+### Community 242 - "Community 242"
+Cohesion: 0.22
+Nodes (7): nextConfig, docRedirects, historicalSources, legacyHosts, match, redirects, slug
+
+### Community 261 - "Community 261"
+Cohesion: 0.07
+Nodes (28): 1. Lighthouse Optimization (<50 → 95+), 2. n8n Automation Architecture (3 Production Workflows), 3. LLM-First SEO Strategy (llms.txt) - PROVEN RESULTS, 4. WhatsApp AI Lead Qualification System (Original Approach Discontinued - Alternative in Development), AI SEO/GEO Results (llms.txt Strategy), Architecture Highlights, Aviators Training Centre - Executive Summary, Blog-Driven Organic Growth (+20 more)
+
 ### Community 262 - "Community 262"
-Cohesion: 0.25
-Nodes (5): generateHeadingId(), MarkdownImage(), MarkdownViewerProps, MermaidDiagram, extractText()
+Cohesion: 0.09
+Nodes (22): 1️⃣ Product Label Image Generator, 2️⃣ Dental Clinic Image Analysis, 3️⃣ Invoice OCR Extractor, Architectural Patterns, Core Technologies, Dental AI Automation Suite — Executive Summary, 📊 Execution Quality & Proof, For Clients (+14 more)
+
+### Community 263 - "Community 263"
+Cohesion: 0.09
+Nodes (23): 10. Authentication UI, 1. useOnlineStatus Custom Hook, 2. useRestaurantMenu Custom Hook, 3. useFallbackImage Custom Hook, 4. Swiggy API Integration, 5. Responsive Navbar with Mobile Modal, 6. Cart with Order Summary Calculations, 7. Restaurant Category Accordion (+15 more)
+
+### Community 264 - "Community 264"
+Cohesion: 0.10
+Nodes (20): 1.1 The Current Path Behavior, 1.2 The 4 Major Breadcrumb Flaws, 1. Problem Statement & Root Cause Analysis, 2.1 Google Search Central Schema.org Compliance (No Fragment `#` Invalidation), 2.2 W3C WAI-ARIA Breadcrumb Pattern & WCAG 2.2 AA, 2. SEO, AEO, and GEO Architecture & Standards, 3. Step-by-Step Implementation Plan, 4. Verification & Quality Gates (+12 more)
 
 ### Community 265 - "Community 265"
 Cohesion: 0.67
 Nodes (3): 📈 Business Impact, Impact Breakdown, Quantified Results
 
+### Community 266 - "Community 266"
+Cohesion: 0.10
+Nodes (20): 5.10 Future Enhancements, 5.1 The Business Need, 5.2 The Solution: Automatic UTM Tracking, 5.3 Technical Implementation, 5.4 Firebase Data Structure, 5.5 Real-World Examples, 5.6 Supported Traffic Sources, 5.7 Business Impact (+12 more)
+
+### Community 267 - "Community 267"
+Cohesion: 0.10
+Nodes (19): 02. Architecture and Flow, 1. Bi-Part Workflow Separation & The Approval Gate, 2. Session-Based Architecture, 3. Platform Selection Architecture (New in v4.2), 4. Obsidian MCP Context Engine (v5.0), 5. Recursive Content Extraction, code:text (Notion – Get Ready Content (Trigger)), code:mermaid (graph TD) (+11 more)
+
+### Community 268 - "Community 268"
+Cohesion: 0.10
+Nodes (19): 12. Portfolio API Reference, API Architecture (AmanSuryavanshi.dev), Base URL, code:block1 (https://amansuryavanshi.com/api/portfolio), code:json ({), code:block3 (Method: GET), code:javascript (const name = $json.core.name;), code:text (┌─────────────────────────────────────────────────┐) (+11 more)
+
+### Community 269 - "Community 269"
+Cohesion: 0.11
+Nodes (18): 1. Assumptions Attack (Resolved), 1. Context Check, 2. Adversarial Council Synthesis (Pattern D: 6-Axis Audit), 2. Architecture Fit Attack (Resolved), 3. Implementability Attack (Resolved), 3. Verification of Round 1 Findings Resolution, 4. Dimension Scores & Grounded Evidence, 4. Security & Privacy Attack (Resolved) (+10 more)
+
+### Community 270 - "Community 270"
+Cohesion: 0.11
+Nodes (18): 1. System Architecture Overview, 2. The 8 Relational Notion Databases, 3. The 11-Layer Core Notion Defense, 4. Edge Security & Compliance Directives, code:mermaid (graph TD), Layer 10: Edge-Request Budget Optimization, Layer 11: Multi-Tier Cache Persistence, Layer 1: Proactive Semaphore Throttling (+10 more)
+
+### Community 271 - "Community 271"
+Cohesion: 0.11
+Nodes (18): 05. Developer Journal, Challenge 1: Multi-Platform Asset Management, Challenge 2: Markdown-to-Platform Conversion, Challenge 3: Session-Based File Management, Challenge 4: Error Handling & Reliability, code:javascript (if (!name.includes(sessionId)) return null; // Ignore files ), Insight A: "Capability-Compliance Gap" & Image Markers, Insight B: Repo Split and IP Protection (+10 more)
+
+### Community 272 - "Community 272"
+Cohesion: 0.11
+Nodes (17): brokenInternal, dest, docFiles, docsDir, docSlugs, externalLinks, extractedLinks, fs (+9 more)
+
+### Community 273 - "Community 273"
+Cohesion: 0.12
+Nodes (16): 1. Assumptions Attack, 1. Context Check, 2. Adversarial Council Synthesis (Pattern D: 6-Axis Attack), 2. Architecture Fit Attack, 3. Dimension Scores, 3. Implementability Attack, 4. Findings by Severity, 4. Security & Privacy Attack (+8 more)
+
+### Community 274 - "Community 274"
+Cohesion: 0.27
+Nodes (13): sitemap(), buildDocBreadcrumbJsonLd(), Doc, DocMeta, docsDirectory, getAllDocs(), getAllFiles(), getCanonicalDocSlug() (+5 more)
+
+### Community 275 - "Community 275"
+Cohesion: 0.12
+Nodes (15): 03. Prompt Engineering, 1. The Append-Mode Merge Lesson, 2. Personal Context Builder Contract (v4), AI Agent Node vs. Message a Model Node (The Tool Hallucination Problem), Anti-Slop Guidelines (Strictly Enforced), code:xml (<systemContext>), code:text (Phase 1: AI Content Strategist), code:javascript (// Words/phrases banned from all AI output) (+7 more)
+
+### Community 276 - "Community 276"
+Cohesion: 0.12
+Nodes (15): Architecture Overview, Brand Project Setup (Claude Desktop), Carousel Posting Branch, code:block1 (Part-1 (n8n automation)), code:json ({), code:block3 (IF LinkedIn_Content_Format == "carousel"), code:block4 (You are a LinkedIn carousel designer for Aman Suryavanshi.), Decision Router (+7 more)
+
+### Community 277 - "Community 277"
+Cohesion: 0.12
+Nodes (13): allExtractedLinks, content, docFiles, docsDir, fs, http, https, linksList (+5 more)
+
+### Community 278 - "Community 278"
+Cohesion: 0.13
+Nodes (15): 2. Production Node Configuration, code:block1 (Model:           gemini-2.5-flash-lite), code:block2 (Model:           gemini-3.1-pro-preview), code:block3 (Model:           gemini-3-flash-preview), code:block4 (Model:           gemini-3.1-pro-preview), code:block5 (Model:           gemini-3-flash-preview), code:block6 (Model:           gemini-3-flash-preview), code:block7 (Model:           gemini-3-pro-preview) (+7 more)
+
+### Community 279 - "Community 279"
+Cohesion: 0.13
+Nodes (13): blogUrl, codeUrl, docItems, docMatch, docs, fs, liveUrl, path (+5 more)
+
+### Community 280 - "Community 280"
+Cohesion: 0.14
+Nodes (13): 🎯 Canonical Positioning Standard (2026–2027), Domain 0: Immediate Production Hotfixes (Phase 0 — Critical Live Defects), 🧭 Executive Summary & Core Objective, 📋 Master Task Specification & Action Ledger: AmanSuryavanshi.dev Overhaul, 📊 Master Task Status & Progress Tracker, 📌 Phased Execution Sequencing, Section 1: Strategic Positioning & Brand Architecture, Section 2: Universal Documentation & Asset Synchronization Engine (`portfolio-docs-sync`) (+5 more)
+
+### Community 281 - "Community 281"
+Cohesion: 0.14
+Nodes (13): AV NewsStream: Real-Time Multi-Source News Aggregator, 👨‍💻 Built By, 🎯 Conclusion, Desktop Views, 📊 Key Metrics at a Glance, Mobile View, 🏷️ Project Badges, 🔗 Quick Links (+5 more)
+
+### Community 282 - "Community 282"
+Cohesion: 0.14
+Nodes (14): 6.1 Challenge 1: n8n Empty Object Bug, Challenge 2: Lighthouse Optimization (<50 → 95+), Challenge 3: Firebase Cold Start, Challenge 4: Duplicate Email Bug, code:block34 (Cal.com sends webhook for BOOKING_CREATED), code:javascript (function isValidLead(lead) {), code:typescript (<Image), code:typescript (const Testimonials = dynamic(() => import('@/components/Test) (+6 more)
+
+### Community 283 - "Community 283"
+Cohesion: 0.14
+Nodes (14): 5. Perplexity Replacement: AI Agent + Gemini + Tavily, AI Agent Node Configuration, AI Agent System Prompt (for Research), Alternative: Tavily as Standalone Node (Simpler), Architecture: Drop-In Perplexity Replacement, code:block16 ([Context Merger] --> [AI Agent Node] --> [Content Generation), code:block17 (Agent Type:     Tools Agent), code:block18 (You are a content research specialist. Your job is to gather) (+6 more)
+
+### Community 284 - "Community 284"
+Cohesion: 0.14
+Nodes (12): content, docEntries, docMatch, docsDir, existingFiles, exists, fs, idMatch (+4 more)
+
+### Community 285 - "Community 285"
+Cohesion: 0.15
+Nodes (12): 10.1 Quick Wins (1-2 Months), 1.1 Project Overview, 1.2 Key Metrics, 1.3 Technology Stack, Aviators Training Centre, Conclusion, Full-Stack Aviation Training Platform with Intelligent Lead Automation, Long-Term (6-12 Months) (+4 more)
+
+### Community 286 - "Community 286"
+Cohesion: 0.15
+Nodes (12): 04. Platform Integrations, code:text (Tier 1 (Highest Priority): Trust AI Markers), code:javascript (// Node: "Code – Parse & Attach LinkedIn Post V7"), code:javascript (// Node: "Code – Parse & Attach Tweets"), code:javascript (// Node: "Code – Parse Blog Content"), Decision Engine V5.0 (Image Management), LinkedIn Parser V7.0, Platform Character Limits & Content Rights (+4 more)
+
+### Community 287 - "Community 287"
+Cohesion: 0.15
+Nodes (12): 1. Overview & Architecture Flow, 2. Source Data: Notion Properties, 3. Transformation: Omni-Post Part 2 Nodes, 4. Destination: Sanity `post` Schema Mapping, 5. Security & Operations, A. Blog Parser V16.0 (`Code - Parse Blog Content.js`), Answer Engine Optimization (AEO) & SEO (`seo` group), B. Portable Text Rebuilder V14.0 (`Code - Rebuild Blog Blocks with Image References.js`) (+4 more)
+
+### Community 288 - "Community 288"
+Cohesion: 0.17
+Nodes (11): 1. Files Inspected, 2. BLOCKING Findings, 3. SUGGESTION Findings, 4. NIT Findings, 5. Five-Axis Scores, PVE INDEPENDENT VERIFIER — REPORT, S1 — URL migration lacks the redirect and internal-link inventory, S2 — Canonical segment ambiguity and missing short-slug resolver (+3 more)
+
+### Community 289 - "Community 289"
+Cohesion: 0.17
+Nodes (12): 1. Intelligent API Key Rotation, 2. 10-Minute Response Caching, 3. Duplicate Detection Algorithm, 4. Text-to-Speech (TTS), 6. Graceful Degradation, code:javascript (// Fallback chain in DataFetch.jsx), code:javascript (// ApiKeyManager.js - Core rotation logic), code:javascript (// DataFetch.jsx - Caching implementation) (+4 more)
+
+### Community 290 - "Community 290"
+Cohesion: 0.17
+Nodes (12): 1. Data Validation, 2. HTML Template Generation, 3. Error Handling & Image Caching Strategy, code:block2 ([Manual Trigger]), code:javascript (// Pre-render validation in n8n Code node), code:html (<div class="label" style="width: 400px; font-family: Arial, ), Key Implementation Details, 🎥 Live Demonstration & Architecture (+4 more)
+
+### Community 291 - "Community 291"
+Cohesion: 0.17
+Nodes (12): 1. Gemini Vision Prompt Engineering, 2. Confidence-Based Validation, 3. Edge Case Handling, code:block5 ([Manual Trigger / Webhook]), code:block6 (You are an expert image analyst for dental clinic verificati), code:javascript (// Post-processing validation in n8n Code node), Key Implementation Details, 🎥 Live Demonstration & Architecture (+4 more)
+
+### Community 292 - "Community 292"
+Cohesion: 0.17
+Nodes (11): Business Impact, Conclusion, FAQs, Foodah: Live Restaurant Discovery Platform, Future Improvements, Introduction, Key Metrics at a Glance, Project Badges (+3 more)
+
+### Community 293 - "Community 293"
+Cohesion: 0.18
+Nodes (10): 1. Existing System Analysis, Baseline Validation, code:typescript (export interface SeriesPostSibling {), code:groq (series,), code:typescript (expect(screen.getByRole('link', { name: 'AI Automation' })).), GROQ Querying & Resolution, Research Digest — Native Blog Series System, Sanity Schema & Studio (+2 more)
+
+### Community 294 - "Community 294"
+Cohesion: 0.18
+Nodes (11): 6.1 The 5-Rule System, code:block22 (Project: BIP), code:block23 (Status: Prod      (Live, production-ready)), code:block24 (❌ Bad:  Project: BIP / Folder: V1 / Twitter.json), code:block25 (Project: Internal/GitHub/Backups), code:block26 (Project: Internal           (Tag 1)), **Rule 1: The Folder Tag (Project)**, **Rule 2: The Status Tag (Metadata)** (+3 more)
+
+### Community 295 - "Community 295"
+Cohesion: 0.18
+Nodes (10): 8.1 Time Complexity, 8.2 Space Complexity, 8.3 Network Efficiency, **Conclusion**, Enterprise-Grade One-Way Archival from n8n to GitHub, **Executive Overview: The Problem We Solved**, 🏗️ n8n Workflow Backup to GitHub (V5): Technical Deep Dive, **Part 8: Performance Characteristics** (+2 more)
+
+### Community 296 - "Community 296"
+Cohesion: 0.18
+Nodes (10): codeMatch, content, docMatch, docs, fs, imageMatch, liveMatch, projectBlocks (+2 more)
+
+### Community 297 - "Community 297"
+Cohesion: 0.18
+Nodes (10): aboutIndex, blogEntries, blogsIndex, creatorDoc, deadProjectRoutes, docEntries, leakedUrls, omnipostDoc (+2 more)
+
+### Community 298 - "Community 298"
+Cohesion: 0.20
+Nodes (9): 1.1 UI/UX & Spacing Glitches, 1.2 URL Breadcrumbs & Directory Topology, 1. Problem Statement & Root Cause, 2. Implementation Specifications, 3. Machine Gates & Verification, Task 1: Dual Slug Resolution Engine (`src/lib/docs-engine.ts`), Task 2: Universal Multi-Doc Sibling Population (`src/app/docs/[...slug]/page.tsx`), Task 3: Visual & Responsive UI/UX Overhaul (`src/components/docs/DocPageClient.tsx`) (+1 more)
+
+### Community 299 - "Community 299"
+Cohesion: 0.20
+Nodes (9): Barkat Enterprise: A Freelance Project for an Enterprise, Conclusion, Key Achievements, 📊 Key Metrics at a Glance, 🏷️ Project Badges, 🔗 Quick Links, Skills Demonstrated, 📋 Table of Contents (+1 more)
+
+### Community 300 - "Community 300"
+Cohesion: 0.20
+Nodes (9): 01. Executive Summary, Business Impact, Business Value, Constraints, High-Level Operational Flow, Key Capabilities, Open-Source vs Private IP Split, Overview (+1 more)
+
+### Community 301 - "Community 301"
+Cohesion: 0.22
+Nodes (9): Challenge 1: CORS Issues in Production, Challenge 2: React StrictMode Double Fetching, Challenge 3: SPA Routing on Vercel, Challenge 4: Inconsistent API Response Schemas, 🚧 Challenges Faced, code:javascript (// server.js - CORS configuration), code:javascript (const hasFetched = useRef(false);), code:json ({) (+1 more)
+
+### Community 302 - "Community 302"
+Cohesion: 0.22
+Nodes (9): 2.1 High-Level Architecture, 2.2 Frontend Architecture, 2.3 Backend Architecture, code:block1 (┌───────────────────────────────────────────────────────────), code:block2 (src/), code:typescript (// src/app/page.tsx), code:typescript (// src/app/api/contact/route.ts), Data Flow Diagram (+1 more)
+
+### Community 303 - "Community 303"
+Cohesion: 0.22
+Nodes (9): 1. Secure Contact Integration, 2. Image Optimization Pipeline, 3. PDF Catalogue System, 4. Advanced Product Filtering, 5. Hardware-Accelerated Animations, code:jsx (// Optimized image implementation), code:jsx (// Multi-level filtering system), code:jsx (// GPU-optimized hero carousel) (+1 more)
+
+### Community 304 - "Community 304"
+Cohesion: 0.22
+Nodes (9): 1. Structured Output Enforcement, 2. Edge Case Enumeration, 3. Context-Specific Instructions, 4. Confidence Scoring, code:block13 (## OUTPUT FORMAT), code:block14 (**PERSON COUNT**: Count ONLY visible human heads/faces. Do N), code:block15 (**SPECIAL HANDLING FOR PINK BACKGROUND:**), code:json ({) (+1 more)
+
+### Community 305 - "Community 305"
+Cohesion: 0.22
+Nodes (9): 1. Thermal Invoice Prompt Optimization, 2. PIN Code Validation, 3. Item Description Cleaning, 4. Partial Success Handling, code:javascript (// Regex validation for 6-digit PIN), code:javascript (// Remove common OCR artifacts and normalize text), code:javascript (// Return partial data if full extraction fails), code:block9 (You are an expert OCR system for Indian dental supplies invo) (+1 more)
+
+### Community 306 - "Community 306"
+Cohesion: 0.22
+Nodes (9): Code Splitting with React.lazy(), code:javascript (const Shimmer = ({ type = 'list' }) => {), code:javascript (import React, { Suspense, lazy } from 'react';), code:javascript (import { createSlice } from "@reduxjs/toolkit";), code:javascript (// tailwind.config.js), Custom Tailwind Theme Configuration, Redux Toolkit State Management, Shimmer UI Implementation (+1 more)
+
+### Community 307 - "Community 307"
+Cohesion: 0.22
+Nodes (9): 3.1 Split Tags: Infinite Nesting for Monorepos, 3.2 Zero-Trust Security: Recursive Redaction, 3.3 Idempotency: The Diff Check, code:block12 (Internal/GitHub/Backups/Daily/Workflows/production/...), code:javascript (const targetPath = `${root}/${sub}${safeName}/workflow.json`), code:block14 (Project: Internal      (Root)), code:block15 (Workflow JSON), code:javascript (const localJson = JSON.stringify(scrubbed, null, 2);) (+1 more)
+
+### Community 308 - "Community 308"
+Cohesion: 0.22
+Nodes (9): code:block10 (PUT /repos/Owner/Repo/contents/{path}), code:block11 (If: status === 201 (Created) or 200 (Updated)), code:javascript (const SENSITIVE_REGEX = /password|token|secret|api_?key|auth), code:javascript (let root = '_Unsorted';), code:javascript (function scrub(obj) {), code:block7 (GET https://api.github.com/search/code?q=filename:workflow.j), code:block8 (If: total_count > 0), code:javascript (// Simple comparison) (+1 more)
+
+### Community 309 - "Community 309"
+Cohesion: 0.22
+Nodes (8): 06. API and Infrastructure, code:javascript ({), Current Approach, Free-Tier API Strategy, Future Enhancement: Proactive Token Refresh & Exponential Backoff, Internal Network Connectivity, OAuth2 Implementation, Rate Limiting & Quotas
+
+### Community 310 - "Community 310"
+Cohesion: 0.22
+Nodes (8): 1. Model Tier Comparison (All Free on ai.google.dev), 7. Rate Limit Optimization Strategy, AI Model & Node Settings Reference Guide, code:block23 (Per account: ~100 RPD (for Pro models) or ~250 RPD (for Flas), Credential Rotation Setup in n8n, Critical Rate Limit Rules, Daily Budget Calculation (5 API Keys from 5 Google Accounts), Version History
+
+### Community 311 - "Community 311"
+Cohesion: 0.22
+Nodes (6): externalLinks, extractedLinks, fs, http, https, path
+
+### Community 312 - "Community 312"
+Cohesion: 0.25
+Nodes (7): 1. Files Inspected, 2. BLOCKING Findings, 3. SUGGESTION Findings, 4. NIT Findings, 5. Axis Scores, 6. Strengths & Remediations, PVE INDEPENDENT VERIFICATION — Breadcrumb Modernization (Plan 002)
+
+### Community 313 - "Community 313"
+Cohesion: 0.25
+Nodes (7): 1. Files inspected, 2. BLOCKING findings, 3. SUGGESTION findings, 4. NIT findings, 5. Five-axis scores (PVE rubric), code:tsx (// :304), code:ts (const docCategory = meta.type === 'series' ? 'Series Documen)
+
+### Community 314 - "Community 314"
+Cohesion: 0.25
+Nodes (8): API Key Health Tracking, code:javascript (class KeyMetadata {), code:javascript (markFailure(key, errorType) {), code:javascript (// GET /api/health), code:json ({), Exponential Backoff Strategy, Health Check Endpoint, 🔬 Technical Deep Dive
+
+### Community 315 - "Community 315"
+Cohesion: 0.25
+Nodes (8): code:json ({), code:env (# NewsAPI Keys (3 keys for rotation)), code:bash (# Clone and install), 🚀 Deployment and Testing, Environment Variables Setup, Quick Start Commands, Testing Strategy, Vercel Configuration
+
+### Community 316 - "Community 316"
+Cohesion: 0.25
+Nodes (8): 6.3 Technical SEO Implementation, 7.1 LLM-First SEO Strategy (llms.txt), 7.2 Blog-Driven Organic Growth, code:text (# Aviators Training Centre - LLM Discovery File), code:text (# AI/LLM Crawlers - Welcome!), code:typescript (<script type="application/ld+json">), code:typescript (// next-sitemap.config.js), PART 7: SEO & LLM STRATEGY
+
+### Community 317 - "Community 317"
+Cohesion: 0.25
+Nodes (7): code:mermaid (graph TD), Engineering Impact & Capabilities, Executive Overview, Key Pillars of the Defense Architecture:, MacroPulse Creator Platform — Executive Summary, The Solution: The 11-Layer Notion CMS Defense System, The Strategic Dilemma: Author Experience vs. API Fragility
+
+### Community 318 - "Community 318"
+Cohesion: 0.25
+Nodes (8): code:javascript (// Success logging), 🛡️ Error Handling & Production Readiness, Failure Recovery Strategies, Layer 1: Pre-Processing Validation, Layer 2: API Error Handling, Layer 3: Post-Processing Validation, Monitoring & Logging, Validation Layers
+
+### Community 319 - "Community 319"
+Cohesion: 0.25
+Nodes (7): code:block18 (Dental-AI-Automation-Suite/), Dental AI Automation Suite — Technical Documentation, Google Gemini Vision 2.0 Flash, n8n Workflow Orchestration, 📂 Repository Structure, Supporting Services, 🛠️ Technology Stack Deep Dive
+
+### Community 320 - "Community 320"
+Cohesion: 0.25
+Nodes (8): 2.1 Stream A: The Manager (Orchestration Layer), 2.2 Stream B: The Worker (Execution Layer), code:javascript (return $input.all().filter(item => item.json.isArchived !== ), **Key Insight: Why Batch Size = 1?**, **Node-by-Node Breakdown**, **Part 2: Deep Dive into Each Component**, **Purpose**, **Purpose**
+
+### Community 321 - "Community 321"
+Cohesion: 0.25
+Nodes (7): candidate1, candidate2, content, docUrlMatches, fs, path, relativeSlug
+
+### Community 322 - "Community 322"
+Cohesion: 0.25
+Nodes (7): content, files, fs, http, https, matches, urls
+
+### Community 323 - "Community 323"
+Cohesion: 0.29
+Nodes (6): 1. Files Inspected, 2. BLOCKING Findings, 3. SUGGESTION Findings, 4. NIT Findings, 5. Five-Axis Scores, PVE Independent Verification Report — Plan 003 (Docs UI/UX & URL Modernization)
+
+### Community 324 - "Community 324"
+Cohesion: 0.29
+Nodes (6): 1. Files Inspected, 2. BLOCKING Findings, 3. SUGGESTION Findings, 4. NIT Findings, 5. Five-Axis Scores, PVE INDEPENDENT VERIFIER — REPORT
+
+### Community 325 - "Community 325"
+Cohesion: 0.29
+Nodes (6): 1. Files inspected, 2. BLOCKING findings, 3. SUGGESTION findings, 4. NIT findings, 5. Five-axis scores with evidence, Independent Adversarial Verification — Native Blog Series System
+
+### Community 326 - "Community 326"
+Cohesion: 0.29
+Nodes (6): 5-Axis Scores, BLOCKING Findings, Files Inspected, NIT Findings, PVE Independent Verification — 002-native-blog-series-system, SUGGESTION Findings
+
+### Community 327 - "Community 327"
+Cohesion: 0.29
+Nodes (6): 1. Files inspected, 2. BLOCKING findings, 3. SUGGESTION findings, 4. NIT findings, 5. 5-axis scores, PVE Independent Verification — 002-native-blog-series-system
+
+### Community 328 - "Community 328"
+Cohesion: 0.29
+Nodes (6): code:ts (const PROJECT_ORDER: Record<string, number> = {), Executive Context, Pillar 1: Root Cause & Defect Inventory, Pillar 2: Project Ordering Matrix (OmniPost-Core -> #2), Pillar 3: Verification & Test Protocol, PLAN: Global Link Architecture Audit & Project Section Remediation
+
+### Community 329 - "Community 329"
+Cohesion: 0.29
+Nodes (7): 11.1 Contact Form & Email Issues, 11.2 Blog & CMS (Sanity) Issues, 11.3 Analytics & Authentication, 11.4 Deployment & Performance, code:bash (# Test Resend API health), code:bash (curl -X POST 'https://www.aviatorstrainingcentre.in/api/reva), PART 11: OPERATIONAL TROUBLESHOOTING GUIDE (CHEATSHEET)
+
+### Community 330 - "Community 330"
+Cohesion: 0.29
+Nodes (7): 12.1 Component Statistics & Structure, 12.2 Architectural Patterns, code:block50 (src/components/), Custom Hooks, Error Handling & Resilience, Part 12: Component Architecture & Patterns, Server vs. Client Components
+
+### Community 331 - "Community 331"
+Cohesion: 0.29
+Nodes (7): 1. Image Path Issues on Vercel, 2. SPA Routing 404 Errors, 3. Hero Carousel Stability, 4. Indian Network Optimization, Challenges Faced, code:json ({), code:jsx (// Before (broken on deployment))
+
+### Community 332 - "Community 332"
+Cohesion: 0.29
+Nodes (7): code:json ({), code:bash (npm run build), code:bash (git add .), Deployment and Testing, Deployment Steps, Testing Strategy, Vercel Configuration
+
+### Community 333 - "Community 333"
+Cohesion: 0.29
+Nodes (7): 10.1 Prerequisites, 10.2 Configuration Steps, 10.3 Adjusting Rate Limits, 10.4 Monitoring & Alerts, code:javascript (const REPO_OWNER = 'YourUsername';), code:javascript (// In Error node, send alert with:), **Part 10: Operational Guidelines**
+
+### Community 334 - "Community 334"
+Cohesion: 0.29
+Nodes (7): 6.2 Character Sanitization, 6.3 Filtering Logic for Edge Cases, code:block27 (Project: BIP | OmniPostAI), code:javascript (if (!input.name) return { json: { skipped: true } };), code:javascript (if (input.isArchived === true) // Skip), code:javascript (const pTag = input.tags.find(t => t.name.startsWith('Project), **Part 6: Tagging Strategy for Professional Organization**
+
+### Community 335 - "Community 335"
+Cohesion: 0.29
+Nodes (7): 7.1 Regex Pattern Analysis, 7.2 Recursive Scrubbing Guarantees, 7.3 What Gets Redacted, code:javascript (const SENSITIVE_REGEX = /password|token|secret|api_?key|auth), code:javascript (obj.level1.level2.level3.level4.level5.level6.level7.level8.), code:json ({), **Part 7: Security Implementation Details**
+
+### Community 336 - "Community 336"
+Cohesion: 0.29
+Nodes (7): 3. SEO & Metadata Properties, 📂 hasImages / Assets, 🌐 Shared_Canonical_URL, 📄 Shared_SEO_Description, 🏷️ Shared_SEO_Title, 🔗 Shared_Slug, 🏷️ Shared_Tags
+
+### Community 337 - "Community 337"
+Cohesion: 0.29
+Nodes (7): 4. Platform-Specific Draft Properties, 💻 DevTo Draft, 🟦 Hashnode Draft, 📰 Hashnode_Subtitle, 💼 LinkedIn Draft, 📝 Sanity Blog Draft, 🐦 Twitter Draft
+
+### Community 338 - "Community 338"
+Cohesion: 0.29
+Nodes (7): code:block10 (Use this tool to reason through your LinkedIn post structure), code:block11 (Use this tool to plan article structure BEFORE writing. Thin), code:block12 (Use this tool to plan blog structure BEFORE writing. Think t), code:block13 (Use this tool to plan the Dev.to article BEFORE writing. Thi), code:block14 (Use this tool to validate tweet structure BEFORE outputting.), code:block9 (Use this tool to plan your content strategy step-by-step BEF), Optimized Think Tool Descriptions Per Node
+
+### Community 339 - "Community 339"
+Cohesion: 0.33
+Nodes (5): Dimension Scores (Round 2), Findings Status, Next Action, PVE State Ledger — Universal Portfolio Docs & Asset Sync Engine, Scores by Round
+
+### Community 340 - "Community 340"
+Cohesion: 0.33
+Nodes (5): Audit Criteria, code:block1 (=== PVE VERIFICATION SUMMARY ===), Post-Execution Code Verification Prompt: Native Blog Series System, Required Output Format, Scope of Inspection
+
+### Community 341 - "Community 341"
+Cohesion: 0.33
+Nodes (5): Audit Criteria, code:block1 (=== PVE VERIFICATION SUMMARY ===), Context from Round 1, Post-Execution Code Verification Prompt: Native Blog Series System (Round 2), Round 2 Remediations Applied
+
+### Community 342 - "Community 342"
+Cohesion: 0.33
+Nodes (6): 1. How does the API key rotation work?, 2. Why not use a single API?, 3. How does caching reduce API calls by 90%?, 4. Is the application accessible?, 5. How do I add my own API keys?, ❓ FAQs
+
+### Community 343 - "Community 343"
+Cohesion: 0.33
+Nodes (6): Architecture Diagram, code:block3 (User Request Flow), code:block4 (AV-News-Stream/), Core Capabilities, 🏗️ Project Overview, Project Structure
+
+### Community 344 - "Community 344"
+Cohesion: 0.33
+Nodes (6): 15.1 Quick Start (Setup from Scratch), 15.2 Deployment (Vercel), 15.3 UTM Tracking Operations, code:bash (git clone <repo-url>), code:bash (npm run dev), Part 15: Deployment & Operations Manual
+
+### Community 345 - "Community 345"
+Cohesion: 0.33
+Nodes (6): 4.1 Why Airtable?, 4.2 Database Schema, 4.3 Airtable Views, 4.4 Workflow Integration, code:block24 (Website Form → Firebase → n8n → Airtable (New record, Status), PART 4: AIRTABLE CRM STRUCTURE
+
+### Community 346 - "Community 346"
+Cohesion: 0.33
+Nodes (6): 8.1 Vercel Deployment, 8.2 Lighthouse Optimization Strategy (Deep Dive), 8.3 Firebase Cost Optimization, 8.4 Monitoring, code:json ({), PART 8: PERFORMANCE & OPTIMIZATION
+
+### Community 347 - "Community 347"
+Cohesion: 0.33
+Nodes (6): code:block3 (┌───────────────────────────────────────────────────────────), code:javascript (const catalogues = {), Core Capabilities, Dynamic Catalog Generation, Project Overview, Technical Architecture
+
+### Community 348 - "Community 348"
+Cohesion: 0.33
+Nodes (6): FAQs, How were images optimized?, Is the project scalable for larger businesses?, What business impact was achieved?, What technologies were used in this project?, What were the main challenges faced?
+
+### Community 349 - "Community 349"
+Cohesion: 0.33
+Nodes (6): code:block8 ([Manual Trigger]), 🎥 Live Demonstration & Architecture, Performance Metrics, Problem Statement, 📄 Workflow 3: Invoice OCR Extractor, Workflow Architecture
+
+### Community 350 - "Community 350"
+Cohesion: 0.33
+Nodes (6): Architecture Diagram, code:block2 (┌─────────────────────────────────────────────────────────┐), code:block3 (Foodah/), Core Capabilities, Project Overview, Project Structure
+
+### Community 351 - "Community 351"
+Cohesion: 0.33
+Nodes (6): Code Splitting & Lazy Loading, code:javascript (const WL_recommendations = lazy(() => import("./src/pages/Wi), Custom Hooks for Resilience, Graceful Degradation, Shimmer UI for Perceived Performance, The Solution
+
+### Community 352 - "Community 352"
+Cohesion: 0.33
+Nodes (6): 1.1 Why "Loop-to-Webhook" Beats Traditional Approaches, 1.2 The Technical Elegance, code:block1 (Fetch → Filter → Loop Item → Backup Item → Next → ...), code:block2 (STREAM A (Manager):), How It Works (The "No Ghost Files" Logic), **Part 1: The Architecture Philosophy**
+
+### Community 353 - "Community 353"
+Cohesion: 0.33
+Nodes (6): 5.1 The 422/409 Self-Healing Loop, 5.2 Failure Isolation, code:block19 (Try Push), code:block20 (Worker #1 → Success), code:block21 (Worker #1 → Success), **Part 5: Error Handling & Resilience**
+
+### Community 354 - "Community 354"
+Cohesion: 0.33
+Nodes (6): 5. Asset Management Properties, 📁 Drive Folder Link, 📋 Image Task List, 📎 images, 🖼️ imagesURL, 📝 Notes
+
+### Community 355 - "Community 355"
+Cohesion: 0.33
+Nodes (5): 📋 Notion Content Calendar Properties Reference, Overview, Property Categories, Quick Reference Table, 📖 Table of Contents
+
+### Community 356 - "Community 356"
+Cohesion: 0.40
+Nodes (4): Applied Remediations & Polish, Final Machine Verification Gates, PVE State Ledger — 002-native-blog-series-system, Scores History
+
+### Community 357 - "Community 357"
+Cohesion: 0.40
+Nodes (5): Additional Libraries, Backend Stack, External APIs, Frontend Stack, 🛠️ Technologies and Tools Used
+
+### Community 358 - "Community 358"
+Cohesion: 0.40
+Nodes (5): 13.1 Sanity CMS Schema, 13.2 Firebase Realtime Database (Contact Forms), 13.3 Firestore (Analytics), code:typescript (interface Contact {), Part 13: Data Schemas & Models
+
+### Community 359 - "Community 359"
+Cohesion: 0.40
+Nodes (5): Accessibility Compliance, code:css (/* TailwindCSS responsive breakpoints optimized for Indian d), Mobile-First Responsive Design, Performance Optimizations, Technical Deep Dive
+
+### Community 360 - "Community 360"
+Cohesion: 0.40
+Nodes (5): Architecture Decisions, code:javascript (// Dynamic product filtering with debounced search), code:javascript (// Intersection observer-based lazy loading), Key Implementation Highlights, 💡 The Solution
+
+### Community 361 - "Community 361"
+Cohesion: 0.40
+Nodes (5): APIs & Services, Build Tools, Frontend Core, Supporting Libraries, Technologies and Tools Used
+
+### Community 362 - "Community 362"
+Cohesion: 0.40
+Nodes (5): 4.1 Why 2 Seconds Is The Magic Number, 4.2 Why Batch Size = 1, code:block17 (60 seconds / 30 requests = 2 seconds per request), code:block18 (Manager waits 2 seconds → Dispatches 1 Worker → Worker compl), **Part 4: Rate Limiting Mathematics**
+
+### Community 363 - "Community 363"
+Cohesion: 0.40
+Nodes (5): 9.1 Three Test Scenarios, 9.2 Mathematical Proofs, code:block34 (Manager Loop:), code:block35 (Manager dispatches via HTTP POST), **Part 9: Testing & Validation**
+
+### Community 364 - "Community 364"
+Cohesion: 0.40
+Nodes (5): 1. Core Content Properties, All Properties (Detailed), 📂 Category, 📝 Content Pages, ⭐ Priority
+
+### Community 365 - "Community 365"
+Cohesion: 0.40
+Nodes (5): 6. Scheduling & Timing Properties, 💼 LinkedIn Best Time To Post, 📅 PostedAt, ⏰ Processing Started, 🐦 Twitter Best Time to post
+
+### Community 366 - "Community 366"
+Cohesion: 0.40
+Nodes (5): 7. System & Tracking Properties, 📊 Engagement Score, ⚠️ ErrorLog, 🔢 ManualOrder, 🆔 SessionID
+
+### Community 367 - "Community 367"
+Cohesion: 0.40
+Nodes (5): code:javascript (// Example: Update Status after posting), Fetching Content from Notion, Session Management, Updating Properties via API, 🔧 Usage Notes for Automations
+
+### Community 368 - "Community 368"
+Cohesion: 0.40
+Nodes (5): 3. Think Tool Configuration, code:block8 (Use the tool to think about something. It will not obtain ne), Default Description (Pre-written), **SHOULD YOU CUSTOMIZE IT? YES - DEFINITELY**, What the Think Tool Does
+
+### Community 369 - "Community 369"
+Cohesion: 0.40
+Nodes (5): 4. SerpAPI Tool Usage, code:block15 (If you need current trending data, hashtags, or competitor a), Current State, Should Prompts Reference SerpAPI Specifically? NO., Why NOT Add SerpAPI to Generation Nodes
+
+### Community 370 - "Community 370"
+Cohesion: 0.40
+Nodes (5): 6. Prompt Modifications for Tool Usage, code:block22 (Before generating the final output, use available thinking t), Do Prompts Need Changes for Tools? MINIMAL., What NOT To Do, What TO Add (Optional, One Line Per Node)
+
+### Community 371 - "Community 371"
+Cohesion: 0.60
+Nodes (4): main(), str, run_js(), update_post()
+
+### Community 372 - "Community 372"
+Cohesion: 0.40
+Nodes (3): http, https, urlsToCheck
+
+### Community 373 - "Community 373"
+Cohesion: 0.50
+Nodes (3): Core Problems Being Solved:, Files Modified:, Your Review Task:
+
+### Community 374 - "Community 374"
+Cohesion: 0.50
+Nodes (4): Business Constraints, code:block1 (Without Solution:), The API Rate Limiting Problem, 🎯 The Challenge
+
+### Community 375 - "Community 375"
+Cohesion: 0.50
+Nodes (4): code:block2 (┌───────────────────────────────────────────────────────────), Dual-Architecture System, Key Architectural Decisions, 💡 The Solution
+
+### Community 376 - "Community 376"
+Cohesion: 0.50
+Nodes (4): 14.1 Integration Matrix, 14.2 Environment Config, code:bash (# Sanity), Part 14: API Reference & Integrations
+
+### Community 377 - "Community 377"
+Cohesion: 0.50
+Nodes (4): 9.1 What Worked Well, Key Technical Insights, PART 9: LESSONS LEARNED, What I'd Do Differently
+
+### Community 378 - "Community 378"
+Cohesion: 0.50
+Nodes (4): Core Stack, Development Tools, Supporting Libraries, Technologies and Tools Used
+
+### Community 379 - "Community 379"
+Cohesion: 0.50
+Nodes (4): Deployment and Testing, Deployment Benefits, Testing Strategy, Vercel Deployment Configuration
+
+### Community 380 - "Community 380"
+Cohesion: 0.50
+Nodes (4): code:block1 (┌───────────────────────────────────────────────────────────), Core Design Principles, High-Level Design, 📐 System Architecture Overview
+
+### Community 381 - "Community 381"
+Cohesion: 0.50
+Nodes (4): Cost Analysis, 📊 Production Deployment Considerations, Scalability, Security & Privacy
+
+### Community 382 - "Community 382"
+Cohesion: 0.50
+Nodes (4): 🚀 Getting Started, Prerequisites, Quick Start, Support & Questions
+
+### Community 383 - "Community 383"
+Cohesion: 0.50
+Nodes (4): 🎯 Lessons Learned & Best Practices, Recommendations for Similar Projects, What Could Be Improved, What Worked Well
+
+### Community 384 - "Community 384"
+Cohesion: 0.50
+Nodes (4): 2. Publishing Control Properties, ✅ Post Status, 📤 Post To, 🔄 Status
+
+### Community 385 - "Community 385"
+Cohesion: 0.50
+Nodes (3): content, fs, ids
+
+### Community 387 - "Community 387"
+Cohesion: 0.67
+Nodes (3): 📈 Business Impact, Quantified Results, Real-World Impact
+
+### Community 388 - "Community 388"
+Cohesion: 0.67
+Nodes (3): 🔮 Future Improvements, Priority Roadmap, Technical Debt
+
+### Community 389 - "Community 389"
+Cohesion: 0.67
+Nodes (3): 📈 Business Impact, Impact Breakdown, Quantified Results
+
+### Community 390 - "Community 390"
+Cohesion: 0.67
+Nodes (3): Desktop Views, Mobile View, 📸 Screenshots Gallery
+
+### Community 391 - "Community 391"
+Cohesion: 0.67
+Nodes (3): Future Improvements, Planned Feature Roadmap, Technical Roadmap
+
+### Community 392 - "Community 392"
+Cohesion: 0.67
+Nodes (3): Soft Skills, Technical Skills, What I Learned
+
+### Community 393 - "Community 393"
+Cohesion: 0.67
+Nodes (3): Challenges Faced, code:javascript (// Instead of direct Swiggy API), CORS Proxy Solution
+
+### Community 394 - "Community 394"
+Cohesion: 0.67
+Nodes (3): Desktop Views, Mobile View, Screenshots Gallery
+
+### Community 395 - "Community 395"
+Cohesion: 0.67
+Nodes (3): Soft Skills, Technical Skills, What I Learned
+
+### Community 396 - "Community 396"
+Cohesion: 0.67
+Nodes (3): Conclusion, Key Achievements, Skills Demonstrated
+
 ## Knowledge Gaps
-- **1534 isolated node(s):** `Overview`, `code:mermaid (graph TD)`, `1. Hybrid Data Strategy`, `2. Rendering Strategy`, `3. Asset Management` (+1529 more)
+- **2444 isolated node(s):** `extends`, `@typescript-eslint/no-explicit-any`, `@typescript-eslint/ban-ts-comment`, `@typescript-eslint/no-unused-vars`, `overrides` (+2439 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **29 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **27 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Community 44` to `Community 32`, `Community 164`, `Community 8`, `Community 10`, `Community 13`, `Community 16`, `Community 20`?**
-  _High betweenness centrality (0.010) - this node is a cross-community bridge._
-- **Why does `FallbackImageManager` connect `Community 261` to `Community 32`, `Community 66`, `Community 164`, `Community 262`, `Community 39`, `Community 38`, `Community 43`, `Community 44`, `Community 21`, `Community 58`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Why does `portfolioData` connect `Community 4` to `Community 32`, `Community 1`, `Community 264`, `Community 8`, `Community 10`, `Community 13`, `Community 14`, `Community 144`, `Community 223`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
-- **What connects `Overview`, `code:mermaid (graph TD)`, `1. Hybrid Data Strategy` to the rest of the system?**
-  _1534 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `cn()` connect `Community 8` to `Community 32`, `Community 164`, `Community 10`, `Community 44`, `Community 13`, `Community 16`, `Community 20`?**
+  _High betweenness centrality (0.004) - this node is a cross-community bridge._
+- **Why does `portfolioData` connect `Community 4` to `Community 32`, `Community 1`, `Community 164`, `Community 8`, `Community 14`, `Community 16`, `Community 144`, `Community 274`, `Community 24`, `Community 223`?**
+  _High betweenness centrality (0.003) - this node is a cross-community bridge._
+- **Why does `FallbackImageManager` connect `Community 164` to `Community 32`, `Community 38`, `Community 39`, `Community 47`, `Community 20`, `Community 21`, `Community 58`?**
+  _High betweenness centrality (0.002) - this node is a cross-community bridge._
+- **What connects `extends`, `@typescript-eslint/no-explicit-any`, `@typescript-eslint/ban-ts-comment` to the rest of the system?**
+  _2444 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.03333333333333333 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.13333333333333333 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._

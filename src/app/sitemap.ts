@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next';
-import { portfolioData } from '@/data/portfolio';
-import { getAllDocs } from '@/lib/docs-engine';
+import { getAllDocs, getCanonicalDocSlug } from '@/lib/docs-engine';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://amansuryavanshi.com';
@@ -19,20 +18,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: route === '' ? 1.0 : 0.8,
     }));
 
-    // Dynamic Project pages
-    const projects = portfolioData.projects.map((project) => ({
-        url: `${baseUrl}/projects/${project.id}`,
-        lastModified: new Date(), // Ideally this comes from the project data/CMS
-        changeFrequency: 'monthly' as const,
-        priority: 0.8,
-    }));
-
-    // Dynamic Documentation pages
+    // Dynamic Documentation pages (canonical 2-segment URLs without internal folder prefixes)
     let docsEntries: MetadataRoute.Sitemap = [];
     try {
         const docs = getAllDocs();
         docsEntries = docs.map((doc) => ({
-            url: `${baseUrl}/docs/${doc.slug.join('/')}`,
+            url: `${baseUrl}/docs/${getCanonicalDocSlug(doc).join('/')}`,
             lastModified: new Date(),
             changeFrequency: 'monthly' as const,
             priority: 0.8,
@@ -73,5 +64,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         console.error("Failed to fetch blog posts for sitemap:", error);
     }
 
-    return [...routes, ...projects, ...docsEntries, ...blogs];
+    return [...routes, ...docsEntries, ...blogs];
 }

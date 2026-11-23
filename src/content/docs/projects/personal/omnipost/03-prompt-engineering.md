@@ -1,4 +1,4 @@
----
+﻿---
 title: 03. Prompt Engineering
 seoDescription: >-
   Deep dive into advanced Agentic AI prompt engineering for n8n. Learn how
@@ -9,7 +9,7 @@ keywords:
   - Next.js
   - Agentic AI
   - OmniPost
-projectId: n8n-automation-suite
+projectId: omnipost-core
 type: series
 schemaType: TechArticle
 ---

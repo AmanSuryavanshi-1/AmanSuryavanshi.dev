@@ -3,69 +3,6 @@ import { getIcon } from '../icons/icon-map';
 
 const rawProjects = [
     {
-        id: "agent-reliability-harness",
-        title: "Agent Reliability Harness & SRE Proving Ground",
-        tagLine: "Enterprise AI Agent SRE: Bounded LangGraph StateGraphs, AST Ingestion & MicroVM Hardware Sandboxes",
-        category: "featured",
-        type: "open-source",
-        shortDescription: "Production-grade reliability harness for autonomous multi-agent systems and enterprise RAG pipelines. Features AST layout-aware document chunking, full-jitter exponential backoff, LangGraph HITL interrupt checkpoints, and microVM hardware sandboxing with eBPF egress firewalls. 25/25 automated tests green in 0.58s in a <100MB distroless container.",
-        description: "Autonomous agentic systems in production face severe failure modes: unconstrained ReAct loops, token-burning conversational ping-pong, pgvector RAM cliffs, unshielded task cancellations, and Docker socket escape vulnerabilities. Aman engineered the Agent Reliability Harness—a zero-slop production testing ground and runtime architecture. Features: (1) Discrete Ingestion FSM with full-jitter backoff and a 3-state Dead Letter Queue Circuit Breaker, (2) IBM Docling AST chunker preserving financial and statutory tables atomically with contextual breadcrumb trails, (3) True Hybrid RRF Search (k=60) combining pgvector HNSW with BM25 sparse retrieval and ONNX Cross-Encoder reranking, (4) Anthropic 4-breakpoint prompt caching saving >75% in API costs, (5) Bounded LangGraph StateGraphs with PostgresSaver WAL checkpoints and wire-safe token reducers, and (6) E2B/Firecracker microVM hardware execution sandboxes with eBPF egress firewalls blocking cloud metadata exfiltration (169.254.169.254).",
-        heroImageAlt: "Agent Reliability Harness C4 Architecture, LangGraph StateGraph, and Distributed Tracing Dashboard",
-        seo: {
-            title: "Agent Reliability Harness – Production AI Agent SRE & Ingestion Proving Ground",
-            description: "See how Aman Suryavanshi engineered an enterprise reliability harness for LangGraph agents, AST layout-aware RAG, and microVM sandboxing with 25/25 automated tests green.",
-            keywords: [
-                "AI Agent SRE",
-                "LangGraph StateGraph",
-                "Agent Reliability Harness",
-                "RAG AST Chunking",
-                "Prompt Caching FinOps",
-                "Aman Suryavanshi portfolio"
-            ],
-            canonicalPath: "/projects/agent-reliability-harness"
-        },
-        challenge: "Autonomous agentic systems and enterprise RAG pipelines deployed in mission-critical environments face catastrophic failure modes: blind character chunking destroys regulatory financial tables, unconstrained agent loops burn millions of tokens in polite chit-chat, vector database HNSW indexes trigger 90x latency spikes when exceeding RAM, and untrusted tool execution risks cloud credential theft via instance metadata endpoints.",
-        solution: "Architected a comprehensive 6-pillar SRE harness in Python 3.12: AST layout-aware document parsing with atomic table serialization and hierarchical breadcrumb injection; 3-state Dead Letter Queue circuit breakers with full-jitter exponential backoff; True Hybrid Reciprocal Rank Fusion (k=60) with ONNX Cross-Encoder reranking; Anthropic 4-breakpoint prompt caching with dynamic token cost modeling; bounded LangGraph StateGraphs with PostgresSaver WAL checkpoints and atomic tool-pairing reducers; and microVM hardware virtualization (Firecracker/E2B) with eBPF egress firewalls dropping packets to AWS metadata and private VPC subnets. Enforced by 25/25 automated PyTest suites in 0.58s packaged in a <100MB distroless non-root container.",
-        impact: [
-            "25 / 25 automated tests passing 100% green in 0.58s across ingestion, retrieval, state, and telemetry",
-            "78.5% LLM API cost reduction via Anthropic 4-breakpoint prompt caching with 6x faster TTFT",
-            "Zero table fragmentation on complex statutory circulars via AST layout-aware chunking",
-            "Zero duplicate financial side-effects during container crash recovery via deterministic idempotency keys",
-            "100% cloud credential theft prevention via eBPF egress drop rules on 169.254.169.254",
-            "<100MB multi-stage distroless non-root Docker container (UID 65532) with Kubernetes health probes"
-        ],
-        technicalOverview: "Built on Python 3.12 with async architecture. Ingestion leverages IBM Docling and LlamaParse for AST layout extraction. State management uses LangGraph StateGraphs with PostgresSaver checkpointer, recursion_limit=25, and wire-safe token reducers. Retrieval combines PostgreSQL 16 pgvector HNSW indexing (M=16, ef_construction=64) with BM25 sparse keyword search fused via Reciprocal Rank Fusion (k=60) and reranked using bge-reranker-base in ONNX Runtime INT8. Telemetry implements OpenTelemetry distributed tracing with W3C traceparent context propagation across async boundaries and regex PII sanitization. Containerized using gcr.io/distroless/python3-debian12:nonroot with /healthz liveness and /readyz readiness probes handling graceful connection draining.",
-        techStack: ["Python 3.12", "LangGraph", "PostgreSQL 16", "pgvector", "OpenTelemetry", "Docker", "PyTest", "FastAPI", "HTTPX", "ONNX Runtime", "Pydantic v2", "Redis", "eBPF", "Linux cgroups v2"],
-        badges: ["AI Agent SRE", "LangGraph", "Python 3.12", "pgvector", "OpenTelemetry", "Docker", "Production", "Open-Source", "FinOps", "Distributed Systems"],
-        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/AviatorsTrainingCentre/Docs_Assets/ASSET-13%20Homepage%20Screenshot.webp",
-        imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/v1764768016/aviators-training-centre/docs-assets/ASSET-13_Homepage_Screenshot.png",
-        videoYouTubeId: "",
-        video: "",
-        liveUrl: "https://amansuryavanshi.com/projects/agent-reliability-harness",
-        codeUrl: "https://github.com/AmanSuryavanshi-1/agent-reliability-harness",
-        blogUrl: "https://amansuryavanshi.com/blogs/agent-reliability-harness",
-        featured: true,
-        metrics: {
-            tests: "25/25 Green",
-            runtime: "0.58s",
-            savings: ">75%",
-            container: "<100MB",
-            latency: "<5ms",
-            coverage: "100%"
-        },
-        documentation: [
-            {
-                title: "C4 Architecture & ADRs",
-                url: "https://github.com/AmanSuryavanshi-1/agent-reliability-harness/blob/main/README.md"
-            },
-            {
-                title: "Automated Test Suite",
-                url: "https://github.com/AmanSuryavanshi-1/agent-reliability-harness/tree/main/tests"
-            }
-        ],
-        gallery: []
-    },
-    {
         id: "aviators-training-centre",
         title: "Aviators Training Centre",
         tagLine: "High-Performance Next.js 15 Platform + 74-Node n8n Lead Automation",
@@ -118,11 +55,11 @@ const rawProjects = [
         documentation: [
             {
                 title: "Executive Summary",
-                url: "/projects/aviators-training-centre-executive-summary"
+                url: "/docs/aviators-training-centre/executive-summary"
             },
             {
                 title: "Technical Documentation",
-                url: "/projects/aviators-training-centre-technical-documentation"
+                url: "/docs/aviators-training-centre/technical-documentation"
             }
         ],
         gallery: [
@@ -136,44 +73,115 @@ const rawProjects = [
         ]
     },
     {
-        id: "vivek-onpoint-platform",
-        title: "Vivek OnPoint Creator Platform",
+        id: "omnipost-core",
+        title: "OmniPost-Core: Autonomous Multi-Platform Content Engine",
+        tagLine: "122-Node n8n Workflow Engine + FastMCP (:3010) Second Brain Knowledge Bridge",
+        category: "featured",
+        type: "automation",
+        shortDescription: "Production-grade multi-agent content distribution system orchestrating 122 n8n nodes. Connects local Obsidian Second Brain via FastMCP (:3010) and Google NotebookLM via FastAPI (:3012). Features a 5-layer anti-slop linter, 300 DPI Playwright carousel compiler, and multi-platform publishing across 7+ networks.",
+        description: "A production-grade, multi-agent content distribution operating system designed to eliminate 100% of repetitive formatting, context extraction, and manual cross-posting overhead. Pulls living project context from a local Obsidian Second Brain via FastMCP (:3010), consults a zero-token NotebookLM research oracle via FastAPI (:3012), formats platform-native copy through an adversarial 5-Layer Slop Linter (banning 39 AI tells), compiles 300 DPI multi-slide carousels using headless Playwright, and autonomously publishes across 7+ distribution networks (LinkedIn, Twitter/X, Threads, Sanity, Dev.to, Hashnode, Reddit) on a $0/month operational budget.",
+        heroImageAlt: "OmniPost-Core Architecture and Workflow Engine",
+        seo: {
+            title: "OmniPost-Core – Autonomous Multi-Platform Content Engine",
+            description: "How Aman Suryavanshi engineered OmniPost-Core: a 122-node n8n workflow engine connecting Obsidian FastMCP and publishing across 7+ networks.",
+            keywords: [
+                "OmniPost Core",
+                "n8n automation",
+                "FastMCP",
+                "autonomous content engine",
+                "Aman Suryavanshi portfolio"
+            ],
+            canonicalPath: "/projects/omnipost-core"
+        },
+        challenge: "Build-in-public founders and creators struggle to maintain consistent, high-quality presence across multiple platforms while writing deep technical code. Manual cross-posting is time-consuming and error-prone, while conventional tools output generic, low-engagement AI slop that lacks deep code context and fails platform-specific formatting constraints.",
+        solution: "Engineered a 122-node dual-workflow engine in n8n (Part 1 Generation Engine + Part 2 Distribution Router). Implemented FastMCP (:3010) streaming gateway to inject verified project telemetry from Obsidian, an adversarial 5-layer slop linter in JavaScript/Node.js, headless Playwright carousel generation, and robust Dead-Letter Queues with retry backoff.",
+        impact: [
+            "122 n8n nodes orchestrated with zero-loss Dead-Letter Queue (DLQ) retry architecture",
+            "Eliminated 100% of manual social copy-pasting across 7+ distribution channels",
+            "FastMCP (:3010) live context bridge ground prompts in real code—zero AI hallucinations",
+            "300 DPI Playwright automated carousel generation for high-engagement LinkedIn slide decks",
+            "Contributed to 6,000+ total views and direct inbound lead conversions with $0/mo tool costs"
+        ],
+        technicalOverview: "Dual-stream n8n v1.x architecture combining multi-LLM routing (Gemini 2.5 Flash, GPT-4o, Claude 3.5 Sonnet) with custom Node.js code nodes for regex sanitization. FastMCP gateway running on Python FastMCP (:3010) streams Markdown notes from Obsidian. FastAPI bridge (:3012) queries Google NotebookLM. Playwright + Jinja2 scripts compile JSON specifications into 2160x2700 4:5 PNG carousels. Uses OAuth2 and REST APIs for publishing with automatic rate-limit cooldowns.",
+        techStack: ["n8n", "FastMCP", "FastAPI", "Python", "Playwright", "Docker", "GPT-4o", "Claude 3.5 Sonnet", "Gemini 2.5 Flash", "Twitter API", "LinkedIn API", "Notion API", "Node.js"],
+        badges: ["n8n", "AI/Automation", "FastMCP", "Open Source", "Playwright", "Production", "Multi-Agent"],
+        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-v2-architecture.webp",
+        imageUrlFallback: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-v2-architecture.webp",
+        liveUrl: null,
+        codeUrl: null,
+        blogUrl: "https://amansuryavanshi.com/blogs/n8n-automation",
+        featured: true,
+        metrics: {
+            workflows: "122 Nodes",
+            platforms: "7+ Networks",
+            bridge: "FastMCP :3010",
+            cost: "$0/month",
+            views: "6,000+"
+        },
+        gallery: [
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-v2-architecture.webp", alt: "OmniPost Architecture Overview", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-l2-part1-generation.webp", alt: "Part 1: Generation Workflow", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-l2-part2-distribution.webp", alt: "Part 2: Distribution Workflow", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-notion-schema.webp", alt: "Notion Database Schema", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-metrics-dashboard.webp", alt: "Metrics Dashboard", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-llm-routing.webp", alt: "LLM Routing Architecture", type: "image" }
+        ],
+        documentation: [
+            { title: "01. Executive Summary", url: "/docs/omnipost/01-executive-summary" },
+            { title: "02. Architecture and Flow", url: "/docs/omnipost/02-architecture-and-flow" },
+            { title: "03. Prompt Engineering", url: "/docs/omnipost/03-prompt-engineering" },
+            { title: "04. Platform Integrations", url: "/docs/omnipost/04-platform-integrations" },
+            { title: "05. Developer Journal", url: "/docs/omnipost/05-developer-journal" },
+            { title: "06. API and Infrastructure", url: "/docs/omnipost/06-api-and-infrastructure" },
+            { title: "07. Sanity Portfolio Integration Architecture", url: "/docs/omnipost/07-sanity-portfolio-integration-architecture" },
+            { title: "08. Obsidian MCP Setup Guide", url: "/docs/omnipost/08-obsidian-mcp-setup-guide" },
+            { title: "09. Notion Database Schema", url: "/docs/omnipost/09-notion-database-schema" },
+            { title: "10. AI Model Routing and Settings", url: "/docs/omnipost/10-ai-model-routing-and-settings" },
+            { title: "11. LinkedIn Carousel Implementation", url: "/docs/omnipost/11-linkedin-carousel-implementation" },
+            { title: "12. Portfolio API Reference", url: "/docs/omnipost/12-portfolio-api-reference" }
+        ]
+    },
+    {
+        id: "creator-intelligence-platform",
+        title: "MacroPulse Creator Platform",
         tagLine: "Next.js 16 + Headless Notion CMS (8 Relational DBs) & 11-Layer Defense System",
         category: "featured",
         type: "client",
-        shortDescription: "Static-first educational platform for financial creator Vivek OnPoint. Integrates 8 relational Notion databases with an 11-layer defense system: semaphore throttling (0.67 req/s), jittered exponential backoff, static emergency bypass snapshots, draft leakage guards, and edge rate limiting with Upstash Redis.",
-        description: "An enterprise-grade creator platform built on Next.js 16 App Router and Tailwind CSS v4, utilizing Notion as a headless CMS across 8 relational databases (Sources, Bookshelf, FAQ, Newsletter, Sponsors, Corrections). To eliminate Notion API rate limits and draft leaks, architected an 11-Layer Notion CMS Defense: 0.67 req/s Semaphore Throttler, jittered exponential backoff for transient 429/5xx errors, emergency bypass mode serving version-controlled static fallback snapshots, post-Zod draft leakage validation, and ISR freshness health probes (/api/health/isr-freshness). Enforces strict compliance guardrails (SEBI educational boundaries, ASCI sponsor disclosures, DPDP minimal consent).",
-        heroImageAlt: "Vivek OnPoint Creator Hub Architecture and Notion CMS Dashboard",
+        shortDescription: "Static-first educational & OSINT intelligence platform architected for a 1M+ follower financial and macro-geopolitics creator. Integrates 8 relational Notion databases with an 11-layer defense system: semaphore throttling (0.67 req/s), jittered exponential backoff, static emergency bypass snapshots, draft leakage guards, and edge rate limiting with Upstash Redis.",
+        description: "An enterprise-grade creator media & OSINT intelligence platform built on Next.js 16 App Router and Tailwind CSS v4, architected for a 1M+ follower financial creator ecosystem using Notion as a headless CMS across 8 relational databases (Sources, Bookshelf, FAQ, Newsletter, Sponsors, Corrections, Claims, Reels). To eliminate Notion API rate limits and draft leaks, engineered an 11-Layer Notion CMS Defense: 0.67 req/s Semaphore Throttler, jittered exponential backoff for transient 429/5xx errors, emergency bypass mode serving version-controlled static fallback snapshots, post-Zod draft leakage validation, and ISR freshness health probes (/api/health/isr-freshness). Enforces strict compliance guardrails (SEBI educational boundaries, ASCI sponsor disclosures, DPDP minimal consent).",
+        heroImageAlt: "MacroPulse Creator Platform OSINT Intelligence Vault and 11-Layer Headless Notion CMS Architecture",
         seo: {
-            title: "Vivek OnPoint Platform – Next.js 16 & 11-Layer Notion CMS Case Study",
-            description: "How Aman Suryavanshi engineered a static-first Next.js 16 platform with 8 relational Notion databases and an 11-layer defense system against API limits.",
+            title: "MacroPulse Creator Platform – Next.js 16 & 11-Layer Notion CMS Case Study",
+            description: "How Aman Suryavanshi engineered a static-first Next.js 16 platform for a 1M+ follower creator workflow with 8 relational Notion databases and an 11-layer defense system.",
             keywords: [
                 "Next.js 16 App Router",
                 "Headless Notion CMS",
                 "11-Layer Defense System",
                 "Upstash Redis Rate Limiting",
+                "Creator Platform Architecture",
+                "OSINT Intelligence Platform",
                 "Aman Suryavanshi portfolio"
             ],
-            canonicalPath: "/projects/vivek-onpoint-platform"
+            canonicalPath: "/projects#creator-intelligence-platform"
         },
-        challenge: "Creator platforms relying on Notion as a headless CMS face severe API bottlenecks: strict 3 req/s rate limits causing build crashes, accidental leakage of draft content, empty page rendering during outages, and compliance violations when displaying financial educational content without strict disclosure boundaries.",
+        challenge: "High-reach creator platforms relying on Notion as a headless CMS face severe API bottlenecks: strict 3 req/s rate limits causing build crashes, accidental leakage of draft content, empty page rendering during outages, and compliance violations when displaying financial educational content without strict disclosure boundaries.",
         solution: "Engineered an 11-Layer Notion CMS Defense System with a semaphore throttler (0.67 req/s), AWS-style jittered backoff, and static emergency bypass snapshots. Coupled with Upstash Redis edge rate limiting, strict Zod schema validation, and edge middleware that normalizes tracking parameters to avoid CDN cache fragmentation.",
         impact: [
             "100% build reliability with 0 Notion API 429 rate-limit breaches across all deployments",
             "Zero content loss via emergency static fallback snapshots during Notion downtime",
             "99.9% uptime with sub-second page loads powered by Vercel edge caching",
             "Full SEBI / ASCI / DPDP compliance enforced through server-side validation rules",
-            "Seamless headless authoring workflow for 8 relational databases"
+            "Seamless headless authoring workflow across 8 relational Notion databases"
         ],
         technicalOverview: "Next.js 16 App Router application styled with Tailwind CSS v4 and OKLCH color tokens. Integrates the Notion JavaScript SDK with custom throttling wrappers. Edge rate limiting is powered by @upstash/ratelimit on Upstash Redis. Runtime schema validation is enforced via Zod v3. Features automated ISR caching with freshness health probes (/api/health/isr-freshness) and edge middleware for cache-key normalization.",
         techStack: ["Next.js 16", "Notion API", "TypeScript", "Tailwind CSS", "Upstash Redis", "Zod", "Vercel", "Docker", "Node.js"],
-        badges: ["Next.js 16", "Notion CMS", "TypeScript", "Redis", "Security", "Production", "Client", "Full-Stack"],
-        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-v2-architecture.webp",
-        imageUrlFallback: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-v2-architecture.webp",
+        badges: ["Next.js 16", "Notion CMS", "TypeScript", "Redis", "Security", "Architecture", "1M+ Creator Scale", "Full-Stack"],
+        imageUrl: "/assets/projects/creator-intelligence-platform/osint-intelligence-vault.webp",
+        imageUrlFallback: "/assets/projects/creator-intelligence-platform/osint-intelligence-vault.webp",
         videoYouTubeId: "",
         video: "",
-        liveUrl: "https://vivekonpoint.com",
-        codeUrl: "https://github.com/AmanSuryavanshi-1/Vivek-OnPoint-Web",
+        liveUrl: null,
+        codeUrl: null,
         blogUrl: null,
         featured: true,
         metrics: {
@@ -182,56 +190,78 @@ const rawProjects = [
             rateLimit: "0.67 req/s",
             uptime: "99.9%",
             buildReliability: "100%"
-        }
+        },
+        documentation: [
+            {
+                title: "Executive Summary",
+                url: "/docs/creator-intelligence-platform/executive-summary"
+            },
+            {
+                title: "Technical Documentation",
+                url: "/docs/creator-intelligence-platform/technical-documentation"
+            }
+        ],
+        gallery: [
+            { src: "/assets/projects/creator-intelligence-platform/osint-intelligence-vault.webp", alt: "OSINT Intelligence Vault & Radial Matrix", type: "image" },
+            { src: "/assets/projects/creator-intelligence-platform/notion-cms-dashboard.webp", alt: "Creator Headless Notion CMS Master Dashboard", type: "image" },
+            { src: "/assets/projects/creator-intelligence-platform/notion-sources-database.webp", alt: "Notion Relational Sources & Policy Database", type: "image" },
+            { src: "/assets/projects/creator-intelligence-platform/notion-bookshelf-database.webp", alt: "Notion Relational Bookshelf Database", type: "image" },
+            { src: "/assets/projects/creator-intelligence-platform/osint-compliance-inspector.webp", alt: "SEBI Compliance & Primary Source Verification Inspector", type: "image" },
+            { src: "/assets/projects/creator-intelligence-platform/newsletter-distribution-ui.webp", alt: "Creator Newsletter & DPDP Consent Engine UI", type: "image" }
+        ]
     },
     {
         id: "notebooklm-py-pr276",
-        title: "notebooklm-py (16.5k★) — Core Auth & Asyncio Architecture PR #276",
-        tagLine: "Merged Core Architecture PR (+1,483 / -353 Lines) in Google NotebookLM Python Client",
+        title: "notebooklm-py (16.5k★) — HTTPX Auth Cookie Jar PR #276",
+        tagLine: "Merged Authentication Fix PR (+1,483 / -353 Lines) in Community notebooklm-py Client",
         category: "featured",
         type: "open-source",
-        shortDescription: "Engineered domain-preserving httpx cookie jar architecture resolving silent auth drops on cross-domain 302-redirects to accounts.google.com when short-lived tokens expire. Implemented atomic token storage (tempfile + chmod 0o600) and resolved Windows asyncio ProactorEventLoop policies.",
-        description: "Google's NotebookLM web interface relies on short-lived authentication cookies (~10 minutes) that redirect to accounts.google.com upon expiry. In notebooklm-py (the leading community Python API with 16.5k+ stars), the existing client passed raw Cookie headers that were silently dropped by httpx upon cross-domain redirects, causing catastrophic session termination. Aman architected and merged Core PR #276 (+1,483 / -353 lines): created a domain-preserving httpx cookie jar constructor (build_cookie_jar), introduced the DomainCookieMap type, wired atomic cookie persistence (save_cookies_to_storage using tempfile and chmod 0o600), and fixed Windows asyncio event loop policy mismatches.",
-        heroImageAlt: "notebooklm-py Core Architecture PR #276 GitHub Merge and Cookie Jar Architecture",
+        shortDescription: "Authored an AI-assisted, merged authentication fix in teng-lin/notebooklm-py replacing raw Cookie headers with a domain-preserving httpx.Cookies jar across cross-domain 302 redirects to accounts.google.com, plus atomic token storage (tempfile + chmod 0o600) and regression tests.",
+        description: "Google's NotebookLM web endpoints issue short-lived authentication cookies that redirect to accounts.google.com upon expiry. In community library teng-lin/notebooklm-py (16.5k+ stars), the existing client passed raw Cookie headers that were stripped by httpx upon cross-domain 302 redirects, breaking long-running CLI auth sessions. I authored an AI-assisted fix merged as PR #276 (+1,483 / -353 lines): implemented a domain-preserving httpx cookie jar constructor (build_cookie_jar), introduced DomainCookieMap, added atomic cookie persistence (save_cookies_to_storage using tempfile and chmod 0o600), and worked through maintainer review with automated regression tests.",
+        heroImageAlt: "teng-lin/notebooklm-py PR #276 Merged HTTPX Cookie Jar Architecture",
         seo: {
-            title: "notebooklm-py PR #276 – Core Auth & Windows Asyncio Fix Case Study",
-            description: "How Aman Suryavanshi re-architected auth cookie management and Windows asyncio loops in the 16.5k-star notebooklm-py open-source library.",
+            title: "notebooklm-py PR #276 – HTTPX Cookie Jar Auth Fix Case Study",
+            description: "How Aman Suryavanshi authored merged PR #276 in community repository teng-lin/notebooklm-py fixing cross-domain redirect cookie stripping.",
             keywords: [
                 "notebooklm-py PR 276",
                 "httpx cookie jar",
-                "Windows asyncio ProactorEventLoop",
+                "RFC 6265 cross-domain redirect",
                 "open source contribution",
                 "Aman Suryavanshi portfolio"
             ],
             canonicalPath: "/projects/notebooklm-py-pr276"
         },
-        challenge: "When Google auth cookies expire every 10 minutes, API requests receive a 302 redirect to accounts.google.com. Standard HTTP clients strip raw 'Cookie' request headers on cross-domain redirects for security reasons, instantly killing long-running CLI sessions. On Windows, default asyncio event loop policies caused fatal Subprocess/RPC transport crashes during cookie retrieval.",
-        solution: "Engineered an authoritative httpx.Cookies jar implementation that binds cookies to specific domains (allowing cross-domain redirect preservation). Built atomic storage synchronization using temporary files and 0o600 file permissions to ensure multi-process CLI safety. Resolved Windows ProactorEventLoop policy handling.",
+        challenge: "When short-lived auth cookies expired, API requests hit a 302 redirect to accounts.google.com. Compliant HTTP clients like httpx intentionally strip raw 'Cookie' request headers across cross-domain redirects, dropping session credentials mid-flow.",
+        solution: "Implemented a domain-bound httpx.Cookies jar (build_cookie_jar + DomainCookieMap) preserving cookies safely across authorized Google redirect hops, added atomic temporary-file storage synchronization (chmod 0o600), and iterated through upstream maintainer code review with regression tests.",
         impact: [
-            "Merged into core repository of notebooklm-py (16.5k+ GitHub stars)",
-            "+1,483 lines added, -353 lines refactored across 8 core architecture files",
-            "Eliminated 100% of session dropouts on 10-minute token expiration cycles",
-            "Restored full Windows compatibility across all async CLI commands",
-            "Enforced atomic file locking to prevent storage_state corruption across parallel jobs"
+            "Merged into community repository teng-lin/notebooklm-py (16.5k+ GitHub stars)",
+            "+1,483 lines added, -353 lines refactored across core auth & test files (resolving Issue #273)",
+            "Prevented cross-domain 302 redirect header stripping by switching raw headers to httpx.Cookies",
+            "Added automated pytest & pytest-asyncio regression coverage approved during maintainer review",
+            "Enforced atomic temp-file writes (os.replace + 0o600 permissions) for storage_state persistence"
         ],
-        technicalOverview: "Python 3.10+ async architecture utilizing httpx, asyncio, and Playwright for headless token harvesting. Implements custom cookie normalization logic, domain mapping, atomic file writing with os.replace, and automated unit test suites using pytest and pytest-asyncio.",
+        technicalOverview: "Python 3.10+ async architecture utilizing httpx, asyncio, and Playwright for token harvesting. Implements domain-aware cookie mapping, atomic storage persistence via os.replace, and automated regression suites using pytest and pytest-asyncio.",
         techStack: ["Python", "asyncio", "httpx", "Playwright", "pytest", "GitHub Actions"],
-        badges: ["Open Source", "Python", "AsyncIO", "Auth Architecture", "16.5k★", "Production"],
-        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/obsidian-mcp-network-topology.webp",
-        imageUrlFallback: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/obsidian-mcp-network-topology.webp",
+        badges: ["Open Source", "Python", "HTTPX", "Auth Architecture", "16.5k★", "PR Merged"],
+        imageUrl: "/assets/projects/notebooklm/notebooklm-py-pr276-github-merged.webp",
+        imageUrlFallback: "/assets/projects/notebooklm/notebooklm-py-pr276-github-merged.webp",
         videoYouTubeId: "",
         video: "",
-        liveUrl: "https://github.com/tomaarsen/notebooklm-py/pull/276",
-        codeUrl: "https://github.com/AmanSuryavanshi-1/notebooklm-py/commit/5c3f325391eef248b94b885972e032212be009ca",
+        liveUrl: null,
+        codeUrl: "https://github.com/teng-lin/notebooklm-py/pull/276",
         blogUrl: null,
         featured: true,
         metrics: {
             githubStars: "16.5k+",
             codeDiff: "+1,483 / -353",
-            sessionDrops: "0%",
-            platform: "Python / Asyncio",
+            authFix: "HTTPX Cookie Jar",
+            platform: "Python / HTTPX",
             testsPassing: "100%"
-        }
+        },
+        gallery: [
+            { src: "/assets/projects/notebooklm/notebooklm-py-pr276-github-merged.webp", alt: "GitHub PR #276 Merged (+1,483 / -353 lines)", type: "image" },
+            { src: "/assets/projects/notebooklm/notebooklm-py-async-httpx-architecture.svg", alt: "notebooklm-py Async HTTPX & Cookie Jar Architecture", type: "image" }
+        ]
     },
     {
         id: "barkat-enterprise",
@@ -280,7 +310,7 @@ const rawProjects = [
         documentation: [
             {
                 title: "Technical Documentation",
-                url: "/projects/barkat-enterprise-technical-documentation"
+                url: "/docs/barkat-enterprise/technical-documentation"
             }
         ]
     },
@@ -326,7 +356,7 @@ const rawProjects = [
         documentation: [
             {
                 title: "Technical Documentation",
-                url: "/projects/av-newsstream-technical-documentation"
+                url: "/docs/av-newsstream/technical-documentation"
             }
         ]
     },
@@ -371,64 +401,8 @@ const rawProjects = [
         documentation: [
             {
                 title: "Technical Documentation",
-                url: "/projects/foodah-technical-documentation"
+                url: "/docs/foodah/technical-documentation"
             }
-        ]
-    },
-    {
-        id: "n8n-automation-suite",
-        title: "OmniPost-Core: Autonomous Multi-Platform Content Engine",
-        tagLine: "122-Node n8n Workflow Engine + FastMCP (:3010) Second Brain Knowledge Bridge",
-        category: "featured",
-        type: "automation",
-        shortDescription: "Production-grade multi-agent content distribution system orchestrating 122 n8n nodes. Connects local Obsidian Second Brain via FastMCP (:3010) and Google NotebookLM via FastAPI (:3012). Features a 5-layer anti-slop linter, 300 DPI Playwright carousel compiler, and multi-platform publishing across 7+ networks.",
-        description: "A production-grade, multi-agent content distribution operating system designed to eliminate 100% of repetitive formatting, context extraction, and manual cross-posting overhead. Pulls living project context from a local Obsidian Second Brain via FastMCP (:3010), consults a zero-token NotebookLM research oracle via FastAPI (:3012), formats platform-native copy through an adversarial 5-Layer Slop Linter (banning 39 AI tells), compiles 300 DPI multi-slide carousels using headless Playwright, and autonomously publishes across 7+ distribution networks (LinkedIn, Twitter/X, Threads, Sanity, Dev.to, Hashnode, Reddit) on a $0/month operational budget.",
-        challenge: "Build-in-public founders and creators struggle to maintain consistent, high-quality presence across multiple platforms while writing deep technical code. Manual cross-posting is time-consuming and error-prone, while conventional tools output generic, low-engagement AI slop that lacks deep code context and fails platform-specific formatting constraints.",
-        solution: "Engineered a 122-node dual-workflow engine in n8n (Part 1 Generation Engine + Part 2 Distribution Router). Implemented FastMCP (:3010) streaming gateway to inject verified project telemetry from Obsidian, an adversarial 5-layer slop linter in JavaScript/Node.js, headless Playwright carousel generation, and robust Dead-Letter Queues with retry backoff.",
-        impact: [
-            "122 n8n nodes orchestrated with zero-loss Dead-Letter Queue (DLQ) retry architecture",
-            "Eliminated 100% of manual social copy-pasting across 7+ distribution channels",
-            "FastMCP (:3010) live context bridge ground prompts in real code—zero AI hallucinations",
-            "300 DPI Playwright automated carousel generation for high-engagement LinkedIn slide decks",
-            "Contributed to 6,000+ total views and direct inbound lead conversions with $0/mo tool costs"
-        ],
-        technicalOverview: "Dual-stream n8n v1.x architecture combining multi-LLM routing (Gemini 2.5 Flash, GPT-4o, Claude 3.5 Sonnet) with custom Node.js code nodes for regex sanitization. FastMCP gateway running on Python FastMCP (:3010) streams Markdown notes from Obsidian. FastAPI bridge (:3012) queries Google NotebookLM. Playwright + Jinja2 scripts compile JSON specifications into 2160x2700 4:5 PNG carousels. Uses OAuth2 and REST APIs for publishing with automatic rate-limit cooldowns.",
-        techStack: ["n8n", "FastMCP", "FastAPI", "Python", "Playwright", "Docker", "GPT-4o", "Claude 3.5 Sonnet", "Gemini 2.5 Flash", "Twitter API", "LinkedIn API", "Notion API", "Node.js"],
-        badges: ["n8n", "AI/Automation", "FastMCP", "Open Source", "Playwright", "Production", "Multi-Agent"],
-        imageUrl: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-l1-macro.webp",
-        imageUrlFallback: "https://res.cloudinary.com/dr0lrme36/image/upload/f_auto/q_auto/c_limit,w_1600/v1/Omni_post_Ai_autoamtion/omni_post_ai_assets/Part_1_Generation_Workflow",
-        liveUrl: "https://n8n.aviatorstrainingcentre.in",
-        codeUrl: "https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/tree/main/Omni-Post-AI-Automation",
-        blogUrl: "https://amansuryavanshi.com/blogs/n8n-automation",
-        featured: true,
-        metrics: {
-            workflows: "122 Nodes",
-            platforms: "7+ Networks",
-            bridge: "FastMCP :3010",
-            cost: "$0/month",
-            views: "6,000+"
-        },
-        gallery: [
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/omnipost-l1-macro.webp", alt: "Part 1: Generation Workflow", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Part_2_Distribution_Workflow.webp", alt: "Part 2: Distribution Workflow", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_2_Notion_Database_Schema_FullSize_Screenshot_zoomable.webp", alt: "Notion Database Schema", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_3_Metrics_Dashboard.webp", alt: "Metrics Dashboard", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_4_Error_Handling_Architecture.webp", alt: "Error Handling Architecture", type: "image" },
-            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/OMNI-POST-AI-Assets/Asset_5_LLM_Routing.webp", alt: "LLM Routing Architecture", type: "image" }
-        ],
-        documentation: [
-            { title: "01. Executive Summary", url: "/docs/omnipost/01-executive-summary" },
-            { title: "02. Architecture and Flow", url: "/docs/omnipost/02-architecture-and-flow" },
-            { title: "03. Prompt Engineering", url: "/docs/omnipost/03-prompt-engineering" },
-            { title: "04. Platform Integrations", url: "/docs/omnipost/04-platform-integrations" },
-            { title: "05. Developer Journal", url: "/docs/omnipost/05-developer-journal" },
-            { title: "06. API and Infrastructure", url: "/docs/omnipost/06-api-and-infrastructure" },
-            { title: "07. Sanity Portfolio Integration Architecture", url: "/docs/omnipost/07-sanity-portfolio-integration-architecture" },
-            { title: "08. Obsidian MCP Setup Guide", url: "/docs/omnipost/08-obsidian-mcp-setup-guide" },
-            { title: "09. Notion Database Schema", url: "/docs/omnipost/09-notion-database-schema" },
-            { title: "10. AI Model Routing and Settings", url: "/docs/omnipost/10-ai-model-routing-and-settings" },
-            { title: "11. LinkedIn Carousel Implementation", url: "/docs/omnipost/11-linkedin-carousel-implementation" },
-            { title: "12. Portfolio API Reference", url: "/docs/omnipost/12-portfolio-api-reference" }
         ]
     },
     {
@@ -479,11 +453,11 @@ const rawProjects = [
         documentation: [
             {
                 title: "Executive Summary",
-                url: "/projects/n8n-github-backup-executive-summary"
+                url: "/docs/n8n-github-backup/executive-summary"
             },
             {
                 title: "Technical Documentation",
-                url: "/projects/n8n-github-backup-technical-documentation"
+                url: "/docs/n8n-github-backup/technical-documentation"
             }
         ]
     },
@@ -598,7 +572,7 @@ const rawProjects = [
         videoYouTubeId: "tbtadaI_mow",
         video: "",
         liveUrl: "",
-        codeUrl: "https://github.com/AmanSuryavanshi-1/Dental-AI-Automation-Suite",
+        codeUrl: null,
         blogUrl: "",
         featured: true,
         metrics: {
@@ -607,11 +581,14 @@ const rawProjects = [
             automation: "90%+"
         },
         documentation: [
-            { title: "Executive Summary", url: "/projects/dental-ai-executive-summary" },
-            { title: "Technical Documentation", url: "/projects/dental-ai-technical-documentation" }
+            { title: "Executive Summary", url: "/docs/dental-ai-automation/executive-summary" },
+            { title: "Technical Documentation", url: "/docs/dental-ai-automation/technical-documentation" }
         ],
         gallery: [
             { src: "https://img.youtube.com/vi/tbtadaI_mow/maxresdefault.jpg", alt: "Label Generator", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/DentalAI/workflow-1-architecture.webp", alt: "Dental AI Batch OCR Pipeline Architecture", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/DentalAI/workflow-2-architecture.webp", alt: "Dental AI Clinical Validation Workflow", type: "image" },
+            { src: "https://cdn.jsdelivr.net/gh/AmanSuryavanshi-1/portfolio-assets@main/DentalAI/workflow-3-architecture.webp", alt: "Dental AI Automated Label Generator Workflow", type: "image" },
             { src: "https://img.youtube.com/vi/tlI2jZw_VVA/maxresdefault.jpg", alt: "Clinic Compliance", type: "image" },
             { src: "https://img.youtube.com/vi/KAO0HJNRlGU/maxresdefault.jpg", alt: "Invoice OCR", type: "image" }
         ]

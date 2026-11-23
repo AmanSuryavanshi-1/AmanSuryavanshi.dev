@@ -30,7 +30,7 @@ https://amansuryavanshi.com/api/portfolio
 | `barkat-enterprise` | Barkat Enterprise |
 | `av-newsstream` | AV NewsStream |
 | `foodah` | Foodah |
-| `n8n-automation-suite` | Omni-Post AI Automation |
+| `omnipost-core` | OmniPost-Core: Autonomous Multi-Platform Content Engine |
 | `n8n-github-backup` | N8N GitHub Backup V5 |
 | `portfolio-website` | AmanSuryavanshi.dev |
 
@@ -185,7 +185,7 @@ GET /api/portfolio?sections=projects
 
 ### 4. Featured Projects Full Details
 ```
-GET /api/portfolio?projects=aviators-training-centre,n8n-automation-suite,n8n-github-backup
+GET /api/portfolio?projects=aviators-training-centre,omnipost-core,n8n-github-backup
 ```
 
 ### 5. Complete Profile

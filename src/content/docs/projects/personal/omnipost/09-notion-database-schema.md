@@ -1,4 +1,4 @@
----
+﻿---
 title: 09. Notion Database Schema
 seoDescription: >-
   Inside the content engine: Explore the advanced Notion Database schema that
@@ -9,7 +9,7 @@ keywords:
   - Next.js
   - Agentic AI
   - OmniPost
-projectId: n8n-automation-suite
+projectId: omnipost-core
 type: series
 schemaType: TechArticle
 ---

@@ -1,9 +1,8 @@
 /**
  * @jest-environment node
  */
-import fs from 'fs';
-import path from 'path';
 import nextConfig from '../../next.config';
+import { getDocBySlug } from '@/lib/docs-engine';
 
 describe('Next.js Config Redirects & Host Normalization', () => {
   let redirects: Array<{ source: string; destination: string; permanent: boolean; has?: Array<{ type: string; value: string }> }> = [];
@@ -27,27 +26,27 @@ describe('Next.js Config Redirects & Host Normalization', () => {
     }
   });
 
-  it('guarantees every documentation redirect target maps to a physical markdown file', () => {
-    const docsDir = path.join(process.cwd(), 'src', 'content', 'docs');
+  it('guarantees every documentation redirect target resolves via docs-engine', () => {
     const docRedirects = redirects.filter((r) =>
-      r.destination.startsWith('/docs/projects/') && !r.destination.includes(':')
+      r.destination.startsWith('/docs/') && !r.destination.includes(':')
     );
 
     expect(docRedirects.length).toBeGreaterThan(0);
 
     for (const r of docRedirects) {
-      const relativePath = r.destination.replace(/^\/docs\//, '') + '.md';
-      const fullPath = path.join(docsDir, relativePath);
-      expect(fs.existsSync(fullPath)).toBe(true);
+      const slug = r.destination.replace(/^\/docs\//, '').split('/');
+      expect(getDocBySlug(slug)).not.toBeNull();
     }
   });
 
-  it('normalizes historical 404 paths to valid documentation routes', () => {
+  it('normalizes historical 404 paths and legacy 4-segment paths to clean 2-segment routes', () => {
     const historicalSources = [
-      '/docs/omnipost/01-executive-summary',
+      '/docs/projects/clientele/:project/:doc*',
+      '/docs/projects/personal/:project/:doc*',
       '/projects/omni-post-ai-executive-summary',
       '/projects/omni-post-ai-technical-documentation',
-      '/docs/projects/personal/omnipost/02-technical-architecture'
+      '/docs/omnipost/02-technical-architecture',
+      '/projects/vivek-onpoint-platform',
     ];
 
     for (const source of historicalSources) {

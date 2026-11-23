@@ -8,15 +8,15 @@ export const experienceData: ExperienceItem[] = [
         duration: "1.5+ years",
         achievements: [
             "Generated ₹300K+ ($3.5K+) client revenue via programmatic SEO, Next.js 15, and 74-node n8n CRM automation (110K+ GSC impressions)",
-            "Merged Core PR #276 (+1,483 / -353 lines) in notebooklm-py (16.5k★) fixing domain cookie preservation and Windows asyncio event loops",
-            "Architected Vivek-OnPoint platform with Next.js 16, Headless Notion CMS (8 DBs), and an 11-layer defense system (0.67 req/s throttler, bypass snapshots)",
+            "Authored & merged PR #276 (+1,483 / -353 lines) in community notebooklm-py (16.5k★) fixing cross-domain HTTPX cookie jar persistence and auth regression tests",
+            "Architected MacroPulse Creator Platform (1M+ follower creator media architecture) with Next.js 16, Headless Notion CMS (8 DBs), and an 11-layer defense system (0.67 req/s throttler, bypass snapshots)",
             "Built OmniPost-Core: 122-node self-healing n8n engine with FastMCP (:3010) knowledge gateway and 300 DPI Playwright carousel compiler"
         ],
         keyProjects: [
             { title: "Aviators Training Centre", url: "/projects#aviators-training-centre" },
-            { title: "Vivek-OnPoint Platform", url: "/projects#vivek-onpoint-platform" },
-            { title: "notebooklm-py PR #276 (16.5k★)", url: "https://github.com/tomaarsen/notebooklm-py/pull/276" },
-            { title: "OmniPost-Core", url: "/projects#n8n-automation-suite" }
+            { title: "MacroPulse Creator Platform", url: "/projects#creator-intelligence-platform" },
+            { title: "notebooklm-py PR #276 (16.5k★)", url: "https://github.com/teng-lin/notebooklm-py/pull/276" },
+            { title: "OmniPost-Core", url: "/projects#omnipost-core" }
         ]
     },
     {

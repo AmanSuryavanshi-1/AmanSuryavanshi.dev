@@ -47,21 +47,30 @@ describe('Sitemap Generator', () => {
     const docEntries = entries.filter((e) => e.url.startsWith('https://amansuryavanshi.com/docs/'));
     expect(docEntries.length).toBeGreaterThanOrEqual(20);
 
-    // Verify key case study doc exists
+    // Verify key case study doc uses clean 2-segment canonical URL (no clientele/personal leaks)
     const omnipostDoc = entries.find((e) =>
-      e.url.includes('/docs/projects/personal/omnipost/01-executive-summary')
+      e.url === 'https://amansuryavanshi.com/docs/omnipost/01-executive-summary'
     );
     expect(omnipostDoc).toBeDefined();
+
+    const creatorDoc = entries.find((e) =>
+      e.url === 'https://amansuryavanshi.com/docs/creator-intelligence-platform/executive-summary'
+    );
+    expect(creatorDoc).toBeDefined();
+
+    // Ensure no internal folder groupings leak into sitemap URLs
+    const leakedUrls = entries.filter((e) => e.url.includes('/docs/projects/'));
+    expect(leakedUrls).toHaveLength(0);
   });
 
-  it('includes dynamic projects under https://amansuryavanshi.com/projects/', async () => {
+  it('omits nonexistent /projects/[id] routes from sitemap to avoid 404s', async () => {
     delete process.env.NEXT_PUBLIC_SITE_URL;
     const entries = await sitemap();
 
-    const projectEntries = entries.filter((e) =>
+    const deadProjectRoutes = entries.filter((e) =>
       e.url.startsWith('https://amansuryavanshi.com/projects/')
     );
-    expect(projectEntries.length).toBeGreaterThan(0);
+    expect(deadProjectRoutes).toHaveLength(0);
   });
 
   it('includes dynamic blog posts under https://amansuryavanshi.com/blogs/', async () => {

@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://amansuryavanshi.com";
+import { buildProjectsBreadcrumbJsonLd, SITE_URL } from '@/lib/breadcrumb-utils';
 
 export const metadata: Metadata = {
     title: "Projects | Aman Suryavanshi",
@@ -28,10 +27,20 @@ export const metadata: Metadata = {
     },
 };
 
+const breadcrumbJsonLd = buildProjectsBreadcrumbJsonLd();
+
 export default function ProjectsLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    return <>{children}</>;
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, '\\u003c') }}
+            />
+            {children}
+        </>
+    );
 }

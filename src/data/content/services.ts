@@ -13,7 +13,7 @@ export const servicesData: ServiceData[] = [
         icon: "GitBranch",
         image: "/services/revenue-ops.png",
         relatedProjects: [
-            { title: "Case Study: ₹300K Revenue via Automation", url: "/projects/aviators-training-centre-executive-summary" }
+            { title: "Case Study: ₹300K Revenue via Automation", url: "/docs/aviators-training-centre/executive-summary" }
         ]
     },
     {
@@ -43,7 +43,7 @@ export const servicesData: ServiceData[] = [
         icon: "Layout",
         image: "/services/dashboard.png",
         relatedProjects: [
-            { title: "Case Study: 95+ Lighthouse Dashboard", url: "/projects/aviators-training-centre-technical-documentation" }
+            { title: "Case Study: 95+ Lighthouse Dashboard", url: "/docs/aviators-training-centre/technical-documentation" }
         ]
     },
     {
@@ -58,7 +58,7 @@ export const servicesData: ServiceData[] = [
         icon: "Search",
         image: "/services/seo-dominance.png",
         relatedProjects: [
-            { title: "Case Study: 110K+ Impressions via Entity SEO", url: "/projects/aviators-training-centre-executive-summary" }
+            { title: "Case Study: 110K+ Impressions via Entity SEO", url: "/docs/aviators-training-centre/executive-summary" }
         ]
     }
 ];

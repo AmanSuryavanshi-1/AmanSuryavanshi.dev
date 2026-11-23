@@ -61,7 +61,7 @@ export const metadata: Metadata = {
         "notebooklm-py PR 276",
         "Aviators Training Centre",
         "OmniPost Core",
-        "Vivek OnPoint Platform",
+        "MacroPulse Creator Platform",
         // LOCATIONS
         "AI Engineer Bengaluru",
         "Technical Solutions Engineer Delhi NCR",
@@ -279,7 +279,7 @@ const structuredData = {
                     "name": "What are Aman Suryavanshi's core receipts and technical achievements?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Aman's four flagship receipts include: (1) Aviators Training Centre: Next.js 15 + pSEO platform generating ₹300,000+ ($3.5K+) revenue, 110K+ GSC impressions, and 95+ Lighthouse score. (2) Vivek-OnPoint Platform: Next.js 16 + Headless Notion CMS (8 relational DBs) with an 11-Layer Defense System eliminating API limits. (3) notebooklm-py (16.5k★): Merged Core PR #276 (+1,483 / -353 lines) fixing short-lived auth cookie drops on cross-domain 302 redirects and Windows asyncio event loop policy. (4) OmniPost-Core: 122-node self-healing n8n engine connected to an Obsidian Second Brain via FastMCP (:3010)."
+                        "text": "Aman's four flagship receipts include: (1) Aviators Training Centre: Next.js 15 + SEO platform with reported ₹300,000+ ($3.5K+) client revenue, 110K+ GSC impressions, and 95+ Lighthouse score. (2) MacroPulse Creator Platform (1M+ Follower Creator Architecture): Next.js 16 + Headless Notion CMS (8 relational DBs) with 11-layer defense, 0.67 req/s throttling, 429 retry, and Zod snapshot fallbacks. (3) notebooklm-py (16.5k★): Merged PR #276 (+1,483 / -353 lines) in community repo teng-lin/notebooklm-py fixing short-lived auth cookie drops on cross-domain 302 redirects via an httpx cookie jar and regression tests. (4) OmniPost-Core: separate generation and distribution n8n workflows connected to an Obsidian Second Brain via FastMCP (:3010)."
                     }
                 },
                 {
@@ -300,10 +300,10 @@ const structuredData = {
                 },
                 {
                     "@type": "Question",
-                    "name": "What is Aman Suryavanshi's experience with open source and Google NotebookLM?",
+                    "name": "What is Aman Suryavanshi's experience with open source and notebooklm-py?",
                     "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Aman authored and merged Core PR #276 (+1,483 / -353 lines) in notebooklm-py (16.5k+ stars on GitHub), resolving silent authentication cookie dropouts on cross-domain redirects to accounts.google.com via an httpx cookie jar, atomic token storage (tempfile + chmod 0o600), and fixing Windows ProactorEventLoop policies."
+                        "text": "Aman authored and merged PR #276 (+1,483 / -353 lines) in the community teng-lin/notebooklm-py repository (16.5k+ stars on GitHub), resolving cross-domain redirect cookie drops to accounts.google.com via an httpx cookie jar, atomic token storage (tempfile + chmod 0o600), and automated pytest regression tests."
                     }
                 }
             ]
@@ -311,14 +311,14 @@ const structuredData = {
         {
             "@type": "SoftwareSourceCode",
             "@id": `${SITE_URL}#notebooklm-py-pr276`,
-            name: "notebooklm-py PR #276: Core Auth Cookie Jar & Windows Asyncio Fix",
+            name: "notebooklm-py PR #276: HTTPX Auth Cookie Jar & Persistence Fix",
             programmingLanguage: "Python",
-            runtimePlatform: "Python 3.10+, Windows, Linux, macOS",
-            codeRepository: "https://github.com/tomaarsen/notebooklm-py/pull/276",
+            runtimePlatform: "Python 3.10+",
+            codeRepository: "https://github.com/teng-lin/notebooklm-py/pull/276",
             author: {
                 "@id": `${SITE_URL}#person`
             },
-            description: "Merged core architectural pull request in Google NotebookLM's leading Python library (16.5k stars), implementing domain-preserving cookie jars and resolving Windows asyncio ProactorEventLoop policies."
+            description: "Merged pull request in the community Python library teng-lin/notebooklm-py (16.5k stars), implementing domain-preserving httpx cookie jars, atomic persistence, and regression tests."
         }
     ]
 };

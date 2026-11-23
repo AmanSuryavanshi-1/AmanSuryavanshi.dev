@@ -33,10 +33,10 @@ This document provides deep-context technical architecture, production receipts,
   - Programmatic SEO engine capturing #1 rankings across 50+ commercial aviation pilot queries.
   - Zero-latency client-side caching combined with React Server Components (RSC) to sustain sub-2s First Contentful Paint (FCP) on mobile networks.
 
-### Receipt 2: Vivek OnPoint Creator Platform
-- URL: https://vivekonpoint.com
-- Repository: https://github.com/AmanSuryavanshi-1/Vivek-OnPoint-Web
-- Category: Production Creator Platform (Headless Notion CMS)
+### Receipt 2: MacroPulse Creator Platform (1M+ Follower Creator Scale)
+- Documentation: https://amansuryavanshi.com/docs/creator-intelligence-platform/executive-summary
+- Technical Specs: https://amansuryavanshi.com/docs/creator-intelligence-platform/technical-documentation
+- Category: Reference Creator Platform (Headless Notion CMS, 1M+ Follower Scale)
 - Commercial & Operational Impact:
   - 100% build reliability across all Vercel edge deployments
   - 0 Notion API 429 rate-limit breaches (down from frequent build breakages)
@@ -53,11 +53,11 @@ This document provides deep-context technical architecture, production receipts,
   8. SEBI / ASCI Compliance Scanner: Automated regex verification checking for mandated educational disclosures and sponsor tags.
   9. ISR Freshness Probes: Automated health check endpoint (/api/health/isr-freshness) alerting if caches exceed SLA.
   10. Strict Zod Schema Parsing: Discriminated union validation transforming raw Notion block trees into typesafe UI models.
-  11. Multi-Database Relational Mapping: Efficiently resolves relations across 8 Notion databases (Sources, Bookshelf, FAQ, Newsletter, Sponsors, Corrections).
+  11. Multi-Database Relational Mapping: Efficiently resolves relations across 8 Notion databases (Sources, Bookshelf, FAQ, Newsletter, Sponsors, Corrections, Claims, Reels).
 
 ### Receipt 3: notebooklm-py (16.5k★) Core Architecture Contribution
-- Pull Request: https://github.com/tomaarsen/notebooklm-py/pull/276
-- Repository: https://github.com/tomaarsen/notebooklm-py (16.5k+ GitHub Stars)
+- Pull Request: https://github.com/teng-lin/notebooklm-py/pull/276
+- Repository: https://github.com/teng-lin/notebooklm-py (16.5k+ GitHub Stars)
 - Commits: 5c3f325391eef248b94b885972e032212be009ca, 4bacf1c981eb0fc701dd92e105e94b29ceee89ca
 - Code Diff: +1,483 lines added, -353 lines refactored across 8 core architecture modules
 - Problem Solved:
@@ -71,8 +71,7 @@ This document provides deep-context technical architecture, production receipts,
   - Windows Asyncio Loop Patch: Explicitly configured WindowsProactorEventLoopPolicy, ensuring 100% headless token harvesting reliability on Windows OS.
 
 ### Receipt 4: OmniPost-Core Multi-Platform Distribution Engine
-- Repository: https://github.com/AmanSuryavanshi-1/AmanSuryavanshi.dev/tree/main/Omni-Post-AI-Automation
-- Documentation: https://amansuryavanshi.com/docs/projects/personal/omnipost/01-executive-summary
+- Documentation: https://amansuryavanshi.com/docs/omnipost/01-executive-summary
 - Category: Multi-Agent AI System & Distributed Automation
 - Operational Metrics:
   - 122 total n8n workflow nodes across dual-stream architecture
